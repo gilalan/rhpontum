@@ -1,7 +1,7 @@
 var Apontamento = require('../../models/apontamento');
 var router = require('express').Router();
 
-router.get('/api/apontamentos', function(req, res) {
+router.get('/', function(req, res) {
 
     // usando o mongoose Model para buscar todos os funcionários
     Apontamento.find(function(err, apontamentos) {
@@ -14,7 +14,7 @@ router.get('/api/apontamentos', function(req, res) {
     });
 });
 
-router.post('/api/apontamentos', function(req, res) {
+router.post('/', function(req, res) {
 
     // create a user, information comes from AJAX request from Angular
     var apoint = req.body;

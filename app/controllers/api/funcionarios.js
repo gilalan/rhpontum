@@ -6,7 +6,7 @@ var router = require('express').Router();
 // API para FUNCIONARIOS
 //=========================================================================
 // get all FUNCIONARIOS
-router.get('/api/funcionarios', function(req, res) {
+router.get('/', function(req, res) {
 
     // usando o mongoose Model para buscar todos os funcionários
     Funcionario.find(function(err, funcionarios) {
@@ -21,7 +21,7 @@ router.get('/api/funcionarios', function(req, res) {
 
 
 // cria um funcionário na BD em consultas provenientes de um POST
-router.post('/api/funcionarios', function(req, res) {
+router.post('/', function(req, res) {
 
     // create a user, information comes from AJAX request from Angular
     Funcionario.create({

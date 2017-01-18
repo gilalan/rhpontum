@@ -11,18 +11,42 @@
   <div class="jumbotron">
     <h2>Bem-vindo,</h2>
     <p>digite seus dados para ter acesso ao sistema RHPontum:</p>
-    <form class="form-signin" ng-submit="login(user)">
+    <!-- Colocando o name no form cria uma variavel no $scope com as informações dos campos de ng-required, min-length, max-lenth etc -->    
+    
+    <div ng-show="successMsg" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Feito!</strong> {{successMsg}}
+    </div>
+
+    <div ng-show="errorMsg" class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Ops!</strong> {{errorMsg}}
+    </div>
+
+    <div ng-messages="userForm.email.$error" ng-show="userForm.email.$error && userForm.email.$dirty" class="alertas-msgs">
+      <div ng-message="required" class="alert alert-danger">Por favor, preencha o campo e-mail</div>
+      <div ng-message="minlength" class="alert alert-danger">Tamanho mínimo do campo e-mail: 10 caracteres</div>
+      <div ng-message="pattern" class="alert alert-danger">O campo e-mail necessita do caracter '@'</div>
+    </div>
+       
+    <div ng-messages="userForm.senha.$error" ng-show="userForm.senha.$error && userForm.senha.$dirty" class="alertas-msgs">      
+        <div ng-message="required" class="alert alert-danger">Por favor, preencha o campo senha</div>
+        <div ng-message="minlength" class="alert alert-danger">Tamanho mínimo do campo senha: 8 caracteres</div>
+    </div>
+
+    <form class="form-signin" name="userForm" ng-submit="login(user)">
       <label for="inputEmail" class="sr-only">Email</label>
-      <input id="inputEmail" class="form-control" placeholder="E-mail" ng-model="user.email" autofocus="" type="email">
+      <input id="inputEmail" name="email" class="form-control" placeholder="E-mail" ng-model="user.email" ng-required="true" ng-minlength='10' ng-pattern='/@/' autofocus="" type="email">
       <label for="inputPassword" class="sr-only">Senha</label>
-      <input id="inputPassword" class="form-control" placeholder="Senha" ng-model="user.senha" type="password">
+      <input id="inputPassword" name="senha" class="form-control" placeholder="Senha" ng-model="user.senha" ng-required="true" ng-minlength='8' type="password">
       <div class="checkbox">
         <label>
           <input value="remember-me" type="checkbox"> Lembre-me
         </label>
       </div>
-      <input class="btn btn-lg btn-primary btn-block" type="submit" value="Entrar">
+      <input class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="userForm.$invalid" value="Entrar">
     </form>
+    
     <button class="btn btn-xs btn-warning btn-block" ng-click="register(user)">Registrar</button>
   </div>
 

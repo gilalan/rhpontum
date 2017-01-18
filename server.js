@@ -18,12 +18,14 @@ app.use(bodyParser.json());                                     // parse applica
 //app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 //app.use(methodOverride());
 
+//middleware para atachar informações de usuário logado
+app.use(require('./auth'));
 
 // routes ======================================================================
-app.use(require('./app/controllers/api/usuarios'));
+app.use('/api/usuarios', require('./app/controllers/api/usuarios'));
 app.use('/api/sessions', require('./app/controllers/api/sessions'));
-app.use(require('./app/controllers/api/funcionarios'));
-app.use(require('./app/controllers/api/apontamentos'));
+app.use('/api/funcionarios', require('./app/controllers/api/funcionarios'));
+app.use('/api/apontamentos', require('./app/controllers/api/apontamentos'));
 app.use(require('./app/controllers/static'));
 // equivalent to: app.use('/', require('./controllers/static'))
 

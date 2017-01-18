@@ -29,4 +29,12 @@ angular.module('rhPontumApp').config(function($routeProvider){
 		controller: "registerCtrl",
 		templateUrl: "view/register.html"
 	});
+
+	$routeProvider.when("/error", {
+		templateUrl: "view/error.html"
+	});
+
+	$routeProvider.otherwise({
+		redirectTo: '/'
+	});
 });
