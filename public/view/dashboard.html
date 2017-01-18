@@ -1,0 +1,126 @@
+<link href="css/dashboard.css" rel="stylesheet">
+
+<span>Bem vindo, {{currentUser.email}}</span>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Alternar navegação</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">RHPontum</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Bater Ponto</a></li>
+        <li><a href="#">Configurações</a></li>
+        <li><a href="#">Perfil</a></li>
+        <li><a href="#">Ajuda</a></li>
+      </ul>
+      <form class="navbar-form navbar-right">
+        <input class="form-control" placeholder="Buscar..." type="text">
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li class="active"><a href="#">Acompanhamento <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Solicitações</a></li>
+        <li><a href="#">Folgas/Férias</a></li>
+        <li><a href="#">Montar Escalas</a></li>
+        <li><a href="#">Montar Equipes</a></li>
+        <li><a href="#">Meu Ponto</a></li>
+      </ul>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="funcionarioCtrl"> 
+      <h1 class="page-header">Acompanhamento de Marcações</h1>
+        
+       <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Escolha Setor, Equipe e Período para filtrar as informações</h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-3">
+              <select class="form-control" ng-model="equipe.setor" ng-options="setor.nome for setor in setores">
+                <option value="">Selecione um Setor</option>
+              </select> 
+            </div>
+            <div class="col-md-3">
+              <select class="form-control" ng-model="equipe" ng-options="equipe.nome group by equipe.setor.nome for equipe in equipes">
+                <option value="">Selecione uma Equipe</option>
+              </select>  
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control" placeholder="Data inicial"/> 
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control" placeholder="Data final"/> 
+            </div>
+            <div class="col-md-1">
+              <button type="button" class="btn btn-primary">Buscar</button>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Status</th>
+              <th>Marcações</th>
+              <th>H.Extras</th>
+              <th>H.Faltantes</th>
+              <th>Justificativa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="funcionario in funcionarios">
+              <td>{{funcionario.nome}}</td>
+              <td>Lorem</td>
+              <td>ipsum</td>
+              <td>dolor</td>
+              <td>sit</td>
+              <td>justificat</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Implementação da adição de marcação de ponto para testes -->
+  <div id="todo-form" class="row">
+    <div class="col-sm-8 col-sm-offset-2 text-center">
+      <form>
+        <div class="form-group">
+
+          <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+          <input type="text" class="form-control input-lg text-center" placeholder="Nome" ng-model="funcionario.nome">
+          <input type="text" class="form-control input-lg text-center" placeholder="PIS" ng-model="funcionario.PIS">
+          <input type="text" class="form-control input-lg text-center" placeholder="datanascimento" ng-model="funcionario.dataNascimento">
+        </div>
+
+        <!-- createUser() WILL CREATE NEW Users -->
+        <button type="submit" class="btn btn-primary btn-lg" ng-click="createFuncionario(funcionario)" ng-disabled="!funcionario.nome || !funcionario.PIS || !funcionario.dataNascimento">Add Func</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="lib/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+<script src="lib/bootstrap-workarounds/holder.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="lib/bootstrap-workarounds/ie10-viewport-bug-workaround.js"></script>

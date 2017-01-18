@@ -1,0 +1,60 @@
+body {
+    background: url('../img/bg-resposive.jpg') no-repeat fixed center center !important;
+    background-size: cover !important;
+    font-family: Montserrat !important;
+  }
+  #inputEmail {
+    margin-bottom: 2px !important;
+    padding-left: 45px;
+  }
+  #inputPassword {
+    padding-left: 45px !important;
+  }
+  .form-signin {
+    max-width: 450px !important;
+    padding: 0px !important;
+  }
+
+  .container {
+    max-width: 600px !important;
+  }
+
+  .jumbotron {
+    background-color: #fff !important;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    text-align: left !important; 
+    border-top: 5px solid #134f74 !important;   
+  }
+
+  .jumbotron p {
+    text-align: left !important;
+    font-size: 14px !important; 
+    padding-left: 2px !important;
+    margin-bottom: 15px !important;
+  }
+
+  .text-muted {
+    color: #fff !important;
+  }
+
+  .form-signin input#inputEmail {
+    background: #fff url('../img/login-blue-icon.png') 15px top no-repeat;
+    background-size: 16px 80px;
+  }
+
+  .form-signin input#inputEmail:focus {
+      background: #fff url('../img/login-blue-icon.png') 15px bottom no-repeat;
+      background-size: 16px 80px;
+  }
+
+  .form-signin input#inputPassword {
+      background: #fff url('http://i.imgur.com/Qf83FTt.png') 15px top no-repeat;
+      background-size: 16px 80px;
+  }
+
+  .form-signin input#inputPassword:focus {
+      background: #fff url('http://i.imgur.com/Qf83FTt.png') 15px bottom no-repeat;
+      background-size: 16px 80px;
+  }
+}

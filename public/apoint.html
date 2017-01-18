@@ -1,0 +1,90 @@
+<!-- index.html -->
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="rhPontumApp">
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+    <title>Registrar Ponto</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/lib/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/apontamento.css" rel="stylesheet"> 
+
+    <!-- SPELLS -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
+    <script src="static/lib/angular-1.6.1/angular.min.js"></script><!-- Load Angular localmente -->
+    <script src="static/js/app.js"></script>
+    <script src="static/js/controllers/apontamentoCtrl.js"></script>
+
+</head>
+<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+<body>
+    <div class="container" ng-controller="apontamentoCtrl">
+
+        <!-- HEADER AND TODO COUNT -->
+        <div class="jumbotron text-center">
+            <h1>Quantidade de Apontamentos: <span class="label label-info">{{ apontamentos.length }}</span></h1>
+        </div>
+
+        <!-- TODO LIST -->
+        <div id="todo-list" class="row">
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Data</th>
+                      <th>Status</th>
+                      <th>Funcionário</th>
+                      <th>Marcações</th>
+                      <th>Justificativa</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="apontamento in apontamentos">
+                      <td>{{apontamento.data | date:'dd/MM/yyyy'}}</td>
+                      <td>{{apontamento.status.descricao}}</td>
+                      <td>{{apontamento.funcionario}}</td>
+                      <td>
+                        <ul class='list-group'>
+                            <li ng-repeat="marcacao in apontamento.marcacoes track by $index" class='list-group-item'>                        
+                                {{marcacao | date:'HH:mm'}}
+                            </li>
+                        </ul>
+                      </td>
+                      <td>{{apontamento.justificativa}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+
+            
+        </div>
+
+        <!-- FORM TO CREATE FUNCS -->
+        <div id="todo-form" class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <form>
+                   <div class="form-group">
+
+                      <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                      <input type="text" class="form-control input-lg text-center" placeholder="Data" ng-model="apontamento.data">
+                      <input type="text" class="form-control input-lg text-center" placeholder="Status [C,I,E,J]" ng-model="apontamento.status.descricao">
+                      <input type="text" class="form-control input-lg text-center" placeholder="justificativa" ng-model="apontamento.justificativa">
+                    </div>
+
+                    <!-- createUser() WILL CREATE NEW Users -->
+                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createApontamento(apontamento)">Add Apt</button>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+</body>
+</html>

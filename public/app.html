@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RHPontum System</title>
+	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+</head>
+<body ng-app="rhPontumApp" ng-controller="applicationCtrl">
+		
+	<div ng-view></div>
+
+	<!-- Carregando os scripts depois para uma melhor "performance" no loading -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
+	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js'></script>
+	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-route.min.js'></script>
+	<script src="lib/bootstrap-workarounds/ie-emulation-modes-warning.js"></script>
+	<script src="lib/bootstrap-workarounds/ie10-viewport-bug-workaround.js"></script>
+	<script src='js/app.js'></script>
+	<script src='js/controllers/services/usuarioAPIService.js'></script>
+    <script src="js/controllers/services/funcionariosAPIService.js"></script>
+	<script src='js/controllers/applicationCtrl.js'></script>
+	<script src='js/controllers/loginCtrl.js'></script>
+	<script src='js/controllers/dashboardCtrl.js'></script>
+	<script src="js/controllers/funcionarioCtrl.js"></script>
+	<!--<script src="js/controllers/services/funcionariosAPIService.js"></script>-->
+  	<script src="js/values/configValue.js"></script>
+	<script src='js/config/routes.js'></script>
+</body>
+</html>
