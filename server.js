@@ -23,12 +23,23 @@ app.use(require('./auth'));
 
 // routes ======================================================================
 app.use('/api/usuarios', require('./app/controllers/api/usuarios'));
-app.use('/api/sessions', require('./app/controllers/api/sessions'));
+app.use('/api/authenticate', require('./app/controllers/api/sessions'));
 app.use('/api/funcionarios', require('./app/controllers/api/funcionarios'));
 app.use('/api/apontamentos', require('./app/controllers/api/apontamentos'));
+app.use('/api/instituicoes', require('./app/controllers/api/instituicoes'));
+app.use('/api/campi', require('./app/controllers/api/campi'));
+app.use('/api/setores', require('./app/controllers/api/setores'));
+app.use('/api/equipes', require('./app/controllers/api/equipes'));
 app.use(require('./app/controllers/static'));
 // equivalent to: app.use('/', require('./controllers/static'))
+
+process.on('uncaughtException', function(err) {
+	console.log('process on - uncaughtException');
+	console.log(err);
+});
 
 // listen (start app with node server.js) ======================================
 app.listen(8080);
 console.log("App listening on port 8080");
+
+//588168ed8ccb4e0c7bf5b22f

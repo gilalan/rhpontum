@@ -1,5 +1,5 @@
-angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "usuarioAPI",
-	function($scope, $location, usuarioAPI){
+angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "$localStorage", "usuarioAPI",
+	function($scope, $location, $localStorage, usuarioAPI){
 		
 	function getUsuario(){
 		
@@ -11,7 +11,7 @@ angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "u
 			//Maneira elegante de associar um usuário logado a nossa APP			
 			$scope.$emit('login', response.data);
 			//usuarioLogado = response.data;
-			$location.path("/dashboard");
+			//$location.path("/dashboard");
 
 		}, function errorCallback(response){
 
@@ -25,9 +25,14 @@ angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "u
 
 	$scope.login = function (usuario) {
 
-	    usuarioAPI.login(usuario).then(function sucessCallback(response){      				
+	    usuarioAPI.signIn(usuario).then(function sucessCallback(response){      				
 			
-			return getUsuario();
+			$localStorage.token = response.data;
+			console.log('localStorage');
+			console.log($localStorage);
+			$location.path("/dashboard");
+            //window.location = "/";
+			//return getUsuario();
 
 		}, function errorCallback (response) {
 			
@@ -51,4 +56,6 @@ angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "u
 			
 		});		
 	}
+
+	$scope.token = $localStorage.token;
 }]);

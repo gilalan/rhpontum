@@ -1,4 +1,3 @@
-
 var Funcionario = require('../../models/funcionario');
 var router = require('express').Router();
 
@@ -8,6 +7,25 @@ var router = require('express').Router();
 // get all FUNCIONARIOS
 router.get('/', function(req, res) {
 
+    if (req.auth) {
+      if (req.auth.email)
+        console.log('usuário já logado: ' + req.auth.email);
+        if (req.auth.role){
+
+            console.log('role: ' + req.auth.role);
+            //forçando um erro para um novo usuário criado com os roles
+            if (req.auth.role === 'ROLE_USER'){//na verdade esse é admin
+                //teria q checar o nível de acesso da rota pra saber se ele é permitido visualizar
+                console.log("Usuário com ROLE não autorizado example!");
+                //res.status(403).send({ success: false, message: 'Não Autorizado!' });
+            }
+        }
+
+    } else {
+        console.log('usuário não logado');
+        //res.status(403).send({ success: false, message: 'Não Autorizado!' });
+        //403 - forbidden - proibido de acessar
+    }
     // usando o mongoose Model para buscar todos os funcionários
     Funcionario.find(function(err, funcionarios) {
 
@@ -27,7 +45,7 @@ router.post('/', function(req, res) {
     Funcionario.create({
         nome : req.body.nome,
         PIS: req.body.PIS,
-        dataNascimento: req.body.dataNascimento            
+        dataNascimento: req.body.dataNascimento
     }, function(err, user) {
         if (err)
             res.send(err);    

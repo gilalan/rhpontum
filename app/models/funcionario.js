@@ -16,8 +16,7 @@ var funcionarioSchema = new Schema({
 		horasTrabalho: Number
 	},
 	apontamentos: [Schema.Types.ObjectId],
-	equipes: [Schema.Types.ObjectId],
-	perfilId: Schema.Types.ObjectId
+	equipes: [Schema.Types.ObjectId]	
 },
 {
 	timestamps: true

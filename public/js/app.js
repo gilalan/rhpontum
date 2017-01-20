@@ -1,1 +1,1 @@
-angular.module('rhPontumApp', ['ngRoute', 'ngMessages']);
+angular.module('rhPontumApp', ['ngRoute', 'ngMessages', 'ngStorage']);

@@ -2,6 +2,7 @@ var Usuario = require('../../models/usuario');
 var router = require('express').Router();
 var jwt = require('jwt-simple');
 var bcrypt = require('bcrypt');
+var moment = require('moment');
 var config = require('../../../config');
 
 router.post('/', function(req, res, next) {
@@ -36,7 +37,13 @@ router.post('/', function(req, res, next) {
                 console.log("Senha inválida? " + valid);
                 return res.status(401).send({ success: false, message: 'Senha inválida!'});
             }
-            var token = jwt.encode({email: usuario.email}, config.secretKey);
+            var expires = moment().add(1, 'days').valueOf();
+
+            var token = jwt.encode({
+                    email: usuario.email,
+                    role: 'ROLE_ADMIN',
+                    exp: expires
+                }, config.secretKey);
             res.json(token);
         });
     });
