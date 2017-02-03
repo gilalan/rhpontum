@@ -1,17 +1,17 @@
-angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "$localStorage", "usuarioAPI",
-	function($scope, $location, $localStorage, usuarioAPI){
+angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "$localStorage", 
+	"usuarioAPI", "homeAPI",
+	function($scope, $location, $localStorage, usuarioAPI, homeAPI){
 		
-	function getUsuario(){
+	function getUsuario(idUsuario){
 		
-		usuarioAPI.getUsuario().then(function sucessCallback(response){
+		usuarioAPI.getUsuario(idUsuario).then(function sucessCallback(response){
 
-			console.log('usuario logado: ' + response.data.email);
-			console.log('api services token: ' + usuarioAPI.token);
+			console.log('usuario logado: ', response.data.email);
 
 			//Maneira elegante de associar um usuário logado a nossa APP			
 			$scope.$emit('login', response.data);
 			//usuarioLogado = response.data;
-			//$location.path("/dashboard");
+			$location.path("/dashboard");
 
 		}, function errorCallback(response){
 
@@ -23,16 +23,27 @@ angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "$
 		});
 	}
 
+	function redirectHome() {
+
+		homeAPI.get().then(function sucessCallback(response){
+
+			console.log('passou pelo sucess do redirectHome');
+			$location.path('/dashboard');
+		});
+	}
+
 	$scope.login = function (usuario) {
 
 	    usuarioAPI.signIn(usuario).then(function sucessCallback(response){      				
 			
-			$localStorage.token = response.data;
+			$localStorage.token = response.data.token;
 			console.log('localStorage');
 			console.log($localStorage);
-			$location.path("/dashboard");
+			
+			console.log('id usuário retornado: ', response.data.idUsuario);
             //window.location = "/";
-			//return getUsuario();
+			return getUsuario(response.data.idUsuario);
+			//return redirectHome();
 
 		}, function errorCallback (response) {
 			

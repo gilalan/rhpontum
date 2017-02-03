@@ -3,9 +3,9 @@ angular.module('rhPontumApp').service("usuarioAPI", function($http){
 	var _urlBaseUsuarios = '/api/usuarios';
 	var svc = this;	
 
-	svc.getUsuario = function() {
+	svc.getUsuario = function(idUsuario) {
 
-		return $http.get(_urlBaseUsuarios);//, {
+		return $http.get(_urlBaseUsuarios+'/'+idUsuario);//, {
 	      //headers: { 'X-Auth': token }
 	    //});
 	};
@@ -15,7 +15,7 @@ angular.module('rhPontumApp').service("usuarioAPI", function($http){
 		console.log(usuario);
 		return $http.post('/api/authenticate', usuario).then(function sucessCallback(response){
 	      
-			svc.token = response.data;
+			svc.token = response.data.token;
 			console.log("Login efetuado, token gerado da api user svc: " + svc.token);
 			//$http.defaults.headers.common['X-Auth'] = response.data;
 

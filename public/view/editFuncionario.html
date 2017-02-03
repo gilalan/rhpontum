@@ -1,0 +1,60 @@
+<!-- FORM TO CREATE FUNCS -->
+<h2 class="sub-header">{{::newOrEdit}} Funcionário</h2>
+
+<div ng-show="successMsg" class="alert alert-success alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Feito!</strong> {{successMsg}}
+</div>
+
+<div ng-show="errorMsg" class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Ops!</strong> {{errorMsg}}
+</div>
+
+<div id="todo-form" class="row">
+    
+    <div class="col-sm-12 col-sm-offset-0">
+
+        <form name="funcionarioForm">
+                 
+          <div class="form-group col-xs-12 col-md-8">
+            <label class="control-label" for="instituicao">Instituição</label>
+            <select id="instituicao" name="instituicao" class="form-control" ng-init="funcionario.instituicao = funcionario.instituicao || instituicoes[0]" ng-options="instituicao.sigla for instituicao in instituicoes track by instituicao._id" ng-model="funcionario.instituicao">
+            <!--<pre>{{funcionario.instituicao | json}}</pre>-->
+              
+            </select>
+          </div>
+
+          <div class="form-group col-xs-12 col-md-8">
+            <label class="control-label" for="nome">Nome</label>
+            <input type="text" class="form-control input-lg" placeholder="Nome" ng-model="funcionario.nome" ng-required="true">
+          </div>
+
+          <div class="form-group col-xs-12 col-md-8">
+            <label class="control-label" for="pis">PIS</label>
+            <input type="text" class="form-control input-lg" placeholder="PIS" ng-model="funcionario.PIS" ng-required="true">
+          </div>
+
+          <div class="form-group col-xs-12 col-md-8">
+                <label class="control-label" for="dataNascimento">Data de Nascimento</label>
+            <input type="text" class="form-control input-lg" placeholder="Data de Nascimento" ng-model="funcionario.dataNascimento" ng-required="true" ui-date>
+          </div>        
+          
+          <div class="form-group col-xs-12 col-md-8">
+            <h4 class="sub-header"><strong>Equipes</strong></h4>
+            <div class="form-group col-xs-12 col-md-8" ng-repeat="setor in setores">
+              <p class="form-group" ng-show="setor.equipes.length>0">{{::setor.nome}}</p>
+              <div class="form-group col-xs-12 col-md-8" ng-repeat="equipe in setor.equipes">                
+                <input type="checkbox" value="{{::equipe.nome}}" ng-checked="equipe.selecionado" ng-click="checkAddEquipe(equipe)"/>
+                  {{::equipe.nome}}
+              </div>
+            </div>
+          </div>
+           
+          <div class="form-group col-xs-12 col-md-8">
+            <button type="submit" class="btn btn-primary btn-lg" ng-disabled="funcionarioForm.$invalid" ng-click="save(funcionario)">Salvar</button>
+            <!--ng-disabled="funcionarioForm.$invalid"-->
+          </div>
+        </form>
+    </div>
+</div>

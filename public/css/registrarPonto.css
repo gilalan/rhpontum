@@ -1,0 +1,11 @@
+.well h3 {
+	
+	border-bottom: 2px solid #ddd;
+	
+}
+
+.img-reg-user {	
+	width: 78px !important;
+	height: 78px !important;	
+	display: block;
+}

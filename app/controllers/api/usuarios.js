@@ -51,7 +51,8 @@ router.post('/', function(req, res, next) {
         console.log('usuário já logado: ' + req.auth.email);
     }
 
-    var _usuario = new Usuario({email: req.body.email});
+    var _usuario = new Usuario({email: req.body.email, funcionario: req.body.funcionario});
+    console.log('email p cadastro: ', req.body.email);
     console.log('senha enviada: ' + req.body.senha);
     bcrypt.hash(req.body.senha, 10, function (err, hash) {
       if(err) {
@@ -77,21 +78,85 @@ router.post('/', function(req, res, next) {
     });
 });
 
-// delete a user
-router.delete('/:user_id', function(req, res) {
-    Usuario.remove({
-        _id : req.params.user_id
-    }, function(err, user) {
-        if (err)
-            res.send(err);
+//get specific user
+router.get('/:id', function(req, res){
 
-        // get and return all the users after you create another
-        Usuario.find(function(err, users) {
-            if (err)
-                res.send(err)
-            res.json(users);
-        });
-    });
+  var idUsuario = req.params.id;
+
+  Usuario.findOne({_id: idUsuario})
+  .populate('instituicao', 'nome sigla')
+  .populate('funcionario', 'nome dataNascimento PIS')
+  .exec(function(err, usuario){
+    
+    if(err) {
+        return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+      }
+
+      /*remover por enquanto essa função de verificar a permissão de autorização
+    
+      if(!config.ensureAuthorized(req.auth, accessLevel)) {
+        console.log('usuário não autorizado para instituições');
+        return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
+      }
+      */
+    console.log("usuario mongoose: ", usuario);
+    return res.json(usuario);
+  });
+
+});
+
+//Update 1 usuario by id
+router.put('/:id', function(req, res){
+  
+  var idUsuario = req.params.id;
+  
+  Usuario.findOne({_id: idUsuario}, function(err, usuario){
+
+    if(err) {
+        return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+      }
+
+      /*remover por enquanto essa função de verificar a permissão de autorização
+    
+      if(!config.ensureAuthorized(req.auth, accessLevel)) {
+        console.log('usuário não autorizado para instituições');
+        return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
+      }
+      */
+
+      usuario.email = req.body.email;
+      //usuario.senha = req.body.senha;//criptografar
+      usuario.instituicao = req.body.instituicao;
+      usuario.perfil = req.body.perfil;
+
+      //tenta atualizar de fato no BD
+      usuario.save(function(err){
+        
+        if(err){
+          console.log('Erro no save do update', err);
+          return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+        }
+
+      });
+
+      return res.json(usuario);
+  });
+});
+
+// delete a user
+router.delete('/:id', function(req, res) {
+    
+  var idUsuario = req.params.id;
+  
+  Usuario.remove({_id: idUsuario}, function(err){
+    
+    if(err){
+        console.log('Erro no delete usuario', err);
+        return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+      }
+
+      return res.status(200).send({success: true, message: 'Usuário removido com sucesso!'});
+  });    
 });
 
 module.exports = router;

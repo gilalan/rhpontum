@@ -7,7 +7,6 @@ var Setor = require('./setor');
 
 var equipe = mongoose.Schema({
   nome: {type: String, required: true, unique: true},
-  componentes: [{type: Schema.Types.ObjectId, ref: 'Funcionario'}],
   gestor: {type: Schema.Types.ObjectId, required: true, ref: 'Funcionario'},
   setor: {type: Schema.Types.ObjectId, required: true, ref: 'Setor'}
 },{

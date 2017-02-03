@@ -68,8 +68,15 @@ router.post('/', function(req, res) {
       return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
     }
     */
-      
-    return res.json(instituicao);
+    /*
+     return res.status(200).send(
+      { success: true, 
+        message: 'Instituição criada com sucesso!', 
+        object: res.json(instituicao)
+      });*/
+      //Não sei se eh uma boa prática para retorno de mensagens....
+      //instituicao.message = 'Instituição cadastrada com sucesso!';
+      return res.json(instituicao);
   });
 });
 

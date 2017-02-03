@@ -1,4 +1,5 @@
 var Setor = require('../../models/setor');
+var Equipe = require('../../models/equipe');
 //var Campus = require('../../models/campi');
 //var Instituicao = require('../../models/instituicao');
 var router = require('express').Router();
@@ -17,12 +18,34 @@ var config = require('../../../config');
    4: admin 
   }
  */
+
+/*
+ * Essa busca está mto DEEP , profunda d+, se tiver mtos setores/equipes/funcionarios pode comprometer
+ * d+ a performance do sistema (DEIXAR SÓ PARA TESTES)
+ * Ideal seria filtrar o setor só com as equipes, depois o cara escolhe as datas e busca no servidor p 
+ * trazer os funcionarios apenas naquele período
+ */
 var accessLevel = 3;
 
 router.get('/', function(req, res) {
 
   Setor.find()
-  .populate('campus')
+  .populate('campus', 'nome')
+  .populate({
+	path: 'equipes',
+	model: 'Equipe',
+	select: 'nome gestor componentes',
+	populate: [{
+		path: 'gestor', 
+		model: 'Funcionario', 
+		select: 'nome'		
+	},
+	{
+		path: 'componentes', 
+		model: 'Funcionario', 
+		select: 'nome'		
+	}]
+   })  
   .exec(function(err, setores){
 		
 		if(err) {
@@ -147,6 +170,31 @@ router.delete('/:id', function(req, res){
 
     	return res.status(200).send({success: true, message: 'Setor removido com sucesso!'});
 	});
+});
+
+router.get('/:id/equipes', function(req, res){
+
+    var idSetor = req.params.id;
+
+    console.log('idSetor', idSetor);
+    Equipe.find({setor: idSetor})
+    .populate('gestor', 'nome PIS')
+    .exec(function(err, equipes){
+        
+        if(err) {
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+        }
+
+        /*remover por enquanto essa função de verificar a permissão de autorização
+    
+        if(!config.ensureAuthorized(req.auth, accessLevel)) {
+            console.log('usuário não autorizado para instituições');
+            return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
+        }
+        */
+        console.log("equipes mongoose: ", equipes);
+        return res.json(equipes);
+    });
 });
 
 module.exports = router;

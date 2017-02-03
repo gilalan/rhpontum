@@ -1,10 +1,13 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var Equipe = require('./equipe');
+var Instituicao = require('./instituicao');
 
 var funcionarioSchema = new Schema({
-	nome: String,
+	nome: {type: String, required: true},
 	dataNascimento: Date,
-	PIS: String,
+	PIS: {type: String, required: true, unique: true},
+	instituicao: {type: Schema.Types.ObjectId, ref: 'Instituicao'},
 	escalaTrabalho: {
 		jornada: {
 			entrada: Date,
@@ -15,8 +18,7 @@ var funcionarioSchema = new Schema({
 		horasIntervalo: Number,
 		horasTrabalho: Number
 	},
-	apontamentos: [Schema.Types.ObjectId],
-	equipes: [Schema.Types.ObjectId]	
+	equipes: [{type: Schema.Types.ObjectId, ref: 'Equipe'}]
 },
 {
 	timestamps: true

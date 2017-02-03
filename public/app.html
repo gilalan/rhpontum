@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<base href="/"></base>
 	<title>RHPontum System</title>
 	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -8,29 +9,49 @@
 
 </head>
 <body ng-app="rhPontumApp" ng-controller="applicationCtrl">
-		
-	<div ng-view></div>
+	
+	<div ng-include="" src="'/view/layout/home.html'" ng-if="auth"></div>
+	<div ng-include="" src="'/view/layout/index.html'" ng-if="!auth"></div>	
 
 	<!-- Carregando os scripts depois para uma melhor "performance" no loading -->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
-	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script><!-- load jquery -->
 	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js'></script>
+	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
 	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-route.min.js'></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-messages.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.js"></script>
 	
+	<script src="lib/ui-bootstrap-tpls-2.5.0.min.js""></script>
 	<script src="lib/bootstrap-workarounds/ie-emulation-modes-warning.js"></script>
 	<script src="lib/bootstrap-workarounds/ie10-viewport-bug-workaround.js"></script>
 	<script src='js/app.js'></script>
+	<script src='js/locale/angular-locale_pt-br.js'></script>
+  	<script src='js/config/routes.js'></script>
 	<script src='js/controllers/services/usuarioAPIService.js'></script>
     <script src="js/controllers/services/funcionariosAPIService.js"></script>
+    <script src="js/controllers/services/setoresAPIService.js"></script>
+    <script src="js/controllers/services/equipesAPIService.js"></script>
+    <script src="js/controllers/services/homeAPIService.js"></script>
+    <script src="js/controllers/services/instituicoesAPIService.js"></script>
+    <script src="js/controllers/services/campiAPIService.js"></script>
+    <script src="js/controllers/services/apontamentosAPIService.js"></script>
 	<script src='js/controllers/applicationCtrl.js'></script>
 	<script src='js/controllers/loginCtrl.js'></script>
+	<script src='js/controllers/homeCtrl.js'></script>
 	<script src='js/controllers/dashboardCtrl.js'></script>
+	<script src='js/controllers/setorCtrl.js'></script>
 	<script src="js/controllers/funcionarioCtrl.js"></script>
+	<script src="js/controllers/instituicaoCtrl.js"></script>
+	<script src="js/controllers/campiCtrl.js"></script>
+	<script src="js/controllers/equipeCtrl.js"></script>
+	<script src="js/controllers/regPontoCtrl.js"></script>
+	<script src="js/controllers/editFuncionarioCtrl.js"></script>
+	<script src="js/controllers/novoFuncionarioCtrl.js"></script>
+	<script src="js/controllers/associarFuncionarioCtrl.js"></script>
 	<script src="js/services/Auth.js"></script>
+	<script src='js/directives/uiDateDirective.js'></script>
+	<script src='js/filters/zeroPadFilter.js'></script>
 	<script src="js/values/configValue.js"></script>
-  	<script src='js/config/routes.js'></script>
 	<script src="js/interceptors/timestampInterceptor.js"></script>
 	<script src="js/interceptors/errorInterceptor.js"></script>
 	<script src="js/interceptors/sessionInjectorInterceptor.js"></script>

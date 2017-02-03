@@ -1,20 +1,45 @@
 var mongoose = require('mongoose');
+var Funcionario = require('./funcionario');
 var Schema = mongoose.Schema;
 
 var apontamentoSchema = new Schema(
 {
-	data: Date,
+	data: {type: Date, required: true},
 	status: {
 		id: Number,
-		descricao: {type: String, enum: ['Correto', 'Incompleto', 'Errado', 'Justificado']}
+		descricao: {type: String, enum: ["Correto", "Incompleto", "Errado", "Justificado"]}
 	},
-	funcionario: Schema.Types.ObjectId,
-	marcacoes: [Date],
+	marcacoes: [{
+		id: Number, //1, 2, 3, 4 -> sequencial para ordenação
+		descricao: String, //ent1, sai1, ent2, sai2, ent3, sai3
+		hora: Number,
+		minuto: Number,
+		segundo: Number,
+		gerada: {
+			created_at: Date,
+			aprovadaPor: {type: Schema.Types.ObjectId, ref: 'Funcionario'},
+			justificativa: String
+		}
+	}],
+	marcacoes_invalidadas: [{
+		hora: Number,
+		minuto: Number,
+		segundo: Number,
+		gerada: {
+			created_at: Date,
+			aprovadaPor: {type: Schema.Types.ObjectId, ref: 'Funcionario'},
+			justificativa: String
+		},
+		motivo: String
+	}],
+	funcionario: {type: Schema.Types.ObjectId, ref: 'Funcionario'},
 	justificativa: String
 },
 {
 	timestamps: true
 });
+
+apontamentoSchema.index({ data: 1, funcionario: 1}, { unique: true });
 
 var apontamentoModel = mongoose.model('Apontamento', apontamentoSchema);
 

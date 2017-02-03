@@ -1,0 +1,99 @@
+<h1 class="page-header">Instituições</h1>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Sigla</th>
+        <th>Endereços</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="instituicao in instituicoes">
+        <td>{{instituicao.nome}}</td>
+        <td>{{instituicao.sigla}}</td>
+        <td>
+          <ul class='list-group'>
+            <li ng-repeat="endereco in instituicao.enderecos track by $index" class='list-group-item'>                      
+              {{endereco.logradouro}}, {{endereco.numero}} <br/>
+              {{endereco.CEP}}<br/>
+              {{endereco.bairro}}<br/>
+              {{endereco.cidade}}<br/>
+              {{endereco.UF}}
+            </li>
+          </ul>
+        </td>
+        <td> <button class="btn btn-danger btn-xs" ng-click="delete(instituicao._id)">DEL</button> | <button class="btn btn-info btn-xs" ng-click="update(instituicao._id)">UPT</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- FORM TO CREATE FUNCS -->
+<h2 class="sub-header">Adicionar Instituição</h2>
+
+<div ng-show="successMsg" class="alert alert-success alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Feito!</strong> {{successMsg}}
+</div>
+
+<div ng-show="errorMsg" class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Ops!</strong> {{errorMsg}}
+</div>
+
+<div id="todo-form" class="row">
+    
+    <div class="col-sm-12 col-sm-offset-0">
+
+        <form name="instituicaoForm">
+                 
+              <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+              <div class="form-group col-xs-12 col-md-8">
+	              <label class="sr-only" for="nome">Nome</label>
+	    		  <input id="nome" type="text" class="form-control input-lg" placeholder="Nome" ng-model="instituicao.nome">
+	    	  </div>
+	    	  
+	    	  <div class="form-group col-xs-6 col-md-4">
+	    		  <label class="sr-only" for="sigla">Sigla</label>
+	              <input id="sigla" type="text" class="form-control input-lg" placeholder="Sigla" ng-model="instituicao.sigla">
+	          </div>
+
+	          <div class="form-group col-xs-12 col-md-8">
+	              <label class="sr-only" for="logradouro">Logradouro</label>
+	              <input type="text" class="form-control input-lg" placeholder="Logradouro" ng-model="instituicao.endereco.logradouro">
+	          </div>
+
+	          <div class="form-group col-xs-6 col-md-4">
+	              <label class="sr-only" for="numero">Nº</label>
+	              <input id="numero" type="text" class="form-control input-lg" placeholder="Nº" ng-model="instituicao.endereco.numero">
+	          </div>
+
+	          <div class="form-group col-xs-6 col-md-8">
+	              <label class="sr-only" for="bairro">Bairro</label>
+	              <input id="bairro" type="text" class="form-control input-lg" placeholder="Bairro" ng-model="instituicao.endereco.bairro">
+	          </div>
+
+	          <div class="form-group col-xs-6 col-md-4">
+	              <label class="sr-only" for="cep">CEP</label>
+	              <input id="cep" type="text" class="form-control input-lg" placeholder="CEP" ng-model="instituicao.endereco.CEP">
+	          </div>
+
+	          <div class="form-group col-xs-6 col-md-8">
+	              <label class="sr-only" for="cidade">Cidade</label>
+	              <input id="cidade" type="text" class="form-control input-lg" placeholder="Cidade" ng-model="instituicao.endereco.cidade">
+	          </div>
+
+	          <div class="form-group col-xs-6 col-md-4">
+	              <label class="sr-only" for="uf">UF</label>
+	              <input id="uf" type="text" class="form-control input-lg" placeholder="UF" ng-model="instituicao.endereco.UF">
+	          </div>
+           
+              <div class="form-group col-xs-12 col-md-8">
+            	<button type="submit" class="btn btn-primary btn-lg" ng-click="create(instituicao)">Adicionar</button>
+              </div>
+        </form>
+    </div>
+</div>

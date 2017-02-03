@@ -6,7 +6,7 @@ var Instituicao = require('./instituicao');
 
 var campi = mongoose.Schema({
   nome: {type: String, required: true, unique: true},
-  endereço: Schema.Types.Mixed,
+  endereco: Schema.Types.Mixed,
   area: Number,
   projetos: Array,
   instituicao: {type: Schema.Types.ObjectId, required: true, ref: 'Instituicao'}

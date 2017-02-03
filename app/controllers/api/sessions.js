@@ -44,7 +44,10 @@ router.post('/', function(req, res, next) {
                     role: 'ROLE_ADMIN',
                     exp: expires
                 }, config.secretKey);
-            res.json(token);
+
+            var obj = {'token': token, 'idUsuario': usuario._id};
+
+            res.json(obj);
         });
     });
 });

@@ -1,0 +1,69 @@
+<link href="css/alertas-msgs.css" rel="stylesheet">
+<link href="css/identacaoParagraph.css" rel="stylesheet">
+
+<h3 class="page-header">Configurar funcionário para acesso ao sistema</h3>
+
+<div class="well">	
+		
+	<div class="row">
+
+		<div class="col-md-12">
+			<div ng-show="successMsg" class="alert alert-success alert-dismissible" role="alert">
+		      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		      <strong>Feito!</strong> {{successMsg}}
+		    </div>
+
+		    <div ng-show="errorMsg" class="alert alert-danger alert-dismissible" role="alert">
+		      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		      <strong>Ops!</strong> {{errorMsg}}
+		    </div>
+
+		    <div ng-messages="userForm.email.$error" ng-show="userForm.email.$error && userForm.email.$dirty" class="alertas-msgs">
+		      <div ng-message="required" class="alert alert-danger">Por favor, preencha o campo e-mail</div>
+		      <div ng-message="minlength" class="alert alert-danger">Tamanho mínimo do campo e-mail: 10 caracteres</div>
+		      <div ng-message="pattern" class="alert alert-danger">O campo e-mail necessita do caracter '@'</div>
+		    </div>
+		       
+		    <div ng-messages="userForm.senha.$error" ng-show="userForm.senha.$error && userForm.senha.$dirty" class="alertas-msgs">      
+		        <div ng-message="required" class="alert alert-danger">Por favor, preencha o campo senha</div>
+		        <div ng-message="minlength" class="alert alert-danger">Tamanho mínimo do campo senha: 8 caracteres</div>
+		    </div>
+
+		    <div ng-messages="userForm.confirmaSenha.$error" ng-show="userForm.confirmaSenha.$error && userForm.confirmaSenha.$dirty" class="alertas-msgs">      
+		        <div ng-message="required" class="alert alert-danger">Por favor, preencha o campo de confirmação de senha</div>
+		        <div ng-message="minlength" class="alert alert-danger">Tamanho mínimo do campo de confirmação de  senha: 8 caracteres</div>
+		        <div ng-message="compareTo" class="alert alert-danger">Senha e Confirmação devem ser iguais</div>
+		    </div>
+		</div>
+
+		<div class="col-md-12">
+			<p> Funcionário: {{funcionario.nome}} </p>
+			<p> Nascimento: {{funcionario.dataNascimento | date:'dd/MM/yyyy'}} </p>
+			<p ng-if="isAssociated"> Funcionário já possui acesso com o e-mail: <strong>{{usuario.email}}</strong> </p>
+		</div>
+		
+		<form name="userForm">
+			<div class="col-md-12">
+				<label class="control-label" for="nome">E-mail para acesso</label>
+	            <input id="inputEmail" name="email" class="form-control" placeholder="E-mail" ng-model="usuario.email" ng-required="true" ng-minlength='10' ng-pattern='/@/' autofocus="" type="email">
+			</div>
+			<div class="col-md-6">
+				<label class="control-label" for="senha">Senha</label>
+	            <input id="inputPassword" name="senha" class="form-control" placeholder="Senha" ng-model="usuario.senha" ng-required="true" ng-minlength='8' type="password">
+			</div>
+			<div class="col-md-6">
+				<label class="control-label" for="confirmaSenha">Confirmar Senha</label>
+	            <input id="inputPassword" name="confirmaSenha" class="form-control" placeholder="Confirme a Senha" ng-model="usuario.confirmaSenha" ng-required="true" ng-minlength='8' type="password" compare-to="usuario.senha">
+			</div>
+		</form>
+		
+	</div>			
+</div>
+
+<div class="col-md-4 text-center">
+</div>
+<div class="col-md-4 text-center">
+	<button class="btn btn-lg btn-primary btn-block" ng-disabled="userForm.$invalid" ng-click="associar(usuario)">Associar</button>
+</div>
+<div class="col-md-4 text-center">
+</div>

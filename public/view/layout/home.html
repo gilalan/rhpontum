@@ -1,0 +1,57 @@
+
+<link href="css/dashboard.css" rel="stylesheet">
+<link href="css/app.css" rel="stylesheet">
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div ng-controller='homeCtrl' class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Alternar navegação</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">RHPontum</a> <span>Bem vindo, {{currentUser.email}}</span>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/registro_ponto">Bater Ponto</a></li>
+        <li><a href="/configuracoes">Configurações</a></li>
+        <li><a href="/perfil">Perfil</a></li>
+        <li><a href="/ajuda">Ajuda</a></li>
+      </ul>
+      <form class="navbar-form navbar-right">
+        <input class="form-control" placeholder="Buscar..." type="text">
+      </form>
+    </div>
+  </div>
+</nav>	
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li class="active"><a href="/dashboard">Acompanhamento <span class="sr-only">(current)</span></a></li>
+        <li><a href="/solicitacoes">Solicitações</a></li>
+        <li><a href="/folgas_ferias">Folgas/Férias</a></li>
+        <li><a href="/escalas">Montar Escalas</a></li>
+        <li><a href="/equipes">Montar Equipes</a></li>
+        <li><a href="/ponto">Meu Ponto</a></li>
+        <li><a href="/instituicoes">Instituições</a></li>
+        <li><a href="/campi">Campi</a></li>
+        <li><a href="/setores">Setores</a></li>
+        <li><a href="/equipes">Equipes</a></li>
+        <li><a href="/funcionarios">Funcionários</a></li>
+      </ul>
+    </div>
+
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    	<div class="panel default-panel">
+        <div class="panel-body">
+          <div ng-view></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

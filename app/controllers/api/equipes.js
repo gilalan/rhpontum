@@ -1,6 +1,5 @@
 var Equipe = require('../../models/equipe');
-//var Campus = require('../../models/campi');
-//var Instituicao = require('../../models/instituicao');
+var Funcionario = require('../../models/funcionario');
 var router = require('express').Router();
 var config = require('../../../config');
 
@@ -23,7 +22,8 @@ router.get('/', function(req, res) {
 
   Equipe.find()
   .populate('gestor', 'nome')
-  .populate('setor')
+  .populate('setor', 'nome descricao')
+  .populate('componentes', 'nome apontamentos')
   .exec(function(err, equipes){
 		
 		if(err) {
@@ -151,6 +151,31 @@ router.delete('/:id', function(req, res){
 
     	return res.status(200).send({success: true, message: 'Equipe removida com sucesso!'});
 	});
+});
+
+//Get funcionarios by equipe
+router.get('/:id/funcionarios', function(req, res){
+
+    var idEquipe = req.params.id;
+
+    Funcionario.find({equipes: idEquipe})
+    //.populate('gestor', 'nome PIS')
+    .exec(function(err, funcionarios){
+        
+        if(err) {
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+        }
+
+        /*remover por enquanto essa função de verificar a permissão de autorização
+    
+        if(!config.ensureAuthorized(req.auth, accessLevel)) {
+            console.log('usuário não autorizado para instituições');
+            return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
+        }
+        */
+        console.log("funcionarios mongoose: ", funcionarios);
+        return res.json(funcionarios);
+    });
 });
 
 module.exports = router;

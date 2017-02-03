@@ -1,122 +1,80 @@
-<link href="css/dashboard.css" rel="stylesheet">
+<link href="css/app.css" rel="stylesheet">
 
-<span>Bem vindo, {{currentUser.email}}</span>
+<h1 class="page-header">Acompanhamento de Marcações</h1>
+ 
+ <div ng-show="successMsg" class="alert alert-success alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Feito!</strong> {{successMsg}}
+ </div>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Alternar navegação</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">RHPontum</a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Bater Ponto</a></li>
-        <li><a href="#">Configurações</a></li>
-        <li><a href="#">Perfil</a></li>
-        <li><a href="#">Ajuda</a></li>
-      </ul>
-      <form class="navbar-form navbar-right">
-        <input class="form-control" placeholder="Buscar..." type="text">
+ <div ng-show="errorMsg" class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Ops!</strong> {{errorMsg}}
+ </div>
+
+ <div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Escolha Setor, Equipe e Período para filtrar as informações</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <form name="searchForm">  
+        <div class="col-md-3">
+          <label class="control-label" for="setores">Selecione um Setor</label>
+          <select id="setores" name="setores" class="form-control" ng-options="setor.nome for setor in setores" ng-model="setor" ng-change="getEquipes(setor._id)" ng-required="true">
+          </select> 
+        </div>
+        <div class="col-md-3">
+          <label class="control-label" for="equipes">Selecione uma Equipe</label>
+          <select id="equipes" name="equipes" class="form-control" ng-options="equipe.nome for equipe in equipesMap.get(setor._id)" ng-model="equipe" ng-change="getFuncionariosByEquipe(equipe._id)" ng-required="true" ng-disabled="!equipesMap.get(setor._id)">
+          </select>  
+        </div>
+        <div class="col-md-2">
+          <label class="control-label" for="dataInicial">Data Inicial</label>
+          <input name="dataInicial" type="text" class="form-control" ng-model="dataInicial" placeholder="Data inicial" ng-required="true" ui-date/>
+        </div>
+        <div class="col-md-2">
+          <label class="control-label" for="dataFinal">Data Final</label>
+          <input name="dataFinal" type="text" class="form-control" ng-model="dataFinal" placeholder="Data final" ng-required="true" ui-date/> 
+        </div>
+        <div class="col-md-1">
+          <div class="control-mg-filter" for="btnFiltrar"> </div>
+          <button name="btnFiltrar" type="button" class="btn btn-primary" ng-disabled='searchForm.$invalid' ng-click='getApontamentosByFilter(setor._id, equipe._id, dataInicial, dataFinal)'>Filtrar</button>
+        </div>
       </form>
     </div>
   </div>
-</nav>
+  
+</div>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-3 col-md-2 sidebar">
-      <ul class="nav nav-sidebar">
-        <li class="active"><a href="#">Acompanhamento <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Solicitações</a></li>
-        <li><a href="#">Folgas/Férias</a></li>
-        <li><a href="#">Montar Escalas</a></li>
-        <li><a href="#">Montar Equipes</a></li>
-        <li><a href="#">Meu Ponto</a></li>
-      </ul>
-    </div>
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="funcionarioCtrl"> 
-      <h1 class="page-header">Acompanhamento de Marcações</h1>
-        
-       <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Escolha Setor, Equipe e Período para filtrar as informações</h3>
-        </div>
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-md-3">
-              <select class="form-control" ng-model="equipe.setor" ng-options="setor.nome for setor in setores">
-                <option value="">Selecione um Setor</option>
-              </select> 
-            </div>
-            <div class="col-md-3">
-              <select class="form-control" ng-model="equipe" ng-options="equipe.nome group by equipe.setor.nome for equipe in equipes">
-                <option value="">Selecione uma Equipe</option>
-              </select>  
-            </div>
-            <div class="col-md-2">
-              <input type="text" class="form-control" placeholder="Data inicial"/> 
-            </div>
-            <div class="col-md-2">
-              <input type="text" class="form-control" placeholder="Data final"/> 
-            </div>
-            <div class="col-md-1">
-              <button type="button" class="btn btn-primary">Buscar</button>
-            </div>
-          </div>
-        </div>
-        
-      </div>
-      
-      <div class="table-responsive">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Status</th>
-              <th>Marcações</th>
-              <th>H.Extras</th>
-              <th>H.Faltantes</th>
-              <th>Justificativa</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="funcionario in funcionarios">
-              <td>{{funcionario.nome}}</td>
-              <td>Lorem</td>
-              <td>ipsum</td>
-              <td>dolor</td>
-              <td>sit</td>
-              <td>justificat</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- Implementação da adição de marcação de ponto para testes -->
-  <div id="todo-form" class="row">
-    <div class="col-sm-8 col-sm-offset-2 text-center">
-      <form>
-        <div class="form-group">
-
-          <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-          <input type="text" class="form-control input-lg text-center" placeholder="Nome" ng-model="funcionario.nome">
-          <input type="text" class="form-control input-lg text-center" placeholder="PIS" ng-model="funcionario.PIS">
-          <input type="text" class="form-control input-lg text-center" placeholder="datanascimento" ng-model="funcionario.dataNascimento">
-        </div>
-
-        <!-- createUser() WILL CREATE NEW Users -->
-        <button type="submit" class="btn btn-primary btn-lg" ng-click="createFuncionario(funcionario)" ng-disabled="!funcionario.nome || !funcionario.PIS || !funcionario.dataNascimento">Add Func</button>
-      </form>
-    </div>
+<div ng-repeat="data in rangeDate">
+  <h4 class="sub-header">{{data | date:'dd/MM/yyyy'}}</h4>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Status</th>
+          <th>Entrada e Saída</th>
+          <th>H.Extras</th>
+          <th>H.Faltantes</th>
+          <th>Justificativa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="apontamentosFuncionario in dateApontamentosFuncionarioMap.get(data)">
+          <td>{{apontamentosFuncionario.funcionario.nome}}</td>
+          <td>{{apontamentosFuncionario.statusString || apontamentoStatusStr.statusString}}</td>
+          <td>{{apontamentosFuncionario.marcacaoString}}</td>
+          <td>{{00 | number}}</td>
+          <td>{{00 | number}}</td>
+          <td>{{apontamentosFuncionario.justificativa}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
+
 
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 <script src="lib/bootstrap-3.3.7/js/bootstrap.min.js"></script>

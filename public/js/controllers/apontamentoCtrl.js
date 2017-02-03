@@ -54,7 +54,7 @@ angular.module('rhPontumApp').controller('apontamentoCtrl', function($scope, apo
         apontamento.marcacoes = testDateArray;
 
         
-        apontamentosAPI.save(apontamento).then(
+        apontamentosAPI.create(apontamento).then(
 
             function sucessCallback(response){
            

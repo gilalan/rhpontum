@@ -1,3 +1,12 @@
 .jumbotron{
 	margin-top: 20px;
 }
+
+.default-panel {
+	border: 1px solid #eee !important;
+	border-top: 3px solid #bdb5b5 !important;
+}
+
+.control-mg-filter {
+  margin-bottom: 25px;
+}

@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 // connect to mongoDB database on modulus.io
-mongoose.connect('mongodb://rhpontumadm:123456789@jello.modulusmongo.net:27017/Ohy3tagi');     
+mongoose.connect('mongodb://rhpontumadm:123456789@jello.modulusmongo.net:27017/Ohy3tagi');
 
 
 var db = mongoose.connection;  

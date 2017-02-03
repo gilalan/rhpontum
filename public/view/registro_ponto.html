@@ -1,0 +1,28 @@
+<link href="css/registrarPonto.css" rel="stylesheet">
+
+	<h3 class="page-header">Registro de Ponto</h3>
+
+	<div class="well">	
+		
+		<div class="row">
+			<div class="col-md-1">
+				<img src="../img/user-basic1.png" class="img-circle img-reg-user">
+			</div>
+			<div class="col-md-11">
+				<p>	
+					{{funcionario.nome}} ({{funcionario.instituicao.sigla}})				
+				</p>
+				<p class="muted"> {{usuario.email}} </p>
+			</div>
+		</div>		
+
+		<div class="row">
+			<h3 class="page-header"></h3>		
+			<p>
+				Data e hora: {{currentDate | date: 'dd/MM/yyyy, HH:mm'}}
+			</p>
+		</div>	
+	</div>
+
+	<button class="btn btn-xs btn-primary" ng-click="registro()">Registrar!</button>	
+</div>

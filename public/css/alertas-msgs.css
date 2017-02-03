@@ -1,0 +1,10 @@
+.alertas-msgs .alert{
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    font-size: smaller;    
+  } 
+
+  .alertas-msgs .close {
+    margin-right: 20px !important;
+  }

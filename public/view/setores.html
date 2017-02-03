@@ -1,0 +1,82 @@
+<h1 class="page-header">Setores</h1>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Campus</th>
+        <th>Setor</th>
+        <th>Descrição</th>
+        <th>Equipes</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="setor in setores track by $index">
+        <td>{{setor.campus.nome}}</td>
+        <td>{{setor.nome}}</td>
+        <td>{{setor.descricao}}</td>
+        <td>
+          <button class="btn btn-primary btn-xs" ng-click="loadEquipes(setor._id, $index)" ng-show="!loaded[$index]">Carregar equipes</button>          
+          <ul class='list-group' ng-show="loaded[$index]">
+            <p ng-if='equipes[$index].length===0'>Não há equipes cadastradas</p>                   
+            <li ng-repeat="equipe in equipes[$index] track by $index" class='list-group-item'>  
+              {{equipe.nome}}<br/>
+              {{equipe.componentes.length}} componentes              
+            </li>
+          </ul>
+        </td>
+        <td> <button class="btn btn-danger btn-xs" ng-click="delete(setor._id)">DEL</button> | <button class="btn btn-info btn-xs" ng-click="update(setor._id)">UPT</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- FORM TO CREATE FUNCS -->
+<h2 class="sub-header">Adicionar Setor</h2>
+
+<div ng-show="successMsg" class="alert alert-success alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Feito!</strong> {{successMsg}}
+</div>
+
+<div ng-show="errorMsg" class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Ops!</strong> {{errorMsg}}
+</div>
+
+<div id="todo-form" class="row">
+    
+    <div class="col-sm-12 col-sm-offset-0">
+
+        <form name="setorForm">
+                 
+            <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+            <div class="form-group col-xs-12 col-md-8">
+	              <label class="sr-only" for="campus">Campus</label>
+	    		  <select id="campus" class="form-control" ng-model="setor.campus" ng-options="campus.nome for campus in campi">
+	    		  	<option value="">Selecione um Campus</option>
+	    		  </select>
+	    	  </div>
+              <div class="form-group col-xs-12 col-md-8">
+	              <label class="sr-only" for="nome">Nome</label>
+	    		  <input id="nome" type="text" class="form-control input-lg" placeholder="Nome" ng-model="setor.nome">
+	    	  </div>
+	    	  
+	    	  <div class="form-group col-xs-12 col-md-8">
+	    		  <label class="sr-only" for="descricao">Descrição</label>
+	              <input id="descricao" type="text" class="form-control input-lg" placeholder="Descrição" ng-model="setor.descricao">
+	          </div>
+
+	          <!-- no futuro poder cadastrar uma equipe diretamente
+            <div class="form-group col-xs-12 col-md-8">
+	              <label class="sr-only" for="equipes">Equipes</label>
+	              <input type="text" class="form-control input-lg" placeholder="Equipes" ng-model="setor.equipes">
+	          </div>-->
+           
+            <div class="form-group col-xs-12 col-md-8">
+            	<button type="submit" class="btn btn-primary btn-lg" ng-click="create(setor)">Adicionar</button>
+            </div>
+        </form>
+    </div>
+</div>
