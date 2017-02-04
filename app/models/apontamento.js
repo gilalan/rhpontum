@@ -33,6 +33,7 @@ var apontamentoSchema = new Schema(
 		motivo: String
 	}],
 	funcionario: {type: Schema.Types.ObjectId, ref: 'Funcionario'},
+	saldoDiario: Number, //saldo do dia em minutos, negativo ou positivo, sempre atualizado nas batidas PARES, 2a batida, 4a batida, 6a batida por aí em diante
 	justificativa: String
 },
 {

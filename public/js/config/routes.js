@@ -140,6 +140,69 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 		templateUrl: "view/register.html"
 	});
 
+	$routeProvider.when("/feriados", {
+		controller: "feriadoCtrl",
+		templateUrl: "view/feriados.html",
+		resolve: {
+			feriados: function(feriadosAPI) {
+				return feriadosAPI.get();
+			}
+		}
+	});
+
+	$routeProvider.when('/novoFeriado', {
+		controller: 'novoFeriadoCtrl',
+		templateUrl: 'view/editFeriado.html'		
+	});
+
+	$routeProvider.when('/editFeriado/:id', {
+		controller: 'editFeriadoCtrl',
+		templateUrl: 'view/editFeriado.html',
+		resolve: {
+			feriado: function(feriadosAPI, $route){
+				return feriadosAPI.getFeriado($route.current.params.id);
+			}
+		}
+	});
+
+	$routeProvider.when("/turnos", {
+		controller: "turnoCtrl",
+		templateUrl: "view/turnos.html",
+		resolve: {
+			turnos: function(turnosAPI){
+				return turnosAPI.get();
+			}
+		}
+	});
+
+	$routeProvider.when('/novoTurno', {
+		controller: 'novoTurnoCtrl',
+		templateUrl: 'view/editTurno.html',
+		resolve: {
+			escalas: function(escalasAPI){
+				return escalasAPI.get();
+			}
+		}
+	});
+
+	$routeProvider.when('/editTurno/:id', {
+		controller: 'editTurnoCtrl',
+		templateUrl: 'view/editTurno.html',
+		resolve: {
+			turno: function(turnosAPI, $route){
+				return turnosAPI.getTurno($route.current.params.id);
+			},
+			escalas: function(escalasAPI){
+				return escalasAPI.get();
+			}
+		}
+	});
+
+	$routeProvider.when("/escalas", {
+		controller: "escalaCtrl",
+		templateUrl: "view/escalas.html"
+	});
+
 	$routeProvider.when("/error", {
 		templateUrl: "view/error.html"
 	});

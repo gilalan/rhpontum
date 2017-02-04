@@ -1,0 +1,91 @@
+<!-- FORM TO CREATE FUNCS -->
+<h2 class="sub-header">{{::newOrEdit}} Turno</h2>
+
+<div ng-show="successMsg" class="alert alert-success alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Feito!</strong> {{successMsg}}
+</div>
+
+<div ng-show="errorMsg" class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Ops!</strong> {{errorMsg}}
+</div>
+{{turno}}
+<div id="todo-form" class="row">
+    
+    <div class="col-sm-12 col-sm-offset-0">
+
+        <form name="turnoForm">
+
+          <div class="form-group col-xs-12 col-md-4">
+            <label class="control-label" for="codigo">Código*</label>
+            <input type="text" class="form-control input-lg" placeholder="Código" ng-model="turno.codigo" ng-required="true">
+          </div>          
+
+          <div class="form-group col-xs-12 col-md-8">
+            <label class="control-label" for="descricao">Descrição*</label>
+            <input type="text" class="form-control input-lg" placeholder="Descrição" ng-model="turno.descricao" ng-required="true">
+          </div>        
+          
+          <div class="form-group col-xs-12 col-md-4">
+            <input type="checkbox" ng-model="turno.isFlexivel" /><p>É Flexível?</p>
+          </div>
+
+          <div class="form-group col-xs-12 col-md-4">
+            <input type="checkbox" ng-model="turno.intervaloFlexivel" /><p>Intervalo Flexível?</p>
+          </div>
+
+          <div class="form-group col-xs-12 col-md-4">
+            <label class="control-label" for="tolerancia">Tolerância (para intervalos rígidos, não flexíveis)</label>
+            <input type="text" class="form-control input-lg" placeholder="Tolerância" ng-model="turno.tolerancia">
+          </div>            
+           
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="control-label" for="escalas">Escala*</label>
+            <div class="btn-group btn-group" role="group" aria-label="escalas" ng-repeat="escala in escalas">
+              <button type="button" class="btn btn-default" ng-class="{'btn-primary': escala.selecionada}" ng-click="checkUncheckEscala(escala)" ng-disabled="preencherEscala">
+                {{escala.nome}}
+              </button>
+            </div>
+
+          </div>
+
+          <div class="form-group col-xs-12 col-md-6">
+            <input type="checkbox" ng-model="turno.ignoraFeriados" /><p>Ignorar os Feriados? (Normalmente para os turnos de 12/36h)</p>
+          </div>
+
+          <div class="form-group col-xs-12 col-md-12" ng-if="!preencherEscala">
+            <button type="submit" class="btn btn-primary btn-lg" ng-disabled="turnoForm.$invalid" ng-click="save(turno)">Salvar</button>
+          </div>
+        </form>
+    </div>
+</div>
+
+<div id="escala-form" class="row" ng-if="preencherEscala">
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Dia da semana</th>        
+          <th>1ª Entd.</th>
+          <th>1ª Saída</th>
+          <th>2ª Entd.</th>
+          <th>2ª Saída</th>
+          <th>Intervalo Principal</th>
+          <th>Virada do Turno</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="dia in diasSemana">
+          <td>{{dia}}</td>
+          <td><input type="text" class="form-control table-form-control" placeholder="__:__" ng-model="ent1"></td>
+          <td><input type="text" class="form-control table-form-control" placeholder="__:__" ng-model="sai1"></td>
+          <td><input type="text" class="form-control table-form-control" placeholder="__:__" ng-model="ent2"></td>
+          <td><input type="text" class="form-control table-form-control" placeholder="__:__" ng-model="sai2"></td>
+          <td>De tanto a tanto</td>
+          <td><input type="text" class="form-control table-form-control" placeholder="__:__" ng-model="viradaTurno"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

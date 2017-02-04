@@ -1,0 +1,17 @@
+{
+  "name": "node-todo",
+  "description": "Simple todo application.",
+  "main": "server.js",
+  "authors": [
+    "Gilliard Lopes"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/gilalan/rhpontum",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -122,6 +122,8 @@ router.put('/:id', function(req, res){
         funcionario.PIS = req.body.PIS;
         funcionario.dataNascimento = req.body.dataNascimento;
         funcionario.instituicao = req.body.instituicao;
+        funcionario.turno = req.body.turno;
+        funcionario.ferias = req.body.ferias;
         funcionario.equipes = req.body.equipes;
 
       //tenta atualizar de fato no BD
