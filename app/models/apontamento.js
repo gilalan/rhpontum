@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var apontamentoSchema = new Schema(
 {
 	data: {type: Date, required: true},
+	funcionario: {type: Schema.Types.ObjectId, ref: 'Funcionario', required: true},
 	status: {
 		id: Number,
 		descricao: {type: String, enum: ["Correto", "Incompleto", "Errado", "Justificado"]}
@@ -32,7 +33,6 @@ var apontamentoSchema = new Schema(
 		},
 		motivo: String
 	}],
-	funcionario: {type: Schema.Types.ObjectId, ref: 'Funcionario'},
 	saldoDiario: Number, //saldo do dia em minutos, negativo ou positivo, sempre atualizado nas batidas PARES, 2a batida, 4a batida, 6a batida por aí em diante
 	justificativa: String
 },

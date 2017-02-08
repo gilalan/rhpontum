@@ -18,7 +18,7 @@
         <td>{{funcionario.PIS}}</td>
         <td>
           <ul class='list-group'>
-            <li ng-repeat="equipe in funcionario.equipes track by $index" class='list-group-item'>                      
+            <li ng-repeat="equipe in funcionario.alocacao.equipes track by $index" class='list-group-item'>                      
               {{equipe.nome}}
               
             </li>

@@ -1,4 +1,5 @@
 var Instituicao = require('../../models/instituicao');
+var Campi = require('../../models/campi');
 var router = require('express').Router();
 var config = require('../../../config');
 
@@ -155,6 +156,30 @@ router.delete('/:id', function(req, res){
     return res.status(200).send({success: true, message: 'Instituição removida com sucesso!'});
   });
 
+});
+
+router.get('/:id/campi', function(req, res){
+
+    var idInstituicao = req.params.id;
+
+    console.log('idInstituicao', idInstituicao);
+    Campi.find({instituicao: idInstituicao})
+    .exec(function(err, campi){
+        
+        if(err) {
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+        }
+
+        /*remover por enquanto essa função de verificar a permissão de autorização
+    
+        if(!config.ensureAuthorized(req.auth, accessLevel)) {
+            console.log('usuário não autorizado para instituições');
+            return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
+        }
+        */
+        console.log("campi mongoose: ", campi);
+        return res.json(campi);
+    });
 });
 
 module.exports = router;

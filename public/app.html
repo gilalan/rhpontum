@@ -4,8 +4,8 @@
 	<base href="/"></base>
 	<title>RHPontum System</title>
 	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="css/ie10-viewport-bug-workaround.css">
 
 </head>
 <body ng-app="rhPontumApp" ng-controller="applicationCtrl">
@@ -14,14 +14,23 @@
 	<div ng-include="" src="'/view/layout/index.html'" ng-if="!auth"></div>	
 
 	<!-- Carregando os scripts depois para uma melhor "performance" no loading -->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script><!-- load jquery -->
-	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js'></script>
-	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
-	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-route.min.js'></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-messages.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.js"></script>
+	<script src="bower_components/jquery/dist/jquery.js"></script><!-- load jquery -->
+	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+	<script src="bower_components/angular-route/angular-route.js"></script>
+	<script src="bower_components/angular-messages/angular-messages.js"></script>
+	<script src="bower_components/ngstorage/ngStorage.js"></script>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
+
+	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	<script src="bower_components/angular-ui-mask/dist/mask.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.js"></script>
+	<script src="https://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"></script>
+	<!--<script src="bower_components/chart.js/Chart.js"></script>-->
+	<!--<script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>-->
 	
-	<script src="lib/ui-bootstrap-tpls-2.5.0.min.js""></script>
 	<script src="lib/bootstrap-workarounds/ie-emulation-modes-warning.js"></script>
 	<script src="lib/bootstrap-workarounds/ie10-viewport-bug-workaround.js"></script>
 	<script src='js/app.js'></script>
@@ -38,6 +47,7 @@
     <script src="js/controllers/services/feriadosAPIService.js"></script>
     <script src="js/controllers/services/turnosAPIService.js"></script>
     <script src="js/controllers/services/escalasAPIService.js"></script>
+    <script src="js/controllers/services/cargosAPIService.js"></script>
 	<script src='js/controllers/applicationCtrl.js'></script>
 	<script src='js/controllers/loginCtrl.js'></script>
 	<script src='js/controllers/homeCtrl.js'></script>
@@ -57,6 +67,12 @@
 	<script src="js/controllers/turnoCtrl.js"></script>
 	<script src="js/controllers/novoTurnoCtrl.js"></script>
 	<script src="js/controllers/editTurnoCtrl.js"></script>
+	<script src="js/controllers/cargoCtrl.js"></script>
+	<script src="js/controllers/novoCargoCtrl.js"></script>
+	<script src="js/controllers/editCargoCtrl.js"></script>
+	<script src="js/controllers/indicadoresCtrl.js"></script>
+	<script src="js/controllers/accCtrl.js"></script>
+	<script src="js/controllers/AccordionDemoCtrl.js"></script>
 	<script src="js/services/Auth.js"></script>
 	<script src='js/directives/uiDateDirective.js'></script>
 	<script src='js/filters/zeroPadFilter.js'></script>

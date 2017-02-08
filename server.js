@@ -33,6 +33,7 @@ app.use('/api/equipes', require('./app/controllers/api/equipes'));
 app.use('/api/feriados', require('./app/controllers/api/feriados'));
 app.use('/api/escalas', require('./app/controllers/api/escalas'));
 app.use('/api/turnos', require('./app/controllers/api/turnos'));
+app.use('/api/cargos', require('./app/controllers/api/cargos'));
 app.use(require('./app/controllers/static'));
 // equivalent to: app.use('/', require('./controllers/static'))
 

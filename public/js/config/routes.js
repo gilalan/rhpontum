@@ -35,6 +35,23 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 		}
 	});
 
+	$routeProvider.when("/indicadores", {
+		controller: "indicadoresCtrl",
+		templateUrl: "view/indicadores.html",
+		access: 'gestor',
+		resolve: {
+			setores: function(setoresAPI){
+				return setoresAPI.get();
+			}
+		}
+	});
+
+	$routeProvider.when("/acc", {
+		template: 'Test <uib-accordion></uib-accordion>',
+		controller: "accCtrl"
+		//templateUrl: "view/accordion.html"
+	});
+
 	$routeProvider.when('/instituicoes', {
 		controller: 'instituicaoCtrl',
 		templateUrl: 'view/instituicoes.html',
@@ -198,6 +215,31 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 		}
 	});
 
+	$routeProvider.when("/cargos", {
+		controller: "cargoCtrl",
+		templateUrl: "view/cargos.html",
+		resolve: {
+			cargos: function(cargosAPI){
+				return cargosAPI.get();
+			}
+		}
+	});
+
+	$routeProvider.when('/novoCargo', {
+		controller: 'novoCargoCtrl',
+		templateUrl: 'view/editCargo.html'
+	});
+
+	$routeProvider.when('/editCargo/:id', {
+		controller: 'editCargoCtrl',
+		templateUrl: 'view/editCargo.html',
+		resolve: {
+			cargo: function(cargosAPI, $route){
+				return cargosAPI.getCargo($route.current.params.id);
+			}
+		}
+	});
+
 	$routeProvider.when("/escalas", {
 		controller: "escalaCtrl",
 		templateUrl: "view/escalas.html"
@@ -212,7 +254,7 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 	});
 
 	$routeProvider.otherwise({
-		redirectTo: '/dashboard'
+		redirectTo: '/'
 	});
 }])
 

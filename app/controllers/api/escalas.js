@@ -37,11 +37,7 @@ router.post('/', function(req, res) {
 
   Escala.create({
     codigo: req.body.codigo,
-    nome: req.body.nome,
-    jornada: req.body.jornada,
-    minutosIntervalo: req.body.minutosIntervalo,
-    minutosEfetivos: req.body.minutosEfetivos
-
+    nome: req.body.nome
   }, function(err, escala){
 
     if(err) {
@@ -90,9 +86,6 @@ router.put('/:id', function(req, res){
     //TEMOS QUE VALIDAR PARA NAO TER QUE TESTAR SE CADA CAMPO VEIO VAZIO
     escala.nome = req.body.nome;
     escala.codigo = req.body.codigo;
-    escala.jornada = req.body.jornada;
-    escala.minutosIntervalo = req.body.minutosIntervalo;
-    escala.minutosEfetivos = req.body.minutosEfetivos;
 
     //tenta atualizar de fato no BD
     escala.save(function(err){
@@ -101,7 +94,6 @@ router.put('/:id', function(req, res){
         console.log('Erro no save do update', err);
         return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
       }
-
 
     });
 

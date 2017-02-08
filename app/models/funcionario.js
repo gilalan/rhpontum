@@ -3,15 +3,25 @@ var Schema = mongoose.Schema;
 var Equipe = require('./equipe');
 var Instituicao = require('./instituicao');
 var Turno = require('./turno');
+var Cargo = require('./cargo');
 
 var funcionarioSchema = new Schema({
 	nome: {type: String, required: true},
+	sobrenome: {type: String, required: true},
 	dataNascimento: Date,
+	CPF: {type: String, required: true, unique: true},
 	PIS: {type: String, required: true, unique: true},
-	instituicao: {type: Schema.Types.ObjectId, ref: 'Instituicao'},
-	turno: {type: Schema.Types.ObjectId, ref: 'Turno'},
-	ferias: [{ano: Number, periodo: [Date]}],
-	equipes: [{type: Schema.Types.ObjectId, ref: 'Equipe'}]
+	matricula: {type: Number, unique: true},
+	email: {type: String, unique: true},
+	alocacao: {
+		dataAdmissao: {type: Date, required: true},
+		cargo: {type: Schema.Types.ObjectId, ref: 'Cargo', required: true},
+		turno: {type: Schema.Types.ObjectId, ref: 'Turno', required: true},
+		instituicao: {type: Schema.Types.ObjectId, ref: 'Instituicao', required: true},
+		equipes: [{type: Schema.Types.ObjectId, ref: 'Equipe'}]
+	},
+	rhponto: {type: Boolean, required: true}, //usa o sistema caso TRUE, usa relogio de ponto caso FALSE
+	ferias: [{ano: Number, periodo: [Date]}]
 },
 {
 	timestamps: true

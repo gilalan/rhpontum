@@ -20,7 +20,7 @@ var accessLevel = 4;
 router.get('/', function(req, res) {
 
 	Turno.find()
-  .populate('escala', 'nome')
+  .populate('escala', 'codigo nome')
   .exec(function(err, turnos){
 		
 		if(err) {
@@ -51,8 +51,15 @@ router.post('/', function(req, res) {
       return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
     }
 
-    return res.status(200).send({success: true, message: 'Turno cadastrado com sucesso!'});
-    //return res.json(turno);
+    Turno.findOne({_id: turno._id})
+    .populate('escala', 'codigo')
+    .exec(function(err, nTurno){
+
+      if (err)
+        return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+
+      return res.status(200).send({success: true, message: 'Turno cadastrado com sucesso! Prossiga com o preenchimento da jornada', turno: nTurno});
+    });
   });
 });
 
@@ -62,7 +69,7 @@ router.get('/:id', function(req, res) {
   var idTurno = req.params.id;
 
   Turno.findOne({_id: idTurno})
-  .populate('escala', 'nome')
+  .populate('escala', 'codigo nome')
   .exec(function(err, turno){
     
     if(err) {
@@ -92,6 +99,7 @@ router.put('/:id', function(req, res){
     turno.intervaloFlexivel = req.body.intervaloFlexivel;
     turno.ignoraFeriados = req.body.ignoraFeriados;
     turno.tolerancia = req.body.tolerancia;
+    turno.jornada = req.body.jornada;
 
     //tenta atualizar de fato no BD
     turno.save(function(err){

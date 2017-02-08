@@ -1,0 +1,45 @@
+<!-- FORM TO CREATE FUNCS -->
+<h2 class="sub-header">{{::newOrEdit}} Cargo</h2>
+
+<div ng-show="successMsg" class="alert alert-success alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Feito!</strong> {{successMsg}}
+</div>
+
+<div ng-show="errorMsg" class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Ops!</strong> {{errorMsg}}
+</div>
+{{cargo}}
+<div id="todo-form" class="row">
+    
+    <div class="col-sm-12 col-sm-offset-0">
+
+        <form name="cargoForm">
+
+          <div class="form-group col-xs-12 col-md-8">
+            <label class="control-label" for="especificacao">Especificação*</label>
+            <input type="text" class="form-control input-lg" placeholder="Nome do cargo" ng-model="cargo.especificacao" ng-required="true">
+          </div>          
+
+          <div class="form-group col-xs-12 col-md-8">
+            <label class="control-label" for="nomeFeminino">Nome Feminino</label>
+            <input type="text" class="form-control input-lg" placeholder="Nome feminino do cargo (se houver)" ng-model="cargo.nomeFeminino">
+          </div>
+          
+          <div class="form-group col-xs-12 col-md-8">
+            <label class="control-label" for="descricao">Descrição</label>
+            <textarea class="form-control input-lg" placeholder="Descrição" ng-model="cargo.descricao"></textarea>
+          </div> 
+
+          <div class="form-group col-xs-12 col-md-8">
+            <label class="control-label" for="codigoCBO">Código CBO</label>
+            <input type="text" class="form-control input-lg" placeholder="Código CBO" ng-model="cargo.cbo">
+          </div> 
+
+          <div class="form-group col-xs-12 col-md-8">
+            <button type="submit" class="btn btn-primary btn-lg" ng-disabled="cargoForm.$invalid" ng-click="save(cargo)">Salvar</button>
+          </div>
+        </form>
+    </div>
+</div>

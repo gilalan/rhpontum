@@ -1,11 +1,14 @@
 
-angular.module('rhPontumApp').controller('editFuncionarioCtrl', ['$scope', '$filter', '$window', 'funcionariosAPI', 'funcionario', 'setores', 'instituicoes', 
-    function($scope, $filter, $window, funcionariosAPI, funcionario, setores, instituicoes){
+angular.module('rhPontumApp').controller('editFuncionarioCtrl', ['$scope', '$filter', '$window', 'funcionariosAPI', 'funcionario', 'setores', 'instituicoes', 'instituicaoAPI', 'campiAPI', 'setoresAPI',
+    function($scope, $filter, $window, funcionariosAPI, funcionario, setores, instituicoes, instituicaoAPI, campiAPI, setoresAPI){
         
     $scope.funcionario = funcionario.data;
     $scope.funcionario.dataNascimento = $filter('date')($scope.funcionario.dataNascimento, "dd/MM/yyyy");
     $scope.instituicoes = instituicoes.data;
     $scope.setores = setores.data;
+    $scope.campusMap = new Map();
+    $scope.setoresMap = new Map();
+    $scope.equipesMap = new Map();
     $scope.newOrEdit = 'Editar';
     $window.scrollTo(0, 0);    
 
@@ -35,6 +38,57 @@ angular.module('rhPontumApp').controller('editFuncionarioCtrl', ['$scope', '$fil
         $window.scrollTo(0, 0);
     };
 
+    $scope.getCampi = function(instituicaoId) {
+
+        if (instituicaoId) {
+            if (!$scope.campusMap.get(instituicaoId)) {
+                console.log('getCampi!!: ', instituicaoId);
+                instituicaoAPI.getCampiByInstituicao(instituicaoId).then(function sucessCallback(response){
+
+                    $scope.campusMap.set(instituicaoId, response.data);
+
+                }, function errorCallback(response){
+
+                    $scope.errorMsg = response.data.message;
+                });
+            }
+        }
+    };
+
+    $scope.getSetores = function(campusId) {
+        console.log('entrou no getSetores: ', campusId);
+        if (campusId) {
+            if (!$scope.setoresMap.get(campusId)) {
+                campiAPI.getSetoresByCampus(campusId).then(function sucessCallback(response){
+
+                    $scope.setoresMap.set(campusId, response.data);
+                    console.log('getSetores!!: ', response.data);
+
+                }, function errorCallback(response){
+
+                    $scope.errorMsg = response.data.message;
+                });
+            }
+        }
+    };
+
+    $scope.getEquipes = function(setorId) {
+        console.log('entrou no getEquipes: ', setorId);
+        if (setorId) {
+            if (!$scope.equipesMap.get(setorId)) {
+                setoresAPI.getEquipesBySetor(setorId).then(function sucessCallback(response){
+
+                    $scope.equipesMap.set(setorId, response.data);
+                    console.log('getEquipes!!: ', response.data);
+
+                }, function errorCallback(response){
+
+                    $scope.errorMsg = response.data.message;
+                });
+            }
+        }
+    };
+
     $scope.checkAddEquipe = function(equipe) {
         
         equipe.selecionado = !equipe.selecionado;
@@ -61,7 +115,7 @@ angular.module('rhPontumApp').controller('editFuncionarioCtrl', ['$scope', '$fil
         console.log("equipes do funcionario: ", $scope.funcionario.equipes);
         console.log("instituicao do funcionario: ", $scope.funcionario.instituicao);
 
-        $scope.setores.forEach(function (setor){
+        /*$scope.setores.forEach(function (setor){
             
             setor.equipes.forEach(function(equipe){
                 
@@ -72,7 +126,7 @@ angular.module('rhPontumApp').controller('editFuncionarioCtrl', ['$scope', '$fil
                     }
                 });
             });
-        });
+        });*/
     };
 
     checkEquipes();

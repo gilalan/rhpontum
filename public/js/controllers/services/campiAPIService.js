@@ -29,4 +29,9 @@ angular.module('rhPontumApp').service("campiAPI", function($http){
 
 		return $http.put(_urlBaseCampi + '/' + id);
 	};
+
+	svc.getSetoresByCampus = function(id) {
+
+		return $http.get(_urlBaseCampi + '/' + id + "/setores")
+	}
 });

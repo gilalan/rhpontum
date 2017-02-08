@@ -1,4 +1,5 @@
 var Campi = require('../../models/campi');
+var Setor = require('../../models/setor');
 var router = require('express').Router();
 var config = require('../../../config');
 
@@ -149,7 +150,30 @@ router.delete('/:id', function(req, res){
     }
     return res.status(200).send({success: true, message: 'Instituição removida com sucesso!'});
   });
+});
 
+router.get('/:id/setores', function(req, res){
+
+  var idCampus = req.params.id;
+
+  console.log('idCampus', idCampus);
+  Setor.find({campus: idCampus})
+  .exec(function(err, setores){
+      
+      if(err) {
+          return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+      }
+
+      /*remover por enquanto essa função de verificar a permissão de autorização
+  
+      if(!config.ensureAuthorized(req.auth, accessLevel)) {
+          console.log('usuário não autorizado para instituições');
+          return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
+      }
+      */
+      console.log("setores mongoose: ", setores);
+      return res.json(setores);
+  });
 });
 
 module.exports = router;

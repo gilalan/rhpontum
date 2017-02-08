@@ -15,15 +15,7 @@
     
     <div class="col-sm-12 col-sm-offset-0">
 
-        <form name="funcionarioForm">
-                 
-          <div class="form-group col-xs-12 col-md-8">
-            <label class="control-label" for="instituicao">Instituição</label>
-            <select id="instituicao" name="instituicao" class="form-control" ng-init="funcionario.instituicao = funcionario.instituicao || instituicoes[0]" ng-options="instituicao.sigla for instituicao in instituicoes track by instituicao._id" ng-model="funcionario.instituicao">
-            <!--<pre>{{funcionario.instituicao | json}}</pre>-->
-              
-            </select>
-          </div>
+        <form name="funcionarioForm">                        
 
           <div class="form-group col-xs-12 col-md-8">
             <label class="control-label" for="nome">Nome</label>
@@ -41,13 +33,39 @@
           </div>        
           
           <div class="form-group col-xs-12 col-md-8">
-            <h4 class="sub-header"><strong>Equipes</strong></h4>
-            <div class="form-group col-xs-12 col-md-8" ng-repeat="setor in setores">
-              <p class="form-group" ng-show="setor.equipes.length>0">{{::setor.nome}}</p>
-              <div class="form-group col-xs-12 col-md-8" ng-repeat="equipe in setor.equipes">                
-                <input type="checkbox" value="{{::equipe.nome}}" ng-checked="equipe.selecionado" ng-click="checkAddEquipe(equipe)"/>
-                  {{::equipe.nome}}
+            <label class="control-label" for="instituicao">Instituição</label>
+            <select id="instituicao" name="instituicao" class="form-control" ng-init="funcionario.instituicao = funcionario.instituicao || instituicoes[0]" ng-options="instituicao.sigla for instituicao in instituicoes track by instituicao._id" ng-model="funcionario.instituicao" ng-change="getCampi(funcionario.instituicao._id)">
+            <!--<pre>{{funcionario.instituicao | json}}</pre>-->
+            </select>
+          </div>
+
+          <div class="form-group col-xs-12 col-md-8">
+            <label class="control-label" for="campus">Selecione um Campus</label>
+            <select id="campus" name="campus" class="form-control" ng-options="campus.nome for campus in campusMap.get(funcionario.instituicao._id)" ng-model="campus" ng-change="getSetores(campus._id)" ng-required="true" ng-disabled="!campusMap.get(funcionario.instituicao._id)">
+            </select>
+          </div>
+
+          <div class="form-group col-xs-12 col-md-8">
+            <label class="control-label" for="setor">Selecione um Setor</label>
+            <select id="setor" name="setor" class="form-control" ng-options="setor.nome for setor in setoresMap.get(campus._id)" ng-model="setor" ng-change="getEquipes(setor._id)" ng-required="true" ng-disabled="!setoresMap.get(campus._id)">
+            </select>
+          </div>
+          
+          <div class="form-group col-md-12">
+            <h4 class="sub-header"><strong>Equipes*</strong></h4>
+            <div class="form-group col-md-6">  
+              <label class="control-label" for="Equipes">Participantes:</label><br/>
+              <div class="btn-group btn-group" role="group" aria-label="Equipes" ng-repeat="equipe in funcionario.equipes">
+                <button type="button" class="btn btn-default btn-sm" ng-class="{'btn-primary': equipe.added}" ng-click="removeEquipe(equipe)">
+                  {{equipe.nome}}
+                </button>
               </div>
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <div ng-repeat="equipe in equipesMap.get(setor._id)">
+              <input type="checkbox" value="{{::equipe.nome}}" ng-checked="equipe.selecionado" ng-click="checkAddEquipe(equipe)"/>
+                {{::equipe.nome}}
             </div>
           </div>
            

@@ -29,4 +29,9 @@ angular.module('rhPontumApp').service("instituicaoAPI", function($http){
 
 		return $http.put(_urlBaseInstituicoes + '/' + id);
 	};
+
+	svc.getCampiByInstituicao = function(id) {
+
+		return $http.get(_urlBaseInstituicoes+'/'+id+'/campi')
+	}
 });
