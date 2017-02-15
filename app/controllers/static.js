@@ -17,6 +17,7 @@ router.get('/', function(req, res) {
 // rewrite virtual urls to angular app to enable refreshing of internal pages
 router.get('*', function (req, res, next) {
     //res.sendFile(path.resolve('app/index.html'));
+    console.log("passou no router get * que envia para o roteamento do angularJS");
     res.sendFile(path.join(__dirname, '../../public', 'app.html'));
 });
 

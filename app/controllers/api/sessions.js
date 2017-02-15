@@ -14,8 +14,10 @@ router.post('/', function(req, res, next) {
     console.log("req.body.email: " + req.body.email);
 
     Usuario.findOne({email: req.body.email})
+    .populate('perfil')    
     .select('email')
     .select('senha')
+    .select('perfil')
     .exec(function (err, usuario) {
         if (err){
             console.log("aconteceu um erro");
@@ -40,10 +42,11 @@ router.post('/', function(req, res, next) {
             var expires = moment().add(1, 'days').valueOf();
 
             var token = jwt.encode({
-                    email: usuario.email,
-                    role: 'ROLE_ADMIN',
-                    exp: expires
-                }, config.secretKey);
+                email: usuario.email,
+                role: usuario.perfil.nome, //pode botar manual para testes
+                acLvl: usuario.perfil.accessLevel, //pode botar manual para testes
+                exp: expires
+            }, config.secretKey);
 
             var obj = {'token': token, 'idUsuario': usuario._id};
 

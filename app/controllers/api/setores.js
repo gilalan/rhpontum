@@ -5,92 +5,36 @@ var Equipe = require('../../models/equipe');
 var router = require('express').Router();
 var config = require('../../../config');
 
-//=========================================================================
-// API para Setores -> Cada setor faz parte de um Campus (que pertence a uma Instituicao)
-// Cada setor possui Equipes acopladas
-//=========================================================================
-/*accessLevel => 
- *{
-   0: public,
-   1: colaborador,
-   2: fiscal,
-   3: gestor,
-   4: admin 
-  }
- */
-
-/*
- * Essa busca está mto DEEP , profunda d+, se tiver mtos setores/equipes/funcionarios pode comprometer
- * d+ a performance do sistema (DEIXAR SÓ PARA TESTES)
- * Ideal seria filtrar o setor só com as equipes, depois o cara escolhe as datas e busca no servidor p 
- * trazer os funcionarios apenas naquele período
- */
-var accessLevel = 3;
 
 router.get('/', function(req, res) {
 
   Setor.find()
-  .populate('campus', 'nome')
-  .populate({
-	path: 'equipes',
-	model: 'Equipe',
-	select: 'nome gestor componentes',
-	populate: [{
-		path: 'gestor', 
-		model: 'Funcionario', 
-		select: 'nome'		
-	},
-	{
-		path: 'componentes', 
-		model: 'Funcionario', 
-		select: 'nome'		
-	}]
-   })  
+  .populate('campus', 'nome')  
   .exec(function(err, setores){
 		
 		if(err) {
     	return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
-  	}
+    }
 
-  	/*remover por enquanto essa função de verificar a permissão de autorização
   	
-  	if(!config.ensureAuthorized(req.auth, accessLevel)) {
-  		console.log('usuário não autorizado para instituições');
-  		return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
-  	}
-  	*/
-
-    //console.log("Instituição: ", instituicao);
-    //var inst = ObjectId(""+);
-	return res.json(setores);
+	  return res.json(setores);
   });
 });
 
+//criar setor
 router.post('/', function(req, res) {
 
-  console.log("req", req.body);
+  console.log("setor: ", req.body);
+  var _setor = req.body;
 
-  Setor.create({
-    
-    nome: req.body.nome,
-    descricao: req.body.descricao,
-    campus: req.body.campus    
-
-  }, function(err, setor){
+  Setor.create(_setor, function(err, setor){
 
     if(err) {
       console.log('erro post setor: ', err);
       return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
     }
-
-    /*remover por enquanto essa função de verificar a permissão de autorização
-    if(!config.ensureAuthorized(req.auth, accessLevel)) {
-      console.log('usuário não autorizado para instituições');
-      return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
-    }
-    */
-      
-    return res.json(setor);
+    
+    return res.status(200).send({success: true, message: 'Setor cadastrado com sucesso!'});
   });
 });
 
@@ -98,21 +42,14 @@ router.post('/', function(req, res) {
 router.get('/:id', function(req, res){
 
 	var idSetor = req.params.id;
-	console.log("nomeSetor: ", idSetor);
+	console.log("idSetor: ", idSetor);
 	
 	Setor.findOne({_id: idSetor}, function(err, setor){
 		
 		if(err) {
-    		return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
-    	}
-
-    	/*remover por enquanto essa função de verificar a permissão de autorização
-  	
-	  	if(!config.ensureAuthorized(req.auth, accessLevel)) {
-	  		console.log('usuário não autorizado para instituições');
-	  		return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
-	  	}
-	  	*/
+   		return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+   	}
+    	
 		console.log("Setor mongoose: ", setor);
 		return res.json(setor);
 	});
@@ -128,15 +65,7 @@ router.put('/:id', function(req, res){
 		if(err) {
     		return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
     	}
-
-    	/*remover por enquanto essa função de verificar a permissão de autorização
-  	
-	  	if(!config.ensureAuthorized(req.auth, accessLevel)) {
-	  		console.log('usuário não autorizado para instituições');
-	  		return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
-	  	}
-	  	*/
-
+    	
 	  	setor.nome = req.body.nome;
 	  	setor.campus = req.body.campus;
 	  	if(req.body.descricao)
@@ -152,7 +81,7 @@ router.put('/:id', function(req, res){
 
 	    });
 
-	    return res.json(setor);
+	    return res.status(200).send({success: true, message: 'Setor atualizado com sucesso!'});
 	});
 });
 
@@ -172,6 +101,12 @@ router.delete('/:id', function(req, res){
 	});
 });
 
+//########################################################
+// Métodos extras, fora do padrão REST
+//########################################################
+
+
+//Pegando equipes de um setor específico
 router.get('/:id/equipes', function(req, res){
 
     var idSetor = req.params.id;
@@ -184,14 +119,7 @@ router.get('/:id/equipes', function(req, res){
         if(err) {
             return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
         }
-
-        /*remover por enquanto essa função de verificar a permissão de autorização
-    
-        if(!config.ensureAuthorized(req.auth, accessLevel)) {
-            console.log('usuário não autorizado para instituições');
-            return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
-        }
-        */
+        
         console.log("equipes mongoose: ", equipes);
         return res.json(equipes);
     });

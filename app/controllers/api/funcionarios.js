@@ -1,5 +1,7 @@
 var Funcionario = require('../../models/funcionario');
 var Equipe = require('../../models/equipe');
+var Turno = require('../../models/turno');
+var Escala = require('../../models/escala');
 var Usuario = require('../../models/usuario');
 var Apontamento = require('../../models/apontamento');
 var moment = require('moment');
@@ -9,29 +11,16 @@ var router = require('express').Router();
 // API para FUNCIONARIOS
 //=========================================================================
 // get all FUNCIONARIOS
-router.get('/', function(req, res) {
-
-    if (req.auth) {
-      if (req.auth.email)
-        console.log('usuário já logado: ' + req.auth.email);
-        if (req.auth.role){
-
-            console.log('role: ' + req.auth.role);
-            //forçando um erro para um novo usuário criado com os roles
-            if (req.auth.role === 'ROLE_USER'){//na verdade esse é admin
-                //teria q checar o nível de acesso da rota pra saber se ele é permitido visualizar
-                console.log("Usuário com ROLE não autorizado example!");
-                //res.status(403).send({ success: false, message: 'Não Autorizado!' });
-            }
-        }
-
-    } else {
-        console.log('usuário não logado');
-        //res.status(403).send({ success: false, message: 'Não Autorizado!' });
-        //403 - forbidden - proibido de acessar
-    }
+router.get('/', function(req, res) {    
+    
     // usando o mongoose Model para buscar todos os funcionários
     Funcionario.find()
+    .populate('cargo')
+    .populate({
+        path: 'turno',
+        model: 'Turno',
+        populate: [{path: 'escala', model: 'Escala'}]
+    })
     .populate('equipes', 'nome')
     .populate('instituicao', 'nome')
     .exec(function(err, funcionarios){
@@ -48,25 +37,14 @@ router.get('/', function(req, res) {
 // cria um funcionário na BD em consultas provenientes de um POST
 router.post('/', function(req, res) {
 
+    var _funcionario = req.body;
+    console.log("Funcionario para cadastrar no BD: ", _funcionario);
+
     // create a user, information comes from AJAX request from Angular
-    Funcionario.create({
-        nome : req.body.nome,
-        PIS: req.body.PIS,
-        dataNascimento: req.body.dataNascimento,
-        instituicao: req.body.instituicao,
-        equipes: req.body.equipes
-    }, function(err, user) {
+    Funcionario.create(_funcionario, function(err, user) {
         
         if (err)
             return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
-
-        // get and return all funcs - não funciona sem essa parte, o post é um get porém envia informações
-        // ele precisa responder com algo
-        /*Funcionario.find(function(err, funcionarios) {
-            if (err)
-                res.send(err)
-            res.json(funcionarios);
-        });*/
 
         return res.status(200).send({success: true, message: 'Funcionário cadastrado com sucesso.'});
     });
@@ -79,6 +57,12 @@ router.get('/:id', function(req, res){
     var idFuncionario = req.params.id;
     
     Funcionario.findOne({_id: idFuncionario})
+    .populate('cargo')
+    .populate({
+        path: 'turno',
+        model: 'Turno',
+        populate: [{path: 'escala', model: 'Escala'}]
+    })
     .populate('equipes')
     .populate('instituicao')
     .exec(function(err, funcionario){
@@ -87,19 +71,11 @@ router.get('/:id', function(req, res){
             return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
         }
 
-        /*remover por enquanto essa função de verificar a permissão de autorização
-    
-        if(!config.ensureAuthorized(req.auth, accessLevel)) {
-            console.log('usuário não autorizado para instituições');
-            return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
-        }
-        */
-        
         return res.json(funcionario);
     });
 });
 
-//Update 1 setor by id
+//Update funcionario by id
 router.put('/:id', function(req, res){
     
     var idFuncionario = req.params.id;
@@ -110,21 +86,16 @@ router.put('/:id', function(req, res){
             return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
         }
 
-        /*remover por enquanto essa função de verificar a permissão de autorização
-    
-        if(!config.ensureAuthorized(req.auth, accessLevel)) {
-            console.log('usuário não autorizado para instituições');
-            return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
-        }
-        */
-
         funcionario.nome = req.body.nome;
-        funcionario.PIS = req.body.PIS;
+        funcionario.sobrenome = req.body.sobrenome;
         funcionario.dataNascimento = req.body.dataNascimento;
-        funcionario.instituicao = req.body.instituicao;
-        funcionario.turno = req.body.turno;
+        funcionario.PIS = req.body.PIS;
+        funcionario.CPF = req.body.CPF;
+        funcionario.matricula = req.body.matricula;
+        funcionario.email = req.body.email;
+        funcionario.alocacao = req.body.alocacao;
+        funcionario.rhponto = req.body.rhponto;
         funcionario.ferias = req.body.ferias;
-        funcionario.equipes = req.body.equipes;
 
       //tenta atualizar de fato no BD
       funcionario.save(function(err){
@@ -156,6 +127,10 @@ router.delete('/:id', function(req, res){
         return res.status(200).send({success: true, message: 'Funcionário removido com sucesso!'});
     });
 });
+
+//##############################################
+//Métodos extras, fora do padrão REST
+//##############################################
 
 //Get usuario by funcionario
 router.get('/:id/usuario', function(req, res){

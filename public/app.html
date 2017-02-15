@@ -10,8 +10,8 @@
 </head>
 <body ng-app="rhPontumApp" ng-controller="applicationCtrl">
 	
-	<div ng-include="" src="'/view/layout/home.html'" ng-if="auth"></div>
-	<div ng-include="" src="'/view/layout/index.html'" ng-if="!auth"></div>	
+	<div ng-include="" src="'/view/layout/home.html'" ng-if="logged && authorized"></div>
+	<div ng-include="" src="'/view/layout/index.html'" ng-if="!logged || !authorized"></div>	
 
 	<!-- Carregando os scripts depois para uma melhor "performance" no loading -->
 	<script src="bower_components/jquery/dist/jquery.js"></script><!-- load jquery -->
@@ -20,6 +20,7 @@
 	<script src="bower_components/angular-route/angular-route.js"></script>
 	<script src="bower_components/angular-messages/angular-messages.js"></script>
 	<script src="bower_components/ngstorage/ngStorage.js"></script>
+	<script src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
 
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>

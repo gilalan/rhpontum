@@ -23,53 +23,29 @@ router.get('/', function(req, res) {
   Equipe.find()
   .populate('gestor', 'nome')
   .populate('setor', 'nome descricao')
-  .populate('componentes', 'nome apontamentos')
   .exec(function(err, equipes){
 		
 		if(err) {
     	return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
   	}
-
-  	/*remover por enquanto essa função de verificar a permissão de autorização
   	
-  	if(!config.ensureAuthorized(req.auth, accessLevel)) {
-  		console.log('usuário não autorizado para instituições');
-  		return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
-  	}
-  	*/
-
-    //console.log("Instituição: ", instituicao);
-    //var inst = ObjectId(""+);
-	return res.json(equipes);
+  	return res.json(equipes);
   });
 });
 
 router.post('/', function(req, res) {
 
   console.log("req", req.body);
+  var _equipe = req.body;
 
-  Equipe.create({
-    
-    nome: req.body.nome,
-    componentes: req.body.componentes,
-    gestor: req.body.gestor,
-    setor: req.body.setor
-
-  }, function(err, equipe){
+  Equipe.create(_equipe, function(err, equipe){
 
     if(err) {
       console.log('erro post setor: ', err);
       return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
     }
-
-    /*remover por enquanto essa função de verificar a permissão de autorização
-    if(!config.ensureAuthorized(req.auth, accessLevel)) {
-      console.log('usuário não autorizado para instituições');
-      return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
-    }
-    */
       
-    return res.json(equipe);
+    return res.status(200).send({success: true, message: 'Equipe cadastrada com sucesso!'});
   });
 });
 
@@ -80,20 +56,14 @@ router.get('/:id', function(req, res){
 	console.log("nomeEquipe: ", idEquipe);
 	
 	Equipe.findOne({_id: idEquipe})
-  .populate('setor')
+  .populate('setor', 'nome descricao')
+  .populate('gestor', 'nome')
   .exec(function(err, equipe){
 		
 		if(err) {
-    		return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
-    	}
-
-    	/*remover por enquanto essa função de verificar a permissão de autorização
-  	
-	  	if(!config.ensureAuthorized(req.auth, accessLevel)) {
-	  		console.log('usuário não autorizado para instituições');
-	  		return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
-	  	}
-	  	*/
+   		return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+   	}
+    	
 		console.log("Equipe mongoose: ", equipe);
 		return res.json(equipe);
 	});
@@ -110,16 +80,7 @@ router.put('/:id', function(req, res){
     		return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
     	}
 
-    	/*remover por enquanto essa função de verificar a permissão de autorização
-  	
-	  	if(!config.ensureAuthorized(req.auth, accessLevel)) {
-	  		console.log('usuário não autorizado para instituições');
-	  		return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
-	  	}
-	  	*/
-
 	  	equipe.nome = req.body.nome;
-      equipe.componentes = req.body.componentes;
       equipe.gestor = req.body.gestor;
       equipe.setor = req.body.setor;
 
@@ -133,7 +94,7 @@ router.put('/:id', function(req, res){
 
       });
 
-      return res.json(equipe);
+      return res.status(200).send({success: true, message: 'Equipe atualizada com sucesso!'});
 	});
 });
 
@@ -152,6 +113,10 @@ router.delete('/:id', function(req, res){
     	return res.status(200).send({success: true, message: 'Equipe removida com sucesso!'});
 	});
 });
+
+//##############################################
+//Métodos extras, fora do padrão REST
+//##############################################
 
 //Get funcionarios by equipe
 router.get('/:id/funcionarios', function(req, res){

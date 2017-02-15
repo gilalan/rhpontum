@@ -1,7 +1,9 @@
-angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "$localStorage", 
+angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "Auth", 
 	"usuarioAPI", "homeAPI",
-	function($scope, $location, $localStorage, usuarioAPI, homeAPI){
-		
+	function($scope, $location, Auth, usuarioAPI, homeAPI){
+	
+	console.log("Entrou no Login controller");
+
 	function getUsuario(idUsuario){
 		
 		usuarioAPI.getUsuario(idUsuario).then(function sucessCallback(response){
@@ -35,15 +37,14 @@ angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "$
 	$scope.login = function (usuario) {
 
 	    usuarioAPI.signIn(usuario).then(function sucessCallback(response){      				
-			
-			$localStorage.token = response.data.token;
-			console.log('localStorage');
-			console.log($localStorage);
-			
+						
+			console.log('Auth.setToken', response.data.token);
 			console.log('id usuário retornado: ', response.data.idUsuario);
             //window.location = "/";
-			return getUsuario(response.data.idUsuario);
+			//return getUsuario(response.data.idUsuario);
 			//return redirectHome();
+			$scope.$emit('login', response.data.token);
+			$location.path("/dashboard");
 
 		}, function errorCallback (response) {
 			
@@ -68,5 +69,5 @@ angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "$
 		});		
 	}
 
-	$scope.token = $localStorage.token;
+	//$scope.token = $localStorage.token;
 }]);

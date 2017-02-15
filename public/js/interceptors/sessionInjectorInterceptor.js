@@ -1,6 +1,6 @@
 angular.module('rhPontumApp')
-.factory('sessionInjectorInterceptor', ['$q', '$location', '$localStorage', 
-	function($q, $location, $localStorage){
+.factory('sessionInjectorInterceptor', ['$q', '$location', 'Auth', 
+	function($q, $location, Auth){
 
 	return {
 		request: function(config){
@@ -12,9 +12,10 @@ angular.module('rhPontumApp')
 
 			//melhor checar se há um usuário logado antes de pegar no localStorage
 			//se o usuario der refresh, perdemeos a informacao do usuário logado na memoria e recuperamos do localStorage
-			if ($localStorage.token) {
-				console.log('interceptorInjectorSession, injetando token', $localStorage.token);
-				config.headers['X-Auth'] = $localStorage.token;
+			var currentToken = Auth.getToken();
+			if (currentToken) {
+				console.log('interceptorInjectorSession, injetando token no HEADER', currentToken);
+				config.headers['X-Auth'] = currentToken;
 			}
 			return config;
 		},

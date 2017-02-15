@@ -11,7 +11,7 @@ var funcionarioSchema = new Schema({
 	dataNascimento: Date,
 	CPF: {type: String, required: true, unique: true},
 	PIS: {type: String, required: true, unique: true},
-	matricula: {type: Number, unique: true},
+	matricula: {type: String, unique: true},
 	email: {type: String, unique: true},
 	alocacao: {
 		dataAdmissao: {type: Date, required: true},
