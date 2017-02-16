@@ -9,7 +9,6 @@ angular.module('rhPontumApp').service('equipesAPI', ['$http', function($http){
 
 	svc.create = function (equipe) {
 
-		console.log("equipe capturada do form: ", equipe);
 		return $http.post(_urlBaseEquipes, equipe);
 	};
 
@@ -18,9 +17,9 @@ angular.module('rhPontumApp').service('equipesAPI', ['$http', function($http){
 		return $http.delete(_urlBaseEquipes+'/'+id);
 	};
 
-	svc.update = function (id) {
+	svc.update = function (equipe) {
 
-		return $http.put(_urlBaseEquipes + '/' + id);
+		return $http.put(_urlBaseEquipes + '/' + equipe._id, equipe);
 	};
 
 	svc.getEquipe = function(id) {

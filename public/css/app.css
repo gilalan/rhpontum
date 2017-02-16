@@ -10,3 +10,7 @@
 .control-mg-filter {
   margin-bottom: 25px;
 }
+
+.table > tbody > tr > td {
+     vertical-align: middle;
+}

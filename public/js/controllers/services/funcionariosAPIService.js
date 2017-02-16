@@ -1,6 +1,7 @@
 angular.module('rhPontumApp').service("funcionariosAPI", function($http, config){
 
 	var _urlBaseFuncionarios = '/api/funcionarios';
+	var _urlBaseGestores = '/api/gestores';
 	var svc = this;
 
 	svc.get = function () {
@@ -36,6 +37,10 @@ angular.module('rhPontumApp').service("funcionariosAPI", function($http, config)
 	svc.getPeriodoApontamentoByFuncionario = function(id, rangeDate) {
 
 		return $http.post(_urlBaseFuncionarios+'/'+id+'/apontamentoRange', rangeDate);
+	};
+
+	svc.getGestores = function() {
+		return $http.get(_urlBaseGestores);
 	};
 	
 });

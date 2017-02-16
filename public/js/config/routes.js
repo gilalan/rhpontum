@@ -93,17 +93,25 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 		access: 'gestor',
 		accessLevel: 3,
 		resolve: {
-			setores: function(setoresAPI){
-				return setoresAPI.get();
+			equipes: function(equipesAPI){
+				return equipesAPI.get();
 			}
 		}
 	});
 
 	$routeProvider.when('/novaEquipe', {
 		controller: 'novaEquipeCtrl',
-		templateUrl: 'view/novaEquipe.html',
+		templateUrl: 'view/editEquipe.html',
 		access: 'gestor',
-		accessLevel: 3
+		accessLevel: 3,
+		resolve: {
+			setores: function(setoresAPI) {
+				return setoresAPI.get();
+			},
+			gestores: function(funcionariosAPI) {
+				return funcionariosAPI.getGestores();
+			}
+		}
 	});
 
 	$routeProvider.when('/editEquipe/:id', {
@@ -112,8 +120,14 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 		access: 'gestor',
 		accessLevel: 3,
 		resolve: {
-			funcionarios: function(funcionariosAPI, $route){
-				return funcionariosAPI.getFuncionario($route.current.params.id);
+			equipe: function(equipesAPI, $route){
+				return equipesAPI.getEquipe($route.current.params.id);
+			},
+			setores: function(setoresAPI) {
+				return setoresAPI.get();
+			},
+			gestores: function(funcionariosAPI) {
+				return funcionariosAPI.getGestores();
 			}
 		}
 	});
@@ -131,8 +145,11 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 		access: 'gestor',
 		accessLevel: 3,
 		resolve: {
-			setores: function(setoresAPI){
-				return setoresAPI.get();
+			cargos: function(cargosAPI){
+				return cargosAPI.get();
+			},
+			turnos: function(turnosAPI){
+				return turnosAPI.get();
 			},
 			instituicoes: function(instituicaoAPI) {
 				return instituicaoAPI.get();
@@ -149,8 +166,11 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 			funcionario: function(funcionariosAPI, $route){
 				return funcionariosAPI.getFuncionario($route.current.params.id);
 			},
-			setores: function(setoresAPI){
-				return setoresAPI.get();
+			cargos: function(cargosAPI){
+				return cargosAPI.get();
+			},
+			turnos: function(turnosAPI){
+				return turnosAPI.get();
 			},
 			instituicoes: function(instituicaoAPI) {
 				return instituicaoAPI.get();
@@ -322,6 +342,12 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 		//a gnt passa isso para um authorize(local) e verifica se ele pode entrar nessa rota.
 		if(next){
 			console.log('next.access: ', next.access);
+
+			if (next.originalPath == "/" && Auth.getToken()){ //se estiver acessando a app na tela inicial mas tiver um token de log guardado, manda para a página principal
+				console.log("página de login com o usuário já logado... encaminha para o dashboard");
+				return $location.path("/dashboard");
+			}
+
 			if (next.accessLevel > 0) {
 
 				if(!Auth.getToken()){

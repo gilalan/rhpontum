@@ -1,0 +1,52 @@
+<!-- FORM TO CREATE FUNCS -->
+<h2 class="sub-header">{{::newOrEdit}} Equipe</h2>
+
+<div ng-show="successMsg" class="alert alert-success alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Feito!</strong> {{successMsg}}
+</div>
+
+<div ng-show="errorMsg" class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Ops!</strong> {{errorMsg}}
+</div>
+
+{{equipe}}
+<div id="todo-form" class="row">
+    
+    <div class="col-sm-12 col-sm-offset-0">
+
+        <form name="equipeForm">
+                 
+            <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+            <div class="form-group col-xs-12 col-md-8">
+  	          <label class="sr-only" for="setor">Setor</label>
+  	    		  <select id="setor" class="form-control" ng-model="equipe.setor" ng-options="setor.nome for setor in setores track by setor._id">
+  	    		  	<option value="">Selecione um Setor</option>
+  	    		  </select>
+	    	  </div>
+          <div class="form-group col-xs-12 col-md-8">
+	          <label class="sr-only" for="nome">Nome</label>
+	    		  <input id="nome" type="text" class="form-control input-lg" placeholder="Nome" ng-model="equipe.nome">
+	    	  </div>
+          
+          <!-- Trazer os funcionários habilitados a serem gestores -->	    	  
+	    	  <div class="form-group col-xs-12 col-md-8">
+	    		  <label class="sr-only" for="gestor">Gestor</label>
+	          <select id="gestor" class="form-control" ng-model="equipe.gestor" ng-options="gestor.nome for gestor in gestores track by gestor._id">
+              <option value="">Selecione um Gestor</option>
+            </select>
+	          </div>
+
+	          <!-- no futuro poder selecionar componentes diretamente
+            <div class="form-group col-xs-12 col-md-8">
+	              <label class="sr-only" for="equipes">Equipes</label>
+	              <input type="text" class="form-control input-lg" placeholder="Equipes" ng-model="setor.equipes">
+	          </div>-->
+           
+            <div class="form-group col-xs-12 col-md-8">
+            	<button type="submit" class="btn btn-primary btn-lg" ng-click="save(equipe)">Enviar</button>
+            </div>
+        </form>
+    </div>
+</div>

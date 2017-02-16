@@ -25,6 +25,7 @@ app.use(require('./auth'));
 app.use('/api/usuarios', require('./app/controllers/api/usuarios'));
 app.use('/api/authenticate', require('./app/controllers/api/sessions'));
 app.use('/api/funcionarios', require('./app/controllers/api/funcionarios'));
+app.use('/api/gestores', require('./app/controllers/api/gestores'));
 app.use('/api/apontamentos', require('./app/controllers/api/apontamentos'));
 app.use('/api/instituicoes', require('./app/controllers/api/instituicoes'));
 app.use('/api/campi', require('./app/controllers/api/campi'));

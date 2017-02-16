@@ -23,6 +23,7 @@ router.get('/', function(req, res) {
   Equipe.find()
   .populate('gestor', 'nome')
   .populate('setor', 'nome descricao')
+  .populate('componentes', 'nome sobrenome PIS')
   .exec(function(err, equipes){
 		
 		if(err) {
@@ -58,6 +59,7 @@ router.get('/:id', function(req, res){
 	Equipe.findOne({_id: idEquipe})
   .populate('setor', 'nome descricao')
   .populate('gestor', 'nome')
+  .populate('componentes', 'nome sobrenome PIS')
   .exec(function(err, equipe){
 		
 		if(err) {
@@ -80,9 +82,15 @@ router.put('/:id', function(req, res){
     		return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
     	}
 
+      console.log("nome: ", req.body.nome);
+      console.log("gestor: ", req.body.gestor);
+      console.log("setor: ", req.body.setor);
+      console.log("componentes: ", req.body.componentes);
+
 	  	equipe.nome = req.body.nome;
       equipe.gestor = req.body.gestor;
       equipe.setor = req.body.setor;
+      equipe.componentes = req.body.componentes;
 
       //tenta atualizar de fato no BD
       equipe.save(function(err){
@@ -92,9 +100,8 @@ router.put('/:id', function(req, res){
           return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
         }
 
+        return res.status(200).send({success: true, message: 'Equipe atualizada com sucesso!'});
       });
-
-      return res.status(200).send({success: true, message: 'Equipe atualizada com sucesso!'});
 	});
 });
 
@@ -131,13 +138,6 @@ router.get('/:id/funcionarios', function(req, res){
             return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
         }
 
-        /*remover por enquanto essa função de verificar a permissão de autorização
-    
-        if(!config.ensureAuthorized(req.auth, accessLevel)) {
-            console.log('usuário não autorizado para instituições');
-            return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
-        }
-        */
         console.log("funcionarios mongoose: ", funcionarios);
         return res.json(funcionarios);
     });

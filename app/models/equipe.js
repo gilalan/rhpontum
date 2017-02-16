@@ -3,12 +3,12 @@ var Schema = mongoose.Schema;
 var Funcionario = require('./funcionario');
 var Setor = require('./setor');
 
-//mongoose.connect('mongodb://rhpontumadm:123456789@jello.modulusmongo.net:27017/Ohy3tagi');
 
 var equipe = mongoose.Schema({
   nome: {type: String, required: true, unique: true},
   gestor: {type: Schema.Types.ObjectId, required: true, ref: 'Funcionario'},
-  setor: {type: Schema.Types.ObjectId, required: true, ref: 'Setor'}
+  setor: {type: Schema.Types.ObjectId, required: true, ref: 'Setor'},
+  componentes: [{type: Schema.Types.ObjectId, ref: 'Funcionario'}]  
 },{
 	timestamps: true
 });

@@ -123,13 +123,6 @@ router.get('/:id/setores', function(req, res){
           return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
       }
 
-      /*remover por enquanto essa função de verificar a permissão de autorização
-  
-      if(!config.ensureAuthorized(req.auth, accessLevel)) {
-          console.log('usuário não autorizado para instituições');
-          return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
-      }
-      */
       console.log("setores mongoose: ", setores);
       return res.json(setores);
   });

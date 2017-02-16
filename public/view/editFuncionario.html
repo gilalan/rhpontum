@@ -1,4 +1,5 @@
-<!-- FORM TO CREATE FUNCS -->
+<link href="css/funcionarios.css" rel="stylesheet">
+
 <h2 class="sub-header">{{::newOrEdit}} Funcionário</h2>
 
 <div ng-show="successMsg" class="alert alert-success alert-dismissible" role="alert">
@@ -10,63 +11,91 @@
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <strong>Ops!</strong> {{errorMsg}}
 </div>
-
+{{funcionario}}
 <div id="todo-form" class="row">
     
     <div class="col-sm-12 col-sm-offset-0">
 
         <form name="funcionarioForm">                        
 
-          <div class="form-group col-xs-12 col-md-8">
-            <label class="control-label" for="nome">Nome</label>
-            <input type="text" class="form-control input-lg" placeholder="Nome" ng-model="funcionario.nome" ng-required="true">
-          </div>
+          <h4 class="sub-header destakHeader"><strong>Dados</strong></h4>
+          <div id="dados-form" class="row">
+            <div class="form-group col-xs-12 col-md-6">
+              <label class="control-label" for="nome">Nome*</label>
+              <input type="text" class="form-control input-lg" placeholder="Nome" ng-model="funcionario.nome" ng-required="true">
+            </div>
 
-          <div class="form-group col-xs-12 col-md-8">
-            <label class="control-label" for="pis">PIS</label>
-            <input type="text" class="form-control input-lg" placeholder="PIS" ng-model="funcionario.PIS" ng-required="true">
-          </div>
+            <div class="form-group col-xs-12 col-md-6">
+              <label class="control-label" for="nome">Sobrenome*</label>
+              <input type="text" class="form-control input-lg" placeholder="Sobrenome" ng-model="funcionario.sobrenome" ng-required="true">
+            </div>
 
-          <div class="form-group col-xs-12 col-md-8">
-                <label class="control-label" for="dataNascimento">Data de Nascimento</label>
-            <input type="text" class="form-control input-lg" placeholder="Data de Nascimento" ng-model="funcionario.dataNascimento" ng-required="true" ui-date>
+            <div class="form-group col-xs-12 col-md-6">
+              <label class="control-label" for="pis">PIS*</label>
+              <input type="text" class="form-control input-lg" placeholder="PIS" ng-model="funcionario.PIS" ng-required="true">
+            </div>
+
+            <div class="form-group col-xs-12 col-md-6">
+              <label class="control-label" for="pis">CPF*</label>
+              <input type="text" class="form-control input-lg" placeholder="CPF" ng-model="funcionario.CPF" ng-required="true">
+            </div>
+
+            <div class="form-group col-xs-6 col-md-3">
+                  <label class="control-label" for="dataNascimento">Data de Nascimento</label>
+              <input type="text" class="form-control input-lg" placeholder="Data de Nascimento" ng-model="funcionario.dataNascimento" ui-date>
+            </div> 
+
+            <div class="form-group col-xs-6 col-md-3">
+              <label class="control-label" for="email">Matrícula</label>
+              <input type="text" class="form-control input-lg alignTextRight" placeholder="Matrícula" ng-model="funcionario.matricula">
+            </div> 
+
+            <div class="form-group col-xs-12 col-md-6">
+              <label class="control-label" for="email">E-mail</label>
+              <input type="text" class="form-control input-lg" placeholder="E-mail" ng-model="funcionario.email">
+            </div>
           </div>        
-          
-          <div class="form-group col-xs-12 col-md-8">
-            <label class="control-label" for="instituicao">Instituição</label>
-            <select id="instituicao" name="instituicao" class="form-control" ng-init="funcionario.instituicao = funcionario.instituicao || instituicoes[0]" ng-options="instituicao.sigla for instituicao in instituicoes track by instituicao._id" ng-model="funcionario.instituicao" ng-change="getCampi(funcionario.instituicao._id)">
-            <!--<pre>{{funcionario.instituicao | json}}</pre>-->
-            </select>
+                    
+          <h4 class="sub-header destakHeader"><strong>Alocação</strong></h4>
+          <div id="alocacao-form" class="row">
+            
+            <div class="form-group col-xs-6 col-md-3">
+              <label class="control-label" for="instituicao">Instituição*</label>
+              <select id="instituicao" name="instituicao" class="form-control" ng-model="funcionario.alocacao.instituicao" ng-options="instituicao.sigla for instituicao in instituicoes track by instituicao._id" ng-required="true">
+                <option value="">Selecione uma Instituição</option>
+              </select>
+            </div>
+
+            <div class="form-group col-xs-6 col-md-3">
+                  <label class="control-label" for="dataAdmissao">Data de Admissão*</label>
+              <input type="text" class="form-control input-lg" placeholder="Data de Admissão" ng-model="funcionario.alocacao.dataAdmissao" ng-required="true" ui-date>
+            </div> 
+
+            <div class="form-group col-xs-6 col-md-3">
+              <label class="control-label" for="cargo">Cargo*</label>
+              <select id="cargo" name="cargo" class="form-control" ng-model="funcionario.alocacao.cargo" ng-options="cargo.especificacao for cargo in cargos track by cargo._id" ng-required="true">
+                <option value="">Selecione um Cargo</option>
+              </select>
+            </div> 
+
+             <div class="form-group col-xs-6 col-md-3">
+              <label class="control-label" for="turno">Turno*</label>
+              <select id="turno" name="turno" class="form-control" ng-model="funcionario.alocacao.turno" ng-options="turno.descricao for turno in turnos track by turno._id" ng-required="true">
+                <option value="">Selecione um Turno</option>
+              </select>
+            </div> 
+            
           </div>
 
-          <div class="form-group col-xs-12 col-md-8">
-            <label class="control-label" for="campus">Selecione um Campus</label>
-            <select id="campus" name="campus" class="form-control" ng-options="campus.nome for campus in campusMap.get(funcionario.instituicao._id)" ng-model="campus" ng-change="getSetores(campus._id)" ng-required="true" ng-disabled="!campusMap.get(funcionario.instituicao._id)">
-            </select>
-          </div>
+          <h4 class="sub-header destakHeader"><strong>Acesso Web</strong></h4>
+          <div id="acessoweb-form" class="row">
 
-          <div class="form-group col-xs-12 col-md-8">
-            <label class="control-label" for="setor">Selecione um Setor</label>
-            <select id="setor" name="setor" class="form-control" ng-options="setor.nome for setor in setoresMap.get(campus._id)" ng-model="setor" ng-change="getEquipes(setor._id)" ng-required="true" ng-disabled="!setoresMap.get(campus._id)">
-            </select>
-          </div>
-          
-          <div class="form-group col-md-12">
-            <h4 class="sub-header"><strong>Equipes*</strong></h4>
-            <div class="form-group col-md-6">  
-              <label class="control-label" for="Equipes">Participantes:</label><br/>
-              <div class="btn-group btn-group" role="group" aria-label="Equipes" ng-repeat="equipe in funcionario.equipes">
-                <button type="button" class="btn btn-default btn-sm" ng-class="{'btn-primary': equipe.added}" ng-click="removeEquipe(equipe)">
-                  {{equipe.nome}}
-                </button>
-              </div>
+            <div class="form-group col-xs-12 col-md-6">
+              <input type="checkbox" ng-model="funcionario.alocacao.gestor" /><p>É um GESTOR?</p>
             </div>
-          </div>
-          <div class="form-group col-md-12">
-            <div ng-repeat="equipe in equipesMap.get(setor._id)">
-              <input type="checkbox" value="{{::equipe.nome}}" ng-checked="equipe.selecionado" ng-click="checkAddEquipe(equipe)"/>
-                {{::equipe.nome}}
-            </div>
+            <div class="form-group col-xs-12 col-md-6">
+              <input type="checkbox" ng-model="funcionario.rhponto" /><p>Usa o RHPonto?</p>
+            </div> 
           </div>
            
           <div class="form-group col-xs-12 col-md-8">

@@ -15,17 +15,17 @@ router.get('/', function(req, res) {
     
     // usando o mongoose Model para buscar todos os funcionários
     Funcionario.find()
-    .populate('cargo')
+    .populate('alocacao.cargo', 'especificacao')
     .populate({
-        path: 'turno',
+        path: 'alocacao.turno',
         model: 'Turno',
         populate: [{path: 'escala', model: 'Escala'}]
     })
-    .populate('equipes', 'nome')
-    .populate('instituicao', 'nome')
+    .populate('alocacao.instituicao', 'nome sigla')
     .exec(function(err, funcionarios){
 
        if(err) {
+        console.log('errorrrrr', err);
         return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
        }
 
@@ -55,16 +55,15 @@ router.post('/', function(req, res) {
 router.get('/:id', function(req, res){
 
     var idFuncionario = req.params.id;
-    
+
     Funcionario.findOne({_id: idFuncionario})
-    .populate('cargo')
+    .populate('alocacao.cargo', 'especificacao')
     .populate({
-        path: 'turno',
+        path: 'alocacao.turno',
         model: 'Turno',
         populate: [{path: 'escala', model: 'Escala'}]
     })
-    .populate('equipes')
-    .populate('instituicao')
+    .populate('alocacao.instituicao', 'nome sigla')
     .exec(function(err, funcionario){
         
         if(err) {
@@ -105,10 +104,8 @@ router.put('/:id', function(req, res){
           return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
         }
 
+        return res.status(200).send({success: true, message: 'Funcionário atualizado com sucesso.'});
       });
-
-      //return res.json(funcionario);
-      return res.status(200).send({success: true, message: 'Funcionário cadastrado com sucesso.'});
     });
 });
 

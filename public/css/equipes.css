@@ -1,0 +1,4 @@
+.table > tbody > tr > td > ul{
+     vertical-align: middle;
+     margin-bottom: 0px !important;
+}

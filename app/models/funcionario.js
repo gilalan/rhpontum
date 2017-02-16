@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var Equipe = require('./equipe');
 var Instituicao = require('./instituicao');
 var Turno = require('./turno');
 var Cargo = require('./cargo');
@@ -18,7 +17,7 @@ var funcionarioSchema = new Schema({
 		cargo: {type: Schema.Types.ObjectId, ref: 'Cargo', required: true},
 		turno: {type: Schema.Types.ObjectId, ref: 'Turno', required: true},
 		instituicao: {type: Schema.Types.ObjectId, ref: 'Instituicao', required: true},
-		equipes: [{type: Schema.Types.ObjectId, ref: 'Equipe'}]
+		gestor: {type: Boolean}
 	},
 	rhponto: {type: Boolean, required: true}, //usa o sistema caso TRUE, usa relogio de ponto caso FALSE
 	ferias: [{ano: Number, periodo: [Date]}]
