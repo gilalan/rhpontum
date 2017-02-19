@@ -16,17 +16,33 @@
 
 .table th { 
 	border-top: none !important;
-    border-bottom: 1px solid #dcdcdc !important;
-    border-left: 1px solid #dcdcdc !important;
-    border-right: 1px solid #dcdcdc !important;
+    border-bottom: 1px solid #dcdcdc !important;  
  }
 
- .table td {
+ .first {
+
+    border-left: 1px solid #dcdcdc !important;   
+ }
+
+.last {
+	border-right: 2px solid #dcdcdc !important;	
+}
+
+.lastVertical {
+	border-bottom: 1px solid #dcdcdc !important;
+}
+
+.table td {
  	border-left: 1px solid #dcdcdc !important;
-    border-right: 1px solid #dcdcdc !important;	
- }
+}
 
- .dateDestak {
+.marcacoesDestak {
+	font-family: Montserrat;
+    color: #436cbd;
+    font-size: 13px;
+}
+
+.dateDestak {
  	margin-top: 5px;
     font-size: 15px;
     color: #12198e;

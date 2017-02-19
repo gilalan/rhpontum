@@ -9,7 +9,6 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
   $scope.liberado = false;
   $scope.funcionarioApontamentosMap = new Map();
   
-
   getEquipesByGestor = function() {
 
     equipesAPI.getEquipesByGestor($scope.gestor).then(function successCallback(response){
@@ -33,7 +32,7 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
 
   getApontamentosByDateRangeAndEquipe = function(intervaloDias, componentes) {
 
-    var objDateEquipe = {dias: intervaloDias, equipe: componentes};
+    var objDateEquipe = {date: $scope.currentDate, dias: intervaloDias, equipe: componentes};
 
     apontamentosAPI.getApontamentosByDateRangeAndEquipe(objDateEquipe).then(function successCallback(response){
 
@@ -53,8 +52,8 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
 
     $scope.equipe = equipe;
     
-    if (!$scope.equipe.componentes){
-      
+    if (!equipe.componentes){
+      console.log("Equipe sem componentes!!!! Tratar isso no código");
       $scope.equipe.componentes = [];
       $scope.apontamentosDiarios = [];
 
@@ -75,9 +74,8 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
   }
 
   setPretty = function(apontamento) {
-
-    checkStatus();
-    //apontamento.statusString = "Nenhum ponto";
+    
+    var expedienteObj = {};
     var codigoEscala = apontamento.funcionario.alocacao.turno.escala.codigo; 
     var jornadaArray = apontamento.funcionario.alocacao.turno.jornada.array; //varia de acordo com a escala
     var today = $scope.currentDate.getDay();
@@ -91,7 +89,10 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
       if (apontamento.marcacoes.length == 0){
 
         
-        apontamento.statusString = checkExpediente(today, codigoEscala, jornadaArray, false, false);
+        expedienteObj = checkExpediente(today, codigoEscala, jornadaArray, false, false);
+        apontamento.statusCodeString = expedienteObj.code;
+        apontamento.statusString = expedienteObj.string;
+        apontamento.statusImgUrl = expedienteObj.imgUrl;
 
       }            
       else if (apontamento.marcacoes.length > 0){
@@ -105,11 +106,16 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
         //Verificar a falta de flexibilidade, pois utiliza a tolerancia
         if(!apontamento.funcionario.alocacao.turno.isFlexivel){
 
-          apontamento.statusString = checkExpediente(today, codigoEscala, jornadaArray, minutosTotaisMarcacao, apontamento.funcionario.alocacao.turno.tolerancia);
+          expedienteObj = checkExpediente(today, codigoEscala, jornadaArray, minutosTotaisMarcacao, apontamento.funcionario.alocacao.turno.tolerancia);
+          apontamento.statusCodeString = expedienteObj.code;
+          apontamento.statusString = expedienteObj.string;
+          apontamento.statusImgUrl = expedienteObj.imgUrl;
         }
         else {
           console.log("horário flexível, não dá pra dizer se há atraso");
-          apontamento.statusString = "FLE";
+          apontamento.statusCodeString = "FLE";
+          apontamento.statusString = "Horário Flexível";
+          apontamento.statusImgUrl = "../img/bullet-black.png";
         }
       }
      
@@ -117,8 +123,12 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
 
     //se não tiver marcações -> 
     else {
-      apontamento.statusString = checkExpediente(today, codigoEscala, jornadaArray, false, false);
+      expedienteObj = checkExpediente(today, codigoEscala, jornadaArray, false, false);
+      apontamento.statusCodeString = expedienteObj.code;
+      apontamento.statusString = expedienteObj.string;
+      apontamento.statusImgUrl = expedienteObj.imgUrl;
     }
+
   }
 
   checkExpediente = function(today, codigoEscala, jornadaArray, valorComparacao, tolerancia) {
@@ -148,21 +158,21 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
           if (totalMinutesAtual < ENT1) {
           
             console.log("Ainda não iniciou o expediente");
-            return "ENI";
+            return {code: "ENI", string: "Expediente Não Iniciado", imgUrl: "../img/bullet-blue.png"};
 
           } else {
-            console.log("Já passou o tempo da 1a batida dele , então está faltante, ainda não bateu!");
-            return "FAL";
+            console.log("Já passou o tempo da 1a batida dele , então está ausente, ainda não bateu!");
+            return {code: "AUS", string: "Ausente", imgUrl: "../img/bullet-red.png"};
           }
 
         } else { //Você compara com o valor fornecido por parametro (q normalmente é o valor do apontamento)
 
           if((valorComparacao >= (ENT1 - tolerancia)) && (valorComparacao <= (ENT1 + tolerancia))){
             console.log("Está dentro dos limites tolerados no horário rígido!");
-            return "PRE";
+            return {code: "PRE", string: "Presente", imgUrl: "../img/bullet-green.png"};
           } else {
             console.log("Está fora dos limites - bateu atrasado!");
-            return "ATR";
+            return {code: "ATR", string: "Atrasado", imgUrl: "../img/bullet-yellow.png"};
           }
 
         }
@@ -170,7 +180,7 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
       } else {
 
         console.log("Dia de descanso na escala semanal");
-        return "DSR";
+        return {code: "DSR", string: "Descanso Semanal Remunerado", imgUrl: "../img/bullet-grey.png"};
       }
 
     } else if (codigoEscala == 2) {//escala 12x36h
@@ -277,6 +287,22 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
 
       showIndicators(equipe);
     }
+  }
+
+  $scope.subtractOneDay = function () {
+
+    $scope.currentDate.setDate($scope.currentDate.getDate() - 1);
+    $scope.currentDateFtd = $filter('date')($scope.currentDate, 'abvFullDate');
+
+    getApontamentosByDateRangeAndEquipe(1, $scope.equipe.componentes);//pegando o diário
+  }
+
+  $scope.addOneDay = function () {
+
+    $scope.currentDate.setDate($scope.currentDate.getDate() + 1);
+    $scope.currentDateFtd = $filter('date')($scope.currentDate, 'abvFullDate');
+
+    getApontamentosByDateRangeAndEquipe(1, $scope.equipe.componentes);//pegando o diário
   }
 
   init();

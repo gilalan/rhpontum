@@ -166,18 +166,19 @@ router.post('/date/equipe', function(req, res){
 });
 
 /* 
- * Obter apontamentos dentro de um intervalo de datas em relação a data atual
+ * Obter apontamentos dentro de um intervalo de datas em relação a data passada por parâmetro ou atual (se nada for passado)
  * @param dias -> Usuário vai passar um intervalo de dias para somar ou subtrair da data atual
  * @param equipe -> array de funcionários que devem ser buscados na pesquisa
  */
 router.post('/intervaldate/equipe', function(req, res){
 
     var objDateEquipe = req.body;
+    var dateParametro = objDateEquipe.date;
     var dias = objDateEquipe.dias;
     var equipe = objDateEquipe.equipe;
 
-    var today = moment(new Date()).startOf('day'); //dia atual
- //   today.subtract(17, 'days');
+    var today = dateParametro ? moment(new Date(dateParametro)).startOf('day') : moment(new Date()).startOf('day'); //dia atual
+    //today.subtract(18, 'days'); //PARA TESTES!
     //var teste2 = moment(today).add(2, 'days');
     var otherDay = (dias >= 0) ? moment(today).add(dias, 'days') : moment(today).subtract(dias, 'days');
     
