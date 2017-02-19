@@ -50,6 +50,9 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 			usuario: function(usuariosAPI, Auth){
 				return usuariosAPI.getUsuario(Auth.getCurrentUser()._id);
 			},
+			feriados: function(feriadosAPI){
+				return feriadosAPI.get();
+			},
 			currentDate: function(apontamentosAPI) {
 				return apontamentosAPI.getCurrentDate();
 			}
@@ -134,6 +137,21 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 			},
 			gestores: function(funcionariosAPI) {
 				return funcionariosAPI.getGestores();
+			}
+		}
+	});
+
+	$routeProvider.when('/editarComponentes/:id', {
+		controller: 'editarComponentesCtrl',
+		templateUrl: 'view/editarComponentes.html',
+		access: 'gestor',
+		accessLevel: 3,
+		resolve: {
+			equipe: function(equipesAPI, $route){
+				return equipesAPI.getEquipe($route.current.params.id);
+			},
+			funcionarios: function(funcionariosAPI) {
+				return funcionariosAPI.get();
 			}
 		}
 	});

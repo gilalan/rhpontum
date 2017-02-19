@@ -66,15 +66,15 @@
 				      </tr>
 				    </thead>
 				    <tbody>
-				      <tr ng-repeat="apontamentoDiario in apontamentosDiarios">
-				        <td><img class="img-responsive" src="{{apontamentoDiario.statusImgUrl}}" alt="{{apontamentoDiario.statusString}}"></td>
-				        <td>{{apontamentoDiario.funcionario.nome}}</td>
-				        <td>{{apontamentoDiario.funcionario.sexoMasculino ? apontamentoDiario.funcionario.alocacao.cargo.especificacao : apontamentoDiario.funcionario.alocacao.cargo.nomeFeminino}}
+				      <tr ng-repeat="funcionario in equipe.componentes">
+				        <td><img class="img-responsive" src="{{funcionario.apontamentoDiario.statusImgUrl}}" alt="{{funcionario.apontamentoDiario.statusString}}"></td>
+				        <td>{{funcionario.nome}}</td>
+				        <td>{{funcionario.sexoMasculino ? funcionario.alocacao.cargo.especificacao : funcionario.alocacao.cargo.nomeFeminino}}
 				        </td>
-				        <td class="centerColSpan marcacoesDestak">{{apontamentoDiario.marcacoesStringObj.ent1}}</td>
-				        <td class="centerColSpan marcacoesDestak">{{apontamentoDiario.marcacoesStringObj.sai1}}</td>
-				        <td class="centerColSpan marcacoesDestak">{{apontamentoDiario.marcacoesStringObj.ent2}}</td>
-				        <td class="centerColSpan marcacoesDestak">{{apontamentoDiario.marcacoesStringObj.sai2}}</td>
+				        <td class="centerColSpan marcacoesDestak">{{funcionario.apontamentoDiario.marcacoesStringObj.ent1}}</td>
+				        <td class="centerColSpan marcacoesDestak">{{funcionario.apontamentoDiario.marcacoesStringObj.sai1}}</td>
+				        <td class="centerColSpan marcacoesDestak">{{funcionario.apontamentoDiario.marcacoesStringObj.ent2}}</td>
+				        <td class="centerColSpan marcacoesDestak">{{funcionario.apontamentoDiario.marcacoesStringObj.sai2}}</td>
 				        <td class="centerColSpan last"> 
 				          <div class="btn-group" role="group" aria-label="acoes">
 				            <button type="button" class="btn btn-default" ng-click="edit(cargo._id)">

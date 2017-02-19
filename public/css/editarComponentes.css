@@ -1,0 +1,25 @@
+table tbody tr {
+	cursor: pointer;
+}
+
+.alignTextRight{
+	text-align: right;
+}
+
+.destakHeader{
+	color: #1b28f3;
+	margin-bottom: 0px !important;
+}
+
+.wellWhiteBG {
+    background-color: #fff; 
+}
+
+.selected-func {
+	background-color: #3d7314;
+    color: white;
+}
+
+.space-fix{
+	margin-bottom: 10px;
+}

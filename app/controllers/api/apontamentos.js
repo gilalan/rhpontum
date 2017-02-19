@@ -193,20 +193,7 @@ router.post('/intervaldate/equipe', function(req, res){
     .populate({
         path: 'funcionario', 
         select: 'nome sobrenome PIS sexoMasculino alocacao',
-        model: 'Funcionario',
-        populate: [{
-          path: 'alocacao.cargo',
-          select: 'especificacao nomeFeminino',
-          model: 'Cargo'
-        },
-        {
-          path: 'alocacao.turno',
-          model: 'Turno',
-          populate: [{
-            path: 'escala', 
-            model: 'Escala'
-          }]
-        }]      
+        model: 'Funcionario'            
     })
     .exec(function(err, apontamentos){
         if(err) {

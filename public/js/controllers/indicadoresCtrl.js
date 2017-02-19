@@ -1,10 +1,12 @@
-angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout', '$filter', 'setores', 'usuario', 'currentDate', 'equipesAPI', 'apontamentosAPI', 
- function($scope, $timeout, $filter, setores, usuario, currentDate, equipesAPI, apontamentosAPI){
+angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout', '$filter', 'setores', 'usuario', 'feriados', 'currentDate', 'equipesAPI', 'apontamentosAPI', 
+ function($scope, $timeout, $filter, setores, usuario, feriados, currentDate, equipesAPI, apontamentosAPI){
 
 	console.log("indicadores");
   var _usuario = usuario.data;
+  var feriados = feriados.data;
+  var dataHoje = new Date(currentDate.data.date);//data de hoje mesmo para comparações com as datas que ele vai navegando
   $scope.gestor = _usuario.funcionario;
-  $scope.currentDate = new Date(currentDate.data.date);
+  $scope.currentDate = new Date(currentDate.data.date);//fica variando a medida que o usuario navega
   $scope.currentDateFtd = $filter('date')($scope.currentDate, 'abvFullDate');
   $scope.liberado = false;
   $scope.funcionarioApontamentosMap = new Map();
@@ -30,15 +32,21 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
     });
   }
 
+  //Esse meu intervalo está sendo para apenas 1 dia, esse código não funcionará
+  //caso a gnt altere esse comportamento! Cuidado!
   getApontamentosByDateRangeAndEquipe = function(intervaloDias, componentes) {
 
     var objDateEquipe = {date: $scope.currentDate, dias: intervaloDias, equipe: componentes};
 
     apontamentosAPI.getApontamentosByDateRangeAndEquipe(objDateEquipe).then(function successCallback(response){
 
-      $scope.apontamentosDiarios = response.data;
+      //$scope.apontamentosDiarios = response.data;
+      var apontamentosDiarios = response.data;
+
       console.log("apontamentos diarios: ", response.data);
-      createPrettyStringResults($scope.apontamentosDiarios);
+      //console.log("atualizado $scope.equipe.componentes", $scope.equipe.componentes);
+
+      createPrettyStringResults(apontamentosDiarios);
 
     }, function errorCallback(response){
       
@@ -55,7 +63,7 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
     if (!equipe.componentes){
       console.log("Equipe sem componentes!!!! Tratar isso no código");
       $scope.equipe.componentes = [];
-      $scope.apontamentosDiarios = [];
+      //$scope.apontamentosDiarios = [];
 
     } else {
 
@@ -65,23 +73,43 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
 
   }
 
-  createPrettyStringResults = function(apontamentoFuncionarios) {
+  createPrettyStringResults = function(apontamentoDiariosPorFuncionario) {
 
-    apontamentoFuncionarios.forEach(function(apontamentoFuncionario){
+    var hasAppoint = false;
 
-      setPretty(apontamentoFuncionario);
+    $scope.equipe.componentes.forEach(function(componente){
+      
+      hasAppoint = false;
+
+      apontamentoDiariosPorFuncionario.forEach(function(apontamentoDiarioPorFuncionario){
+        
+        //se encontrar, é pq o funcionario tem apontamentos
+        if (componente._id == apontamentoDiarioPorFuncionario.funcionario._id){
+          componente.apontamentoDiario = apontamentoDiarioPorFuncionario;
+          setPretty(componente);
+          hasAppoint = true;
+          return hasAppoint;
+        }
+
+      });
+
+      if (!hasAppoint) {
+        //aí verificamos os casos possíveis (feriados, DSR, AUSENCIA)
+        componente.apontamentoDiario = {};
+        setPretty(componente);
+      }
+
     });
   }
 
-  setPretty = function(apontamento) {
+  setPretty = function(funcionario) {
     
     var expedienteObj = {};
-    var codigoEscala = apontamento.funcionario.alocacao.turno.escala.codigo; 
-    var jornadaArray = apontamento.funcionario.alocacao.turno.jornada.array; //varia de acordo com a escala
+    var codigoEscala = funcionario.alocacao.turno.escala.codigo; 
+    var jornadaArray = funcionario.alocacao.turno.jornada.array; //varia de acordo com a escala
     var today = $scope.currentDate.getDay();
+    var apontamento = funcionario.apontamentoDiario;
 
-    //ANTES DE TUDO: verificar se é folga ou feriado...
-    
     //se tiver marcações
     if (apontamento.marcacoes) {          
       
@@ -104,9 +132,9 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
           _ent1ObjMarcacao.minuto);
         //apontamento.statusString = "Em andamento";
         //Verificar a falta de flexibilidade, pois utiliza a tolerancia
-        if(!apontamento.funcionario.alocacao.turno.isFlexivel){
+        if(!funcionario.alocacao.turno.isFlexivel){
 
-          expedienteObj = checkExpediente(today, codigoEscala, jornadaArray, minutosTotaisMarcacao, apontamento.funcionario.alocacao.turno.tolerancia);
+          expedienteObj = checkExpediente(today, codigoEscala, jornadaArray, minutosTotaisMarcacao, funcionario.alocacao.turno.tolerancia);
           apontamento.statusCodeString = expedienteObj.code;
           apontamento.statusString = expedienteObj.string;
           apontamento.statusImgUrl = expedienteObj.imgUrl;
@@ -119,9 +147,8 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
         }
       }
      
-    } 
-
-    //se não tiver marcações -> 
+    }
+    //se não tiver apontamento ou marcações -> 
     else {
       expedienteObj = checkExpediente(today, codigoEscala, jornadaArray, false, false);
       apontamento.statusCodeString = expedienteObj.code;
@@ -129,59 +156,83 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
       apontamento.statusImgUrl = expedienteObj.imgUrl;
     }
 
+    //Atualiza o funcionario.apontamento.
+    funcionario.apontamentoDiario = apontamento;
   }
 
   checkExpediente = function(today, codigoEscala, jornadaArray, valorComparacao, tolerancia) {
     
     console.log("################## CHECK EXPEDIENTE");
-    console.log("today ", today);
+    console.log("today ", today);//dia da semana apenas de 0 a 6
     console.log("codigoEscala ", codigoEscala);
     console.log("jornadaArray", jornadaArray);
     console.log("valorComparacao", valorComparacao);
     console.log("tolerancia", tolerancia);
+    
     //escala semanal
     if (codigoEscala == 1) {
 
-      //Obtém a informação do DIA ATUAL na jornada do trabalhador
-      var objDay = getDayInArrayJornadaSemanal(today, jornadaArray);
-      console.log("ObjDay ", objDay);
-      if (objDay.horarios) {
+      if (isFeriado()){
 
-        //ENTRADA 1 para o DIA ATUAL
-        var ENT1 = objDay.horarios.ent1;
-        
-        if (!valorComparacao){ //é o caso de saber se é o início do expediente
-          //HORA ATUAL é menor que ENT1 ? caso sim, sua jornada ainda não começou
-          var totalMinutesAtual = converteParaMinutosTotais($scope.currentDate.getHours(), 
-          $scope.currentDate.getMinutes()); 
-
-          if (totalMinutesAtual < ENT1) {
-          
-            console.log("Ainda não iniciou o expediente");
-            return {code: "ENI", string: "Expediente Não Iniciado", imgUrl: "../img/bullet-blue.png"};
-
-          } else {
-            console.log("Já passou o tempo da 1a batida dele , então está ausente, ainda não bateu!");
-            return {code: "AUS", string: "Ausente", imgUrl: "../img/bullet-red.png"};
-          }
-
-        } else { //Você compara com o valor fornecido por parametro (q normalmente é o valor do apontamento)
-
-          if((valorComparacao >= (ENT1 - tolerancia)) && (valorComparacao <= (ENT1 + tolerancia))){
-            console.log("Está dentro dos limites tolerados no horário rígido!");
-            return {code: "PRE", string: "Presente", imgUrl: "../img/bullet-green.png"};
-          } else {
-            console.log("Está fora dos limites - bateu atrasado!");
-            return {code: "ATR", string: "Atrasado", imgUrl: "../img/bullet-yellow.png"};
-          }
-
-        }
+        console.log("opa, hoje é feriado!");
+        return {code: "FRD", string: "Feriado!", imgUrl: "../img/bullet-emoji.png"};
 
       } else {
+        //Obtém a informação do DIA ATUAL na jornada do trabalhador
+        var objDay = getDayInArrayJornadaSemanal(today, jornadaArray);
+        console.log("ObjDay ", objDay);
+        if (objDay.horarios) {         
 
-        console.log("Dia de descanso na escala semanal");
-        return {code: "DSR", string: "Descanso Semanal Remunerado", imgUrl: "../img/bullet-grey.png"};
-      }
+          //ENTRADA 1 para o DIA ATUAL
+          var ENT1 = objDay.horarios.ent1;
+          
+          if (!valorComparacao){ //é o caso de saber se é o início do expediente
+            
+            //Verificar se o dia navegado é antes ou depois comparado ao dia de HOJE
+            var codDate = compareOnlyDates($scope.currentDate, dataHoje);
+
+            if (codDate === 0) { //é o próprio dia de hoje
+              //HORA ATUAL é menor que ENT1 ? caso sim, sua jornada ainda não começou
+              var totalMinutesAtual = converteParaMinutosTotais($scope.currentDate.getHours(), 
+              $scope.currentDate.getMinutes());
+
+              if (totalMinutesAtual < ENT1) {
+              
+                console.log("Ainda não iniciou o expediente");
+                return {code: "ENI", string: "Expediente Não Iniciado", imgUrl: "../img/bullet-blue.png"};
+
+              } else {
+                console.log("Já passou o tempo da batida dele , então está ausente, ainda não bateu!");
+                return {code: "AUS", string: "Ausente", imgUrl: "../img/bullet-red.png"};
+              }
+            } else if (codDate === -1) {//Navegando em dia passado 
+
+              console.log("Navegando em dias anteriores e sem valor de apontamento, ou seja, faltante");
+              return {code: "AUS", string: "Ausente", imgUrl: "../img/bullet-red.png"};
+            } else { //Navegando em dias futuros
+
+              console.log("Navegando em dias futuros, expediente não iniciado!");
+              return {code: "ENI", string: "Expediente Não Iniciado", imgUrl: "../img/bullet-blue.png"};
+            }
+
+          } else { //Você compara com o valor fornecido por parametro (q normalmente é o valor do apontamento)
+
+            if((valorComparacao >= (ENT1 - tolerancia)) && (valorComparacao <= (ENT1 + tolerancia))){
+              console.log("Está dentro dos limites tolerados no horário rígido!");
+              return {code: "PRE", string: "Presente", imgUrl: "../img/bullet-green.png"};
+            } else {
+              console.log("Está fora dos limites - bateu atrasado!");
+              return {code: "ATR", string: "Atrasado", imgUrl: "../img/bullet-yellow.png"};
+            }
+
+          }
+
+        } else {
+
+          console.log("Dia de descanso na escala semanal");
+          return {code: "DSR", string: "Descanso Semanal Remunerado", imgUrl: "../img/bullet-grey.png"};
+        }
+      } //fim do não-feriado
 
     } else if (codigoEscala == 2) {//escala 12x36h
 
@@ -249,8 +300,52 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
     return (separator) ? hoursStr+separator+minutesStr : hoursStr+minutesStr;
   }
 
-  checkStatus = function() {
+  isFeriado = function() {
      
+    var date = $scope.currentDate.getDate();//1 a 31
+    var month = $scope.currentDate.getMonth();//0 a 11
+    var year = $scope.currentDate.getFullYear();//
+    var flagFeriado = false;
+    var tempDate;
+
+    feriados.forEach(function(feriado){
+      
+      tempDate = new Date(feriado.data);
+      if (feriado.fixo){
+        
+        if (tempDate.getMonth() === month && tempDate.getDate() === date){
+          console.log("É Feriado (fixo)!");
+          flagFeriado = true;
+          return feriado;
+        }
+
+      } else {//se não é fixo
+
+        if ( (tempDate.getFullYear() === year) && (tempDate.getMonth() === month) && (tempDate.getDate() === date) ){
+          console.log("É Feriado (variável)!");
+          flagFeriado = true;
+          return feriado;
+        }
+
+      }
+    });
+
+    return flagFeriado;
+  }
+
+  compareOnlyDates = function (date1, date2) {
+
+    var d1 = date1;
+    var d2 = date2;
+    d1.setHours(0,0,0,0);
+    d2.setHours(0,0,0,0);
+
+    if (d1.getTime() < d2.getTime())
+      return -1;
+    else if (d1.getTime() === d2.getTime())
+      return 0;
+    else
+      return 1; 
   }
 
   init = function(){

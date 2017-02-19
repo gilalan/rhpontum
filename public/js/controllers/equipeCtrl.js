@@ -19,6 +19,11 @@ angular.module('rhPontumApp').controller('equipeCtrl', ["$scope", "$window", "$l
 		});
 	}
 
+	$scope.workerAssociate = function(equipeId) {
+
+		$location.path('/editarComponentes/' + equipeId);
+	}
+
 	$scope.edit = function(id) {
 
         $location.path("/editEquipe/"+id);

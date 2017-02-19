@@ -1,0 +1,56 @@
+<link href="css/editarComponentes.css" rel="stylesheet">
+<link href="css/alertas-msgs.css" rel="stylesheet">
+
+<h3 class="page-header">Associar/Desassociar Colaboradores a uma Equipe</h3>
+
+<div class="row">
+	<div ng-show="successMsg" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Feito!</strong> {{successMsg}}
+    </div>
+
+    <div ng-show="errorMsg" class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Ops!</strong> {{errorMsg}}
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-md-2">
+		<div class="well">
+			<p class="destakHeader">Equipe:</p> 
+			<p><strong>{{equipe.nome}}</strong></p>
+			<p class="destakHeader">Gestor:</p> 
+			<p><strong>{{equipe.gestor.nome}} {{equipe.gestor.sobrenome}}</strong></p>
+		</div>			    
+	</div>
+	<div class="col-md-10">
+		<div class="well wellWhiteBG">
+			<p class="destakHeader">Total de {{funcionarios.length}} Colaboradores:</p>
+			<table class="table table-striped">
+			    <thead>
+			      <tr>
+			        <th>Nome</th>
+			        <th>E-mail</th>
+			        <th>Cargo</th>
+			      </tr>
+			    </thead>
+			    <tbody>
+			      <tr ng-repeat="componente in funcionarios track by $index" ng-click="setSelected(componente)" ng-class="{'selected-func': componente.selected}">
+			        <td>{{componente.nome}} {{componente.sobrenome}}</td>
+			        <td>{{componente.email}}</td>
+			        <td>{{componente.sexoMasculino ? componente.alocacao.cargo.especificacao : componente.alocacao.cargo.nomeFeminino}}</td>
+			      </tr>
+			    </tbody>
+			  </table>
+		  	  <!--
+				<pagination ng-model="currentPage" total-items="funcionarios.length" max-size="maxSize"    boundary-links="true">
+			    </pagination>
+			  -->
+		</div>			    
+	</div>
+</div>
+
+<div class="row text-center">
+	<button class="btn btn-lg btn-primary btn-block" ng-disabled="userForm.$invalid" ng-click="associar(usuario)">Associar</button>
+</div>
