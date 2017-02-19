@@ -87,13 +87,15 @@
             
           </div>
 
-          <h4 class="sub-header destakHeader"><strong>Acesso Web</strong></h4>
+          <h4 class="sub-header destakHeader"><strong>Informações Extras</strong></h4>
           <div id="acessoweb-form" class="row">
-
-            <div class="form-group col-xs-12 col-md-6">
+            <div class="form-group col-xs-12 col-md-4">
+              <input type="checkbox" ng-model="funcionario.sexoMasculino"/><p>Sexo Masculino?</p>
+            </div>
+            <div class="form-group col-xs-12 col-md-4">
               <input type="checkbox" ng-model="funcionario.alocacao.gestor" /><p>É um GESTOR?</p>
             </div>
-            <div class="form-group col-xs-12 col-md-6">
+            <div class="form-group col-xs-12 col-md-4">
               <input type="checkbox" ng-model="funcionario.rhponto" /><p>Usa o RHPonto?</p>
             </div> 
           </div>

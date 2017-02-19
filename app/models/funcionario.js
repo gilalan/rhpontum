@@ -20,6 +20,7 @@ var funcionarioSchema = new Schema({
 		gestor: {type: Boolean}
 	},
 	rhponto: {type: Boolean, required: true}, //usa o sistema caso TRUE, usa relogio de ponto caso FALSE
+	sexoMasculino: {type: Boolean, required: true},
 	ferias: [{ano: Number, periodo: [Date]}]
 },
 {

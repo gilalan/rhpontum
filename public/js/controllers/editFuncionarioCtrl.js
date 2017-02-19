@@ -14,7 +14,11 @@ angular.module('rhPontumApp').controller('editFuncionarioCtrl', ['$scope', '$fil
     $scope.save = function(funcionario) {
     
         funcionario.dataNascimento = fixDateFormat(funcionario.dataNascimento);        
-        funcionario.dataAdmissao   = fixDateFormat(funcionario.dataAdmissao);
+        funcionario.alocacao.dataAdmissao   = fixDateFormat(funcionario.alocacao.dataAdmissao);
+        
+        if (!funcionario.sexoMasculino)
+            funcionario.sexoMasculino = false;
+
         console.log('funcionario a ser enviado:', funcionario);
 
         funcionariosAPI.update(funcionario).then(

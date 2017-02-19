@@ -46,6 +46,12 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 		resolve: {
 			setores: function(setoresAPI){
 				return setoresAPI.get();
+			},
+			usuario: function(usuariosAPI, Auth){
+				return usuariosAPI.getUsuario(Auth.getCurrentUser()._id);
+			},
+			currentDate: function(apontamentosAPI) {
+				return apontamentosAPI.getCurrentDate();
 			}
 		}
 	});
@@ -186,15 +192,26 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 		resolve: {
 			funcionario: function(funcionariosAPI, $route){
 				return funcionariosAPI.getFuncionario($route.current.params.id);
+			},
+			perfis: function(perfisAPI) {
+				return perfisAPI.get();
 			}
 		}
 	});
 
-	$routeProvider.when('/registro_ponto', {
+	$routeProvider.when('/registro_ponto/:id', {
 		controller: 'regPontoCtrl',
 		templateUrl: 'view/registro_ponto.html',
 		access: 'user',
-		accessLevel: 1
+		accessLevel: 1,
+		resolve: {
+			usuario: function(usuariosAPI, $route){
+				return usuariosAPI.getUsuario($route.current.params.id);
+			},
+			currentDate: function(apontamentosAPI) {
+				return apontamentosAPI.getCurrentDate();
+			}			
+		}
 	});
 
 	$routeProvider.when("/register", {
@@ -319,6 +336,7 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 	});
 
 	$routeProvider.when("/unauthorized", {
+		controller: "unauthorizedCtrl",
 		templateUrl: "view/unauthorized.html",
 		access: 'public',
 		accessLevel: 0

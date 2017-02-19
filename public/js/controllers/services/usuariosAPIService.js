@@ -1,4 +1,4 @@
-angular.module('rhPontumApp').service("usuarioAPI", function($http){
+angular.module('rhPontumApp').service("usuariosAPI", function($http){
 
 	var _urlBaseUsuarios = '/api/usuarios';
 	var svc = this;	
@@ -28,4 +28,8 @@ angular.module('rhPontumApp').service("usuarioAPI", function($http){
 		return $http.post(_urlBaseUsuarios, usuario);
 	};	
 	
+	svc.getUsuario = function(id) {
+		return $http.get(_urlBaseUsuarios + "/" + id);
+	};
+
 });

@@ -28,7 +28,7 @@ angular.module('rhPontumApp')
 		},
 		getCurrentUser: function() {
 			var user = jwtHelper.decodeToken($localStorage.token);
-			console.log("USUARIO OBTIDO NO AUTH ATRAVES DO DECODEJWT: ", user);
+			return user;
 		},
 		logout: function(){
 			delete $localStorage.token;

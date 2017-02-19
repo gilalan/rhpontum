@@ -1,5 +1,8 @@
 var Equipe = require('../../models/equipe');
 var Funcionario = require('../../models/funcionario');
+var Cargo = require('../../models/cargo');
+var Turno = require('../../models/turno');
+var Escala = require('../../models/escala');
 var router = require('express').Router();
 var config = require('../../../config');
 
@@ -128,6 +131,7 @@ router.delete('/:id', function(req, res){
 //Get funcionarios by equipe
 router.get('/:id/funcionarios', function(req, res){
 
+    /*
     var idEquipe = req.params.id;
 
     Funcionario.find({equipes: idEquipe})
@@ -141,6 +145,30 @@ router.get('/:id/funcionarios', function(req, res){
         console.log("funcionarios mongoose: ", funcionarios);
         return res.json(funcionarios);
     });
+    */
+});
+
+router.post('/gestorFilter', function(req, res){
+  
+  console.log("gestorFilter Equipes");
+  var gestor = req.body;
+
+  Equipe.find({gestor: gestor._id})
+  //.populate('gestor', 'nome')
+  //.populate('setor', 'nome descricao')
+  .populate({
+    path: 'componentes',
+    select: 'nome sobrenome PIS',
+    model: 'Funcionario'    
+  })
+  .exec(function(err, equipes){
+    
+    if(err) {
+      return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+    }
+    
+    return res.json(equipes);
+  });
 });
 
 module.exports = router;

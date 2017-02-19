@@ -37,4 +37,13 @@ angular.module('rhPontumApp').service('apontamentosAPI', function($http) {
 
 		return $http.post(_urlBaseApontamentos+'/date/equipe', objDateEquipe);
 	};
+
+	svc.getApontamentosByDateRangeAndEquipe = function(objDateEquipe) {
+
+		return $http.post(_urlBaseApontamentos+'/intervaldate/equipe', objDateEquipe);
+	};
+
+	svc.getCurrentDate = function(){
+		return $http.post(_urlBaseApontamentos+'/currentDate', {});
+	};
 });

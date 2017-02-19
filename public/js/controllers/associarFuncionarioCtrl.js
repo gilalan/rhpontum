@@ -1,8 +1,8 @@
-angular.module('rhPontumApp').controller('associarFuncionarioCtrl', ['$scope', '$rootScope', 'funcionario', 'funcionariosAPI', 'usuarioAPI',  
-    function($scope, $rootScope, funcionario, funcionariosAPI, usuarioAPI){
+angular.module('rhPontumApp').controller('associarFuncionarioCtrl', ['$scope', 'funcionario', 'funcionariosAPI', 'usuariosAPI', 'perfis',
+    function($scope, funcionario, funcionariosAPI, usuariosAPI, perfis){
     
-    $scope.currentUser = $rootScope.currentUser;
     $scope.funcionario = funcionario.data;
+    $scope.perfis = perfis.data;
     $scope.usuario = {};
     $scope.isAssociated = false;
 
@@ -10,7 +10,7 @@ angular.module('rhPontumApp').controller('associarFuncionarioCtrl', ['$scope', '
 
         usuario.funcionario = $scope.funcionario._id;
 
-        usuarioAPI.register(usuario).then(function sucessCallback(response){
+        usuariosAPI.register(usuario).then(function sucessCallback(response){
 
             $scope.successMsg = response.data.message;
             delete $scope.usuario;         

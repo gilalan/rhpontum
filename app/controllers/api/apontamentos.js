@@ -1,4 +1,8 @@
 var Apontamento = require('../../models/apontamento');
+var Funcionario = require('../../models/funcionario');
+var Cargo = require('../../models/cargo');
+var Turno = require('../../models/turno');
+var Escala = require('../../models/escala');
 var moment = require('moment');
 var router = require('express').Router();
 
@@ -73,19 +77,12 @@ router.put('/:id', function(req, res){
             return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
         }
 
-        /*remover por enquanto essa função de verificar a permissão de autorização
-    
-        if(!config.ensureAuthorized(req.auth, accessLevel)) {
-            console.log('usuário não autorizado para instituições');
-            return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
-        }
-        */
-
         //apontamento.data = req.body.data;
         apontamento.status = req.body.status;
         apontamento.marcacoes = req.body.marcacoes;//no futuro não poderá atualizar as marcações
         apontamento.marcacoes_invalidadas = req.body.marcacoes_invalidadas;//no futuro não poderá atualizar as marcações
         apontamento.justificativa = req.body.justificativa;
+        //apontamento.funcionario = req.body.funcionario; //SÓ PARA TESTES!!!!!!
 
       //tenta atualizar de fato no BD
       apontamento.save(function(err){
@@ -166,6 +163,65 @@ router.post('/date/equipe', function(req, res){
         console.log("Apontamento mongoose: ", apontamentos);
         return res.json(apontamentos);
     });
+});
+
+/* 
+ * Obter apontamentos dentro de um intervalo de datas em relação a data atual
+ * @param dias -> Usuário vai passar um intervalo de dias para somar ou subtrair da data atual
+ * @param equipe -> array de funcionários que devem ser buscados na pesquisa
+ */
+router.post('/intervaldate/equipe', function(req, res){
+
+    var objDateEquipe = req.body;
+    var dias = objDateEquipe.dias;
+    var equipe = objDateEquipe.equipe;
+
+    var today = moment(new Date()).startOf('day'); //dia atual
+ //   today.subtract(17, 'days');
+    //var teste2 = moment(today).add(2, 'days');
+    var otherDay = (dias >= 0) ? moment(today).add(dias, 'days') : moment(today).subtract(dias, 'days');
+    
+    console.log('today moment: ', today);
+    //console.log("TESTE 2 OTHER DAY: ", teste2);
+    //console.log("TESTE 2 OTHER DAY: ", teste3);
+    console.log('other day moment: ', otherDay);
+
+    var queryDate = (dias >= 0) ? {$gte: today.toDate(), $lt: otherDay.toDate()} : {$gte: otherDay.toDate(), $lt: today.toDate()};
+
+    Apontamento.find({data: queryDate, funcionario: {$in: equipe}})
+    .populate({
+        path: 'funcionario', 
+        select: 'nome sobrenome PIS sexoMasculino alocacao',
+        model: 'Funcionario',
+        populate: [{
+          path: 'alocacao.cargo',
+          select: 'especificacao nomeFeminino',
+          model: 'Cargo'
+        },
+        {
+          path: 'alocacao.turno',
+          model: 'Turno',
+          populate: [{
+            path: 'escala', 
+            model: 'Escala'
+          }]
+        }]      
+    })
+    .exec(function(err, apontamentos){
+        if(err) {
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+        }
+
+        console.log("Apontamento dateRange mongoose: ", apontamentos);
+        return res.json(apontamentos);
+    });
+});
+
+//Get current date on server
+router.post('/currentDate', function(req, res){
+
+    var currentDate = new Date();
+    return res.json({date: currentDate});
 });
 
 module.exports = router;

@@ -15,7 +15,7 @@ router.get('/', function(req, res) {
     
     // usando o mongoose Model para buscar todos os funcionários
     Funcionario.find()
-    .populate('alocacao.cargo', 'especificacao')
+    .populate('alocacao.cargo', 'especificacao nomeFeminino')
     .populate({
         path: 'alocacao.turno',
         model: 'Turno',
@@ -57,7 +57,7 @@ router.get('/:id', function(req, res){
     var idFuncionario = req.params.id;
 
     Funcionario.findOne({_id: idFuncionario})
-    .populate('alocacao.cargo', 'especificacao')
+    .populate('alocacao.cargo', 'especificacao nomeFeminino')
     .populate({
         path: 'alocacao.turno',
         model: 'Turno',
@@ -78,6 +78,7 @@ router.get('/:id', function(req, res){
 router.put('/:id', function(req, res){
     
     var idFuncionario = req.params.id;
+    var _funcionario = req.body;
     
     Funcionario.findOne({_id: idFuncionario}, function(err, funcionario){
 
@@ -85,16 +86,17 @@ router.put('/:id', function(req, res){
             return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
         }
 
-        funcionario.nome = req.body.nome;
-        funcionario.sobrenome = req.body.sobrenome;
-        funcionario.dataNascimento = req.body.dataNascimento;
-        funcionario.PIS = req.body.PIS;
-        funcionario.CPF = req.body.CPF;
-        funcionario.matricula = req.body.matricula;
-        funcionario.email = req.body.email;
-        funcionario.alocacao = req.body.alocacao;
-        funcionario.rhponto = req.body.rhponto;
-        funcionario.ferias = req.body.ferias;
+        funcionario.nome = _funcionario.nome;
+        funcionario.sobrenome = _funcionario.sobrenome;
+        funcionario.dataNascimento = _funcionario.dataNascimento;
+        funcionario.PIS = _funcionario.PIS;
+        funcionario.CPF = _funcionario.CPF;
+        funcionario.matricula = _funcionario.matricula;
+        funcionario.email = _funcionario.email;
+        funcionario.alocacao = _funcionario.alocacao;
+        funcionario.rhponto = _funcionario.rhponto;
+        funcionario.ferias = _funcionario.ferias;
+        funcionario.sexoMasculino = _funcionario.sexoMasculino;
 
       //tenta atualizar de fato no BD
       funcionario.save(function(err){
@@ -135,21 +137,14 @@ router.get('/:id/usuario', function(req, res){
     var idFuncionario = req.params.id;
 
     Usuario.findOne({funcionario: idFuncionario})
-    .populate('funcionario')
+    .populate('funcionario', 'nome sobrenome email')
+    .populate('perfil', 'nome')
     .exec(function(err, usuario){
         
         if(err) {
             return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
         }
 
-        /*remover por enquanto essa função de verificar a permissão de autorização
-    
-        if(!config.ensureAuthorized(req.auth, accessLevel)) {
-            console.log('usuário não autorizado para instituições');
-            return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
-        }
-        */
-        console.log("usuario mongoose: ", usuario);
         return res.json(usuario);
     });
 });

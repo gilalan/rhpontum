@@ -1,13 +1,15 @@
-angular.module('rhPontumApp').controller('regPontoCtrl', ['$scope', '$rootScope', '$filter', 'apontamentosAPI', 'funcionariosAPI', 
-	function($scope, $rootScope, $filter, apontamentosAPI, funcionariosAPI){
-
-	$scope.usuario = $rootScope.currentUser;
-	$scope.funcionario = $scope.usuario.funcionario;
-	$scope.currentDate = new Date();
+angular.module('rhPontumApp').controller('regPontoCtrl', ['$scope', '$filter', '$interval', 'Auth', 'apontamentosAPI', 'funcionariosAPI', 'usuario', 'currentDate',
+	function($scope, $filter, $interval, Auth, apontamentosAPI, funcionariosAPI, usuario, currentDate){
+	
+	$scope.funcionario = usuario.data.funcionario;
+	$scope.currentDate = currentDate.data.date; //obtendo data do servidor
+	$scope.currentDateFtd = $filter('date')($scope.currentDate, 'abvFullDate');
 	//$scope.currentDate = new Date(2017, 0, 31); //testessss
+	
+	var secsControl = 0;
 	var apontamento = null;
 	var marcacao = null;
-
+	
 	getApontamentoDiarioFromFuncionario = function() {
 		
 		var date = {dataInicial: $scope.currentDate};
@@ -50,40 +52,7 @@ angular.module('rhPontumApp').controller('regPontoCtrl', ['$scope', '$rootScope'
 		
 	}
 
-	$scope.registro = function() {
-		
-		var newDate = new Date();
-		var gId = (apontamento) ? getId(apontamento.marcacoes) : 1;
-		var descricao = (apontamento) ? getDescricao(apontamento.marcacoes) : "ent1";
-
-		marcacao = {
-			id: gId,
-			descricao: descricao,
-			hora: newDate.getHours(),
-			minuto: newDate.getMinutes(),
-			segundo: newDate.getSeconds(),
-			gerada: {}
-		};
-
-		if (apontamento) {
-			
-			apontamento.marcacoes.push(marcacao);
-			$scope.update(apontamento._id, apontamento);
-
-		} else {
-
-			apontamento = {
-				data: newDate,
-				status: {id: 0, descricao: 'Correto'},
-				funcionario: $scope.funcionario._id,
-				marcacoes: [marcacao],
-				justificativa: ''
-			};
-			$scope.create(apontamento);
-		}
-	}	
-
-	$scope.create = function(apontamento) {
+	create = function(apontamento) {
 
 		apontamentosAPI.create(apontamento).then(function sucessCallback(response){
 
@@ -102,7 +71,7 @@ angular.module('rhPontumApp').controller('regPontoCtrl', ['$scope', '$rootScope'
 		});	
 	}
 
-	$scope.update = function(id, apontamento) {
+	update = function(id, apontamento) {
 
 		apontamentosAPI.update(id, apontamento).then(function sucessCallback(response){
 
@@ -110,8 +79,7 @@ angular.module('rhPontumApp').controller('regPontoCtrl', ['$scope', '$rootScope'
 			var dateStr = $filter('date')(response.data.obj.date, "dd/MM/yyyy");
 			var hora = $filter('number')(marcacao.hora);
 			var minuto = $filter('number')(marcacao.minuto);
-			$scope.successMsg = response.data.obj.message + dateStr + ", às " + hora + ":" + minuto;
-			alert($scope.successMsg);
+			$scope.successMsg = response.data.obj.message + dateStr + ", às " + hora + ":" + minuto;			
 
 		}, function errorCallback(response){
 			
@@ -121,6 +89,67 @@ angular.module('rhPontumApp').controller('regPontoCtrl', ['$scope', '$rootScope'
 		});	
 	}
 
-	getApontamentoDiarioFromFuncionario();
+	$scope.registro = function() {
+		
+		apontamentosAPI.getCurrentDate().then(function sucessCallback(response){
 
+			var newDate = new Date(response.data.date);
+			var gId = (apontamento) ? getId(apontamento.marcacoes) : 1;
+			var descricao = (apontamento) ? getDescricao(apontamento.marcacoes) : "ent1";
+
+			marcacao = {
+				id: gId,
+				descricao: descricao,
+				hora: newDate.getHours(),
+				minuto: newDate.getMinutes(),
+				segundo: newDate.getSeconds(),
+				gerada: {}
+			};
+
+			if (apontamento) {
+				
+				apontamento.marcacoes.push(marcacao);
+				update(apontamento._id, apontamento);
+
+			} else {
+
+				apontamento = {
+					data: newDate,
+					status: {id: 0, descricao: 'Correto'},
+					funcionario: $scope.funcionario._id,
+					marcacoes: [marcacao],
+					justificativa: ''
+				};
+				create(apontamento);
+			}
+
+		}, function errorCallback(response) {
+
+			$scope.errorMsg = "Erro ao obter a data do servidor, tente novamente dentro de alguns segundos";
+			console.log("Erro de registro: " + response.data.message);
+
+		});
+	}	
+
+	var tick = function() {
+	    //$scope.clock = Date.now();//atualiza os segundos manualmente
+	    var clock = new Date($scope.currentDate);
+	    clock.setSeconds(clock.getSeconds() + secsControl);
+	    $scope.clock = clock;
+	    secsControl++;
+  	}
+	
+    init = function() {
+    	
+		if ($scope.funcionario)
+			getApontamentoDiarioFromFuncionario();
+		else
+			$scope.usuario = usuario.data;
+	
+		tick();
+		$interval(tick, 1000);		
+    }
+
+    //INICIALIZA O CONTROLLER COM ALGUMAS VARIÁVEIS
+    init();
 }]);

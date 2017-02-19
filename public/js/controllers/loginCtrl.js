@@ -1,12 +1,12 @@
 angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "Auth", 
-	"usuarioAPI", "homeAPI",
-	function($scope, $location, Auth, usuarioAPI, homeAPI){
+	"usuariosAPI", "homeAPI",
+	function($scope, $location, Auth, usuariosAPI, homeAPI){
 	
 	console.log("Entrou no Login controller");
 
 	function getUsuario(idUsuario){
 		
-		usuarioAPI.getUsuario(idUsuario).then(function sucessCallback(response){
+		usuariosAPI.getUsuario(idUsuario).then(function sucessCallback(response){
 
 			console.log('usuario logado: ', response.data.email);
 
@@ -36,7 +36,7 @@ angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "A
 
 	$scope.login = function (usuario) {
 
-	    usuarioAPI.signIn(usuario).then(function sucessCallback(response){      				
+	    usuariosAPI.signIn(usuario).then(function sucessCallback(response){      				
 						
 			console.log('Auth.setToken', response.data.token);
 			console.log('id usuário retornado: ', response.data.idUsuario);
@@ -55,7 +55,7 @@ angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "A
 
 	$scope.register = function (usuario) {
 
-		usuarioAPI.register(usuario).then(function sucessCallback(response){
+		usuariosAPI.register(usuario).then(function sucessCallback(response){
 
 			$scope.successMsg = response.data.message;
 			delete $scope.user;			

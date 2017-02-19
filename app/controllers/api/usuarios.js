@@ -50,7 +50,7 @@ router.post('/', function(req, res) {
       }
 
       console.log("usuario criado com sucesso!");
-      return res.status(200).send({ success: true, message: 'Usuário cadastrado com sucesso!'});
+      return res.status(200).send({ success: true, message: 'Usuário associado com sucesso!'});
     });
   });
 });
@@ -60,12 +60,15 @@ router.get('/:id', function(req, res) {
 
   var idUsuario = req.params.id;
 
-  Usuario.findOne({_id: idUsuario}, function(err, usuario){
+  Usuario.findOne({_id: idUsuario})
+  .populate('perfil')
+  .populate('funcionario')
+  .exec(function(err, usuario){
     
     if(err) {
-      return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+      return res.status(500).send({success: false, message: 'Ocorreu um erro na obtenção do Usuário no Banco de Dados!'});
     }        
-          
+    console.log("usuário retornado no get único: ", usuario);      
     return res.json(usuario);
   });
 
@@ -76,8 +79,8 @@ router.put('/:id', function(req, res){
 
   var idUsuario = req.params.id;
   Usuario.findOne({_id: idUsuario})
-  .populate('funcionario', 'nome dataNascimento PIS')
-  .populate('perfil')
+  //.populate('funcionario', 'nome dataNascimento PIS')
+  //.populate('perfil')
   .exec(function(err, usuario){
 
     if(err) {

@@ -42,6 +42,7 @@ router.post('/', function(req, res, next) {
             var expires = moment().add(1, 'days').valueOf();
 
             var token = jwt.encode({
+                _id: usuario._id,
                 email: usuario.email,
                 role: usuario.perfil.nome, //pode botar manual para testes
                 acLvl: usuario.perfil.accessLevel, //pode botar manual para testes

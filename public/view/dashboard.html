@@ -2,6 +2,7 @@
 
 <h1 class="page-header">Acompanhamento de Marcações</h1>
  
+<div class="row">
  <div ng-show="successMsg" class="alert alert-success alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <strong>Feito!</strong> {{successMsg}}
@@ -11,8 +12,9 @@
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <strong>Ops!</strong> {{errorMsg}}
  </div>
+</div>
 
- <div class="panel panel-primary">
+<div class="panel panel-primary">
   <div class="panel-heading">
     <h3 class="panel-title">Escolha Setor, Equipe e Período para filtrar as informações</h3>
   </div>
@@ -44,7 +46,6 @@
       </form>
     </div>
   </div>
-  
 </div>
 
 <div ng-repeat="data in rangeDate">
@@ -75,10 +76,11 @@
   </div>
 </div>
 
-
+<!--
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 <script src="lib/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+##Just to make our placeholder images work. Don't actually copy the next line!
 <script src="lib/bootstrap-workarounds/holder.js"></script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+##IE10 viewport hack for Surface/desktop Windows 8 bug
 <script src="lib/bootstrap-workarounds/ie10-viewport-bug-workaround.js"></script>
+-->

@@ -9,6 +9,9 @@ angular.module('rhPontumApp').controller('novoFuncionarioCtrl', ['$scope', '$win
 
     $scope.save = function(funcionario) {
 
+        if (!funcionario.sexoMasculino)
+            funcionario.sexoMasculino = false;
+
         console.log('funcionario a ser enviado:', funcionario);
             
         funcionariosAPI.create(funcionario).then(

@@ -7,22 +7,23 @@
         <th>Nome</th>
         <th>Data de Nascimento</th>
         <th>PIS</th>
-        <th>Equipes</th>
+        <th>Cargo</th>
         <th>Ações</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="funcionario in funcionarios">
-        <td>{{funcionario.nome}}</td>
-        <td>{{funcionario.dataNascimento | date: 'dd/MM/yyyy'}}</td>
-        <td>{{funcionario.PIS}}</td>
+        <td>{{::funcionario.nome}}</td>
+        <td>{{::funcionario.dataNascimento | date: 'dd/MM/yyyy'}}</td>
+        <td>{{::funcionario.PIS}}</td>
         <td>
-          <ul class='list-group'>
+          <!--<ul class='list-group'>
             <li ng-repeat="equipe in funcionario.alocacao.equipes track by $index" class='list-group-item'>                      
               {{equipe.nome}}
               
             </li>
-          </ul>
+          </ul>-->
+          {{::funcionario.sexoMasculino ? funcionario.alocacao.cargo.especificacao : funcionario.alocacao.cargo.nomeFeminino}}
         </td>
         <td>
           <div class="btn-group" role="group" aria-label="acoes">

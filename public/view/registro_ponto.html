@@ -1,28 +1,71 @@
 <link href="css/registrarPonto.css" rel="stylesheet">
 
-	<h3 class="page-header">Registro de Ponto</h3>
+<h3 class="page-header">Registro de Ponto</h3>
 
-	<div class="well">	
-		
-		<div class="row">
-			<div class="col-md-1">
-				<img src="../img/user-basic1.png" class="img-circle img-reg-user">
-			</div>
-			<div class="col-md-11">
-				<p>	
-					{{funcionario.nome}} ({{funcionario.instituicao.sigla}})				
-				</p>
-				<p class="muted"> {{usuario.email}} </p>
+
+<div class="well">
+	
+	<div class="row" ng-if="!funcionario">
+		<p> O usuário <strong>{{usuario.email}}</strong> não possui um funcionário associado para o registro do ponto. </p>
+	</div>
+
+	<div class="row" ng-if="funcionario">	
+		<div class="col-md-12">
+			<div ng-show="successMsg" class="alert alert-success alert-dismissible" role="alert">
+		      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		      <strong>Feito!</strong> {{successMsg}}
+		    </div>
+
+		    <div ng-show="errorMsg" class="alert alert-danger alert-dismissible" role="alert">
+		      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		      <strong>Ops!</strong> {{errorMsg}}
+		    </div>
+		</div>
+	</div>
+	<div class="row" ng-if="funcionario">
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-md-3">
+					<img src="../img/user-basic1.png" class="img-circle img-reg-user">
+				</div>
+				<div class="col-md-9">
+					<p>	
+						{{funcionario.nome}} {{funcionario.sobrenome}}				
+					</p>
+					<p class="muted"> {{funcionario.email}} </p>
+				</div>
 			</div>
 		</div>		
 
-		<div class="row">
-			<h3 class="page-header"></h3>		
-			<p>
-				Data e hora: {{currentDate | date: 'dd/MM/yyyy, HH:mm'}}
-			</p>
-		</div>	
-	</div>
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-md-12">
+					<time datetime="{{currentDateFtd}}" class="date-as-calendar position-em size1_25x">
+						<span class="weekday">{{currentDate | date: 'EEE'}}</span>
+						<span class="day">{{currentDate | date: 'd'}}</span>
+						<span class="month">{{currentDate | date: 'LLLL'}}</span>
+						<span class="year">{{currentDate | date: 'yyyy'}}</span>
+					</time>
+					<table class="tabBlock" cellspacing="0" cellpadding="0" border="0">
+			            <tr>
 
-	<button class="btn btn-xs btn-primary" ng-click="registro()">Registrar!</button>	
+			            	<td class="clock" id="dc">{{clock | date: 'HH:mm'}}</td>  <!-- THE DIGITAL CLOCK. -->
+			                <td>
+			                    <table cellpadding="0" cellspacing="0" border="0">		                   		                      
+			                        <!-- SHOWING SECONDS. -->
+			                        <tr><td class="clocklg" id="dc_second">{{clock | date: 'ss'}}</td></tr>
+			                    </table>
+			                </td>
+			            </tr>
+			        </table>
+				</div>
+			</div>
+		</div>			
+	</div>
+	<div class="row" ng-if="funcionario">	
+		<h3 class="page-header"></h3>
+	</div>
+	<div class="row" ng-if="funcionario" align="center">	
+		<button class="btn btn-lg btn-primary" ng-click="registro()">Registrar!</button>
+	<div class="row" ng-if="funcionario">	
 </div>

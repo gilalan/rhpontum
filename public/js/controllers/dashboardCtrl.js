@@ -20,7 +20,7 @@ angular.module('rhPontumApp').controller('dashboardCtrl', ["$scope", "$filter", 
 		
 		if(setorId){
 			if (!$scope.equipesMap.get(setorId)) {
-				console.log('getEquipes!!: ', setorId);
+				console.log('getEquipes!!: ');
 				setoresAPI.getEquipesBySetor(setorId).then(function sucessCallback(response){
 
 					$scope.equipesMap.set(setorId, response.data);
@@ -38,11 +38,13 @@ angular.module('rhPontumApp').controller('dashboardCtrl', ["$scope", "$filter", 
 		if (equipeId) {
 
 			if (!$scope.funcionariosMap.get(equipeId)) {
-				console.log('get funcionarios!> ', equipeId);
-				equipesAPI.getFuncionariosByEquipe(equipeId).then(function sucessCallback(response){
-
-					var funcionariosResult = response.data;
-					$scope.funcionariosMap.set(equipeId, funcionariosResult);
+				console.log('get funcionarios!!');
+				//equipesAPI.getFuncionariosByEquipe(equipeId).then(function sucessCallback(response){
+				equipesAPI.getEquipe(equipeId).then(function sucessCallback(response){
+					
+					console.log("response data Objeto Equipe Completo", response.data);
+					var equipeCompleta = response.data;
+					$scope.funcionariosMap.set(equipeId, equipeCompleta.componentes);					
 
 				}, function errorCallback(response){
 
@@ -55,6 +57,8 @@ angular.module('rhPontumApp').controller('dashboardCtrl', ["$scope", "$filter", 
 
 	//Conjunto de funcionários de uma equipe
 	getApontamentosByFuncionarios = function(arrayFuncionarios, dataInicial, dataFinal){
+
+		console.log("array de funcionários ", arrayFuncionarios);
 
 		$scope.rangeDate = getArrayRangeDate(dataInicial, dataFinal);
 
@@ -169,11 +173,6 @@ angular.module('rhPontumApp').controller('dashboardCtrl', ["$scope", "$filter", 
 
 	$scope.getApontamentosByFilter = function(setorId, equipeId, dataInicial, dataFinal){
 		
-		console.log('click to search', setorId);
-		console.log('click to search', equipeId);
-		console.log('click to search', dataInicial);
-		console.log('click to search', dataFinal);
-
 		//check date format
 		console.log('data entrada: ', dataInicial);
 		dataInicial = fixDateFormat(dataInicial); 

@@ -1,0 +1,34 @@
+.dadosIdent {
+	margin-left: 5px;
+}
+
+.needSpace {
+	margin-bottom: 10px;
+}
+
+.centerColSpan{
+	text-align: center;
+}
+
+.rightColSpan{
+	text-align: right;
+}
+
+.table th { 
+	border-top: none !important;
+    border-bottom: 1px solid #dcdcdc !important;
+    border-left: 1px solid #dcdcdc !important;
+    border-right: 1px solid #dcdcdc !important;
+ }
+
+ .table td {
+ 	border-left: 1px solid #dcdcdc !important;
+    border-right: 1px solid #dcdcdc !important;	
+ }
+
+ .dateDestak {
+ 	margin-top: 5px;
+    font-size: 15px;
+    color: #12198e;
+    font-family: Montserrat;
+ }

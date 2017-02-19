@@ -8,13 +8,13 @@ $provide.value("$locale", {
       "PM"
     ],
     "DAY": [
-      "domingo",
-      "segunda-feira",
-      "ter\u00e7a-feira",
-      "quarta-feira",
-      "quinta-feira",
-      "sexta-feira",
-      "s\u00e1bado"
+      "Domingo",
+      "Segunda-feira",
+      "Ter\u00e7a-feira",
+      "Quarta-feira",
+      "Quinta-feira",
+      "Sexta-feira",
+      "S\u00e1bado"
     ],
     "ERANAMES": [
       "antes de Cristo",
@@ -40,13 +40,13 @@ $provide.value("$locale", {
       "dezembro"
     ],
     "SHORTDAY": [
-      "dom",
-      "seg",
-      "ter",
-      "qua",
-      "qui",
-      "sex",
-      "s\u00e1b"
+      "Dom",
+      "Seg",
+      "Ter",
+      "Qua",
+      "Qui",
+      "Sex",
+      "S\u00e1b"
     ],
     "SHORTMONTH": [
       "jan",
@@ -81,6 +81,7 @@ $provide.value("$locale", {
       6
     ],
     "fullDate": "EEEE, d 'de' MMMM 'de' y",
+    "abvFullDate": "EEE, d 'de' MMM 'de' y",
     "longDate": "d 'de' MMMM 'de' y",
     "medium": "d 'de' MMM 'de' y HH:mm:ss",
     "mediumDate": "d 'de' MMM 'de' y",

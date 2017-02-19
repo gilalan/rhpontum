@@ -32,4 +32,9 @@ angular.module('rhPontumApp').service('equipesAPI', ['$http', function($http){
 		return $http.get(_urlBaseEquipes + '/' + id + '/funcionarios');
 	};
 
+	svc.getEquipesByGestor = function(gestor) {
+
+		return $http.post(_urlBaseEquipes + '/gestorFilter', gestor);
+	};
+
 }]);
