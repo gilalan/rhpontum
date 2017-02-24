@@ -879,34 +879,34 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
 
   init();
 	
-  var label = {
-    value: 55, 
-    label: "8/18 - 8/24", 
-    datasetLabel: "Foo", 
-    strokeColor: "rgba(178,145,47,1)", 
-    fillColor: "rgba(178,145,47,0.2)"
-  }
+  // var label = {
+  //   value: 55, 
+  //   label: "8/18 - 8/24", 
+  //   datasetLabel: "Foo", 
+  //   strokeColor: "rgba(178,145,47,1)", 
+  //   fillColor: "rgba(178,145,47,0.2)"
+  // }
 
-  $scope.options = {
-    scaleShowLabelBackdrop : true,
-    scaleShowLabels : true,
-    scaleBeginAtZero : true,
-    scaleLabel : "<%= Number(value) + ' %'%>",
-    legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%> <strong><%=datasets[i].value%></strong><%}%></li><%}%></ul>",
-    multiTooltipTemplate: "<%=datasetLabel%> XXX : <%= value %>% achieved"
-  }
+  // $scope.options = {
+  //   scaleShowLabelBackdrop : true,
+  //   scaleShowLabels : true,
+  //   scaleBeginAtZero : true,
+  //   scaleLabel : "<%= Number(value) + ' %'%>",
+  //   legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%> <strong><%=datasets[i].value%></strong><%}%></li><%}%></ul>",
+  //   multiTooltipTemplate: "<%=datasetLabel%> XXX : <%= value %>% achieved"
+  // }
 
 	$scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
   $scope.series = ['Series A', 'Series B'];
-  $scope.data = [
-      [65, 59, 80, 81, 56, 55, 40],
-      [28, 48, 40, 19, 86, 27, 90]
-    ];
-  $scope.chart_options = {
-    multiTooltipTemplate: function(label) {
-      return "##" + label.label + ': ' + label.value + "##";
-    }
-  }
+  // $scope.data = [
+  //     [65, 59, 80, 81, 56, 55, 40],
+  //     [28, 48, 40, 19, 86, 27, 90]
+  //   ];
+  // $scope.chart_options = {
+  //   multiTooltipTemplate: function(label) {
+  //     return "##" + label.label + ': ' + label.value + "##";
+  //   }
+  // }
   $scope.data1 = [
       [1164445, 3444359, 3444380, 444481, 566556, 552255, 466440],
       [244448, 444448, 444440, 44419, 8446, 9427, 9440]
@@ -915,12 +915,12 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
     ////console.log(points, evt);
   };
 
-  // Simulate async data update
-  $timeout(function () {
-    $scope.data = [
-      [28, 48, 40, 19, 86, 27, 90],
-      [65, 59, 80, 81, 56, 55, 40]
-    ];
-  }, 3000);
+  // // Simulate async data update
+  // $timeout(function () {
+  //   $scope.data = [
+  //     [28, 48, 40, 19, 86, 27, 90],
+  //     [65, 59, 80, 81, 56, 55, 40]
+  //   ];
+  // }, 3000);
 
 }]); 

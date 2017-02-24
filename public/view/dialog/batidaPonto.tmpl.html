@@ -1,0 +1,32 @@
+<link href="css/dialog.css" rel="stylesheet">
+<md-dialog aria-label="batidaPonto">
+  <form ng-cloak>
+    <md-dialog-content>
+      <div ng-show="successMsg" class="alert alert-success alert-dismissible" role="alert">
+	    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	    <strong>Feito!</strong> {{batidaInfo.successMsg}}
+	  </div>
+      <div class="md-dialog-content">
+        <div class="papelComprovante">
+          <p>
+          	COMPROVANTE DE REGISTRO DE PONTO DO TRABALHADOR<br>
+          	SISTEMA ALTERNATIVO DE BATIDA DE PONTO: RHPONTO <br>
+          	CNPJ: 00.000.000/0000-00<br>
+          	LOCAL: UNIVASF <br>
+          	NOME: {{batidaInfo.funcionario.nome}} {{batidaInfo.funcionario.sobrenome}}<br>
+          	PIS: {{batidaInfo.funcionario.PIS}}<br>
+          	DATA: {{batidaInfo.date}}, &nbsp; &nbsp; &nbsp; &nbsp; HORA: {{batidaInfo.hora}}:{{batidaInfo.minuto}}<br>
+          	NSR: 0000000044
+          </p>
+        </div>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="answer('salvar')">
+        Salvar
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
