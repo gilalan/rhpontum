@@ -83,10 +83,11 @@ router.get('/:id', function(req, res){
 	});
 });
 
-//Update 1 setor by id
+//Update 1 equipe by id
 router.put('/:id', function(req, res){
 	
 	var idEquipe = req.params.id;
+  var _equipeNova = req.body;
 	
 	Equipe.findOne({_id: idEquipe}, function(err, equipe){
 
@@ -94,15 +95,15 @@ router.put('/:id', function(req, res){
     		return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
     	}
 
-      console.log("nome: ", req.body.nome);
-      console.log("gestor: ", req.body.gestor);
-      console.log("setor: ", req.body.setor);
-      console.log("componentes: ", req.body.componentes);
+      console.log("nome: ", _equipeNova.nome);
+      console.log("gestor: ", _equipeNova.gestor);
+      console.log("setor: ", _equipeNova.setor);
+      console.log("componentes: ", _equipeNova.componentes);
 
-	  	equipe.nome = req.body.nome;
-      equipe.gestor = req.body.gestor;
-      equipe.setor = req.body.setor;
-      equipe.componentes = req.body.componentes;
+	  	equipe.nome = _equipeNova.nome;
+      equipe.gestor = _equipeNova.gestor;
+      equipe.setor = _equipeNova.setor;
+      equipe.componentes = _equipeNova.componentes;
 
       //tenta atualizar de fato no BD
       equipe.save(function(err){
@@ -137,24 +138,21 @@ router.delete('/:id', function(req, res){
 //Métodos extras, fora do padrão REST
 //##############################################
 
-//Get funcionarios by equipe
-router.get('/:id/funcionarios', function(req, res){
-
-    /*
-    var idEquipe = req.params.id;
-
-    Funcionario.find({equipes: idEquipe})
-    //.populate('gestor', 'nome PIS')
-    .exec(function(err, funcionarios){
+//Atualizando os componentes de uma determinada equipe
+router.post('/:id/updateWorkers', function(req, res){
         
-        if(err) {
-            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
-        }
+    var query = {_id: req.params.id};
+    var _componentes = req.body;
 
-        console.log("funcionarios mongoose: ", funcionarios);
-        return res.json(funcionarios);
+    Equipe.findOneAndUpdate(query, {componentes: _componentes}, function(err, componente){
+                
+      if(err) {
+        return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+      }
+
+      console.log("componente atualizado mongoose: ", componente);
+      return res.status(200).send({success: true, message: 'Componentes (des)associados com sucesso!'});
     });
-    */
 });
 
 router.post('/gestorFilter', function(req, res){

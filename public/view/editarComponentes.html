@@ -26,10 +26,12 @@
 	</div>
 	<div class="col-md-10">
 		<div class="well wellWhiteBG">
+			<p>Clique sobre o funcionário para integrá-lo em sua equipe. No carregamento inicial da tela, os funcionários destacados em verde já estão associados à sua equipe. Para associar novos colaboradores, basta clicar sobre o funcionário da lista (ficando com a linha também em verde) e depois clicar em Salvar.</p>
 			<p class="destakHeader">Total de {{funcionarios.length}} Colaboradores:</p>
-			<table class="table table-striped">
+			<table class="table">
 			    <thead>
 			      <tr>
+			      	<th>Associado?</th>
 			        <th>Nome</th>
 			        <th>E-mail</th>
 			        <th>Cargo</th>
@@ -37,6 +39,7 @@
 			    </thead>
 			    <tbody>
 			      <tr ng-repeat="componente in funcionarios track by $index" ng-click="setSelected(componente)" ng-class="{'selected-func': componente.selected}">
+			      	<td>{{componente.selected ? "Sim" : "Não"}}</td>
 			        <td>{{componente.nome}} {{componente.sobrenome}}</td>
 			        <td>{{componente.email}}</td>
 			        <td>{{componente.sexoMasculino ? componente.alocacao.cargo.especificacao : componente.alocacao.cargo.nomeFeminino}}</td>
@@ -52,5 +55,11 @@
 </div>
 
 <div class="row text-center">
-	<button class="btn btn-lg btn-primary btn-block" ng-disabled="userForm.$invalid" ng-click="associar(usuario)">Associar</button>
+	<div class="col-md-5">
+	</div>
+	<div class="col-md-2">
+		<button class="btn btn-lg btn-primary btn-block" ng-click="associar()">Salvar</button>
+	</div>
+	<div class="col-md-5">
+	</div>
 </div>

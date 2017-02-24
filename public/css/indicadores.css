@@ -13,7 +13,6 @@
 .rightColSpan{
 	text-align: right;
 }
-
 .table th { 
 	border-top: none !important;
     border-bottom: 1px solid #dcdcdc !important;  
@@ -43,8 +42,26 @@
 }
 
 .dateDestak {
- 	margin-top: 5px;
-    font-size: 15px;
+ 	margin-top: 15px;
+    font-size: 14px;
     color: #12198e;
     font-family: Montserrat;
+ }
+
+ .graphBGColor {
+ 	background-color: rgba(217, 237, 247, 0.6);
+ }
+
+ .titleGraph {
+ 	margin-top: 10px;
+    font-family: monospace;
+    font-size: 13px;
+    border: 1px solid #a79f9f;
+    border-radius: 5px;
+    padding: 10px;
+ }
+
+ .titleGraphSmall {
+ 	float: left;
+	margin-right: 2px;
  }

@@ -67,8 +67,8 @@
             </div>
 
             <div class="form-group col-xs-6 col-md-3">
-                  <label class="control-label" for="dataAdmissao">Data de Admissão*</label>
-              <input type="text" class="form-control input-lg" placeholder="Data de Admissão" ng-model="funcionario.alocacao.dataAdmissao" ng-required="true" ui-date>
+              <label class="control-label" for="dataAdmissao">Data de Admissão*</label>
+              <input type="text" class="form-control input-md" placeholder="Data de Admissão" ng-model="funcionario.alocacao.dataAdmissao" ng-required="true" ui-date>
             </div> 
 
             <div class="form-group col-xs-6 col-md-3">
@@ -80,7 +80,7 @@
 
              <div class="form-group col-xs-6 col-md-3">
               <label class="control-label" for="turno">Turno*</label>
-              <select id="turno" name="turno" class="form-control" ng-model="funcionario.alocacao.turno" ng-options="turno.descricao for turno in turnos track by turno._id" ng-required="true">
+              <select id="turno" name="turno" class="form-control" ng-model="funcionario.alocacao.turno" ng-options="turno.descricao for turno in turnos track by turno._id" ng-change="checkEscala(funcionario.alocacao.turno)" ng-required="true">
                 <option value="">Selecione um Turno</option>
               </select>
             </div> 
@@ -89,20 +89,25 @@
 
           <h4 class="sub-header destakHeader"><strong>Informações Extras</strong></h4>
           <div id="acessoweb-form" class="row">
-            <div class="form-group col-xs-12 col-md-4">
-              <input type="checkbox" ng-model="funcionario.sexoMasculino"/><p>Sexo Masculino?</p>
+            <div class="form-group col-xs-6 col-md-3">
+              <input type="checkbox" class="checkBox" ng-model="funcionario.sexoMasculino"/><p>Sexo Masculino?</p>
             </div>
-            <div class="form-group col-xs-12 col-md-4">
-              <input type="checkbox" ng-model="funcionario.alocacao.gestor" /><p>É um GESTOR?</p>
+            <div class="form-group col-xs-6 col-md-3">
+              <input type="checkbox" class="checkBox" ng-model="funcionario.alocacao.gestor" /><p>É um GESTOR?</p>
             </div>
-            <div class="form-group col-xs-12 col-md-4">
-              <input type="checkbox" ng-model="funcionario.rhponto" /><p>Usa o RHPonto?</p>
+            <div class="form-group col-xs-6 col-md-3">
+              <input type="checkbox" class="checkBox" ng-model="funcionario.rhponto" /><p>Usa o RHPonto?</p>
+            </div> 
+            <div class="form-group col-xs-6 col-md-3">
+              <label class="control-label dateDesab" for="dataAdmissao" ng-class="{'dateRequired': isInitDateRequired}" title="Digite a data que o funcionário de fato inicia o seu trabalho na escala 12x36h se selecionada">Data de Início Efetivo*</label>
+              <input type="text" class="form-control input-md" placeholder="Data de Início Efetivo" title="Digite a data que o funcionário de fato inicia o seu trabalho na escala 12x36h se selecionada" ng-model="funcionario.alocacao.dataInicioEfetivo" ng-required="isInitDateRequired" ng-disabled="!isInitDateRequired" ui-date>
             </div> 
           </div>
            
-          <div class="form-group col-xs-12 col-md-8">
-            <button type="submit" class="btn btn-primary btn-lg" ng-disabled="funcionarioForm.$invalid" ng-click="save(funcionario)">Salvar</button>
-            <!--ng-disabled="funcionarioForm.$invalid"-->
+          <div class="row">
+            <div class="col-md-12">
+              <button type="submit" class="btn btn-primary btn-lg" ng-disabled="funcionarioForm.$invalid" ng-click="save(funcionario)">Salvar</button>
+            </div>
           </div>
         </form>
     </div>

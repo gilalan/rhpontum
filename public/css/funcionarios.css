@@ -9,3 +9,21 @@
 .space-fix{
 	margin-bottom: 10px;
 }
+
+input.checkBox {
+    float: left;
+    margin-right: 5px;
+}
+
+input.smallDate {
+	height: 35px !important;
+	font-size: 15px !important;
+}
+
+label.dateDesab {
+	color: #d0d0d0;
+}
+
+label.dateRequired {
+	color: #000;
+}

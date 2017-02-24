@@ -127,31 +127,15 @@
 </div>
 
 <div id="escala-form" class="row" ng-if="preencherEscala.flag && preencherEscala.tipoRevezamento">
+  
   <h4 class="sub-header">Preencher o Horário da Escala 12h/36h</h4>
-  {{rowHorarioDias[0].anoBase}}
-  <div class="col-md-12">
-    <div class="col-md-6">  
-      <label class="control-label" for="AnoBase">Ano Base*</label>
-      <input type="text" class="form-control table-form-control" placeholder="____" ng-model="rowHorarioDias[0].anoBase" ui-mask="9999">
-    </div>
-
-    <div class="col-md-6">  
-      <label class="control-label" for="MesBase">Mês Base*</label><br/>
-      <div class="btn-group btn-group" role="group" aria-label="MesBase" ng-repeat="mes in meses">
-        <button type="button" class="btn btn-default btn-sm" ng-class="{'btn-primary': mes.selecionado}" ng-click="checkUncheckMes(mes)">
-          {{mes.str}}
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-12">  
+  
+  <div class="col-md-11">  
 
     <div class="table-responsive">
       <table role="grid" class="table table-hover table-striped">
         <thead>
           <tr>
-            <th>Dia Base de início</th>
             <th>1ª Entd.</th>
             <th>1ª Saída</th>
             <th>2ª Entd.</th>
@@ -164,7 +148,6 @@
         <tbody>
           <tr ng-repeat="horarioDia in rowHorarioDias track by $index">
             <tr ng-repeat="horarioDia in rowHorarioDias track by $index">
-            <td class="col-md-3"><button type="button" class="btn btn-default" ng-click="changeDia()">{{diaBaseText}}</button></td>
             <td class="col-md-1"><input type="text" class="form-control table-form-control" placeholder="__:__" ng-model="rowHorarioDias[$index].ent1" ui-mask="99:99"></td>
             <td class="col-md-1"><input type="text" class="form-control table-form-control" placeholder="__:__" ng-model="rowHorarioDias[$index].sai1" ui-mask="99:99"></td>
             <td class="col-md-1"><input type="text" class="form-control table-form-control" placeholder="__:__" ng-model="rowHorarioDias[$index].ent2" ui-mask="99:99"></td>
@@ -178,4 +161,5 @@
       </table>
     </div>
   </div>
+  <div class="col-md-1"></div>
 </div>

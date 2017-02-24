@@ -14,6 +14,7 @@ var funcionarioSchema = new Schema({
 	email: {type: String, unique: true},
 	alocacao: {
 		dataAdmissao: {type: Date, required: true},
+		dataInicioEfetivo: Date, //é usada apenas na escala 12x36h
 		cargo: {type: Schema.Types.ObjectId, ref: 'Cargo', required: true},
 		turno: {type: Schema.Types.ObjectId, ref: 'Turno', required: true},
 		instituicao: {type: Schema.Types.ObjectId, ref: 'Instituicao', required: true},

@@ -37,4 +37,8 @@ angular.module('rhPontumApp').service('equipesAPI', ['$http', function($http){
 		return $http.post(_urlBaseEquipes + '/gestorFilter', gestor);
 	};
 
+	svc.atualizarComponentes = function (id, componentes) {
+		return $http.post(_urlBaseEquipes + '/' + id + '/updateWorkers', componentes);
+	}
+
 }]);

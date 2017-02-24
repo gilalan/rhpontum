@@ -9,6 +9,7 @@ angular.module('rhPontumApp').controller('editFuncionarioCtrl', ['$scope', '$fil
     $scope.cargos = cargos.data;
     $scope.turnos = turnos.data;
     $scope.newOrEdit = 'Editar';
+    $scope.isInitDateRequired = false;
     $window.scrollTo(0, 0);    
 
     $scope.save = function(funcionario) {
@@ -39,6 +40,11 @@ angular.module('rhPontumApp').controller('editFuncionarioCtrl', ['$scope', '$fil
         $window.scrollTo(0, 0);
     };
 
+    $scope.checkEscala = function (turno) {
+        //se for da escala 12x36
+        $scope.isInitDateRequired = (turno.escala.codigo == 2) ? true : false;        
+    }
+
     fixDateFormat = function(data) {
                 
         var regex = /[0-9]{2}\/[0-9]{2}\/[0-9]{4}/;
@@ -52,5 +58,7 @@ angular.module('rhPontumApp').controller('editFuncionarioCtrl', ['$scope', '$fil
 
         return data;
     }
+
+    $scope.checkEscala($scope.funcionario.alocacao.turno)
 
 }]);

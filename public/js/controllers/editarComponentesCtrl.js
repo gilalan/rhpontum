@@ -3,7 +3,6 @@ angular.module('rhPontumApp').controller('editarComponentesCtrl', ['$scope', 'eq
     
     $scope.equipe = equipe.data;
     $scope.funcionarios = funcionarios.data;
-    $scope.isAssociated = false;
 
     /* PAGINAÇÃO , EM BREVE!
     $scope.filteredWorkers = [];
@@ -14,20 +13,27 @@ angular.module('rhPontumApp').controller('editarComponentesCtrl', ['$scope', 'eq
 
     $scope.associar = function (usuario) {
 
-        // usuario.funcionario = $scope.funcionario._id;
+        // Obtendo funcionários selecionados
+        var selectedWorkers = $scope.funcionarios.filter(function(funcionario){
+            return funcionario.selected;
+        });
 
-        // equipesAPI.register(usuario).then(function sucessCallback(response){
+        console.log("selectedWorkers", selectedWorkers);
+        var _componentes = selectedWorkers.map(function(componente){
+            return componente._id;
+        });
 
-        //     $scope.successMsg = response.data.message;
-        //     delete $scope.usuario;         
-        //     $scope.userForm.$setPristine();
+        console.log("Componentes para envio: ", _componentes);
+        equipesAPI.atualizarComponentes($scope.equipe._id, _componentes).then(function sucessCallback(response){
 
-        // }, function errorCallback(response){
+            $scope.successMsg = response.data.message;
+        
+        }, function errorCallback(response){
             
-        //     $scope.errorMsg = response.data.message;
-        //     console.log("Erro de registro: " + response.data.message);
+            $scope.errorMsg = response.data.message;
+            console.log("Erro de registro: " + response.data.message);
             
-        // });     
+        });     
     }
 
     $scope.setSelected = function (funcionario) {
@@ -50,20 +56,17 @@ angular.module('rhPontumApp').controller('editarComponentesCtrl', ['$scope', 'eq
 
     checkAssociation = function () {
 
-        // equipesAPI.getUsuarioByFuncionario($scope.funcionario._id).then(function sucessCallback(response){
-            
-        //     $scope.usuario = response.data;
+        console.log("verificando os componentes da equipe...");
+        $scope.equipe.componentes.forEach(function(componente){
+           
+            $scope.funcionarios.some(function(funcionario){
 
-        //     if ($scope.usuario){
-        //         if($scope.usuario.funcionario._id === $scope.funcionario._id){
-        //             $scope.isAssociated = true;
-        //         }
-        //     }
+                if (funcionario._id === componente._id)
+                    funcionario.selected = true;
 
-        // }, function errorCallback(response){
-            
-        //     console.log("Erro de registro: " + response.data.message);
-        // });
+                return funcionario._id === componente._id;
+            });
+        });
     }
         
     checkAssociation();

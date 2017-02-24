@@ -70,7 +70,6 @@ angular.module('rhPontumApp').controller('editTurnoCtrl', ['$scope', '$window', 
         turnosAPI.update(turno).then(function sucessCallback(response){
             
             console.log("dados recebidos: ", response.data);
-            
             $scope.successMsg = response.data.message;
 
         }, function errorCallback(response){
@@ -290,14 +289,18 @@ angular.module('rhPontumApp').controller('editTurnoCtrl', ['$scope', '$window', 
     buildJornadaSemanalObject = function() {
 
         var arrayHorarios = [];
+        var horariosEmMinutos;
 
         $scope.rowHorarioDias.forEach(function(rowHorarioDia){
 
+            horariosEmMinutos = getHorarios(rowHorarioDia);
+            console.log("total min trabalho: ", getTotalMinutosTrabalho(horariosEmMinutos));
             arrayHorarios.push(
             {
                 dia: rowHorarioDia.nDia,
                 diaAbrev: rowHorarioDia.dia.substring(0, 3),
-                horarios: getHorarios(rowHorarioDia),
+                horarios: horariosEmMinutos,
+                minutosTrabalho: getTotalMinutosTrabalho(horariosEmMinutos),
                 viradaTurno: getTotalMinutosHorario(rowHorarioDia.viradaTurno)
             });
         });
@@ -316,21 +319,23 @@ angular.module('rhPontumApp').controller('editTurnoCtrl', ['$scope', '$window', 
         //$scope.rowHorarioDias.forEach(function(rowHorarioDia){
         //});
         var rowHorarioDia = $scope.rowHorarioDias[0];
-        var mesBaseSelected = $scope.meses.filter(function(mes){return mes.selecionado});
-        console.log("mesBaseSelected: ", mesBaseSelected);
+        //var mesBaseSelected = $scope.meses.filter(function(mes){return mes.selecionado});
+        //console.log("mesBaseSelected: ", mesBaseSelected);
+        var horariosEmMinutos = getHorarios(rowHorarioDia);
 
         arrayBase.push(
         {
-            horarios: getHorarios(rowHorarioDia),
-            diaBase: $scope.diaBase.dia,
-            mesBase: mesBaseSelected[0].mes,
-            anoBase: $scope.anoBase,
+            horarios: horariosEmMinutos,
+            //diaBase: $scope.diaBase.dia,
+            //mesBase: mesBaseSelected[0].mes,
+            //anoBase: $scope.anoBase,
             viradaTurno: getTotalMinutosHorario(rowHorarioDia.viradaTurno)
         });
-        console.log("scope ano base", $scope.anoBase);
+        console.log("total min trabalho: ", getTotalMinutosTrabalho(horariosEmMinutos));
         return jornada = {
             array: arrayBase,
-            minutosIntervalo: $scope.minutosIntervaloPrincipal
+            minutosIntervalo: $scope.minutosIntervaloPrincipal,
+            minutosTrabalho: getTotalMinutosTrabalho(horariosEmMinutos)
         };
     };
 
@@ -380,6 +385,28 @@ angular.module('rhPontumApp').controller('editTurnoCtrl', ['$scope', '$window', 
         var minutes = parseInt(minutesStr);
         console.log("total em minutos: ", (hours + minutes));
         return (hours + minutes); 
+    };
+
+    getTotalMinutosTrabalho = function (objHorariosmMinutos) {
+
+        if (objHorariosmMinutos) {
+            
+            if (objHorariosmMinutos.ent1 && objHorariosmMinutos.sai1 && 
+            objHorariosmMinutos.ent2 && objHorariosmMinutos.sai2) {
+                return (objHorariosmMinutos.sai2 - objHorariosmMinutos.ent2) + 
+                    ((objHorariosmMinutos.sai1 - objHorariosmMinutos.ent1));
+
+            } else if ( (objHorariosmMinutos.ent1 && objHorariosmMinutos.sai1) && 
+            (!objHorariosmMinutos.ent2 && !objHorariosmMinutos.sai2) ) {
+
+                return (objHorariosmMinutos.sai1 - objHorariosmMinutos.ent1);
+
+            } else {
+                return 0;
+            }
+        }  
+
+        return 0;
     };
 
     init = function () {

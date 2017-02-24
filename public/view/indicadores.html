@@ -16,7 +16,7 @@
 </div>
 
 <div clas="container">
-	<div class="row needSpace" ng-if="liberado">
+	<div class="row" ng-if="liberado">
 		<div class="col-xs-12 col-md-12">
 			<div class="dadosIdent"> <strong>Gestor(a)</strong>: {{gestor.nome}} {{gestor.sobrenome}} </div>
 			<div class="dadosIdent">
@@ -28,7 +28,13 @@
         			</button>
       			</div> 
       		</div>
-      		<div class="dadosIdent dateDestak"> 
+		</div>
+	</div>
+
+	<div class="row needSpace" ng-if="liberado && equipes">
+
+		<div class="col-xs-12 col-lg-12">
+			<div class="dadosIdent dateDestak needSpace"> 
       			<button type="button" class="btn btn-sm btn-default" ng-click="subtractOneDay()">
 	                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 	            </button>
@@ -37,14 +43,8 @@
 	                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 	            </button>
   			</div>
-		</div>
-	</div>
-
-	<div class="row needSpace" ng-if="liberado && equipes">
-
-		<div class="col-xs-12 col-md-6">
-			<div class="well well-sm pre-scrollable"> 
-				<div class="table-responsive">
+			<div class="table-responsive">
+				<div class="well well-sm pre-scrollable">
 				  <table role="grid" class="table table-striped table-hover lastVertical">
 				    <thead>
 				      <tr>
@@ -67,7 +67,7 @@
 				    </thead>
 				    <tbody>
 				      <tr ng-repeat="funcionario in equipe.componentes">
-				        <td><img class="img-responsive" src="{{funcionario.apontamentoDiario.statusImgUrl}}" alt="{{funcionario.apontamentoDiario.statusString}}"></td>
+				        <td><img class="img-responsive" src="{{funcionario.apontamentoDiario.statusImgUrl}}" alt="{{funcionario.apontamentoDiario.statusString}}" title="{{funcionario.apontamentoDiario.statusString}}"></td>
 				        <td>{{funcionario.nome}}</td>
 				        <td>{{funcionario.sexoMasculino ? funcionario.alocacao.cargo.especificacao : funcionario.alocacao.cargo.nomeFeminino}}
 				        </td>
@@ -91,19 +91,60 @@
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<div class="col-xs-12 col-md-6">
-			<canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-click="onClick"></canvas> 
+	<div class="row needSpace" ng-if="liberado && equipes">
+		<div class="col-xs-12 col-lg-6">
+			<div class="row">
+				<div class="col-xs-12">
+					<p class="titleGraph titleGraphSmall">Banco de Horas</p>
+					<div class="dadosIdent dateDestak"> 
+		      			<button type="button" class="btn btn-sm btn-default" ng-click="subtractOneWeek()">
+			                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+			            </button>
+		      			{{currentWeekFtd.begin}} a {{currentWeekFtd.end}} 
+		      			<button type="button" class="btn btn-sm btn-default" ng-click="addOneWeek()">
+			                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+			            </button>
+		  			</div>
+				</div>
+			</div>
+			<div class="row col-xs-12">
+				<div class="well well-sm graphBGColor">
+					<canvas class="chart chart-bar" chart-data="weekData" chart-labels="weekLabels" chart-series="weekSeries" chart-options="weekOptions" chart-click="onClick"></canvas> 
+				</div>
+			</div>
+	    </div>
+	    <div class="col-xs-12 col-lg-6">
+	    	<div class="row">
+				<div class="col-xs-12">
+					<p class="titleGraph titleGraphSmall">Absenteísmo</p>
+					<div class="dadosIdent dateDestak"> 
+		      			<button type="button" class="btn btn-sm btn-default" ng-click="subtractOneWeek()">
+			                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+			            </button>
+		      			{{currentWeekFtd.begin}} a {{currentWeekFtd.end}} 
+		      			<button type="button" class="btn btn-sm btn-default" ng-click="addOneWeek()">
+			                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+			            </button>
+		  			</div>
+				</div>
+			</div>
+			<div class="row col-xs-12">
+				<div class="well well-sm graphBGColor">
+					<canvas class="chart chart-line" chart-data="data1" chart-labels="labels" chart-series="series" chart-options="options" chart-click="onClick"></canvas> 
+				</div>
+			</div>
 	    </div>
 
 	</div>
 
 	<div class="row" ng-if="liberado">
-		<div class="col-xs-12 col-md-6">
-			<canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-click="onClick"></canvas> 
+		<div class="col-xs-12 col-md-12 col-lg-6">
+			<canvas class="chart chart-line" chart-data="data1" chart-labels="labels" chart-series="series" chart-options="options" chart-click="onClick"></canvas> 
 		</div>
 
-		<div class="col-xs-12 col-md-6">
+		<div class="col-xs-12 col-md-12 col-lg-6">
 			<canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-click="onClick"></canvas> 
 	    </div>
 	</div>
