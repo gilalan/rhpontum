@@ -141,7 +141,7 @@ router.post('/date', function(req, res){
     });
 });
 
-//Get apontamento de todos os funcionarios by date
+//Get apontamento de todos os funcionarios by DIA (data diária)
 router.post('/date/equipe', function(req, res){
 
     var objDateEquipe = req.body;
@@ -157,6 +157,7 @@ router.post('/date/equipe', function(req, res){
     .populate('funcionario', 'nome PIS')
     .exec(function(err, apontamentos){
         if(err) {
+            console.log("erro de apontamento? ", err);
             return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
         }
 

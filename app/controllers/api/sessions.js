@@ -32,7 +32,7 @@ router.post('/', function(req, res, next) {
         
         bcrypt.compare(req.body.senha, usuario.senha, function (err, valid) {        
             if (err){
-                console.log("aconteceu um erro");
+                console.log("aconteceu um erro: ", err);
                 return res.status(500).send({ success: false, message: 'Ocorreu um erro no processamento!'});
             }
             if (!valid) {

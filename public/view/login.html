@@ -8,7 +8,7 @@
     </nav>
     <h3 class="text-muted">RHPontum</h3>
   </div>
-
+  {{loading}}
   <div class="jumbotron">
     <h2>Bem-vindo,</h2>
     <p>digite seus dados para ter acesso ao sistema RHPontum:</p>
@@ -35,7 +35,7 @@
         <div ng-message="minlength" class="alert alert-danger">Tamanho mínimo do campo senha: 8 caracteres</div>
     </div>
 
-    <form class="form-signin" name="userForm" ng-submit="login(user)">
+    <form class="form-signin" name="userForm">
       <label for="inputEmail" class="sr-only">Email</label>
       <input id="inputEmail" name="email" class="form-control" placeholder="E-mail" ng-model="user.email" ng-required="true" ng-minlength='10' ng-pattern='/@/' autofocus="" type="email">
       <label for="inputPassword" class="sr-only">Senha</label>
@@ -45,10 +45,13 @@
           <input value="remember-me" type="checkbox"> Lembre-me
         </label>
       </div>
-      <input class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="userForm.$invalid" value="Entrar">
+      <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login(user)" ng-disabled="userForm.$invalid">Entrar</button>
+      <button id="baterPontoUsr" type="submit" class="btn btn-lg btn-warning  btn-block" ng-click="login(user, true)" ng-disabled="userForm.$invalid">
+        <span class="fa fa-clock-o fa-lg" aria-hidden="true"></span>
+        Bater Ponto!
+      </button>
     </form>
-    
-    <!--<button class="btn btn-xs btn-warning btn-block" ng-click="register(user)">Registrar</button>-->
+    <!--<span class="fa fa-hand-pointer-o fa-lg" aria-hidden="true"></span>-->
   </div>
 
   <footer class="footer">

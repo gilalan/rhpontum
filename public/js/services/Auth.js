@@ -2,6 +2,8 @@ angular.module('rhPontumApp')
 	.factory('Auth', ['$localStorage', '$q', 'jwtHelper', 
 		function($localStorage, $q, jwtHelper) {
 
+	var batidaDireta = false;
+
 	return {
 		authorize: function(routerAccessLevel){
 
@@ -30,7 +32,15 @@ angular.module('rhPontumApp')
 			var user = jwtHelper.decodeToken($localStorage.token);
 			return user;
 		},
+		setBatidaDireta: function(flag) {
+			console.log("Setando a batida direta para " , flag);
+			batidaDireta = flag;
+		},
+		getBatidaDireta: function() {
+			return batidaDireta;
+		},
 		logout: function(){
+			this.setBatidaDireta(false);
 			delete $localStorage.token;
 			$q.when();
 		}

@@ -1,5 +1,5 @@
 angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "Auth", 
-	"usuariosAPI", "homeAPI",
+	"usuariosAPI", "homeAPI", 
 	function($scope, $location, Auth, usuariosAPI, homeAPI){
 	
 	console.log("Entrou no Login controller");
@@ -32,9 +32,13 @@ angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "A
 			console.log('passou pelo sucess do redirectHome');
 			$location.path('/dashboard');
 		});
-	}
+	}	
 
-	$scope.login = function (usuario) {
+	$scope.login = function (usuario, baterPonto) {
+			
+		console.log("Entrou no $scope.login");
+		console.log("bater ponto?", usuario);
+		console.log("bater ponto?", baterPonto);
 
 	    usuariosAPI.signIn(usuario).then(function sucessCallback(response){      				
 						
@@ -44,12 +48,17 @@ angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "A
 			//return getUsuario(response.data.idUsuario);
 			//return redirectHome();
 			$scope.$emit('login', response.data.token);
-			$location.path("/dashboard");
+			var pathTo = "/dashboard";
+
+			if (baterPonto)
+				pathTo = "/registro_ponto/"+response.data.idUsuario;
+
+			console.log("path? ", pathTo);
+			$location.path(pathTo);
 
 		}, function errorCallback (response) {
 			
 			$scope.errorMsg = response.data.message;
-			
 		});
 	}
 
@@ -67,7 +76,7 @@ angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "A
 			console.log("Erro de registro: " + response.data.message);
 			
 		});		
+		
 	}
 
-	//$scope.token = $localStorage.token;
 }]);

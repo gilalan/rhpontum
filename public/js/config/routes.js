@@ -340,6 +340,25 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 		}
 	});
 
+	$routeProvider.when("/solicitacoes", {
+		controller: "solicitacoesCtrl",
+		templateUrl: "view/solicitacoes.html",
+		access: 'gestor',
+		accessLevel: 3,
+		resolve: {
+			solicitacoes: function(solicitacoesAPI) {
+				return solicitacoesAPI.get();
+			}
+		}
+	});
+
+	$routeProvider.when("/criar-solicitacao", {
+		controller: "editSolicitacaoCtrl",
+		templateUrl: "view/editSolicitacao.html",
+		access: 'user',
+		accessLevel: 1
+	});
+
 	$routeProvider.when("/escalas", {
 		controller: "escalaCtrl",
 		templateUrl: "view/escalas.html",
@@ -371,8 +390,20 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 		console.log('1. route change start: ');
 		
 		//current é de "onde veio", só aparece esse objeto se NÃO for o primeiro acesso
-		if (current)
+		if (current){
 			console.log('2. current.access: ', current.access);
+			if (current.originalPath == "/"){
+				var regex = /registro_ponto/;
+				if (regex.test(next.originalPath)){
+					console.log("opa, veio do login para o registro_ponto");
+					Auth.setBatidaDireta(true);
+					//current.resolve["batidaDireta"] = true;
+				}
+					
+			}
+			console.log("2.0 current path", current.originalPath);
+			console.log("2.1 next path: ", next.originalPath);
+		}
 
 		//next.access pega essa variável definida na rota, que indica o nível de acesso a ela.
 		//a gnt passa isso para um authorize(local) e verifica se ele pode entrar nessa rota.

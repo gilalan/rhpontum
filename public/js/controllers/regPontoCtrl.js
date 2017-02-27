@@ -1,15 +1,17 @@
-angular.module('rhPontumApp').controller('regPontoCtrl', ['$scope', '$filter', '$interval', '$mdDialog', 'Auth', 'apontamentosAPI', 'funcionariosAPI', 'usuario', 'currentDate',
-	function($scope, $filter, $interval, $mdDialog, Auth, apontamentosAPI, funcionariosAPI, usuario, currentDate){
+angular.module('rhPontumApp').controller('regPontoCtrl', ['$scope', '$filter', '$interval', '$mdDialog', '$location', 'Auth', 'apontamentosAPI', 'funcionariosAPI', 'usuario', 'currentDate', 
+	function($scope, $filter, $interval, $mdDialog, $location, Auth, apontamentosAPI, funcionariosAPI, usuario, currentDate){
 	
 	$scope.funcionario = usuario.data.funcionario;
 	$scope.currentDate = currentDate.data.date; //obtendo data do servidor
 	$scope.currentDateFtd = $filter('date')($scope.currentDate, 'abvFullDate');
 	//$scope.currentDate = new Date(2017, 0, 31); //testessss
-	
+	var batidaDireta = Auth.getBatidaDireta();	
 	var secsControl = 0;
 	var apontamento = null;
 	var marcacao = null;
 	
+	console.log("batidaDireta? ", batidaDireta);
+
 	getApontamentoDiarioFromFuncionario = function() {
 		
 		var date = {dataInicial: $scope.currentDate};
@@ -19,6 +21,9 @@ angular.module('rhPontumApp').controller('regPontoCtrl', ['$scope', '$filter', '
 			console.log('apontamento diário:', response.data);
 			if (response.data.length > 0)
 				apontamento = response.data[0];
+
+			if (batidaDireta)
+				$scope.registro();
 
 		}, function errorCallback(response){
 
@@ -50,6 +55,22 @@ angular.module('rhPontumApp').controller('regPontoCtrl', ['$scope', '$filter', '
 			}
 		}
 		
+	}
+
+	setStatus = function(apontamento) {
+
+		var size = apontamento.marcacoes.length;
+		if (size % 2 == 0) {//se for par, entendo que as marcações estão 'completas'
+			apontamento.status = {
+				id: 0,
+				descricao: "Correto"
+			};
+		} else {
+			apontamento.status = {
+				id: 1,
+				descricao: "Incompleto"
+			}
+		}
 	}
 
 	create = function(apontamento, ev) {
@@ -97,7 +118,8 @@ angular.module('rhPontumApp').controller('regPontoCtrl', ['$scope', '$filter', '
 			successMsg: $scope.successMsg,
 			date: date,
 			hora: hora,
-			minuto: minuto
+			minuto: minuto,
+			batidaDireta: batidaDireta
 		}
 
 		$mdDialog.show({
@@ -106,8 +128,8 @@ angular.module('rhPontumApp').controller('regPontoCtrl', ['$scope', '$filter', '
 	      locals: {
 	      	objectDlg: objectDlg
 	      },
-	      //parent: angular.element(document.body),
-	      parent: angular.element(document.querySelector('#popupContainer')),
+	      parent: angular.element(document.body),
+	      //parent: angular.element(document.querySelector('#popupContainer')),
 	      targetEvent: ev,
 	      clickOutsideToClose:true,
 	      fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
@@ -115,9 +137,21 @@ angular.module('rhPontumApp').controller('regPontoCtrl', ['$scope', '$filter', '
 	    .then(function(answer) {
 	      $scope.status = 'You said the information was "' + answer + '".';
 	      console.log("$scope.status: ", $scope.status);
+	      if(answer.toLowerCase() == "Sair".toLowerCase()){
+	      	if (batidaDireta){
+	      		console.log("sair da app pois veio de uma batida direta, era só logar e bater o ponto");
+	      		$scope.$emit('logout');
+				$location.path("/");
+	      	}
+	      }
 	    }, function() {
 	      $scope.status = 'You cancelled the dialog.';
 	      console.log("$scope.status: ", $scope.status);
+	      if (batidaDireta){
+      		console.log("sair da app pois veio de uma batida direta, era só logar e bater o ponto");
+      		$scope.$emit('logout');
+			$location.path("/");
+      	  }
 	    });
 	}
 
@@ -141,13 +175,14 @@ angular.module('rhPontumApp').controller('regPontoCtrl', ['$scope', '$filter', '
 			if (apontamento) {
 				
 				apontamento.marcacoes.push(marcacao);
+				setStatus(apontamento);
 				update(apontamento._id, apontamento, ev);
 
 			} else {
 
 				apontamento = {
 					data: getOnlyDate(newDate),
-					status: {id: 0, descricao: 'Correto'},
+					status: {id: 1, descricao: 'Incompleto'},
 					funcionario: $scope.funcionario._id,
 					marcacoes: [marcacao],
 					justificativa: ''
@@ -189,10 +224,10 @@ angular.module('rhPontumApp').controller('regPontoCtrl', ['$scope', '$filter', '
 		if ($scope.funcionario)
 			getApontamentoDiarioFromFuncionario();
 		else
-			$scope.usuario = usuario.data;
+			$scope.usuario = usuario.data;		
 	
 		tick();
-		$interval(tick, 1000);		
+		$interval(tick, 1000);
     }
 
     //INICIALIZA O CONTROLLER COM ALGUMAS VARIÁVEIS

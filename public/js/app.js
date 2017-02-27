@@ -1,1 +1,1 @@
-angular.module('rhPontumApp', ['ngRoute', 'ngMessages', 'ngStorage', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ui.bootstrap', 'ui.mask', 'chart.js', 'angular-jwt']);
+angular.module('rhPontumApp', ['ngRoute', 'ngMessages', 'ngStorage', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'angularUtils.directives.dirPagination', 'ui.mask', 'chart.js', 'angular-jwt']);
