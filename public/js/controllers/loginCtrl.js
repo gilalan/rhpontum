@@ -13,7 +13,7 @@ angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "A
 			//Maneira elegante de associar um usuário logado a nossa APP			
 			$scope.$emit('login', response.data);
 			//usuarioLogado = response.data;
-			$location.path("/dashboard");
+			$location.path("/indicadores");
 
 		}, function errorCallback(response){
 
@@ -30,7 +30,7 @@ angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "A
 		homeAPI.get().then(function sucessCallback(response){
 
 			console.log('passou pelo sucess do redirectHome');
-			$location.path('/dashboard');
+			$location.path('/indicadores');
 		});
 	}	
 
@@ -48,7 +48,7 @@ angular.module('rhPontumApp').controller('loginCtrl', ["$scope", "$location", "A
 			//return getUsuario(response.data.idUsuario);
 			//return redirectHome();
 			$scope.$emit('login', response.data.token);
-			var pathTo = "/dashboard";
+			var pathTo = "/indicadores";
 
 			if (baterPonto)
 				pathTo = "/registro_ponto/"+response.data.idUsuario;
