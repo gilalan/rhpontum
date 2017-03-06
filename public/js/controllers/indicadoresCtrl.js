@@ -778,7 +778,7 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
       scales: {
         xAxes: [{
           position: 'top'
-        }]
+        }]        
       }
     };
 
@@ -907,13 +907,37 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
   //     return "##" + label.label + ': ' + label.value + "##";
   //   }
   // }
+  $scope.options = {
+   multiTooltipTemplate : function (label) {
+    return label.datasetLabel + ': ' +    label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+   } 
+  };
   $scope.data1 = [
       [1164445, 3444359, 3444380, 444481, 566556, 552255, 466440],
       [244448, 444448, 444440, 44419, 8446, 9427, 9440]
     ];
   $scope.onClick = function (points, evt) {
-    ////console.log(points, evt);
+
+    if (points[0]) {
+      console.log("points[0]", points[0]);
+      if (points[0]._index || points[0]._index === 0) {
+        console.log("Index? ", points[0]._index);
+        var arrayData = $scope.weekData[0];
+        console.log("valor: ", arrayData[points[0]._index]);
+        console.log("dia: ", points[0]._model.label);
+        console.log("dia: ", weekDays.indexOf(points[0]._model.label));
+      }
+    }
+    //console.log("Evt: ", evt);
   };
+
+  /*$scope.onHover = function (points) {
+    if (points.length > 0) {
+      console.log('Point', points[0].value);
+    } else {
+      console.log('No point');
+    }
+  };*/
 
   // // Simulate async data update
   // $timeout(function () {

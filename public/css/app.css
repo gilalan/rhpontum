@@ -2,6 +2,18 @@
 	margin-top: 20px;
 }
 
+.needSpace {
+   margin-bottom: 10px;
+}
+
+.toolBarIdentif {
+   color: #dcdcdc;
+   border: 1px solid #827d6b;
+   border-radius: 5px;
+   padding: 5px;
+   margin-top: 10px;
+}
+
 .default-panel {
 	border: 1px solid #eee !important;
 	border-top: 3px solid #bdb5b5 !important;

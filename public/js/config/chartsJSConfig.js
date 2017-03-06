@@ -13,11 +13,9 @@ angular.module('rhPontumApp').config(["ChartJsProvider", function(ChartJsProvide
       showLines: true
     });
 
-    // Configure all bar charts
-    ChartJsProvider.setOptions('bar', {
-      multiTooltipTemplate: function(label) {
-        return label.label + ': ' + label.value+"##";
-      }
-    });
+    Chart.defaults.global.scaleLabel = function(label){
+      return label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    };
+    
 }]);
 

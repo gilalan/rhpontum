@@ -1,6 +1,6 @@
 angular.module('rhPontumApp').controller('applicationCtrl', ["$scope", "$rootScope", "Auth", function($scope, $rootScope, Auth){	
 
-
+	console.log("Passa no APP controller!");
 	$scope.logged = false;
 	$scope.authorized = false;
 	//$scope.auth = true; //TO COLOCANDO ASSIM PARA PODER FUNCIONAR COM O LAYOUT E TALS

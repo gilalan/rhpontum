@@ -1,7 +1,13 @@
-
 angular.module('rhPontumApp').controller('funcionarioCtrl', ['$scope', '$location', 'funcionariosAPI',
     function($scope, $location, funcionariosAPI){
    
+    $scope.currentPage = 1;
+    $scope.pageSize = 5;
+
+    $scope.pageChangeHandler = function(num) {
+      console.log('funcionários page changed to ' + num);
+    };
+
     // delete a user after checking it
     $scope.delete = function(id) {
         
