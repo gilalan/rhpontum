@@ -1,5 +1,5 @@
-angular.module('rhPontumApp').controller('editTurnoCtrl', ['$scope', '$window', 'turno', 'turnosAPI', 'escalas',  
-    function($scope, $window, turno, turnosAPI, escalas){
+angular.module('rhPontumApp').controller('editTurnoCtrl', ['$scope', '$window', '$location', 'turno', 'turnosAPI', 'escalas',  
+    function($scope, $window, $location, turno, turnosAPI, escalas){
     
     console.log('entrando em edit turno ctrl');
     console.log('recebendo turno: ', turno.data);
@@ -34,7 +34,8 @@ angular.module('rhPontumApp').controller('editTurnoCtrl', ['$scope', '$window', 
 
         console.log("ajustou e vai enviar o turno: ", turno);
         update(turno);
-        $window.scrollTo(0, 0);
+        $location.path("/turnos");
+        //$window.scrollTo(0, 0);
 
     };
 
