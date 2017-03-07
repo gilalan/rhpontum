@@ -20,7 +20,8 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 
 	$routeProvider.when("/home", {
 		controller: "homeCtrl",
-		templateUrl: "view/dashboard.html",
+		//templateUrl: "view/dashboard.html",
+		templateUrl: "view/indicadores.html",
 		access: 'user',
 		accessLevel: 1
 	});
