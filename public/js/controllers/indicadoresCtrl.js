@@ -723,16 +723,17 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
 
     if (isFeriado() && !componente.alocacao.turno.ignoraFeriados){
       
-      if (codigo == 1) {
-        var objDay = getDayInArrayJornadaSemanal(currentDateNav.getDay(), componente.alocacao.turno.jornada.array);
-        if (objDay.horarios)
-          totalMntsAtrabalhar = calcularMarcacoesAusente(objDay.horarios);
-      }
+      // if (codigo == 1) {
+      //   var objDay = getDayInArrayJornadaSemanal(currentDateNav.getDay(), componente.alocacao.turno.jornada.array);
+      //   if (objDay.horarios)
+      //     totalMntsAtrabalhar = calcularMarcacoesAusente(objDay.horarios);
+      // }
 
-      else if (codigoEscala == 2)
-        totalMntsAtrabalhar = calcularMarcacoesAusente(componente.alocacao.turno.jornada.array[0].horarios)
+      // else if (codigoEscala == 2)
+      //   totalMntsAtrabalhar = calcularMarcacoesAusente(componente.alocacao.turno.jornada.array[0].horarios)
 
-      return -totalMntsAtrabalhar;
+      //return -totalMntsAtrabalhar;
+      return totalMntsAtrabalhar;
 
     } else {
 
