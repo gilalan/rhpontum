@@ -3,10 +3,11 @@ angular.module('rhPontumApp').service("funcionariosAPI", function($http, config)
 	var _urlBaseFuncionarios = '/api/funcionarios';
 	var _urlBaseGestores = '/api/gestores';
 	var svc = this;
+	//usaria a config.baseUrl com o prefixo de um determinado serviço de terceiros...
 
 	svc.get = function () {
 		
-		return $http.get(config.baseUrl + _urlBaseFuncionarios);
+		return $http.get(_urlBaseFuncionarios);
 	};
 
 	svc.create = function (funcionario) {
