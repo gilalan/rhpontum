@@ -14,7 +14,7 @@
 	text-align: right;
 }
 .table th { 
-	border-top: none !important;
+	/*border-top: none !important;*/
     border-bottom: 1px solid #dcdcdc !important;  
  }
 
@@ -33,6 +33,10 @@
 
 .table td {
  	border-left: 1px solid #dcdcdc !important;
+}
+
+table tbody tr {
+    cursor: pointer;
 }
 
 .marcacoesDestak {
@@ -64,4 +68,12 @@
  .titleGraphSmall {
  	float: left;
 	margin-right: 2px;
+ }
+
+ .bh-positivo {
+    color: #009c58;
+ }
+
+ .bh-negativo {
+    color: #da4d39;
  }

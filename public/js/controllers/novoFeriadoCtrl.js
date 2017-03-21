@@ -1,5 +1,5 @@
-angular.module('rhPontumApp').controller('novoFeriadoCtrl', ['$scope', '$window', 'feriadosAPI',  
-    function($scope, $window, feriadosAPI){
+angular.module('rhPontumApp').controller('novoFeriadoCtrl', ['$scope', '$window', '$location', 'feriadosAPI',  
+    function($scope, $window, $location, feriadosAPI){
     
     console.log('entrando em novo feriado CTRL');
     $scope.newOrEdit = 'Novo';
@@ -18,14 +18,13 @@ angular.module('rhPontumApp').controller('novoFeriadoCtrl', ['$scope', '$window'
             $scope.feriadoForm.$setPristine();
             $scope.successMsg = response.data.message;
             //feriado cadastrado/salvo com sucesso e retornar para página anterior.
-            //$location.path('/feriados');
+            $location.path('/feriados');
 
         }, function errorCallback(response){
         
             $scope.errorMsg = response.data.message;
             console.log("Erro de cadastro de feriado: " + response.data.message);
+            $window.scrollTo(0, 0);
         });
-
-        $window.scrollTo(0, 0);
     };
 }]);

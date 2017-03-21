@@ -388,38 +388,38 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 .run(['$rootScope', '$location', 'Auth', function($rootScope, $location, Auth){
 
 	$rootScope.$on("$routeChangeStart", function(event, next, current){
-		console.log('1. route change start: ');
+		//console.log('1. route change start: ');
 		
 		//current é de "onde veio", só aparece esse objeto se NÃO for o primeiro acesso
 		if (current){
-			console.log('2. current.access: ', current.access);
+			//console.log('2. current.access: ', current.access);
 			if (current.originalPath == "/"){
 				var regex = /registro_ponto/;
 				if (regex.test(next.originalPath)){
-					console.log("opa, veio do login para o registro_ponto");
+					//console.log("opa, veio do login para o registro_ponto");
 					Auth.setBatidaDireta(true);
 					//current.resolve["batidaDireta"] = true;
 				}
 					
 			}
-			console.log("2.0 current path", current.originalPath);
-			console.log("2.1 next path: ", next.originalPath);
+			//console.log("2.0 current path", current.originalPath);
+			//console.log("2.1 next path: ", next.originalPath);
 		}
 
 		//next.access pega essa variável definida na rota, que indica o nível de acesso a ela.
 		//a gnt passa isso para um authorize(local) e verifica se ele pode entrar nessa rota.
 		if(next){
-			console.log('next.access: ', next.access);
+			//console.log('next.access: ', next.access);
 
 			if (next.originalPath == "/" && Auth.getToken()){ //se estiver acessando a app na tela inicial mas tiver um token de log guardado, manda para a página principal
-				console.log("página de login com o usuário já logado... encaminha para o dashboard");
+				//console.log("página de login com o usuário já logado... encaminha para o dashboard");
 				return $location.path("/dashboard");
 			}
 
 			if (next.accessLevel > 0) {
 
 				if(!Auth.getToken()){
-					console.log('usuário não logado e página necessita de nível de acesso: ', next.accessLevel);
+					//console.log('usuário não logado e página necessita de nível de acesso: ', next.accessLevel);
 					$rootScope.$broadcast('authorized', false);
 					$rootScope.$broadcast('logged', true);
 					$location.path('/');
@@ -427,13 +427,13 @@ angular.module('rhPontumApp').config(['$routeProvider', '$locationProvider', fun
 
 				else {
 					$rootScope.$broadcast('logged', true);
-					console.log("rota exigida: "+next.accessLevel+" e usuário logado, checar seu nível");
+					//console.log("rota exigida: "+next.accessLevel+" e usuário logado, checar seu nível");
 					if (Auth.authorize(next.accessLevel)){//veremos se o user tem o nivel de acesso permitido
-						console.log('opa fui autorizado');
-						console.log('deverá seguir o fluxo normal... controller e depois view');
+						//console.log('opa fui autorizado');
+						//console.log('deverá seguir o fluxo normal... controller e depois view');
 						$rootScope.$broadcast('authorized', true);
 					} else {
-						console.log('vc não é autorizado a ver essa rota');
+						//console.log('vc não é autorizado a ver essa rota');
 						$rootScope.$broadcast('authorized', false);
 						$location.path('/unauthorized');
 					}

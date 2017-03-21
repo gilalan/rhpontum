@@ -27,6 +27,7 @@ router.get('/', function(req, res) {
   .populate('gestor', 'nome')
   .populate('setor', 'nome descricao')
   .populate('componentes', 'nome sobrenome PIS')
+  .sort({nome: 'asc'})
   .exec(function(err, equipes){
 		
 		if(err) {
@@ -163,6 +164,7 @@ router.post('/gestorFilter', function(req, res){
   Equipe.find({gestor: gestor._id})
   //.populate('gestor', 'nome')
   //.populate('setor', 'nome descricao')
+  .sort({nome: 'asc'})
   .populate({
     path: 'componentes',
     select: 'nome sobrenome PIS sexoMasculino alocacao',

@@ -1,5 +1,5 @@
-angular.module('rhPontumApp').controller('editFeriadoCtrl', ['$scope', '$filter', '$window', 'feriado', 'feriadosAPI', 
-    function($scope, $filter, $window, feriado, feriadosAPI){
+angular.module('rhPontumApp').controller('editFeriadoCtrl', ['$scope', '$filter', '$window', '$location', 'feriado', 'feriadosAPI', 
+    function($scope, $filter, $window, $location, feriado, feriadosAPI){
     
     console.log('entrando em edit feriado ctrl');
 
@@ -24,13 +24,14 @@ angular.module('rhPontumApp').controller('editFeriadoCtrl', ['$scope', '$filter'
             //delete $scope.feriado;           
             //$scope.feriadoForm.$setPristine();
             $scope.successMsg = response.data.message;
-            //feriado cadastrado/salvo com sucesso e retornar para página anterior.
-            //$location.path('/feriados');
+            console.log("Sucesso no cadastro de feriado: " + response.data.message);
+            $location.path('/feriados');
 
         }, function errorCallback(response){
         
             $scope.errorMsg = response.data.message;
             console.log("Erro de cadastro de feriado: " + response.data.message);
+            $window.scrollTo(0, 0);  
         });
 
         $window.scrollTo(0, 0);

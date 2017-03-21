@@ -27,37 +27,110 @@ module.exports = turnoModel;
  * 
  * Estou fazendo um objeto de jornada flexível, dessa forma teremos que controlar a app no frontend para não ter
  * discrepâncias. Exemplo de modelo para jornada semanal: 
-   
-   jornada: { 
- 	{dia: 0, diaAbrev: 'dom', horarios: {}},
- 	{dia: 1, diaAbrev: 'seg', horarios: {ent1: 8, sai1, 12, ent2: 13, sai2: 17}},
- 	{dia: 2, diaAbrev: 'ter', horarios: {ent1: 8, sai1, 12, ent2: 13, sai2: 17}},
- 	{dia: 3, diaAbrev: 'qua', horarios: {ent1: 8, sai1, 12, ent2: 13, sai2: 17}},
- 	{dia: 4, diaAbrev: 'qui', horarios: {ent1: 8, sai1, 12, ent2: 13, sai2: 17}},
- 	{dia: 5, diaAbrev: 'sex', horarios: {ent1: 8, sai1, 12, ent2: 13, sai2: 17}},
- 	{dia: 6, diaAbrev: 'sab', horarios: {ent1: 8, sai1, 12}} 	
-   }
+   //Um array com os 7 dias da semana para o horário semanal
+
+    "jornada": {
+      "array": [
+        {
+          "dia": 0,
+          "diaAbrev": "Dom",
+          "viradaTurno": ""
+        },
+        {
+          "dia": 1,
+          "diaAbrev": "Seg",
+          "horarios": {
+            "ent1": 480,
+            "sai1": 720,
+            "ent2": 840,
+            "sai2": 1080
+          },
+          "viradaTurno": 0
+        },
+        {
+          "dia": 2,
+          "diaAbrev": "Ter",
+          "horarios": {
+            "ent1": 480,
+            "sai1": 720,
+            "ent2": 840,
+            "sai2": 1080
+          },
+          "viradaTurno": 0
+        },
+        {
+          "dia": 3,
+          "diaAbrev": "Qua",
+          "horarios": {
+            "ent1": 480,
+            "sai1": 720,
+            "ent2": 840,
+            "sai2": 1080
+          },
+          "viradaTurno": 0
+        },
+        {
+          "dia": 4,
+          "diaAbrev": "Qui",
+          "horarios": {
+            "ent1": 480,
+            "sai1": 720,
+            "ent2": 840,
+            "sai2": 1080
+          },
+          "viradaTurno": 0
+        },
+        {
+          "dia": 5,
+          "diaAbrev": "Sex",
+          "horarios": {
+            "ent1": 480,
+            "sai1": 720,
+            "ent2": 840,
+            "sai2": 1080
+          },
+          "viradaTurno": 0
+        },
+        {
+          "dia": 6,
+          "diaAbrev": "Sáb",
+          "horarios": {
+            "ent1": 480,
+            "sai1": 720
+          },
+          "viradaTurno": 0
+        }
+      ],
+      "minutosIntervalo": 120
+    },
+    "escala": {
+      "_id": "589649a492266b6eeffd7782",
+      "codigo": 1,
+      "nome": "Semanal"
+    },
  * 
  * Para uma jornada de 12x36h
-   jornada: {
-   	horarios: {ent1: 8, sai1, 12, ent2: 13, sai2: 17},
-   	base: [{
-		ano: 2017,
-		mes: 0, //0 até 11 para seguir o Javascript Date
-		dia: 1 //pode ser 1 ou 2, irá compor os dias a trabalhar nesse mês base
-   	}]
-   }
-	//Assim seria bem mais flexível
-   jornada: {
-	 array: [
- 		{
-		horarios: {ent1: 8, sai1, 12, ent2: 13, sai2: 17},
-   		anoBase: 2017,
-		mesBase: 0, //0 até 11 para seguir o Javascript Date
-		diaBase: 1 //pode ser 1 ou 2, irá compor os dias a trabalhar nesse mês base
-   		}
-	 ]
-   }
+ //Um array com apenas 1 objeto para o horário 12x36
+   "jornada": {
+      "array": [
+        {
+          "horarios": {
+	        "ent1": 360,
+	        "sai1": 720,
+	        "ent2": 720,
+	        "sai2": 1080
+	      },
+	        "viradaTurno": 0
+	      	}
+      ],
+      "minutosIntervalo": 0,
+      "minutosTrabalho": 720
+    },
+    "escala": {
+      "_id": "589649a892266b6eeffd7783",
+      "codigo": 2,
+      "nome": "12x36h"
+    }
  
  Essas duas ultimas informações constará nas duas jornadas
  minutosIntervalo: {type: Number, required: true},

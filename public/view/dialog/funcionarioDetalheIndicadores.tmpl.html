@@ -1,0 +1,57 @@
+<link href="css/dialog.css" rel="stylesheet">
+
+<md-dialog aria-label="funcionarioDetalheIndicadores">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Detalhamento: {{funcionario.nome}} {{funcionario.sobrenome}}</h2>
+        <span flex></span>
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="max-width:800px;max-height:810px; ">
+      <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Informações">
+          <md-content class="md-padding">            
+            <p>
+              Nome: <strong>{{funcionario.nome}} {{funcionario.sobrenome}}</strong><br>
+              Escala: <strong>{{funcionario.alocacao.turno.escala.nome}} </strong><br>
+              Dia: <strong>{{currentDate | date:"EEEE"}} </strong><br>
+              Horário: <strong>{{funcionario.alocacao.turno.escala.codigo == 1?  funcionario.alocacao.turno.jornada.array[currentDate.getDay()].horarioFtd : funcionario.alocacao.turno.jornada.array[0].horarioFtd}}</strong>
+            </p>
+          </md-content>
+        </md-tab>
+        <md-tab label="Marcações">
+          <md-content class="md-padding">
+            <!-- <h1 class="md-display-2">Tab Marcações</h1> -->
+            <md-content>
+              <md-list flex="">
+                <md-subheader class="md-no-sticky">{{currentDate | date:"dd-MM-yyyy"}}</md-subheader>
+                <md-divider></md-divider>
+                <md-list-item class="md-2-line" ng-repeat="item in funcionario.apontamentoDiario.marcacoes" ng-click="null">
+                  <!-- <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}"> -->
+                  <div class="md-list-item-text" layout="column">
+                    <h3>{{ funcionario.apontamentoDiario.marcacoesStringObj[item.descricao]}}</h3>
+                    <p>{{ item.id }}</p>
+                  </div>
+                  <md-divider></md-divider>
+                </md-list-item>
+
+              </md-list>
+            </md-content>
+            <p>{{funcionario.apontamentoDiario.marcacoes ? "" : "Não há marcações para essa data."}}</p>
+          </md-content>
+        </md-tab>
+        <md-tab label="Total de Horas">
+          <md-content class="md-padding">
+          </md-content>
+        </md-tab>
+      </md-tabs>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <md-button ng-click="answer('sair')" style="margin-right:20px;" >
+        Fechar
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

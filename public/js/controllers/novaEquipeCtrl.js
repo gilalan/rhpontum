@@ -1,5 +1,5 @@
-angular.module('rhPontumApp').controller('novaEquipeCtrl', ['$scope', '$window', 'equipesAPI', 'setores', 'gestores',  
-    function($scope, $window, equipesAPI, setores, gestores){
+angular.module('rhPontumApp').controller('novaEquipeCtrl', ['$scope', '$window', '$location', 'equipesAPI', 'setores', 'gestores',  
+    function($scope, $window, $location, equipesAPI, setores, gestores){
     
     console.log('entrando em nova Equipe CTRL');
     $scope.newOrEdit = 'Nova';
@@ -16,14 +16,14 @@ angular.module('rhPontumApp').controller('novaEquipeCtrl', ['$scope', '$window',
             $scope.equipeForm.$setPristine();
             $scope.successMsg = response.data.message;
             //equipe cadastrado/salvo com sucesso e retornar para página anterior.
-            //$location.path('/equipes');
+            $location.path('/equipes');
 
         }, function errorCallback(response){
         
             $scope.errorMsg = response.data.message;
             console.log("Erro de cadastro de Equipe: " + response.data.message);
+            $window.scrollTo(0, 0);
         });
 
-        $window.scrollTo(0, 0);
     };
 }]);   

@@ -19,14 +19,14 @@ angular.module('rhPontumApp').controller('editEquipeCtrl', ['$scope', '$window',
             
             $scope.successMsg = response.data.message;
             //equipe cadastrada/salva com sucesso e retornar para página anterior.
-            //$location.path('/equipes');
+            $location.path('/equipes');
 
         }, function errorCallback(response){
         
             $scope.errorMsg = response.data.message;
             console.log("Erro de cadastro de equipe: " + response.data.message);
+            $window.scrollTo(0, 0);
         });
 
-        $window.scrollTo(0, 0);
     };
 }]);

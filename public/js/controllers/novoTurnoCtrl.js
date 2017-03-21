@@ -1,7 +1,7 @@
-angular.module('rhPontumApp').controller('novoTurnoCtrl', ['$scope', '$window', 'turnosAPI', 'escalas', 
-    function($scope, $window, turnosAPI, escalas){
+angular.module('rhPontumApp').controller('novoTurnoCtrl', ['$scope', '$window', '$location', 'turnosAPI', 'escalas', 
+    function($scope, $window, $location, turnosAPI, escalas){
     
-    console.log('entrando em novo turno CTRL');
+    //console.log('entrando em novo turno CTRL');
     $scope.escalas = escalas.data;
     $scope.newOrEdit = 'Novo';
     $scope.turno = {isFlexivel: false, intervaloFlexivel: false, ignoraFeriados: false};
@@ -17,7 +17,7 @@ angular.module('rhPontumApp').controller('novoTurnoCtrl', ['$scope', '$window', 
             
         turnosAPI.create(turno).then(function sucessCallback(response){
             
-            console.log("dados recebidos: ", response.data);
+            //console.log("dados recebidos: ", response.data);
             
             $scope.successMsg = response.data.message;
 
@@ -30,7 +30,7 @@ angular.module('rhPontumApp').controller('novoTurnoCtrl', ['$scope', '$window', 
         }, function errorCallback(response){
         
             $scope.errorMsg = response.data.message;
-            console.log("Erro de cadastro de turno: " + response.data.message);
+            //console.log("Erro de cadastro de turno: " + response.data.message);
         });
 
         $window.scrollTo(0, 0);
@@ -46,17 +46,15 @@ angular.module('rhPontumApp').controller('novoTurnoCtrl', ['$scope', '$window', 
         }
 
         if ($scope.preencherEscala.tipoRevezamento){
-            console.log("chamou o buildJornadaRevezamentoObject");
+            //console.log("chamou o buildJornadaRevezamentoObject");
             turnoSalvo.jornada = buildJornadaRevezamentoObject();
-            console.log("retornou do buildJornadaRevezamentoObject");
+            //console.log("retornou do buildJornadaRevezamentoObject");
         }
 
         //Poderão ter mais escalas no futuro
 
-        console.log("ajustou e vai enviar o turno: ", turnoSalvo);
+        //console.log("ajustou e vai enviar o turno: ", turnoSalvo);
         update(turnoSalvo);
-        $window.scrollTo(0, 0);
-
     };
 
     $scope.goPreencher = function(preencher) {
@@ -115,13 +113,15 @@ angular.module('rhPontumApp').controller('novoTurnoCtrl', ['$scope', '$window', 
 
         turnosAPI.update(turno).then(function sucessCallback(response){
             
-            console.log("dados recebidos: ", response.data);
+            //console.log("dados recebidos: ", response.data);
             $scope.successMsg = response.data.message;
+            $location.path("/turnos");
 
         }, function errorCallback(response){
         
             $scope.errorMsg = response.data.message;
-            console.log("Erro de cadastro de turno: " + response.data.message);
+            //console.log("Erro de cadastro de turno: " + response.data.message);
+            $window.scrollTo(0, 0);
         });
     };
 
@@ -142,7 +142,7 @@ angular.module('rhPontumApp').controller('novoTurnoCtrl', ['$scope', '$window', 
 
     getInfoEscalaRev = function() {
 
-        console.log("ENTROU NO METODO GET INFO REV");
+        //console.log("ENTROU NO METODO GET INFO REV");
         $scope.diaBase = {dia: 1, str: 'Dia 1'};
         $scope.diaBaseText = $scope.diaBase.str;
         $scope.diaBase1Toggle = true;
@@ -175,7 +175,7 @@ angular.module('rhPontumApp').controller('novoTurnoCtrl', ['$scope', '$window', 
             }
         ];
 
-        console.log("rowHorarioDias", rowHorarioDias);
+        //console.log("rowHorarioDias", rowHorarioDias);
         return rowHorarioDias;
     };
 
@@ -209,11 +209,11 @@ angular.module('rhPontumApp').controller('novoTurnoCtrl', ['$scope', '$window', 
         //});
         var rowHorarioDia = $scope.rowHorarioDias[0];
         var varAnoBase = rowHorarioDia.anoBase;
-        console.log("ANO BASE? ", varAnoBase);
+        //console.log("ANO BASE? ", varAnoBase);
         var mesBaseSelected = $scope.meses.filter(function(mes){return mes.selecionado});
 
-        console.log("mesBaseSelected: ", mesBaseSelected);
-        //console.log("$scope ano base", $scope.obj.anoBase);
+        //console.log("mesBaseSelected: ", mesBaseSelected);
+        ////console.log("$scope ano base", $scope.obj.anoBase);
         arrayBase.push(
         {
             horarios: getHorarios(rowHorarioDia),
@@ -222,7 +222,7 @@ angular.module('rhPontumApp').controller('novoTurnoCtrl', ['$scope', '$window', 
             anoBase: varAnoBase,
             viradaTurno: getTotalMinutosHorario(rowHorarioDia.viradaTurno)
         });
-        console.log("VAI RETORNAR A JORNADA!", arrayBase);
+        //console.log("VAI RETORNAR A JORNADA!", arrayBase);
         return jornada = {
             array: arrayBase,
             minutosIntervalo: $scope.minutosIntervaloPrincipal
@@ -231,7 +231,7 @@ angular.module('rhPontumApp').controller('novoTurnoCtrl', ['$scope', '$window', 
 
     getHorarios = function (rowHorarioDia) {
 
-        console.log("ENTRANDO NO GET HORARIOS?!");
+        //console.log("ENTRANDO NO GET HORARIOS?!");
         if (rowHorarioDia.ent1 && rowHorarioDia.sai1 && 
             rowHorarioDia.ent2 && rowHorarioDia.sai2) {
 
@@ -239,7 +239,7 @@ angular.module('rhPontumApp').controller('novoTurnoCtrl', ['$scope', '$window', 
             if (!$scope.minutosIntervaloPrincipal) {
                 $scope.minutosIntervaloPrincipal = getTotalMinutosHorario(rowHorarioDia.ent2);
                 $scope.minutosIntervaloPrincipal -= getTotalMinutosHorario(rowHorarioDia.sai1);
-                console.log("$scope.minutosIntervaloPrincipal ", $scope.minutosIntervaloPrincipal);
+                //console.log("$scope.minutosIntervaloPrincipal ", $scope.minutosIntervaloPrincipal);
             }
 
             return {
@@ -301,7 +301,7 @@ angular.module('rhPontumApp').controller('novoTurnoCtrl', ['$scope', '$window', 
         });
     };
 
-     initAutomaticFill = function (turno) {
+    initAutomaticFill = function (turno) {
 
         //Semanal
         if (turno.escala.codigo == 1) {

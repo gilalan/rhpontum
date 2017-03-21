@@ -34,7 +34,7 @@ angular.module('rhPontumApp').controller('editTurnoCtrl', ['$scope', '$window', 
 
         console.log("ajustou e vai enviar o turno: ", turno);
         update(turno);
-        $location.path("/turnos");
+        
         //$window.scrollTo(0, 0);
 
     };
@@ -72,11 +72,13 @@ angular.module('rhPontumApp').controller('editTurnoCtrl', ['$scope', '$window', 
             
             console.log("dados recebidos: ", response.data);
             $scope.successMsg = response.data.message;
+            $location.path("/turnos");
 
         }, function errorCallback(response){
         
             $scope.errorMsg = response.data.message;
             console.log("Erro de cadastro de turno: " + response.data.message);
+            $window.scrollTo(0, 0);
         });
     };
 
@@ -198,7 +200,7 @@ angular.module('rhPontumApp').controller('editTurnoCtrl', ['$scope', '$window', 
         ];
 
         if($scope.turno.jornada.array) {
-            console.log("tentar preencher o horário da jornada");
+            //console.log("tentar preencher o horário da jornada");
             $scope.turno.jornada.array.forEach(function(jornadaRow){
                 rowHorarioDias.forEach(function(rowHorarioDia){
                     if(jornadaRow.dia == rowHorarioDia.nDia) {
@@ -295,15 +297,17 @@ angular.module('rhPontumApp').controller('editTurnoCtrl', ['$scope', '$window', 
         $scope.rowHorarioDias.forEach(function(rowHorarioDia){
 
             horariosEmMinutos = getHorarios(rowHorarioDia);
-            console.log("total min trabalho: ", getTotalMinutosTrabalho(horariosEmMinutos));
+            //console.log("total min trabalho: ", getTotalMinutosTrabalho(horariosEmMinutos));
             arrayHorarios.push(
             {
                 dia: rowHorarioDia.nDia,
                 diaAbrev: rowHorarioDia.dia.substring(0, 3),
                 horarios: horariosEmMinutos,
+                horarioFtd: getHorarioFtd(rowHorarioDia),
                 minutosTrabalho: getTotalMinutosTrabalho(horariosEmMinutos),
                 viradaTurno: getTotalMinutosHorario(rowHorarioDia.viradaTurno)
             });
+            console.log("horarioFtd: ", getHorarioFtd(rowHorarioDia));
         });
 
         return jornada = {
@@ -327,18 +331,51 @@ angular.module('rhPontumApp').controller('editTurnoCtrl', ['$scope', '$window', 
         arrayBase.push(
         {
             horarios: horariosEmMinutos,
+            horarioFtd: getHorarioFtd(rowHorarioDia),
             //diaBase: $scope.diaBase.dia,
             //mesBase: mesBaseSelected[0].mes,
             //anoBase: $scope.anoBase,
             viradaTurno: getTotalMinutosHorario(rowHorarioDia.viradaTurno)
         });
-        console.log("total min trabalho: ", getTotalMinutosTrabalho(horariosEmMinutos));
+        console.log("horarioFtd: ", getHorarioFtd(rowHorarioDia));
+        //console.log("total min trabalho: ", getTotalMinutosTrabalho(horariosEmMinutos));
         return jornada = {
             array: arrayBase,
             minutosIntervalo: $scope.minutosIntervaloPrincipal,
             minutosTrabalho: getTotalMinutosTrabalho(horariosEmMinutos)
         };
     };
+
+    String.prototype.splice = function(idx, rem, str) {
+        return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
+    };
+
+    getHorarioFtd = function(rowHorarioDia) {
+
+        console.log("obtendo horário formatado");
+
+        if (rowHorarioDia.ent1 && rowHorarioDia.sai1 && 
+            rowHorarioDia.ent2 && rowHorarioDia.sai2) {
+
+            var strResultE1 = rowHorarioDia.ent1.splice(2,0,":");
+            var strResultS1 = rowHorarioDia.sai1.splice(2,0,":");
+            var strResultE2 = rowHorarioDia.ent2.splice(2,0,":");
+            var strResultS2 = rowHorarioDia.sai2.splice(2,0,":");
+
+            return strResultE1+"/"+strResultS1+"; "+
+                    strResultE2+"/"+strResultS2;
+        } 
+
+        if (rowHorarioDia.ent1 && rowHorarioDia.sai1 && 
+            !rowHorarioDia.ent2 && !rowHorarioDia.sai2) {
+
+            var strResultE1 = rowHorarioDia.ent1.splice(2,0,":");
+            var strResultS1 = rowHorarioDia.sai1.splice(2,0,":");
+
+            return strResultE1+"/"+strResultS1;
+
+        }
+    }
 
     getHorarios = function (rowHorarioDia) {
 
@@ -349,7 +386,7 @@ angular.module('rhPontumApp').controller('editTurnoCtrl', ['$scope', '$window', 
             if (!$scope.minutosIntervaloPrincipal) {
                 $scope.minutosIntervaloPrincipal = getTotalMinutosHorario(rowHorarioDia.ent2);
                 $scope.minutosIntervaloPrincipal -= getTotalMinutosHorario(rowHorarioDia.sai1);
-                console.log("$scope.minutosIntervaloPrincipal ", $scope.minutosIntervaloPrincipal);
+                //console.log("$scope.minutosIntervaloPrincipal ", $scope.minutosIntervaloPrincipal);
             }
 
             return {
@@ -381,10 +418,10 @@ angular.module('rhPontumApp').controller('editTurnoCtrl', ['$scope', '$window', 
         
         var hoursStr = strHorario.substring(0, 2);
         var minutesStr = strHorario.substring(2);
-        console.log("hora pega: " + hoursStr + ":" + minutesStr);
+        //console.log("hora pega: " + hoursStr + ":" + minutesStr);
         var hours = parseInt(hoursStr) * 60;
         var minutes = parseInt(minutesStr);
-        console.log("total em minutos: ", (hours + minutes));
+        //console.log("total em minutos: ", (hours + minutes));
         return (hours + minutes); 
     };
 

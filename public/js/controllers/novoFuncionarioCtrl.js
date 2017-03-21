@@ -24,15 +24,14 @@ angular.module('rhPontumApp').controller('novoFuncionarioCtrl', ['$scope', '$win
             $scope.funcionarioForm.$setPristine();
             $scope.successMsg = response.data.message;
             //funcionario cadastrado/salvo com sucesso e retornar para página anterior.
-            //$location.path('/funcionarios');
+            $location.path('/funcionarios');
 
         }, function errorCallback(response){
         
             $scope.errorMsg = response.data.message;
             console.log("Erro de cadastro de funcionario: " + response.data.message);
+            $window.scrollTo(0, 0);
         });
-
-        $window.scrollTo(0, 0);
     };
 
     init = function () {
