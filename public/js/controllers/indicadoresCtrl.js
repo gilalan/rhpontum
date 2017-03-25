@@ -49,7 +49,7 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
 
     if (firstRun) {   
 
-      //////console.log("Objeto Date Equipe Enviado: ", objDateEquipe);
+      console.log("Objeto Date Equipe Enviado: ", objDateEquipe);
 
       apontamentosAPI.getApontamentosByDateRangeAndEquipe(objDateEquipe).then(function successCallback(response){
 
@@ -58,8 +58,8 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
         
         createPrettyStringResults(apontamentosDiarios);
         buildGraphBar(apontamentosSemanais);
-        //////console.log("#$!#$$$$$$$$ APONTAMENTOS DIARIOS ", apontamentosDiarios);
-        //////console.log("#$%@$#@%#$@#%$@%#$@ Apontamentos Semanais: ", apontamentosSemanais);
+        console.log("#$!#$$$$$$$$ APONTAMENTOS DIARIOS ", apontamentosDiarios);
+        console.log("#$%@$#@%#$@#%$@%#$@ Apontamentos Semanais: ", apontamentosSemanais);
         firstRun = false;
         
       }, function errorCallback(response){
@@ -71,6 +71,8 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
 
     } else {
 
+      console.log("Objeto Date Equipe Enviado: ", objDateEquipe);
+
       apontamentosAPI.getApontamentosByDateRangeAndEquipe(objDateEquipe).then(function successCallback(response){
 
         var apontamentosResponse = response.data;
@@ -78,12 +80,12 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
         if (updateDiario) {
           
           createPrettyStringResults(apontamentosResponse);
-          //////console.log("#$!#$$$$$$$$ APONTAMENTOS DIARIOS ", apontamentosResponse);
+          console.log("#$!#$$$$$$$$ APONTAMENTOS DIARIOS ", apontamentosResponse);
 
         } else {
 
           buildGraphBar(apontamentosResponse);
-          //////console.log("#$!@!$@!$!@$@! TESTE !@#!%!@%!%% apontamentos SEMANAIS: ", response.data);
+          console.log("#$!@!$@!$!@$@! TESTE !@#!%!@%!%% apontamentos SEMANAIS: ", response.data);
         }
 
       }, function errorCallback(response){
@@ -930,6 +932,7 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
     $scope.currentDate.setDate($scope.currentDate.getDate() - 1);
     $scope.currentDateFtd = $filter('date')($scope.currentDate, 'abvFullDate');
 
+    console.log("current date: ", $scope.currentDate);
     getApontamentosByDateRangeAndEquipe($scope.currentDate, 1, $scope.equipe.componentes, true);//pegando o diário
   }
 
@@ -938,6 +941,7 @@ angular.module('rhPontumApp').controller('indicadoresCtrl', ['$scope', '$timeout
     $scope.currentDate.setDate($scope.currentDate.getDate() + 1);
     $scope.currentDateFtd = $filter('date')($scope.currentDate, 'abvFullDate');
 
+    console.log("current date: ", $scope.currentDate);
     getApontamentosByDateRangeAndEquipe($scope.currentDate, 1, $scope.equipe.componentes, true);//pegando o diário
   }
 

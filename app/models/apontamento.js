@@ -7,7 +7,7 @@ var apontamentoSchema = new Schema(
 	data: {type: Date, required: true},
 	funcionario: {type: Schema.Types.ObjectId, ref: 'Funcionario', required: true},
 	status: {
-		id: Number,
+		id: Number, //Poderia ter o método no qual foi criado o ponto, se foi batida do usuário ou manualmente pelo Gestor/Fiscal (manual tem q ser justificado)
 		descricao: {type: String, enum: ["Correto", "Incompleto", "Errado", "Justificado"]}
 	},
 	marcacoes: [{
