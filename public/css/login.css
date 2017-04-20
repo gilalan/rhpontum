@@ -2,8 +2,8 @@ body {
   /*background: url('../img/bg-resposive.jpg') no-repeat fixed center center !important;    
   background-size: cover !important;*/
   height: 100%;
-  background-repeat: no-repeat;
-  background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));
+  /*background-repeat: no-repeat;
+  background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
   font-family: Montserrat !important;
 }
 #inputEmail {
@@ -65,4 +65,44 @@ body {
 .form-signin input#inputPassword:focus {
     background: #fff url('http://i.imgur.com/Qf83FTt.png') 15px bottom no-repeat;
     background-size: 16px 80px;
+}
+
+.thing-form {
+  margin: 20px 0;
+}
+
+#banner {
+  border-bottom: none;
+  margin-top: -20px;
+}
+
+#banner h1 {
+  font-size: 60px;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.hero-unit {
+  position: relative;
+  padding: 30px 15px;
+  color: #F5F5F5;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  background: #4393B9;
+}
+
+.login-container {
+  text-align: center;
+}
+
+.fix-space-top {
+  margin-top: 15px;
+}
+
+.fix-space-bottom {
+  margin-bottom: 15px;
+}
+
+.navbar-text {
+  margin-left: 15px;
 }

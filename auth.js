@@ -36,5 +36,10 @@ module.exports = function (req, res, next) {
 	console.log("##### NENHUM USUÁRIO LOGADO NA APP!!!! ##### ROTA PUBLICA?!");
   }
 
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  console.log('passou aqui no ALL e colocou os HEADERS');
+  
   next();
 };
