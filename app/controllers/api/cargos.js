@@ -49,7 +49,8 @@ router.post('/', function(req, res) {
       return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
     }
 
-    return res.json(cargo);
+    //return res.json(cargo);
+    return res.status(200).send({success: true, message: 'Cargo cadastrado com sucesso!'});
   });
 });
 
@@ -63,9 +64,8 @@ router.get('/:id', function(req, res) {
     if(err) {
       return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
     }        
-          
-    return res.status(200).send({success: true, message: 'Cargo cadastrado com sucesso!'});
-    //return res.json(cargo);
+              
+    return res.json(cargo);
   });
 
 });
