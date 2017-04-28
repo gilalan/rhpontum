@@ -1,67 +1,57 @@
-<link href="css/login.css" rel="stylesheet">
-<link href="css/signin.css" rel="stylesheet">
-<link href="css/alertas-msgs.css" rel="stylesheet">
-<!-- <link href="../bower_components/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet"> -->
-
-<div class="navbar navbar-default navbar-static-top">
-  <div class="container">
-    <div class="navbar-header">
-      <a href="/" class="navbar-brand">RHPonto</a>
-    </div>
-    <div uib-collapse="$ctrl.isCollapsed" class="navbar-collapse collapse" id="navbar-main">
-      
-      <ul class="nav navbar-nav navbar-right">
-        <li ng-class="{active: $ctrl.isActive('/')}"><a href="/">Login</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<header class="hero-unit" id="banner">
-  <div class="container">
-    <img src="../img/Single-tap_90px.png" alt="RHPonto System">
-    <h1>RHPonto</h1>
-    <p class="lead">Sistema de Gestão do Ponto</p>
-  </div>
-</header>
-
 <div class="container">
-  <div class="row">
-    <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12">
-      
-      <form class="form fix-space-top" name="userForm" novalidate>
-
-        <div class="form-group">
-          <label>E-mail</label>
-          <input type="email" name="email" class="form-control" ng-model="vm.user.email" required>
-        </div>
-
-        <div class="form-group">
-          <label>Senha</label>
-
-          <input type="password" name="password" class="form-control" ng-model="vm.user.password" required>
-        </div>
-
-        <div class="form-group has-error">
-          <p class="help-block" ng-show="form.email.$error.required && form.password.$error.required && vm.submitted">
-             Por favor, insira seu e-mail e senha.
-          </p>
-          <p class="help-block" ng-show="form.email.$error.email && vm.submitted">
-             Por favor, insira um e-mail válido.
-          </p>
-
-          <p class="help-block">{{ vm.errors.login }}</p>
-        </div>
-
-        <div class="fix-space-bottom">
-          <button class="btn btn-primary btn-lg btn-login" type="submit">
-            Entrar
-          </button>
-          <a class="btn btn-warning btn-lg btn-register" href="/signup">
-            Bater Ponto
-          </a>
-        </div>
-      </form>
-    </div>
+  <div class="header clearfix">
+    <nav>
+    </nav>
+    <h3 class="text-muted">RHPontum</h3>
   </div>
-</div>
+  {{loading}}
+  <div class="jumbotron">
+    <h2>Bem-vindo,</h2>
+    <p>digite seus dados para ter acesso ao sistema RHPontum:</p>
+    <!-- Colocando o name no form cria uma variavel no $scope com as informações dos campos de ng-required, min-length, max-lenth etc -->    
+    
+    <div ng-show="successMsg" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Feito!</strong> {{successMsg}}
+    </div>
+
+    <div ng-show="errorMsg" class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Ops!</strong> {{errorMsg}}
+    </div>
+
+    <div ng-messages="userForm.email.$error" ng-show="userForm.email.$error && userForm.email.$dirty" class="alertas-msgs">
+      <div ng-message="required" class="alert alert-danger">Por favor, preencha o campo e-mail</div>
+      <div ng-message="minlength" class="alert alert-danger">Tamanho mínimo do campo e-mail: 10 caracteres</div>
+      <div ng-message="pattern" class="alert alert-danger">O campo e-mail necessita do caracter '@'</div>
+    </div>
+       
+    <div ng-messages="userForm.senha.$error" ng-show="userForm.senha.$error && userForm.senha.$dirty" class="alertas-msgs">      
+        <div ng-message="required" class="alert alert-danger">Por favor, preencha o campo senha</div>
+        <div ng-message="minlength" class="alert alert-danger">Tamanho mínimo do campo senha: 8 caracteres</div>
+    </div>
+
+    <form class="form-signin" name="userForm">
+      <label for="inputEmail" class="sr-only">Email</label>
+      <input id="inputEmail" name="email" class="form-control" placeholder="E-mail" ng-model="user.email" ng-required="true" ng-minlength='10' ng-pattern='/@/' autofocus="" type="email">
+      <label for="inputPassword" class="sr-only">Senha</label>
+      <input id="inputPassword" name="senha" class="form-control" placeholder="Senha" ng-model="user.senha" ng-required="true" ng-minlength='8' type="password">
+      <div class="checkbox">
+        <label>
+          <input value="remember-me" type="checkbox"> Lembre-me
+        </label>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login(user)" ng-disabled="userForm.$invalid">Entrar</button>
+      <button id="baterPontoUsr" type="submit" class="btn btn-lg btn-warning  btn-block" ng-click="login(user, true)" ng-disabled="userForm.$invalid">
+        <span class="fa fa-clock-o fa-lg" aria-hidden="true"></span>
+        Bater Ponto!
+      </button>
+    </form>
+    <!--<span class="fa fa-hand-pointer-o fa-lg" aria-hidden="true"></span>-->
+  </div>
+
+  <footer class="footer">
+    <p>© Q Company, Inc.</p>
+  </footer>
+
+</div> <!-- /container -->

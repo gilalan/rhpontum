@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var cargo = mongoose.Schema({
   especificacao: {type: String, required: true, unique: true},
-  nomeFeminino: {type: String, required: true},
+  nomeFeminino: {type: String, unique: true},
   descricao: String,
   cbo: {type: String, unique: true}
 },{
