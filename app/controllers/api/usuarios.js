@@ -62,7 +62,24 @@ router.get('/:id', function(req, res) {
 
   Usuario.findOne({_id: idUsuario})
   .populate('perfil')
-  .populate('funcionario')
+  .populate({
+      path: 'funcionario', 
+      select: 'nome sobrenome PIS sexoMasculino alocacao',
+      model: 'Funcionario',
+      populate: [{
+        path: 'alocacao.cargo',
+        select: 'especificacao nomeFeminino',
+        model: 'Cargo'
+      },
+      {
+        path: 'alocacao.turno',
+        model: 'Turno',
+        populate: [{
+          path: 'escala', 
+          model: 'Escala'
+        }]
+      }]            
+  })
   .exec(function(err, usuario){
     
     if(err) {
