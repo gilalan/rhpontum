@@ -13,7 +13,7 @@
 .rightColSpan{
 	text-align: right;
 }
-.table th { 
+.tableDash th { 
 	/*border-top: none !important;*/
     border-bottom: 1px solid #dcdcdc !important;  
  }
@@ -31,11 +31,11 @@
 	border-bottom: 1px solid #dcdcdc !important;
 }
 
-.table td {
+.tableDash td {
  	border-left: 1px solid #dcdcdc !important;
 }
 
-table tbody tr {
+.tableDash tbody tr {
     cursor: pointer;
 }
 

@@ -34,7 +34,24 @@ var apontamentoSchema = new Schema(
 		motivo: String
 	}],
 	saldoDiario: Number, //saldo do dia em minutos, negativo ou positivo, sempre atualizado nas batidas PARES, 2a batida, 4a batida, 6a batida por aí em diante
-	justificativa: String
+	justificativa: String,
+	infoTrabalho: {
+		trabalha: Boolean,
+		aTrabalhar: Number, //em minutos?
+		trabalhados: Number //em minutos?		
+	},
+	infoTurno: {
+		isFlexivel: Boolean,
+		intervaloFlexivel: Boolean,
+		ignoraFeriados: Boolean, //Normalmente se aplica apenas aos turnos com escala 12x36h
+		tolerancia: Number, //caso não seja flexível, tem que aplicar essa tolerancia
+		escala: {type: Schema.Types.Mixed},
+		jornada: {type: Schema.Types.Mixed}
+	},
+	marcacoesFtd: [{
+		id: Number,
+		marcacao: String
+	}]
 },
 {
 	timestamps: true

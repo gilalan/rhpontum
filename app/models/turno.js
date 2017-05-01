@@ -45,6 +45,7 @@ module.exports = turnoModel;
             "ent2": 840,
             "sai2": 1080
           },
+          "minutosTrabalho": 480, (soma as horas de trabalho a partir do horário acima)
           "viradaTurno": 0
         },
         {
