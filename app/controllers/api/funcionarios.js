@@ -39,6 +39,8 @@ router.post('/', function(req, res) {
 
     var _funcionario = req.body;
     console.log("Funcionario para cadastrar no BD: ", _funcionario);
+    _funcionario.alocacao.dataCargo = new Date();
+    _funcionario.alocacao.dataTurno = new Date();
 
     // create a user, information comes from AJAX request from Angular
     Funcionario.create(_funcionario, function(err, user) {
