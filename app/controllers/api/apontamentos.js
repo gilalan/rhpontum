@@ -80,7 +80,9 @@ router.put('/:id', function(req, res){
         //apontamento.data = req.body.data;
         apontamento.status = req.body.status;
         apontamento.marcacoes = req.body.marcacoes;//no futuro não poderá atualizar as marcações
+        apontamento.marcacoesFtd = req.body.marcacoesFtd;
         apontamento.marcacoes_invalidadas = req.body.marcacoes_invalidadas;//no futuro não poderá atualizar as marcações
+        apontamento.infoTrabalho = req.body.infoTrabalho;
         apontamento.justificativa = req.body.justificativa;
         //apontamento.funcionario = req.body.funcionario; //SÓ PARA TESTES!!!!!!
 
