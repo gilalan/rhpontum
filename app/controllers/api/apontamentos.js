@@ -123,6 +123,21 @@ router.post('/date', function(req, res){
 
     var dateApontamento = req.body;
     console.log("dateApontamento: ", dateApontamento);
+    
+    //testes
+    var dateN = new Date(dateApontamento.dataInicial);
+    var dateMom = moment(dateApontamento.dataInicial);
+    var localMoment = moment();
+    var utcMoment = moment.utc();
+    var utcDateM = new Date(utcMoment.format());
+    
+    //console.log('## Segunda parte dos testes ##');
+
+    console.log('data normal no server: ', dateN.toString());
+    console.log("data criada peelo moment: ", dateMom.format());
+    console.log("localMomentValueof: ", localMoment.format());
+    console.log('utcMoment: ', utcMoment.format());
+    console.log('UtcDateMoment: ', utcDateM);
 
     var today = moment(dateApontamento.dataInicial).startOf('day');
     var tomorrow = moment(today).add(1, 'days');
@@ -378,12 +393,14 @@ router.post('/currentDate', function(req, res){
 
     var currentDate = new Date(); //Cria com TImeZone +3h em relação ao Brasil
     //var timezone = currentDate.getTimezoneOffset(); //em horas
-    console.log('UTC Date: ', currentDate.toUTCString());
+    //ao invés de retornar a data com uma string completa, vou retornar ela em partes
+    //lá no cliente eu reconstruo sem precisar dar um new Date() e pegar a hora local
     console.log('@# antes -  date no server: ', currentDate);
+    console.log('@# UTC Date: ', currentDate.toUTCString());
     console.log('@# antes -  timezone no server: ', currentDate.getTimezoneOffset());
-    currentDate.setTime( currentDate.getTime() - currentDate.getTimezoneOffset()*60*1000 );
-    console.log('@# depois -  date no server: ', currentDate);
-    console.log('@# depois -  timezone no server: ', currentDate.getTimezoneOffset());
+    //currentDate.setTime( currentDate.getTime() - currentDate.getTimezoneOffset()*60*1000 );
+    //console.log('@# depois -  date no server: ', currentDate);
+    //console.log('@# depois -  timezone no server: ', currentDate.getTimezoneOffset());
 
     return res.json({date: currentDate});
 });
