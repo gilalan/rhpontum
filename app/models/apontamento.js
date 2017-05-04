@@ -16,7 +16,7 @@ var apontamentoSchema = new Schema(
 		hora: Number,
 		minuto: Number,
 		segundo: Number,
-		tzoffset: Number, //representa a diferença entre a hora universal UTC e a hora local
+		tzOffset: Number, //representa a diferença entre a hora universal UTC e a hora local
 		gerada: {
 			created_at: Date,
 			aprovadaPor: {type: Schema.Types.ObjectId, ref: 'Funcionario'},
