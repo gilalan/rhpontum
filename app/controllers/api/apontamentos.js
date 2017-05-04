@@ -373,10 +373,12 @@ router.post('/teste', function(req, res){
 });
 
 //Get current date on server 
-//Tem que subtrair -3h do Timezone, a data e'criar com 3h a mais.
+//Tem que subtrair -3h do Timezone, pois o server está com timeozne 0
 router.post('/currentDate', function(req, res){
 
     var currentDate = new Date(); //Cria com TImeZone +3h em relação ao Brasil
+    //var timezone = currentDate.getTimezoneOffset(); //em horas
+    console.log('UTC Date: ', currentDate.toUTCString());
     console.log('@# antes -  date no server: ', currentDate);
     console.log('@# antes -  timezone no server: ', currentDate.getTimezoneOffset());
     currentDate.setTime( currentDate.getTime() - currentDate.getTimezoneOffset()*60*1000 );
