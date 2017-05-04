@@ -124,30 +124,14 @@ router.post('/date', function(req, res){
     var dateApontamento = req.body;
     console.log("data pura: ", dateApontamento.dataInicial);
     console.log('dateTimezone: ', dateApontamento.tzOffset);//em minutos
-    
+        
     //testes
-    var dateN = new Date(dateApontamento.dataInicial);
-    var dateO = new Date(dateApontamento.year, dateApontamento.month-1, dateApontamento.day, 
-        dateApontamento.hour, dateApontamento.minute, 0, 0);
-    
-    var dateMom = moment(dateApontamento.dataInicial);
-    var dateMomO = moment({year: dateApontamento.year, month: dateApontamento.month-1,
-        day: dateApontamento.day, hour: dateApontamento.hour, minute: dateApontamento.minute});
-    //var localMoment = moment();
-    //var utcMoment = moment.utc();
-    ///var utcDateM = new Date(utcMoment.format());
-    //var newDateMom = dateMom.subtract(dateApontamento.tzOffset, 'minutes');
-    
-    console.log('data construída através da pura: ', dateN);
-    console.log('data construída separadamente: ', dateO);
-    console.log("data pura criada pelo moment: ", dateMom.format());
-    console.log("data pura criada pelo moment: ", dateMomO.format());
-    // console.log("localMomentValueof: ", localMoment.format());
-    // console.log('utcMoment: ', utcMoment.format());
-    // console.log('UtcDateMoment: ', utcDateM);
-    // console.log('subtraindo o tzOffset da data passada: ', newDateMom.format());
+    var dateMom = moment({year: dateApontamento.year, month: dateApontamento.month-1,
+        day: dateApontamento.day, hour: dateApontamento.hour, minute: dateApontamento.minute});    
 
-    var today = moment(dateApontamento.dataInicial).startOf('day');
+    console.log('#moment date: ', dateMom.format());
+
+    var today = dateMom.startOf('day');//moment(dateApontamento.dataInicial).startOf('day');
     var tomorrow = moment(today).add(1, 'days');
     
     console.log('today moment: ', today);
