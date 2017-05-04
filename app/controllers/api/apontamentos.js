@@ -180,6 +180,8 @@ router.post('/intervaldate/equipe', function(req, res){
     var dias = objDateEquipe.dias;
     var equipe = objDateEquipe.equipe;
 
+    console.log('dateParametro: ', dateParametro);
+    console.log('dateParametro com moment: ', moment(new Date(dateParametro)));
     var today = dateParametro ? moment(new Date(dateParametro)).startOf('day') : moment(new Date()).startOf('day'); //dia atual
     //today.subtract(18, 'days'); //PARA TESTES!
     //var teste2 = moment(today).add(2, 'days');
