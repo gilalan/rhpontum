@@ -161,6 +161,8 @@ router.post('/:id/apontamentoRange', function(req, res){
     var dateMom = moment({year: dateApontamento.year, month: dateApontamento.month,
         day: dateApontamento.day, hour: dateApontamento.hour, minute: dateApontamento.minute});    
 
+    console.log('dateMom: ', dateMom);
+    console.log('dateMom ftd: ', dateMom.format());
     var today = dateMom.startOf('day');
     //var today = moment(dateApontamento.dataInicial).startOf('day');
     var anotherDay = null;
