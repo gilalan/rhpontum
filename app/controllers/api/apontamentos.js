@@ -122,11 +122,10 @@ router.delete('/:id', function(req, res){
 router.post('/date', function(req, res){
 
     var dateApontamento = req.body;
-    console.log("data pura: ", dateApontamento.dataInicial);
-    console.log('dateTimezone: ', dateApontamento.tzOffset);//em minutos
+    console.log("data pura: ", dateApontamento.raw);
         
     //testes
-    var dateMom = moment({year: dateApontamento.year, month: dateApontamento.month-1,
+    var dateMom = moment({year: dateApontamento.year, month: dateApontamento.month,
         day: dateApontamento.day, hour: dateApontamento.hour, minute: dateApontamento.minute});    
 
     console.log('#moment date: ', dateMom.format());
@@ -156,7 +155,13 @@ router.post('/date/equipe', function(req, res){
     var objDateEquipe = req.body;
     var equipe = objDateEquipe.equipe;
 
-    var today = moment(objDateEquipe.dataInicial).startOf('day');
+    var dateMom = moment({year: objDateEquipe.date.year, 
+        month: objDateEquipe.date.month,
+        day: objDateEquipe.date.day, hour: objDateEquipe.date.hour, 
+        minute: objDateEquipe.date.minute});    
+
+    //var today = moment(objDateEquipe.date).startOf('day');
+    var today = dateMom.startOf('day');
     var tomorrow = moment(today).add(1, 'days');
     
     console.log('today moment: ', today);
@@ -187,16 +192,17 @@ router.post('/intervaldate/equipe', function(req, res){
     var dias = objDateEquipe.dias;
     var equipe = objDateEquipe.equipe;
 
-    console.log('dateParametro: ', dateParametro);
-    console.log('dateParametro com moment: ', moment(new Date(dateParametro)));
-    var today = dateParametro ? moment(new Date(dateParametro)).startOf('day') : moment(new Date()).startOf('day'); //dia atual
-    //today.subtract(18, 'days'); //PARA TESTES!
-    //var teste2 = moment(today).add(2, 'days');
+    console.log("data pura: ", dateParametro.raw);
+
+    var dateMom = moment({year: dateParametro.year, month: dateParametro.month,
+        day: dateParametro.day, hour: dateParametro.hour, minute: dateParametro.minute});    
+
+    var today = dateParametro ? dateMom.startOf('day') : moment(new Date()).startOf('day'); //dia atual
+    //var today = dateParametro ? moment(new Date(dateParametro)).startOf('day') : moment(new Date()).startOf('day'); //dia atual
+    
     var otherDay = (dias >= 0) ? moment(today).add(dias, 'days') : moment(today).subtract(dias, 'days');
     
     console.log('today moment: ', today);
-    //console.log("TESTE 2 OTHER DAY: ", teste2);
-    //console.log("TESTE 2 OTHER DAY: ", teste3);
     console.log('other day moment: ', otherDay);
 
     var queryDate = (dias >= 0) ? {$gte: today.toDate(), $lt: otherDay.toDate()} : {$gte: otherDay.toDate(), $lt: today.toDate()};

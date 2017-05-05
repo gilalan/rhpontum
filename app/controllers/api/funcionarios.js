@@ -156,17 +156,33 @@ router.post('/:id/apontamentoRange', function(req, res){
 
     var funcionarioId = req.params.id;
     var dateApontamento = req.body;
-    console.log("dateApontamento: ", dateApontamento);
+    console.log("dateApontamento: ", dateApontamento.raw);
 
-    var today = moment(dateApontamento.dataInicial).startOf('day');
+    var dateMom = moment({year: dateApontamento.year, month: dateApontamento.month,
+        day: dateApontamento.day, hour: dateApontamento.hour, minute: dateApontamento.minute});    
+
+    var today = dateMom.startOf('day');
+    //var today = moment(dateApontamento.dataInicial).startOf('day');
     var anotherDay = null;
     //var tomorrow = moment(today).add(1, 'days');
 
     //se não enviar outra data, é pq ele quer o apontamento diário, basta somarmos 1 dia para isso
     if(!dateApontamento.dataFinal)
+        
         anotherDay = moment(today).add(1, 'days');
-    else
+
+    else {
+        
+        var dateMomFinal = moment({
+            year: dateApontamento.dataFinal.year, 
+            month: dateApontamento.dataFinal.month,
+            day: dateApontamento.dataFinal.day, 
+            hour: dateApontamento.dataFinal.hour, 
+            minute: dateApontamento.dataFinal.minute
+        });
+
         anotherDay = moment(dateApontamento.dataFinal).startOf('day');      
+    }
     
     console.log('today moment: ', today);
     console.log('anotherDay moment: ', anotherDay);
