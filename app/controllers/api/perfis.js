@@ -115,4 +115,22 @@ router.delete('/:id', function(req, res){
   });
 });
 
+//Get ALL perfils
+router.get('/:lvl/level', function(req, res) {
+
+  //nível do usuário que fez a requisição
+  console.log('Obtendo Perfis por Level');
+  var userLevel = req.params.lvl;
+
+  Perfil.find({accessLevel: {$lt: userLevel}}) 
+  .exec(function(err, perfis) {
+
+    if(err) {
+      return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+    }
+          
+    return res.json(perfis);
+  });
+});
+
 module.exports = router;
