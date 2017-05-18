@@ -17,22 +17,42 @@ var apontamentoSchema = new Schema(
 		minuto: Number,
 		segundo: Number,
 		tzOffset: Number, //representa a diferença entre a hora universal UTC e a hora local
+		RHWeb: Boolean, //indica se a batida foi proveniente da WEB 
+		REP: Boolean, //indica se a batida foi de um REP físico (se essa e a de cima são falsas, ela foi gerada)
 		gerada: {
-			created_at: Date,
-			aprovadaPor: {type: Schema.Types.ObjectId, ref: 'Funcionario'},
-			justificativa: String
+			created_at: Date			
 		}
 	}],
-	marcacoes_invalidadas: [{
-		hora: Number,
-		minuto: Number,
-		segundo: Number,
-		gerada: {
-			created_at: Date,
-			aprovadaPor: {type: Schema.Types.ObjectId, ref: 'Funcionario'},
-			justificativa: String
+	historico: [{
+		id: Number,
+		marcacoes: [{
+			id: Number, //1, 2, 3, 4 -> sequencial para ordenação
+			descricao: String, //ent1, sai1, ent2, sai2, ent3, sai3
+			hora: Number,
+			minuto: Number,
+			segundo: Number,
+			tzOffset: Number, //representa a diferença entre a hora universal UTC e a hora local
+			RHWeb: Boolean, //indica se a batida foi proveniente da WEB 
+			REP: Boolean, //indica se a batida foi de um REP físico (se essa e a de cima são falsas, ela foi gerada)
+			gerada: {
+				created_at: Date			
+			}
+		}],
+		infoTrabalho: {
+			trabalha: Boolean,
+			aTrabalhar: Number, //em minutos?
+			trabalhados: Number //em minutos?		
 		},
-		motivo: String
+		ajustada: Boolean,
+		gerencial: {
+			dataAlteracao: Date,
+			gestor: {
+				nome: String,
+				sobrenome: String,
+				email: String,
+				PIS: String
+			}
+		}
 	}],
 	justificativa: String,
 	infoTrabalho: {

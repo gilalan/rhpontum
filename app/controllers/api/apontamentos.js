@@ -263,6 +263,66 @@ router.post('/intervaldate/equipe', function(req, res){
     }
 });
 
+/*
+** Get apontamento de um funcionário dentro do intervalo inicial e final passados
+*/
+router.post('/intervaldate/funcionario', function(req, res){
+
+    var objDateWorker = req.body;
+    var dateParametro = objDateWorker.date;
+    var dateFinalParametro = objDateWorker.date.final;
+    var funcionario = objDateWorker.funcionario;
+
+    console.log("data inicial pura: ", dateParametro.raw);
+    console.log("data final pura: ", dateFinalParametro.raw);
+
+    var startDateMom = moment({year: dateParametro.year, month: dateParametro.month,
+        day: dateParametro.day, hour: dateParametro.hour, minute: dateParametro.minute});
+
+    var endDateMom = moment({year: dateFinalParametro.year, month: dateFinalParametro.month,
+        day: dateFinalParametro.day, hour: dateFinalParametro.hour, minute: dateFinalParametro.minute});
+
+    var firstDay = dateParametro ? startDateMom.startOf('day') : moment(new Date()).startOf('day');
+    var lastDay = dateFinalParametro ? endDateMom.startOf('day') : moment(new Date()).startOf('day');
+    
+    console.log('firstDay moment: ', firstDay);
+    console.log('lastDay moment: ', lastDay);
+
+    var queryDate = {$gte: firstDay.toDate(), $lt: lastDay.toDate()};
+
+    console.log("############# Trazendo dados!");
+
+    Apontamento.find({data: queryDate, funcionario: funcionario._id ? funcionario._id : funcionario})
+    .populate({
+        path: 'funcionario', 
+        select: 'nome sobrenome PIS sexoMasculino alocacao',
+        model: 'Funcionario',
+        populate: [{
+          path: 'alocacao.cargo',
+          select: 'especificacao nomeFeminino',
+          model: 'Cargo'
+        },
+        {
+          path: 'alocacao.turno',
+          model: 'Turno',
+          populate: [{
+            path: 'escala', 
+            model: 'Escala'
+          }]
+        }]            
+    })
+    .sort({data: 'asc'})
+    .exec(function(err, apontamentos){
+        if(err) {
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+        }
+
+        console.log("Apontamento dateRange mongoose: ", apontamentos.length);
+        return res.json(apontamentos);
+    });
+   
+});
+
 //itera sobre uma equipe e traz os apontamentos deles, depois devolve a equipe com cada componente tendo esse apontamento acoplado em uma propriedade
 //seria algo do tipo funcionario.apontamentos = [apontamentos];
 //USAR CURSOR DEIXOU MTO LENTO A REQUISICAO!!!

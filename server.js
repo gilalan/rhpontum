@@ -29,6 +29,7 @@ app.use('/api/gestores', require('./app/controllers/api/gestores'));
 app.use('/api/apontamentos', require('./app/controllers/api/apontamentos'));
 app.use('/api/instituicoes', require('./app/controllers/api/instituicoes'));
 app.use('/api/solicitacoes', require('./app/controllers/api/solicitacoes'));
+app.use('/api/solicitacoes-ajuste', require('./app/controllers/api/solicitacoesAjuste'));
 app.use('/api/campi', require('./app/controllers/api/campi'));
 app.use('/api/setores', require('./app/controllers/api/setores'));
 app.use('/api/equipes', require('./app/controllers/api/equipes'));
