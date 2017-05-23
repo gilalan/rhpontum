@@ -1,6 +1,11 @@
-var Funcionario = require('../app/models/funcionario');
-var Apontamento = require('../app/models/apontamento');
-var Feriado = require('../app/models/feriado');
+//Database configuration =================
+var database = require('./config/database');
+
+const errorLog = require('./util/logger').errorlog;
+const successLog = require('./util/logger').successlog;
+var Funcionario = require('./app/models/funcionario');
+var Apontamento = require('./app/models/apontamento');
+var Feriado = require('./app/models/feriado');
 var moment = require('moment');
 var http = require('http');
 var request = require('request');
@@ -10,50 +15,76 @@ var urlStaticREPFile = 'https://docs.google.com/uc?export=download&id=0B2GW7fQUv
 //var urlStaticREPFile = 'https://docs.google.com/uc?export=download&id=0B2GW7fQUvA47SEJZOFZvdzhqTms';
 var Readable = require('stream').Readable;
 const readline = require('readline');
-
+var timePeriod = 5 * 60 * 1000;//minuto * segundo * ms
 var feriados = [];
+var itemsProcessed = 0;
+
+process.on('uncaughtException', function(err) {
+	errorLog.error('process on - uncaughtException');
+	errorLog.error(err);
+});
+
+successLog.info('Iniciando Serviço de Obtenção dos arquivos dos REPs: ');
+//errorLog.error('Teste de msg de erro');
+//errorLog.error('Teste de msg de erro', error);
 
 /*
 ** Requisita o arquivo .txt com os apontamentos recuperados do REP e armazenados na nuvem 
 */
-var getFileRequest = function(){
-
-    console.log('get file request');
+//function getFileRequest (callback){
+function getFileRequest(callback){
+   
+    successLog.info('#Iniciando request: ', new Date());
+   
     request(urlStaticREPFile, function (error, response, body) {
         //console.log('error:', error); // Print the error if one occurred 
         //console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
         //console.log('body:', body); // Print the HTML for the Google homepage. 
         if (response && response.statusCode === 200){
             
-            getFeriadosAssync(body);
+            //getFeriadosAssync(body);
+            getFeriadosAssync(body, callback).then(v => {
+
+	        	//itemsProcessed++;
+        		//successLog.warn('##############Terminou tudo, chamaria o callback');
+        	});
+            //callback();
 
         } else {
 
-            console.log('Aconteceu um erro na comunicação com o arquivo local do REP, código do erro: ', error);
+            errorLog.error('Aconteceu um erro na comunicação com o arquivo local do REP, código do erro: ', error);
+            callback();
         }
     });
+
+    successLog.info('saiu da função getFileRequest');
 };
 
-function getFeriadosAssync(body){
+async function getFeriadosAssync(body, callback){
+
+	successLog.info('Entrou na getFeriadosAssync', Feriado);
 
     Feriado.find(function(err, rFeriados){
         
+        successLog.info('Entrou no feriado.find: ');
+
         if(err) {
-            console.log('Erro ao obter lista de feriados');
+            errorLog.error('Erro ao obter lista de feriados');
+            //callback();
         }
         else {
-            //console.log('Feriados retornados: ', rFeriados);
+            successLog.info('retornou os feriados: ', rFeriados.length);
             feriados = rFeriados;
             var s = new Readable();
             s.push(body);    // the string you want
             s.push(null);      // indicates end-of-file basically - the end of the stream
-            readFile(s); 
+            readFile(s, callback); 
         }
         
     });
 };
 
-function readFile(streamData){
+function readFile(streamData, callback){
     
     var nsr = "";
     var type = "";
@@ -66,6 +97,9 @@ function readFile(streamData){
     var total = null;
     var pisDateMap = {};
     var objMarcacao = {};
+    var hashMapSize = 0;
+
+    successLog.info('Hora do readFile!');
 
     const rl = readline.createInterface({
       input: streamData//fs.createReadStream(streamData)
@@ -125,6 +159,7 @@ function readFile(streamData){
                 var dateMapTemp = {};
                 dateMapTemp[data] = [objMarcacao];
                 pisDateMap[pis] = dateMapTemp;
+                hashMapSize++;
 
             } else {//já tem um pisDateMap['0032']
                 //caso não haja esse hash, a gnt inicializa o array de marcações nele
@@ -133,6 +168,7 @@ function readFile(streamData){
                     
                     // console.log('-Não tem um pis e data mapeados', pisDateMap[pis][data]);
                     pisDateMap[pis][data] = [objMarcacao];
+                    hashMapSize++;
 
                 } else {
                     //console.log('#Já tem um pis e data mapeados: ', pisDateMap[pis][data]);
@@ -146,16 +182,18 @@ function readFile(streamData){
       //console.log('indice da posição 10: ', line.charAt(9));
     }).on('close', function(){
 
-        console.log('Quantidade de marcações: ', count);
-        //console.log('HashMap pisDateMap Final: ', pisDateMap);
+        successLog.info('Quantidade de marcações: ', count);
+        successLog.info('hashMapSize: ', hashMapSize);
         //Agora posso chamar a rotina para navegar no HashMap e criar os apontamentos
-        iterateHashAndSaveDB(pisDateMap);
+        iterateHashAndSaveDB(pisDateMap, hashMapSize, callback);
     });
 };
 
-function iterateHashAndSaveDB(pisDateMap){
+function iterateHashAndSaveDB(pisDateMap, hashMapSize, callback){
 
     var count = 0;
+	itemsProcessed = 0
+
     for (var pis in pisDateMap){
         if (pisDateMap.hasOwnProperty(pis)) {
              count++;
@@ -165,20 +203,29 @@ function iterateHashAndSaveDB(pisDateMap){
                     // console.log("sub key is " + date + ", value is " + pisDateMap[pis][date]);
                     searchPISAndSaveAppointment(pis, {dia: date.substring(0, 2), 
                         mes: date.substring(2, 4), ano: date.substring(4, 8)}, 
-                        pisDateMap[pis][date]);
+                        pisDateMap[pis][date]).then(v => {
+
+                        	itemsProcessed++;
+                        	successLog.info('itemsProcessed: ', itemsProcessed);
+                        	if(itemsProcessed === hashMapSize){
+                        		successLog.warn('## Terminou tudo, chamaria o callback ##');
+                        		callback();
+                        	}
+                    });
                 }
              }
         }
     }
 
-    console.log('pisDateMap Hash length: ', count);
+    successLog.info('pisDateMap Hash length: ', count);
+    //successLog.info('hashMapSize: ', hashMapSize);
 };
 
 /*
 ** Como são chamadas assíncronas, vou buscar o PIS e se der certo tento criar/atualizar o apontamento 
 ** desse funcionário
 */
-function searchPISAndSaveAppointment(pis, dateObj, marcacoesObj){
+async function searchPISAndSaveAppointment(pis, dateObj, marcacoesObj){
 
     marcacoesObj.sort(function(a, b){//ordena o array de marcações
       return a.total - b.total;
@@ -195,7 +242,7 @@ function searchPISAndSaveAppointment(pis, dateObj, marcacoesObj){
     .exec(function(err, funcionario){
         
         if(err) {
-            console.log('Erro ao recuperar funcionario na BD. Erro: ', err);
+            errorLog.error('Erro ao recuperar funcionario na BD. Erro: ', err);
             return false;
         }
         
@@ -207,7 +254,7 @@ function searchPISAndSaveAppointment(pis, dateObj, marcacoesObj){
 
         } else {
 
-            console.log('Funcionário não encontrado na base, PIS: ', pis);
+            errorLog.error('Funcionário não encontrado na base, PIS: ', pis);
         }
     });
 };
@@ -216,7 +263,7 @@ function saveOrUpdateAssyncApontamento(dateObj, marcacoesObj, funcionario){
 
     var funcionario = funcionario;
     var pis = funcionario.PIS;
-    console.log('saveOrUpdateAssyncApontamento para o funcionario: ', funcionario.nome.concat(' ', funcionario.sobrenome));
+    successLog.info('saveOrUpdateAssyncApontamento para o funcionario: ', funcionario.nome.concat(' ', funcionario.sobrenome));
     var monthJS = parseInt(dateObj.mes);
     if (!monthJS)
         return false;
@@ -243,8 +290,8 @@ function saveOrUpdateAssyncApontamento(dateObj, marcacoesObj, funcionario){
         .exec(function(err, apontamento){
             
             if(err) {
-                console.log('Erro ao recuperar apontamento, pis: ', pis);
-                console.log(err);
+                errorLog.error('Erro ao recuperar apontamento, pis: ', pis);
+                errorLog.error(err);
                 appError = err;
                 return appError;
             }
@@ -252,7 +299,7 @@ function saveOrUpdateAssyncApontamento(dateObj, marcacoesObj, funcionario){
             if (!apontamento) {
                 
                 var arrayMarcacoes = createMarcacoes(marcacoesObj, newDate, null);
-                console.log('## Criando apontamento com a data: ', newDate);
+                successLog.info('## Criando apontamento com a data: ', newDate);
                 var extraInfo = createExtraInfo(funcionario, newDate, arrayMarcacoes);
 
                 if (extraInfo) {
@@ -267,27 +314,27 @@ function saveOrUpdateAssyncApontamento(dateObj, marcacoesObj, funcionario){
                         infoTrabalho: extraInfo.infoTrabalho,
                         marcacoesFtd: createMarcacoesFtd(arrayMarcacoes)
                     };
-                    console.log('vai criar o apontamento: ', apontamento);
+                    successLog.info('vai criar o apontamento: ', apontamento.data);
                     Apontamento.create(apontamento, function(err, appoint) {
                 
                         if(err) {
-                          console.log('erro post apontamento: ', err);
+                          errorLog.error('erro post apontamento: ', err);
                         }   
                         else {
-                          console.log('Apontamento criado com sucesso!. id: ', appoint._id);
+                          successLog.info('Apontamento criado com sucesso!. id: ', appoint._id);
                         }
                         
                     });
 
                 } else {
 
-                    console.log('Não pôde cadastrar o apontamento pois o funcionário não tem turno/escala configurados.');
+                    errorLog.error('Não pôde cadastrar o apontamento pois o funcionário não tem turno/escala configurados.');
                 }
 
             } else { //já tem apontamento, vamos atualizá-lo
 
                 var arrayMarcacoes = createMarcacoes(marcacoesObj, newDate, apontamento.marcacoes);
-                console.log('## Atualizando apontamento com a data: ', newDate);
+                successLog.info('## Atualizando apontamento com a data: ', newDate);
                 if (apontamento.infoTrabalho) {
                     apontamento.infoTrabalho.trabalhados = getWorkedMinutes(arrayMarcacoes);
                 }
@@ -299,9 +346,9 @@ function saveOrUpdateAssyncApontamento(dateObj, marcacoesObj, funcionario){
                 apontamento.save(function(err){
                     
                   if(err)
-                    console.log('Erro no save do update de apontamento', err);
+                    errorLog.error('Erro no save do update de apontamento', err);
                   else 
-                    console.log('apontamento atualizado com sucesso');
+                    successLog.info('apontamento atualizado com sucesso');
 
                 });
             }
@@ -310,7 +357,7 @@ function saveOrUpdateAssyncApontamento(dateObj, marcacoesObj, funcionario){
 
     } else {
 
-        console.log('Não criou o apontamento pois a data é inválida (antes da data de admissão ou maior que a data corrente).', newDate);
+        errorLog.error('Não criou o apontamento pois a data é inválida (antes da data de admissão ou maior que a data corrente).', newDate);
     }
             
 };
@@ -356,7 +403,7 @@ function createMarcacoes(marcacoesObj, date, marcacoesOriginais){
         var inseridaREP = false;
         var abort = false;
         var indexIgualHorario = -1;
-        console.log('#atualização, marcações recebidas: ', marcacoesOriginais);
+        successLog.info('#atualização, marcações recebidas size: ', marcacoesOriginais.length);
         marcacoes = marcacoesOriginais.slice();//copia o array
 
         for (var i=0; i<marcacoesObj.length; i++){
@@ -365,11 +412,11 @@ function createMarcacoes(marcacoesObj, date, marcacoesOriginais){
             abort = false;
             indexIgualHorario = -1;
             marcacao = {}; //'reseta' p não sobrar resquícios da última
-            console.log('marcaçõesObj - NSR: ', marcacoesObj[i].nsr);
-            console.log('marcaçõesObj - Horario: ', marcacoesObj[i].strHorario);
+            //successLog.info('marcaçõesObj - NSR: ', marcacoesObj[i].nsr);
+            //successLog.info('marcaçõesObj - Horario: ', marcacoesObj[i].strHorario);
             for(var j=0; j < marcacoesOriginais.length && !abort; j++){
-                console.log('Originais - NSR: ', marcacoesOriginais[j].NSR);
-                console.log('Originais - Horario: ', marcacoesOriginais[j].strHorario);
+                //successLog.info('Originais - NSR: ', marcacoesOriginais[j].NSR);
+                //successLog.info('Originais - Horario: ', marcacoesOriginais[j].strHorario);
                 if(marcacoesObj[i].nsr == marcacoesOriginais[j].NSR) {
                     inseridaREP = true;
                     abort = true;
@@ -382,7 +429,7 @@ function createMarcacoes(marcacoesObj, date, marcacoesOriginais){
             }
             //vai criar uma nova marcação a ser inserida no BD.
             if (!inseridaREP && (indexIgualHorario == -1) ){
-                console.log('Não é marcacao repetida, vai criar um obj de marcacao novo');
+                //successLog.info('Não é marcacao repetida, vai criar um obj de marcacao novo');
                 marcacao = {
                     id: getId(marcacoes),
                     descricao: getDescricao(marcacoes),
@@ -403,20 +450,20 @@ function createMarcacoes(marcacoesObj, date, marcacoesOriginais){
             //para não ficar com marcações repetidas de horário na WEB e REP (espertinhospodem fazer isso)
             if (!inseridaREP && (indexIgualHorario != -1)) {
                 
-                console.log('caso raro em que a marcacao web e do REP tiveram mesmo horário');
+                errorLog.error('caso raro em que a marcacao web e do REP tiveram mesmo horário');
                 marcacoes[indexIgualHorario].NSR = marcacoesObj[i].nsr;
             }
             
-            console.log('antes de dar push, valor da marcacao: ', marcacao);
+            //successLog.info('antes de dar push, valor da marcacao: ', marcacao);
             //para não inserir marcações vazias...            
             if (marcacao.id){
-                console.log('vai dar push no array');
+                //successLog.info('vai dar push no array');
                 marcacoes.push(marcacao);
             }
 
         }
     }
-    console.log('vai retornar o seguinte array de marcacoes: ', marcacoes);
+    //successLog.info('vai retornar o seguinte array de marcacoes: ', marcacoes);
     return marcacoes;
 };
 
@@ -496,7 +543,7 @@ function createExtraInfo(funcionario, date, arrayMarcacoes){
   
   if (escala) {
     
-    console.log('entrou no if de criar informações extra de Escala');
+    //successLog.info('entrou no if de criar informações extra de Escala');
     var ignoraFeriados = turno.ignoraFeriados;
     infoTrabalho.trabalhados = getWorkedMinutes(arrayMarcacoes);
 
@@ -548,7 +595,7 @@ function createExtraInfo(funcionario, date, arrayMarcacoes){
 
   } else {
 
-    console.log("Funcionário não possui um turno ou uma escala de trabalho cadastrado(a).");
+    errorLog.error("Funcionário não possui um turno ou uma escala de trabalho cadastrado(a).");
     return undefined;
   }
 
@@ -569,7 +616,7 @@ function isFeriado(date) {
     if (feriado.fixo){
       
       if (tempDate.getMonth() === month && tempDate.getDate() === day){
-        console.log("É Feriado (fixo)!");
+        //successLog.info("É Feriado (fixo)!");
         flagFeriado = true;
         return feriado;
       }
@@ -577,7 +624,7 @@ function isFeriado(date) {
     } else {//se não é fixo
 
       if ( (tempDate.getFullYear() === year) && (tempDate.getMonth() === month) && (tempDate.getDate() === day) ){
-        console.log("É Feriado (variável)!");
+        //successLog.info("É Feriado (variável)!");
         flagFeriado = true;
         return feriado;
       }
@@ -636,7 +683,7 @@ function isWorkingDayRotationScale(dateToCompare, dataInicioEfetivo) {
 */
 function getWorkedMinutes(arrayMarcacoes) {
   
-  console.log('Get Worked Minutes #remodeled!!');
+  //successLog.info('Get Worked Minutes #remodeled!!');
   //primeira marcação, retorna 0
   if (arrayMarcacoes.length <= 1){
     return 0;
@@ -646,12 +693,12 @@ function getWorkedMinutes(arrayMarcacoes) {
     var minutosTrabalhados = 0;
 
     for (var i=0; i < arrayMarcacoes.length-1; i=i+2){
-      console.log('index: ', i);
-      console.log('marcacoes[i+1]: ', arrayMarcacoes[i+1].strHorario);
-      console.log('marcacoes[i]: ', arrayMarcacoes[i].strHorario);
-      console.log('saldo parcial: ', (arrayMarcacoes[i+1].totalMin - arrayMarcacoes[i].totalMin));
+      //successLog.info('index: ', i);
+      // successLog.info('marcacoes[i+1]: ', arrayMarcacoes[i+1].strHorario);
+      // successLog.info('marcacoes[i]: ', arrayMarcacoes[i].strHorario);
+      // successLog.info('saldo parcial: ', (arrayMarcacoes[i+1].totalMin - arrayMarcacoes[i].totalMin));
       minutosTrabalhados += (arrayMarcacoes[i+1].totalMin - arrayMarcacoes[i].totalMin);
-      console.log('minutosTrabalhados atualizado: ', minutosTrabalhados);
+      //successLog.info('minutosTrabalhados atualizado: ', minutosTrabalhados);
     }
     
     return minutosTrabalhados;
@@ -706,58 +753,48 @@ function setStatus(arrayMarcacoes, justificativa) {
   return status;
 };
 
-/*
-** Verifica se alguma marcação já possui o NSR, o que significa que a batida já foi armazenada
-*/
-function hasNSR(marcacoes, nsr) {
-
-    var flag = false; //não tem NSR por default
-
-    for (var i=0; i<marcacoes.length; i++){
-        if (marcacoes[i].NSR === nsr){
-            flag = true;
-            return flag;
-        }
-    }
-
-    return flag;
-};
-
 function compareOnlyDates(date1, date2) {
 
-      //como a passagem é por referência, devemos criar uma cópia do objeto
-      var d1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate(), 
-        0, 0, 0, 0); 
-      var d2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate(), 
-        0, 0, 0, 0);
+  //como a passagem é por referência, devemos criar uma cópia do objeto
+  var d1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate(), 
+    0, 0, 0, 0); 
+  var d2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate(), 
+    0, 0, 0, 0);
 
-      //console.log('date1 time', d1.getTime());
-      //console.log('date2 time', d2.getTime());
+  //console.log('date1 time', d1.getTime());
+  //console.log('date2 time', d2.getTime());
 
-      if (d1.getTime() < d2.getTime())
-        return -1;
-      else if (d1.getTime() === d2.getTime())
-        return 0;
-      else
-        return 1; 
-    };
-
-function getFuncionarioId(pis){
-
-    Funcionario.findOne({PIS: pis})
-    .populate('funcionario', 'nome sobrenome PIS')
-    .exec(function(err, funcionario){
-        
-        if(err) {
-            //return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
-            return false;
-        }
-        return funcionario;
-        //return res.json(funcionario);
-    });
+  if (d1.getTime() < d2.getTime())
+    return -1;
+  else if (d1.getTime() === d2.getTime())
+    return 0;
+  else
+    return 1; 
 };
 
-module.exports = {    
-    //getREPFile: getFile
-    getREPFile: getFileRequest
-};
+// function writeDate(callback){
+
+// 	successLog.info( (new Date()).getTime() );
+// 	callback();
+// };
+
+//NEW CODE!!!
+function waitTimePeriod(){
+    setTimeout(function(){
+        getFileRequest(waitTimePeriod);
+    }, timePeriod);
+}
+
+getFileRequest(waitTimePeriod);
+//getFileRequest();
+//END OF NEW CODE
+
+// (function schedule() {
+//     background.asyncStuff().then(function() {
+//         console.log('Process finished, waiting 5 minutes');
+//         setTimeout(function() {
+//             console.log('Going to restart');
+//             schedule();
+//         }, 1000 * 60 * 5);
+//     }).catch(err => console.error('error in scheduler', err));
+// })();

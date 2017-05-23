@@ -79,9 +79,10 @@ router.put('/:id', function(req, res){
 
         //apontamento.data = req.body.data;
         apontamento.status = req.body.status;
+        //apontamento.pis = req.body.pis;
         apontamento.marcacoes = req.body.marcacoes;//no futuro não poderá atualizar as marcações
         apontamento.marcacoesFtd = req.body.marcacoesFtd;
-        apontamento.marcacoes_invalidadas = req.body.marcacoes_invalidadas;//no futuro não poderá atualizar as marcações
+        apontamento.historico = req.body.historico;//no futuro não poderá atualizar as marcações
         apontamento.infoTrabalho = req.body.infoTrabalho;
         apontamento.justificativa = req.body.justificativa;
         //apontamento.funcionario = req.body.funcionario; //SÓ PARA TESTES!!!!!!
@@ -289,6 +290,8 @@ router.post('/intervaldate/funcionario', function(req, res){
     console.log('lastDay moment: ', lastDay);
 
     var queryDate = {$gte: firstDay.toDate(), $lt: lastDay.toDate()};
+    if (dateParametro.finalInclude)
+        queryDate = {$gte: firstDay.toDate(), $lte: lastDay.toDate()};
 
     console.log("############# Trazendo dados!");
 

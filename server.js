@@ -46,11 +46,6 @@ process.on('uncaughtException', function(err) {
 	console.log(err);
 });
 
-var localREP = require('./config/searchLocalAppointments');
-localREP.periodicallySearch();
-localREP.getREPFile();
-//console.log('localREP: ', localREP());
-
 // listen (start app with node server.js) ======================================
 app.listen(8080);
 

@@ -76,6 +76,7 @@ router.get('/:id', function(req, res){
     });
 });
 
+
 //Update funcionario by id
 router.put('/:id', function(req, res){
     
@@ -218,6 +219,29 @@ router.post('/:id/apontamentoRange', function(req, res){
 
         console.log("Apontamentos filtrados mongoose: ", apontamentosFuncionario);
         return res.json(apontamentosFuncionario);
+    });
+});
+
+//GET 1 func by PIS
+router.get('/pis/:pis', function(req, res){
+
+    var pisFuncionario = req.params.pis;
+
+    Funcionario.findOne({PIS: pisFuncionario})
+    .populate('alocacao.cargo', 'especificacao nomeFeminino')
+    .populate({
+        path: 'alocacao.turno',
+        model: 'Turno',
+        populate: [{path: 'escala', model: 'Escala'}]
+    })
+    .populate('alocacao.instituicao', 'nome sigla')
+    .exec(function(err, funcionario){
+        
+        if(err) {
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+        }
+
+        return res.json(funcionario);
     });
 });
 
