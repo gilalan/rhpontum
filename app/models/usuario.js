@@ -7,6 +7,7 @@ var usuario = mongoose.Schema({
   email: {type: String, required: true, unique: true},
   senha: {type: String, required: true, select: false},
   funcionario: {type: Schema.Types.ObjectId, ref: 'Funcionario'},//, unique: true}, depois recolocar
+  firstAccess: {type: Boolean, default: true},
   perfil: {type: Schema.Types.ObjectId, ref: 'Perfil'}  
 },{
 	timestamps: true

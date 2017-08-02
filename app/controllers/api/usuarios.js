@@ -2,8 +2,8 @@ var Usuario = require('../../models/usuario');
 var router = require('express').Router();
 var jwt = require('jwt-simple');
 var bcrypt = require('bcrypt');
+var moment = require('moment');
 var config = require('../../../config');
-
 
 //Get ALL Users
 router.get('/', function(req, res) {
@@ -95,35 +95,69 @@ router.get('/:id', function(req, res) {
 router.put('/:id', function(req, res){
 
   var idUsuario = req.params.id;
-  Usuario.findOne({_id: idUsuario})
-  //.populate('funcionario', 'nome dataNascimento PIS')
-  //.populate('perfil')
-  .exec(function(err, usuario){
+  var _usuario = req.body;
 
-    if(err) {
-      console.log('Erro no FINDONE: ', err);
-      return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
-    }
-    
-    //Atualizar as informacoes provenientes da requisicao
-    //TEMOS QUE VALIDAR PARA NAO TER QUE TESTAR SE CADA CAMPO VEIO VAZIO
-    usuario.email = req.body.email;
-    //usuario.senha = req.body.senha;
-    usuario.funcionario = req.body.funcionario;
-    usuario.perfil = req.body.perfil;
+  var conditions = {
+    _id : idUsuario 
+  }
 
-    //tenta atualizar de fato no BD
-    usuario.save(function(err){
+  //console.log("_usuario: ",_usuario);
+  
+  if (_usuario && _usuario.senha){
+
+    bcrypt.hash(_usuario.senha, 10, function (err, hash) {
       
-      if(err){
-        console.log('Erro no save do update', err);
-        return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+      if(err) {
+        console.log('Erro: ', err);
+        return res.status(500).send({ success: false, message: 'Ocorreu um erro no processamento!'+err });
       }
-    });
 
-    //return res.json(usuario);
-    return res.status(200).send({success: true, message: 'Usuario atualizado com sucesso!'});
-  });
+      var update = {
+        senha: hash,
+        firstAccess: false
+      }
+      //console.log("new hash: ", hash);
+
+      Usuario.findOneAndUpdate(conditions, update, function(err, result){
+        //console.log("findOneAndUpdate");
+        if (err) {
+          
+          if (err.name === 'MongoError' && err.code === 11000) {
+            // Duplicate unique key (email)
+            //console.log('error: ', err);
+            return res.status(500).send({ success: false, message: 'E-mail já existe!' });
+          }
+          // Some other error
+          //console.log('Entrou no erro');
+          return res.status(500).send(err);
+        } 
+        //console.log('passou lotado pelo erro');
+        if (_usuario.returnToken) {
+          var expires = moment().add(1, 'days').valueOf();
+
+          var token = jwt.encode({
+              _id: _usuario._id,
+              email: _usuario.email,
+              role: _usuario.role, 
+              acLvl: _usuario.acLvl, 
+              firstAccess: false,
+              exp: expires
+          }, config.secretKey);
+
+          var obj = {'token': token, 'idUsuario': _usuario._id, 'firstAccess': false};
+
+          res.json(obj);
+        }
+        else {
+          return res.status(200).send({success: true, message: 'Usuario atualizado com sucesso!'});
+        }
+      });
+    });
+  }
+  else {
+
+    return res.status(200).send({success: true, message: 'Usuario não modificado!'});
+  }
 });
 
 router.delete('/:id', function(req, res){

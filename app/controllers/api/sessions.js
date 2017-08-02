@@ -17,6 +17,7 @@ router.post('/', function(req, res, next) {
     .populate('perfil')    
     .select('email')
     .select('senha')
+    .select('firstAccess')
     .select('perfil')
     .exec(function (err, usuario) {
         if (err){
@@ -44,12 +45,13 @@ router.post('/', function(req, res, next) {
             var token = jwt.encode({
                 _id: usuario._id,
                 email: usuario.email,
+                firstAccess: usuario.firstAccess,
                 role: usuario.perfil.nome, //pode botar manual para testes
                 acLvl: usuario.perfil.accessLevel, //pode botar manual para testes
                 exp: expires
             }, config.secretKey);
 
-            var obj = {'token': token, 'idUsuario': usuario._id};
+            var obj = {'token': token, 'idUsuario': usuario._id, 'firstAccess': usuario.firstAccess};
 
             res.json(obj);
         });
