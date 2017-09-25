@@ -14,7 +14,8 @@ var request = require('request');
 //var urlStaticREPFile = 'https://docs.google.com/uc?export=download&id=0B2GW7fQUvA47UXBSYXExSHRXamc';
 //var urlStaticREPFile = 'https://docs.google.com/uc?export=download&id=0B2GW7fQUvA47SEJZOFZvdzhqTms';
 /* Usando o serviço S3 da Amazon: */
-var urlStaticREPFile = 'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/arquivo_teste.txt';
+var urlStaticREPFile = 'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006815.txt'; //Petrolina
+var urlStaticREPFile = 'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/arquivo_teste_soll.txt'; //Petrolina
 var Readable = require('stream').Readable;
 const readline = require('readline');
 var timePeriod = 5 * 60 * 1000;//minuto * segundo * ms

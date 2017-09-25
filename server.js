@@ -1,11 +1,25 @@
 // set up ========================
+var fs = require('fs');
 var express  = require('express');
 var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
 
-//var mongoose = require('mongoose');                     // mongoose for mongodb
-//var morgan = require('morgan');             // log requests to the console (express4)
-//var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
-var app = express();                               // create our app w/ express
+/*
+2. Import them to a keystore (some programs use a keystore)
+keytool -importcert -file certificate.pem -keystore my.keystore
+*/
+var securityOptions = {
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('certificate.pem'),
+    requestCert: true
+};
+
+// .......................................................
+// create the secure server (HTTPS)
+
+var app = express();
+var secureServer = require('https').createServer(securityOptions, app);
+
+//var app = express();                               // create our app w/ express
 
 //Database configuration =================
 var database = require('./config/database');
@@ -48,8 +62,9 @@ process.on('uncaughtException', function(err) {
 });
 
 // listen (start app with node server.js) ======================================
-app.listen(8080);
+//app.listen(8080);
+secureServer.listen(8081);
 
-console.log("App listening on port 8080");
+console.log("App listening on port 8081");
 
 //588168ed8ccb4e0c7bf5b22f

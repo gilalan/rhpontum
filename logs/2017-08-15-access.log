@@ -1,0 +1,1727 @@
+2017-08-15T13:09:58.258Z - info: Iniciando Serviço de Obtenção dos arquivos dos REPs: 
+2017-08-15T13:09:58.262Z - info: #Iniciando request:  2017-08-15T13:09:58.259Z
+2017-08-15T13:09:58.267Z - info: saiu da função getFileRequest
+2017-08-15T13:09:58.698Z - info: Entrou na getFeriadosAssync
+2017-08-15T13:10:02.987Z - info: Entrou no feriado.find: 
+2017-08-15T13:10:02.988Z - info: retornou os feriados:  9
+2017-08-15T13:10:02.989Z - info: Hora do readFile!
+2017-08-15T13:10:02.996Z - info: Quantidade de marcações:  189
+2017-08-15T13:10:02.997Z - info: hashMapSize:  73
+2017-08-15T13:10:03.021Z - info: pisDateMap Hash length:  20
+2017-08-15T13:10:03.041Z - info: itemsProcessed:  1
+2017-08-15T13:10:03.041Z - info: itemsProcessed:  2
+2017-08-15T13:10:03.041Z - info: itemsProcessed:  3
+2017-08-15T13:10:03.042Z - info: itemsProcessed:  4
+2017-08-15T13:10:03.042Z - info: itemsProcessed:  5
+2017-08-15T13:10:03.042Z - info: itemsProcessed:  6
+2017-08-15T13:10:03.042Z - info: itemsProcessed:  7
+2017-08-15T13:10:03.042Z - info: itemsProcessed:  8
+2017-08-15T13:10:03.042Z - info: itemsProcessed:  9
+2017-08-15T13:10:03.042Z - info: itemsProcessed:  10
+2017-08-15T13:10:03.043Z - info: itemsProcessed:  11
+2017-08-15T13:10:03.043Z - info: itemsProcessed:  12
+2017-08-15T13:10:03.043Z - info: itemsProcessed:  13
+2017-08-15T13:10:03.043Z - info: itemsProcessed:  14
+2017-08-15T13:10:03.043Z - info: itemsProcessed:  15
+2017-08-15T13:10:03.043Z - info: itemsProcessed:  16
+2017-08-15T13:10:03.043Z - info: itemsProcessed:  17
+2017-08-15T13:10:03.043Z - info: itemsProcessed:  18
+2017-08-15T13:10:03.043Z - info: itemsProcessed:  19
+2017-08-15T13:10:03.043Z - info: itemsProcessed:  20
+2017-08-15T13:10:03.043Z - info: itemsProcessed:  21
+2017-08-15T13:10:03.044Z - info: itemsProcessed:  22
+2017-08-15T13:10:03.044Z - info: itemsProcessed:  23
+2017-08-15T13:10:03.044Z - info: itemsProcessed:  24
+2017-08-15T13:10:03.044Z - info: itemsProcessed:  25
+2017-08-15T13:10:03.044Z - info: itemsProcessed:  26
+2017-08-15T13:10:03.044Z - info: itemsProcessed:  27
+2017-08-15T13:10:03.045Z - info: itemsProcessed:  28
+2017-08-15T13:10:03.045Z - info: itemsProcessed:  29
+2017-08-15T13:10:03.045Z - info: itemsProcessed:  30
+2017-08-15T13:10:03.045Z - info: itemsProcessed:  31
+2017-08-15T13:10:03.045Z - info: itemsProcessed:  32
+2017-08-15T13:10:03.045Z - info: itemsProcessed:  33
+2017-08-15T13:10:03.045Z - info: itemsProcessed:  34
+2017-08-15T13:10:03.046Z - info: itemsProcessed:  35
+2017-08-15T13:10:03.046Z - info: itemsProcessed:  36
+2017-08-15T13:10:03.046Z - info: itemsProcessed:  37
+2017-08-15T13:10:03.046Z - info: itemsProcessed:  38
+2017-08-15T13:10:03.046Z - info: itemsProcessed:  39
+2017-08-15T13:10:03.046Z - info: itemsProcessed:  40
+2017-08-15T13:10:03.046Z - info: itemsProcessed:  41
+2017-08-15T13:10:03.046Z - info: itemsProcessed:  42
+2017-08-15T13:10:03.046Z - info: itemsProcessed:  43
+2017-08-15T13:10:03.046Z - info: itemsProcessed:  44
+2017-08-15T13:10:03.047Z - info: itemsProcessed:  45
+2017-08-15T13:10:03.047Z - info: itemsProcessed:  46
+2017-08-15T13:10:03.047Z - info: itemsProcessed:  47
+2017-08-15T13:10:03.047Z - info: itemsProcessed:  48
+2017-08-15T13:10:03.047Z - info: itemsProcessed:  49
+2017-08-15T13:10:03.047Z - info: itemsProcessed:  50
+2017-08-15T13:10:03.048Z - info: itemsProcessed:  51
+2017-08-15T13:10:03.048Z - info: itemsProcessed:  52
+2017-08-15T13:10:03.049Z - info: itemsProcessed:  53
+2017-08-15T13:10:03.051Z - info: itemsProcessed:  54
+2017-08-15T13:10:03.053Z - info: itemsProcessed:  55
+2017-08-15T13:10:03.053Z - info: itemsProcessed:  56
+2017-08-15T13:10:03.054Z - info: itemsProcessed:  57
+2017-08-15T13:10:03.054Z - info: itemsProcessed:  58
+2017-08-15T13:10:03.054Z - info: itemsProcessed:  59
+2017-08-15T13:10:03.054Z - info: itemsProcessed:  60
+2017-08-15T13:10:03.054Z - info: itemsProcessed:  61
+2017-08-15T13:10:03.055Z - info: itemsProcessed:  62
+2017-08-15T13:10:03.055Z - info: itemsProcessed:  63
+2017-08-15T13:10:03.055Z - info: itemsProcessed:  64
+2017-08-15T13:10:03.055Z - info: itemsProcessed:  65
+2017-08-15T13:10:03.055Z - info: itemsProcessed:  66
+2017-08-15T13:10:03.055Z - info: itemsProcessed:  67
+2017-08-15T13:10:03.055Z - info: itemsProcessed:  68
+2017-08-15T13:10:03.055Z - info: itemsProcessed:  69
+2017-08-15T13:10:03.055Z - info: itemsProcessed:  70
+2017-08-15T13:10:03.055Z - info: itemsProcessed:  71
+2017-08-15T13:10:03.055Z - info: itemsProcessed:  72
+2017-08-15T13:10:03.055Z - info: itemsProcessed:  73
+2017-08-15T13:10:03.056Z - warn: ## Terminou tudo, chamaria o callback ##
+2017-08-15T13:10:04.106Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:10:04.108Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:10:04.108Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:10:04.108Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:10:04.108Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:10:04.111Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:10:04.114Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:10:04.114Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:10:04.115Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:10:04.126Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:10:04.127Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:10:04.127Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:10:04.128Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:10:04.128Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:10:04.129Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:10:04.138Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:10:04.138Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:10:04.138Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:10:04.152Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:10:04.153Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:10:04.154Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:10:04.154Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:10:04.154Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:10:04.155Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:10:04.168Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:10:04.169Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:10:04.169Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:10:04.170Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:10:04.180Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:10:04.181Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:10:04.182Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:10:04.182Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:10:04.183Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:10:04.183Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:10:04.193Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:10:04.193Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:10:04.194Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:10:04.194Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:10:04.204Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:10:04.205Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:10:04.205Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:10:04.205Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:10:04.206Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:10:04.206Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:10:04.216Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:10:04.216Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:10:04.217Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:10:04.218Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:10:04.251Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:10:04.252Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:10:04.252Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:10:04.252Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:10:04.252Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:10:04.272Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:10:04.273Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:10:04.273Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:10:04.273Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:10:04.273Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:10:04.301Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:10:04.301Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:10:04.301Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:10:04.301Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:10:04.301Z - error: Funcionário não encontrado na base, PIS:  016539730196
+2017-08-15T13:10:04.328Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:10:04.328Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:10:04.329Z - error: Funcionário não encontrado na base, PIS:  016549967458
+2017-08-15T13:10:04.329Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:10:04.329Z - error: Funcionário não encontrado na base, PIS:  013153898307
+2017-08-15T13:10:04.353Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:10:04.353Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:10:04.354Z - error: Funcionário não encontrado na base, PIS:  016119694677
+2017-08-15T13:10:04.354Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:10:04.354Z - error: Funcionário não encontrado na base, PIS:  016550139318
+2017-08-15T13:15:03.059Z - info: #Iniciando request:  2017-08-15T13:15:03.058Z
+2017-08-15T13:15:03.062Z - info: saiu da função getFileRequest
+2017-08-15T13:15:03.467Z - info: Entrou na getFeriadosAssync
+2017-08-15T13:15:03.630Z - info: Entrou no feriado.find: 
+2017-08-15T13:15:03.631Z - info: retornou os feriados:  9
+2017-08-15T13:15:03.631Z - info: Hora do readFile!
+2017-08-15T13:15:03.637Z - info: Quantidade de marcações:  189
+2017-08-15T13:15:03.637Z - info: hashMapSize:  73
+2017-08-15T13:15:03.661Z - info: pisDateMap Hash length:  20
+2017-08-15T13:15:03.700Z - info: itemsProcessed:  1
+2017-08-15T13:15:03.700Z - info: itemsProcessed:  2
+2017-08-15T13:15:03.700Z - info: itemsProcessed:  3
+2017-08-15T13:15:03.700Z - info: itemsProcessed:  4
+2017-08-15T13:15:03.700Z - info: itemsProcessed:  5
+2017-08-15T13:15:03.700Z - info: itemsProcessed:  6
+2017-08-15T13:15:03.700Z - info: itemsProcessed:  7
+2017-08-15T13:15:03.700Z - info: itemsProcessed:  8
+2017-08-15T13:15:03.701Z - info: itemsProcessed:  9
+2017-08-15T13:15:03.701Z - info: itemsProcessed:  10
+2017-08-15T13:15:03.701Z - info: itemsProcessed:  11
+2017-08-15T13:15:03.701Z - info: itemsProcessed:  12
+2017-08-15T13:15:03.701Z - info: itemsProcessed:  13
+2017-08-15T13:15:03.701Z - info: itemsProcessed:  14
+2017-08-15T13:15:03.701Z - info: itemsProcessed:  15
+2017-08-15T13:15:03.702Z - info: itemsProcessed:  16
+2017-08-15T13:15:03.702Z - info: itemsProcessed:  17
+2017-08-15T13:15:03.702Z - info: itemsProcessed:  18
+2017-08-15T13:15:03.702Z - info: itemsProcessed:  19
+2017-08-15T13:15:03.705Z - info: itemsProcessed:  20
+2017-08-15T13:15:03.705Z - info: itemsProcessed:  21
+2017-08-15T13:15:03.705Z - info: itemsProcessed:  22
+2017-08-15T13:15:03.705Z - info: itemsProcessed:  23
+2017-08-15T13:15:03.706Z - info: itemsProcessed:  24
+2017-08-15T13:15:03.706Z - info: itemsProcessed:  25
+2017-08-15T13:15:03.706Z - info: itemsProcessed:  26
+2017-08-15T13:15:03.706Z - info: itemsProcessed:  27
+2017-08-15T13:15:03.706Z - info: itemsProcessed:  28
+2017-08-15T13:15:03.706Z - info: itemsProcessed:  29
+2017-08-15T13:15:03.706Z - info: itemsProcessed:  30
+2017-08-15T13:15:03.706Z - info: itemsProcessed:  31
+2017-08-15T13:15:03.707Z - info: itemsProcessed:  32
+2017-08-15T13:15:03.707Z - info: itemsProcessed:  33
+2017-08-15T13:15:03.707Z - info: itemsProcessed:  34
+2017-08-15T13:15:03.707Z - info: itemsProcessed:  35
+2017-08-15T13:15:03.707Z - info: itemsProcessed:  36
+2017-08-15T13:15:03.707Z - info: itemsProcessed:  37
+2017-08-15T13:15:03.707Z - info: itemsProcessed:  38
+2017-08-15T13:15:03.708Z - info: itemsProcessed:  39
+2017-08-15T13:15:03.708Z - info: itemsProcessed:  40
+2017-08-15T13:15:03.708Z - info: itemsProcessed:  41
+2017-08-15T13:15:03.708Z - info: itemsProcessed:  42
+2017-08-15T13:15:03.708Z - info: itemsProcessed:  43
+2017-08-15T13:15:03.708Z - info: itemsProcessed:  44
+2017-08-15T13:15:03.708Z - info: itemsProcessed:  45
+2017-08-15T13:15:03.708Z - info: itemsProcessed:  46
+2017-08-15T13:15:03.709Z - info: itemsProcessed:  47
+2017-08-15T13:15:03.709Z - info: itemsProcessed:  48
+2017-08-15T13:15:03.709Z - info: itemsProcessed:  49
+2017-08-15T13:15:03.709Z - info: itemsProcessed:  50
+2017-08-15T13:15:03.709Z - info: itemsProcessed:  51
+2017-08-15T13:15:03.709Z - info: itemsProcessed:  52
+2017-08-15T13:15:03.709Z - info: itemsProcessed:  53
+2017-08-15T13:15:03.710Z - info: itemsProcessed:  54
+2017-08-15T13:15:03.710Z - info: itemsProcessed:  55
+2017-08-15T13:15:03.710Z - info: itemsProcessed:  56
+2017-08-15T13:15:03.710Z - info: itemsProcessed:  57
+2017-08-15T13:15:03.710Z - info: itemsProcessed:  58
+2017-08-15T13:15:03.710Z - info: itemsProcessed:  59
+2017-08-15T13:15:03.710Z - info: itemsProcessed:  60
+2017-08-15T13:15:03.711Z - info: itemsProcessed:  61
+2017-08-15T13:15:03.711Z - info: itemsProcessed:  62
+2017-08-15T13:15:03.711Z - info: itemsProcessed:  63
+2017-08-15T13:15:03.711Z - info: itemsProcessed:  64
+2017-08-15T13:15:03.711Z - info: itemsProcessed:  65
+2017-08-15T13:15:03.711Z - info: itemsProcessed:  66
+2017-08-15T13:15:03.711Z - info: itemsProcessed:  67
+2017-08-15T13:15:03.711Z - info: itemsProcessed:  68
+2017-08-15T13:15:03.711Z - info: itemsProcessed:  69
+2017-08-15T13:15:03.711Z - info: itemsProcessed:  70
+2017-08-15T13:15:03.712Z - info: itemsProcessed:  71
+2017-08-15T13:15:03.712Z - info: itemsProcessed:  72
+2017-08-15T13:15:03.712Z - info: itemsProcessed:  73
+2017-08-15T13:15:03.712Z - warn: ## Terminou tudo, chamaria o callback ##
+2017-08-15T13:15:03.863Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:15:03.865Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:15:03.865Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:15:05.027Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:15:05.028Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:15:05.031Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:15:05.032Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:15:06.117Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:15:06.117Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:15:06.118Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:15:06.118Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:15:06.118Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:15:06.118Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:15:06.140Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:15:06.140Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:15:06.141Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:15:06.141Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:15:06.141Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:15:06.142Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:15:06.153Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:15:06.154Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:15:06.154Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:15:06.155Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:15:06.155Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:15:06.155Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:15:06.164Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:15:06.165Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:15:06.165Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:15:06.166Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:15:06.171Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:15:06.171Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:15:06.171Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:15:06.172Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:15:06.178Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:15:06.179Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:15:06.179Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:15:06.179Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:15:06.179Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:15:06.180Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:15:06.189Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:15:06.190Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:15:06.190Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:15:06.190Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:15:06.201Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:15:06.201Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:15:06.203Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:15:06.203Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:15:06.204Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:15:06.205Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:15:06.213Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:15:06.214Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:15:06.214Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:15:06.215Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:15:06.223Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:15:06.223Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:15:06.223Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:15:06.224Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:15:06.263Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:15:06.264Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:15:06.264Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:15:06.264Z - error: Funcionário não encontrado na base, PIS:  016539730196
+2017-08-15T13:15:06.285Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:15:06.285Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:15:06.285Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:15:06.301Z - error: Funcionário não encontrado na base, PIS:  016119694677
+2017-08-15T13:15:06.302Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:15:06.302Z - error: Funcionário não encontrado na base, PIS:  016550139318
+2017-08-15T13:15:06.325Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:15:06.325Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:15:06.325Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:15:06.344Z - error: Funcionário não encontrado na base, PIS:  016549967458
+2017-08-15T13:15:06.344Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:15:06.344Z - error: Funcionário não encontrado na base, PIS:  013153898307
+2017-08-15T13:20:03.714Z - info: #Iniciando request:  2017-08-15T13:20:03.714Z
+2017-08-15T13:20:03.716Z - info: saiu da função getFileRequest
+2017-08-15T13:20:04.086Z - info: Entrou na getFeriadosAssync
+2017-08-15T13:20:04.241Z - info: Entrou no feriado.find: 
+2017-08-15T13:20:04.241Z - info: retornou os feriados:  9
+2017-08-15T13:20:04.242Z - info: Hora do readFile!
+2017-08-15T13:20:04.246Z - info: Quantidade de marcações:  189
+2017-08-15T13:20:04.246Z - info: hashMapSize:  73
+2017-08-15T13:20:04.260Z - info: pisDateMap Hash length:  20
+2017-08-15T13:20:04.275Z - info: itemsProcessed:  1
+2017-08-15T13:20:04.276Z - info: itemsProcessed:  2
+2017-08-15T13:20:04.276Z - info: itemsProcessed:  3
+2017-08-15T13:20:04.276Z - info: itemsProcessed:  4
+2017-08-15T13:20:04.276Z - info: itemsProcessed:  5
+2017-08-15T13:20:04.276Z - info: itemsProcessed:  6
+2017-08-15T13:20:04.276Z - info: itemsProcessed:  7
+2017-08-15T13:20:04.276Z - info: itemsProcessed:  8
+2017-08-15T13:20:04.276Z - info: itemsProcessed:  9
+2017-08-15T13:20:04.276Z - info: itemsProcessed:  10
+2017-08-15T13:20:04.276Z - info: itemsProcessed:  11
+2017-08-15T13:20:04.276Z - info: itemsProcessed:  12
+2017-08-15T13:20:04.276Z - info: itemsProcessed:  13
+2017-08-15T13:20:04.276Z - info: itemsProcessed:  14
+2017-08-15T13:20:04.276Z - info: itemsProcessed:  15
+2017-08-15T13:20:04.277Z - info: itemsProcessed:  16
+2017-08-15T13:20:04.277Z - info: itemsProcessed:  17
+2017-08-15T13:20:04.277Z - info: itemsProcessed:  18
+2017-08-15T13:20:04.277Z - info: itemsProcessed:  19
+2017-08-15T13:20:04.277Z - info: itemsProcessed:  20
+2017-08-15T13:20:04.277Z - info: itemsProcessed:  21
+2017-08-15T13:20:04.277Z - info: itemsProcessed:  22
+2017-08-15T13:20:04.277Z - info: itemsProcessed:  23
+2017-08-15T13:20:04.277Z - info: itemsProcessed:  24
+2017-08-15T13:20:04.277Z - info: itemsProcessed:  25
+2017-08-15T13:20:04.277Z - info: itemsProcessed:  26
+2017-08-15T13:20:04.277Z - info: itemsProcessed:  27
+2017-08-15T13:20:04.277Z - info: itemsProcessed:  28
+2017-08-15T13:20:04.277Z - info: itemsProcessed:  29
+2017-08-15T13:20:04.277Z - info: itemsProcessed:  30
+2017-08-15T13:20:04.278Z - info: itemsProcessed:  31
+2017-08-15T13:20:04.278Z - info: itemsProcessed:  32
+2017-08-15T13:20:04.278Z - info: itemsProcessed:  33
+2017-08-15T13:20:04.278Z - info: itemsProcessed:  34
+2017-08-15T13:20:04.278Z - info: itemsProcessed:  35
+2017-08-15T13:20:04.278Z - info: itemsProcessed:  36
+2017-08-15T13:20:04.279Z - info: itemsProcessed:  37
+2017-08-15T13:20:04.279Z - info: itemsProcessed:  38
+2017-08-15T13:20:04.279Z - info: itemsProcessed:  39
+2017-08-15T13:20:04.279Z - info: itemsProcessed:  40
+2017-08-15T13:20:04.279Z - info: itemsProcessed:  41
+2017-08-15T13:20:04.279Z - info: itemsProcessed:  42
+2017-08-15T13:20:04.279Z - info: itemsProcessed:  43
+2017-08-15T13:20:04.279Z - info: itemsProcessed:  44
+2017-08-15T13:20:04.279Z - info: itemsProcessed:  45
+2017-08-15T13:20:04.280Z - info: itemsProcessed:  46
+2017-08-15T13:20:04.280Z - info: itemsProcessed:  47
+2017-08-15T13:20:04.280Z - info: itemsProcessed:  48
+2017-08-15T13:20:04.280Z - info: itemsProcessed:  49
+2017-08-15T13:20:04.280Z - info: itemsProcessed:  50
+2017-08-15T13:20:04.280Z - info: itemsProcessed:  51
+2017-08-15T13:20:04.280Z - info: itemsProcessed:  52
+2017-08-15T13:20:04.280Z - info: itemsProcessed:  53
+2017-08-15T13:20:04.280Z - info: itemsProcessed:  54
+2017-08-15T13:20:04.280Z - info: itemsProcessed:  55
+2017-08-15T13:20:04.280Z - info: itemsProcessed:  56
+2017-08-15T13:20:04.280Z - info: itemsProcessed:  57
+2017-08-15T13:20:04.280Z - info: itemsProcessed:  58
+2017-08-15T13:20:04.280Z - info: itemsProcessed:  59
+2017-08-15T13:20:04.281Z - info: itemsProcessed:  60
+2017-08-15T13:20:04.281Z - info: itemsProcessed:  61
+2017-08-15T13:20:04.281Z - info: itemsProcessed:  62
+2017-08-15T13:20:04.281Z - info: itemsProcessed:  63
+2017-08-15T13:20:04.281Z - info: itemsProcessed:  64
+2017-08-15T13:20:04.281Z - info: itemsProcessed:  65
+2017-08-15T13:20:04.281Z - info: itemsProcessed:  66
+2017-08-15T13:20:04.281Z - info: itemsProcessed:  67
+2017-08-15T13:20:04.281Z - info: itemsProcessed:  68
+2017-08-15T13:20:04.281Z - info: itemsProcessed:  69
+2017-08-15T13:20:04.281Z - info: itemsProcessed:  70
+2017-08-15T13:20:04.281Z - info: itemsProcessed:  71
+2017-08-15T13:20:04.283Z - info: itemsProcessed:  72
+2017-08-15T13:20:04.283Z - info: itemsProcessed:  73
+2017-08-15T13:20:04.283Z - warn: ## Terminou tudo, chamaria o callback ##
+2017-08-15T13:20:04.431Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:20:04.435Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:20:04.437Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:20:05.608Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:20:05.608Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:20:05.612Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:20:05.614Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:20:06.636Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:20:06.640Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:20:06.641Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:20:06.641Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:20:06.641Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:20:06.642Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:20:06.649Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:20:06.649Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:20:06.650Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:20:06.650Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:20:06.666Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:20:06.666Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:20:06.666Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:20:06.666Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:20:06.667Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:20:06.667Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:20:06.677Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:20:06.677Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:20:06.678Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:20:06.678Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:20:06.689Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:20:06.689Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:20:06.690Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:20:06.690Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:20:06.691Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:20:06.691Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:20:06.702Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:20:06.702Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:20:06.702Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:20:06.703Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:20:06.713Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:20:06.715Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:20:06.715Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:20:06.715Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:20:06.715Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:20:06.716Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:20:06.723Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:20:06.724Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:20:06.724Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:20:06.724Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:20:06.724Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:20:06.725Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:20:06.738Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:20:06.738Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:20:06.738Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:20:06.739Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:20:06.747Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:20:06.748Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:20:06.748Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:20:06.748Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:20:06.783Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:20:06.784Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:20:06.784Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:20:06.784Z - error: Funcionário não encontrado na base, PIS:  016539730196
+2017-08-15T13:20:06.814Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:20:06.814Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:20:06.814Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:20:06.836Z - error: Funcionário não encontrado na base, PIS:  016119694677
+2017-08-15T13:20:06.836Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:20:06.836Z - error: Funcionário não encontrado na base, PIS:  016550139318
+2017-08-15T13:20:06.861Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:20:06.861Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:20:06.861Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:20:06.868Z - error: Funcionário não encontrado na base, PIS:  016549967458
+2017-08-15T13:20:06.869Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:20:06.869Z - error: Funcionário não encontrado na base, PIS:  013153898307
+2017-08-15T13:25:04.286Z - info: #Iniciando request:  2017-08-15T13:25:04.285Z
+2017-08-15T13:25:04.287Z - info: saiu da função getFileRequest
+2017-08-15T13:25:04.654Z - info: Entrou na getFeriadosAssync
+2017-08-15T13:25:04.806Z - info: Entrou no feriado.find: 
+2017-08-15T13:25:04.806Z - info: retornou os feriados:  9
+2017-08-15T13:25:04.807Z - info: Hora do readFile!
+2017-08-15T13:25:04.809Z - info: Quantidade de marcações:  189
+2017-08-15T13:25:04.809Z - info: hashMapSize:  73
+2017-08-15T13:25:04.834Z - info: pisDateMap Hash length:  20
+2017-08-15T13:25:04.858Z - info: itemsProcessed:  1
+2017-08-15T13:25:04.858Z - info: itemsProcessed:  2
+2017-08-15T13:25:04.858Z - info: itemsProcessed:  3
+2017-08-15T13:25:04.858Z - info: itemsProcessed:  4
+2017-08-15T13:25:04.858Z - info: itemsProcessed:  5
+2017-08-15T13:25:04.859Z - info: itemsProcessed:  6
+2017-08-15T13:25:04.859Z - info: itemsProcessed:  7
+2017-08-15T13:25:04.859Z - info: itemsProcessed:  8
+2017-08-15T13:25:04.859Z - info: itemsProcessed:  9
+2017-08-15T13:25:04.859Z - info: itemsProcessed:  10
+2017-08-15T13:25:04.859Z - info: itemsProcessed:  11
+2017-08-15T13:25:04.859Z - info: itemsProcessed:  12
+2017-08-15T13:25:04.860Z - info: itemsProcessed:  13
+2017-08-15T13:25:04.860Z - info: itemsProcessed:  14
+2017-08-15T13:25:04.860Z - info: itemsProcessed:  15
+2017-08-15T13:25:04.860Z - info: itemsProcessed:  16
+2017-08-15T13:25:04.860Z - info: itemsProcessed:  17
+2017-08-15T13:25:04.860Z - info: itemsProcessed:  18
+2017-08-15T13:25:04.860Z - info: itemsProcessed:  19
+2017-08-15T13:25:04.861Z - info: itemsProcessed:  20
+2017-08-15T13:25:04.861Z - info: itemsProcessed:  21
+2017-08-15T13:25:04.861Z - info: itemsProcessed:  22
+2017-08-15T13:25:04.861Z - info: itemsProcessed:  23
+2017-08-15T13:25:04.861Z - info: itemsProcessed:  24
+2017-08-15T13:25:04.861Z - info: itemsProcessed:  25
+2017-08-15T13:25:04.861Z - info: itemsProcessed:  26
+2017-08-15T13:25:04.861Z - info: itemsProcessed:  27
+2017-08-15T13:25:04.861Z - info: itemsProcessed:  28
+2017-08-15T13:25:04.862Z - info: itemsProcessed:  29
+2017-08-15T13:25:04.862Z - info: itemsProcessed:  30
+2017-08-15T13:25:04.862Z - info: itemsProcessed:  31
+2017-08-15T13:25:04.862Z - info: itemsProcessed:  32
+2017-08-15T13:25:04.862Z - info: itemsProcessed:  33
+2017-08-15T13:25:04.862Z - info: itemsProcessed:  34
+2017-08-15T13:25:04.862Z - info: itemsProcessed:  35
+2017-08-15T13:25:04.862Z - info: itemsProcessed:  36
+2017-08-15T13:25:04.862Z - info: itemsProcessed:  37
+2017-08-15T13:25:04.863Z - info: itemsProcessed:  38
+2017-08-15T13:25:04.863Z - info: itemsProcessed:  39
+2017-08-15T13:25:04.863Z - info: itemsProcessed:  40
+2017-08-15T13:25:04.863Z - info: itemsProcessed:  41
+2017-08-15T13:25:04.863Z - info: itemsProcessed:  42
+2017-08-15T13:25:04.863Z - info: itemsProcessed:  43
+2017-08-15T13:25:04.863Z - info: itemsProcessed:  44
+2017-08-15T13:25:04.863Z - info: itemsProcessed:  45
+2017-08-15T13:25:04.863Z - info: itemsProcessed:  46
+2017-08-15T13:25:04.863Z - info: itemsProcessed:  47
+2017-08-15T13:25:04.864Z - info: itemsProcessed:  48
+2017-08-15T13:25:04.864Z - info: itemsProcessed:  49
+2017-08-15T13:25:04.864Z - info: itemsProcessed:  50
+2017-08-15T13:25:04.864Z - info: itemsProcessed:  51
+2017-08-15T13:25:04.864Z - info: itemsProcessed:  52
+2017-08-15T13:25:04.864Z - info: itemsProcessed:  53
+2017-08-15T13:25:04.864Z - info: itemsProcessed:  54
+2017-08-15T13:25:04.864Z - info: itemsProcessed:  55
+2017-08-15T13:25:04.864Z - info: itemsProcessed:  56
+2017-08-15T13:25:04.864Z - info: itemsProcessed:  57
+2017-08-15T13:25:04.865Z - info: itemsProcessed:  58
+2017-08-15T13:25:04.867Z - info: itemsProcessed:  59
+2017-08-15T13:25:04.867Z - info: itemsProcessed:  60
+2017-08-15T13:25:04.867Z - info: itemsProcessed:  61
+2017-08-15T13:25:04.867Z - info: itemsProcessed:  62
+2017-08-15T13:25:04.867Z - info: itemsProcessed:  63
+2017-08-15T13:25:04.867Z - info: itemsProcessed:  64
+2017-08-15T13:25:04.867Z - info: itemsProcessed:  65
+2017-08-15T13:25:04.867Z - info: itemsProcessed:  66
+2017-08-15T13:25:04.868Z - info: itemsProcessed:  67
+2017-08-15T13:25:04.868Z - info: itemsProcessed:  68
+2017-08-15T13:25:04.868Z - info: itemsProcessed:  69
+2017-08-15T13:25:04.868Z - info: itemsProcessed:  70
+2017-08-15T13:25:04.868Z - info: itemsProcessed:  71
+2017-08-15T13:25:04.868Z - info: itemsProcessed:  72
+2017-08-15T13:25:04.868Z - info: itemsProcessed:  73
+2017-08-15T13:25:04.868Z - warn: ## Terminou tudo, chamaria o callback ##
+2017-08-15T13:25:05.019Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:25:05.019Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:25:05.023Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:25:06.187Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:25:06.188Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:25:06.191Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:25:06.194Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:25:07.274Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:25:07.276Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:25:07.276Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:25:07.277Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:25:07.277Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:25:07.277Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:25:07.287Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:25:07.288Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:25:07.288Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:25:07.288Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:25:07.301Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:25:07.301Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:25:07.301Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:25:07.301Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:25:07.301Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:25:07.302Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:25:07.312Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:25:07.313Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:25:07.313Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:25:07.313Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:25:07.324Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:25:07.325Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:25:07.325Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:25:07.325Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:25:07.325Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:25:07.325Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:25:07.337Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:25:07.337Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:25:07.337Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:25:07.338Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:25:07.347Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:25:07.347Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:25:07.347Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:25:07.347Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:25:07.347Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:25:07.347Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:25:07.361Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:25:07.361Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:25:07.362Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:25:07.362Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:25:07.362Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:25:07.362Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:25:07.371Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:25:07.371Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:25:07.371Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:25:07.371Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:25:07.385Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:25:07.385Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:25:07.386Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:25:07.386Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:25:07.421Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:25:07.422Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:25:07.422Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:25:07.422Z - error: Funcionário não encontrado na base, PIS:  016539730196
+2017-08-15T13:25:07.449Z - error: Funcionário não encontrado na base, PIS:  016549967458
+2017-08-15T13:25:07.450Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:25:07.450Z - error: Funcionário não encontrado na base, PIS:  013153898307
+2017-08-15T13:25:07.472Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:25:07.472Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:25:07.472Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:25:07.492Z - error: Funcionário não encontrado na base, PIS:  016119694677
+2017-08-15T13:25:07.492Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:25:07.493Z - error: Funcionário não encontrado na base, PIS:  016550139318
+2017-08-15T13:25:07.509Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:25:07.509Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:25:07.509Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:30:04.871Z - info: #Iniciando request:  2017-08-15T13:30:04.871Z
+2017-08-15T13:30:04.873Z - info: saiu da função getFileRequest
+2017-08-15T13:30:05.273Z - info: Entrou na getFeriadosAssync
+2017-08-15T13:30:05.429Z - info: Entrou no feriado.find: 
+2017-08-15T13:30:05.429Z - info: retornou os feriados:  9
+2017-08-15T13:30:05.429Z - info: Hora do readFile!
+2017-08-15T13:30:05.431Z - info: Quantidade de marcações:  189
+2017-08-15T13:30:05.431Z - info: hashMapSize:  73
+2017-08-15T13:30:05.443Z - info: pisDateMap Hash length:  20
+2017-08-15T13:30:05.469Z - info: itemsProcessed:  1
+2017-08-15T13:30:05.469Z - info: itemsProcessed:  2
+2017-08-15T13:30:05.469Z - info: itemsProcessed:  3
+2017-08-15T13:30:05.469Z - info: itemsProcessed:  4
+2017-08-15T13:30:05.469Z - info: itemsProcessed:  5
+2017-08-15T13:30:05.469Z - info: itemsProcessed:  6
+2017-08-15T13:30:05.469Z - info: itemsProcessed:  7
+2017-08-15T13:30:05.469Z - info: itemsProcessed:  8
+2017-08-15T13:30:05.470Z - info: itemsProcessed:  9
+2017-08-15T13:30:05.470Z - info: itemsProcessed:  10
+2017-08-15T13:30:05.470Z - info: itemsProcessed:  11
+2017-08-15T13:30:05.470Z - info: itemsProcessed:  12
+2017-08-15T13:30:05.470Z - info: itemsProcessed:  13
+2017-08-15T13:30:05.470Z - info: itemsProcessed:  14
+2017-08-15T13:30:05.470Z - info: itemsProcessed:  15
+2017-08-15T13:30:05.470Z - info: itemsProcessed:  16
+2017-08-15T13:30:05.470Z - info: itemsProcessed:  17
+2017-08-15T13:30:05.470Z - info: itemsProcessed:  18
+2017-08-15T13:30:05.470Z - info: itemsProcessed:  19
+2017-08-15T13:30:05.470Z - info: itemsProcessed:  20
+2017-08-15T13:30:05.470Z - info: itemsProcessed:  21
+2017-08-15T13:30:05.470Z - info: itemsProcessed:  22
+2017-08-15T13:30:05.470Z - info: itemsProcessed:  23
+2017-08-15T13:30:05.471Z - info: itemsProcessed:  24
+2017-08-15T13:30:05.471Z - info: itemsProcessed:  25
+2017-08-15T13:30:05.471Z - info: itemsProcessed:  26
+2017-08-15T13:30:05.471Z - info: itemsProcessed:  27
+2017-08-15T13:30:05.471Z - info: itemsProcessed:  28
+2017-08-15T13:30:05.471Z - info: itemsProcessed:  29
+2017-08-15T13:30:05.471Z - info: itemsProcessed:  30
+2017-08-15T13:30:05.471Z - info: itemsProcessed:  31
+2017-08-15T13:30:05.471Z - info: itemsProcessed:  32
+2017-08-15T13:30:05.471Z - info: itemsProcessed:  33
+2017-08-15T13:30:05.471Z - info: itemsProcessed:  34
+2017-08-15T13:30:05.471Z - info: itemsProcessed:  35
+2017-08-15T13:30:05.471Z - info: itemsProcessed:  36
+2017-08-15T13:30:05.471Z - info: itemsProcessed:  37
+2017-08-15T13:30:05.471Z - info: itemsProcessed:  38
+2017-08-15T13:30:05.472Z - info: itemsProcessed:  39
+2017-08-15T13:30:05.472Z - info: itemsProcessed:  40
+2017-08-15T13:30:05.472Z - info: itemsProcessed:  41
+2017-08-15T13:30:05.472Z - info: itemsProcessed:  42
+2017-08-15T13:30:05.472Z - info: itemsProcessed:  43
+2017-08-15T13:30:05.472Z - info: itemsProcessed:  44
+2017-08-15T13:30:05.472Z - info: itemsProcessed:  45
+2017-08-15T13:30:05.472Z - info: itemsProcessed:  46
+2017-08-15T13:30:05.472Z - info: itemsProcessed:  47
+2017-08-15T13:30:05.472Z - info: itemsProcessed:  48
+2017-08-15T13:30:05.472Z - info: itemsProcessed:  49
+2017-08-15T13:30:05.472Z - info: itemsProcessed:  50
+2017-08-15T13:30:05.472Z - info: itemsProcessed:  51
+2017-08-15T13:30:05.472Z - info: itemsProcessed:  52
+2017-08-15T13:30:05.472Z - info: itemsProcessed:  53
+2017-08-15T13:30:05.473Z - info: itemsProcessed:  54
+2017-08-15T13:30:05.473Z - info: itemsProcessed:  55
+2017-08-15T13:30:05.473Z - info: itemsProcessed:  56
+2017-08-15T13:30:05.473Z - info: itemsProcessed:  57
+2017-08-15T13:30:05.473Z - info: itemsProcessed:  58
+2017-08-15T13:30:05.473Z - info: itemsProcessed:  59
+2017-08-15T13:30:05.473Z - info: itemsProcessed:  60
+2017-08-15T13:30:05.473Z - info: itemsProcessed:  61
+2017-08-15T13:30:05.473Z - info: itemsProcessed:  62
+2017-08-15T13:30:05.473Z - info: itemsProcessed:  63
+2017-08-15T13:30:05.473Z - info: itemsProcessed:  64
+2017-08-15T13:30:05.473Z - info: itemsProcessed:  65
+2017-08-15T13:30:05.473Z - info: itemsProcessed:  66
+2017-08-15T13:30:05.473Z - info: itemsProcessed:  67
+2017-08-15T13:30:05.473Z - info: itemsProcessed:  68
+2017-08-15T13:30:05.474Z - info: itemsProcessed:  69
+2017-08-15T13:30:05.474Z - info: itemsProcessed:  70
+2017-08-15T13:30:05.474Z - info: itemsProcessed:  71
+2017-08-15T13:30:05.474Z - info: itemsProcessed:  72
+2017-08-15T13:30:05.474Z - info: itemsProcessed:  73
+2017-08-15T13:30:05.474Z - warn: ## Terminou tudo, chamaria o callback ##
+2017-08-15T13:30:05.625Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:30:05.628Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:30:05.628Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:30:06.763Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:30:06.765Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:30:06.766Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:30:06.771Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:30:07.887Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:30:07.888Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:30:07.888Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:30:07.888Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:30:07.888Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:30:07.888Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:30:07.898Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:30:07.899Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:30:07.899Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:30:07.900Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:30:07.914Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:30:07.914Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:30:07.915Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:30:07.915Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:30:07.916Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:30:07.916Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:30:07.926Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:30:07.926Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:30:07.926Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:30:07.926Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:30:07.938Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:30:07.938Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:30:07.939Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:30:07.939Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:30:07.939Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:30:07.939Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:30:07.949Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:30:07.949Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:30:07.949Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:30:07.949Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:30:07.962Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:30:07.962Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:30:07.962Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:30:07.962Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:30:07.962Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:30:07.962Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:30:07.974Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:30:07.974Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:30:07.974Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:30:07.974Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:30:07.984Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:30:07.984Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:30:07.985Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:30:07.985Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:30:07.985Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:30:07.985Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:30:07.995Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:30:07.995Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:30:07.995Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:30:07.996Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:30:08.035Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:30:08.035Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:30:08.035Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:30:08.035Z - error: Funcionário não encontrado na base, PIS:  016539730196
+2017-08-15T13:30:08.062Z - error: Funcionário não encontrado na base, PIS:  016119694677
+2017-08-15T13:30:08.062Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:30:08.062Z - error: Funcionário não encontrado na base, PIS:  016550139318
+2017-08-15T13:30:08.086Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:30:08.087Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:30:08.087Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:30:08.109Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:30:08.110Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:30:08.110Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:30:08.130Z - error: Funcionário não encontrado na base, PIS:  016549967458
+2017-08-15T13:30:08.130Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:30:08.130Z - error: Funcionário não encontrado na base, PIS:  013153898307
+2017-08-15T13:35:05.478Z - info: #Iniciando request:  2017-08-15T13:35:05.477Z
+2017-08-15T13:35:05.479Z - info: saiu da função getFileRequest
+2017-08-15T13:35:05.847Z - info: Entrou na getFeriadosAssync
+2017-08-15T13:35:06.002Z - info: Entrou no feriado.find: 
+2017-08-15T13:35:06.002Z - info: retornou os feriados:  9
+2017-08-15T13:35:06.002Z - info: Hora do readFile!
+2017-08-15T13:35:06.005Z - info: Quantidade de marcações:  189
+2017-08-15T13:35:06.005Z - info: hashMapSize:  73
+2017-08-15T13:35:06.023Z - info: pisDateMap Hash length:  20
+2017-08-15T13:35:06.048Z - info: itemsProcessed:  1
+2017-08-15T13:35:06.048Z - info: itemsProcessed:  2
+2017-08-15T13:35:06.048Z - info: itemsProcessed:  3
+2017-08-15T13:35:06.048Z - info: itemsProcessed:  4
+2017-08-15T13:35:06.048Z - info: itemsProcessed:  5
+2017-08-15T13:35:06.048Z - info: itemsProcessed:  6
+2017-08-15T13:35:06.048Z - info: itemsProcessed:  7
+2017-08-15T13:35:06.048Z - info: itemsProcessed:  8
+2017-08-15T13:35:06.049Z - info: itemsProcessed:  9
+2017-08-15T13:35:06.049Z - info: itemsProcessed:  10
+2017-08-15T13:35:06.049Z - info: itemsProcessed:  11
+2017-08-15T13:35:06.049Z - info: itemsProcessed:  12
+2017-08-15T13:35:06.049Z - info: itemsProcessed:  13
+2017-08-15T13:35:06.049Z - info: itemsProcessed:  14
+2017-08-15T13:35:06.049Z - info: itemsProcessed:  15
+2017-08-15T13:35:06.049Z - info: itemsProcessed:  16
+2017-08-15T13:35:06.049Z - info: itemsProcessed:  17
+2017-08-15T13:35:06.049Z - info: itemsProcessed:  18
+2017-08-15T13:35:06.049Z - info: itemsProcessed:  19
+2017-08-15T13:35:06.049Z - info: itemsProcessed:  20
+2017-08-15T13:35:06.050Z - info: itemsProcessed:  21
+2017-08-15T13:35:06.050Z - info: itemsProcessed:  22
+2017-08-15T13:35:06.050Z - info: itemsProcessed:  23
+2017-08-15T13:35:06.050Z - info: itemsProcessed:  24
+2017-08-15T13:35:06.050Z - info: itemsProcessed:  25
+2017-08-15T13:35:06.050Z - info: itemsProcessed:  26
+2017-08-15T13:35:06.050Z - info: itemsProcessed:  27
+2017-08-15T13:35:06.050Z - info: itemsProcessed:  28
+2017-08-15T13:35:06.050Z - info: itemsProcessed:  29
+2017-08-15T13:35:06.050Z - info: itemsProcessed:  30
+2017-08-15T13:35:06.050Z - info: itemsProcessed:  31
+2017-08-15T13:35:06.052Z - info: itemsProcessed:  32
+2017-08-15T13:35:06.052Z - info: itemsProcessed:  33
+2017-08-15T13:35:06.052Z - info: itemsProcessed:  34
+2017-08-15T13:35:06.052Z - info: itemsProcessed:  35
+2017-08-15T13:35:06.052Z - info: itemsProcessed:  36
+2017-08-15T13:35:06.052Z - info: itemsProcessed:  37
+2017-08-15T13:35:06.052Z - info: itemsProcessed:  38
+2017-08-15T13:35:06.052Z - info: itemsProcessed:  39
+2017-08-15T13:35:06.053Z - info: itemsProcessed:  40
+2017-08-15T13:35:06.053Z - info: itemsProcessed:  41
+2017-08-15T13:35:06.053Z - info: itemsProcessed:  42
+2017-08-15T13:35:06.053Z - info: itemsProcessed:  43
+2017-08-15T13:35:06.053Z - info: itemsProcessed:  44
+2017-08-15T13:35:06.053Z - info: itemsProcessed:  45
+2017-08-15T13:35:06.053Z - info: itemsProcessed:  46
+2017-08-15T13:35:06.053Z - info: itemsProcessed:  47
+2017-08-15T13:35:06.053Z - info: itemsProcessed:  48
+2017-08-15T13:35:06.053Z - info: itemsProcessed:  49
+2017-08-15T13:35:06.053Z - info: itemsProcessed:  50
+2017-08-15T13:35:06.053Z - info: itemsProcessed:  51
+2017-08-15T13:35:06.054Z - info: itemsProcessed:  52
+2017-08-15T13:35:06.054Z - info: itemsProcessed:  53
+2017-08-15T13:35:06.054Z - info: itemsProcessed:  54
+2017-08-15T13:35:06.054Z - info: itemsProcessed:  55
+2017-08-15T13:35:06.054Z - info: itemsProcessed:  56
+2017-08-15T13:35:06.054Z - info: itemsProcessed:  57
+2017-08-15T13:35:06.054Z - info: itemsProcessed:  58
+2017-08-15T13:35:06.054Z - info: itemsProcessed:  59
+2017-08-15T13:35:06.054Z - info: itemsProcessed:  60
+2017-08-15T13:35:06.055Z - info: itemsProcessed:  61
+2017-08-15T13:35:06.055Z - info: itemsProcessed:  62
+2017-08-15T13:35:06.055Z - info: itemsProcessed:  63
+2017-08-15T13:35:06.055Z - info: itemsProcessed:  64
+2017-08-15T13:35:06.055Z - info: itemsProcessed:  65
+2017-08-15T13:35:06.055Z - info: itemsProcessed:  66
+2017-08-15T13:35:06.055Z - info: itemsProcessed:  67
+2017-08-15T13:35:06.055Z - info: itemsProcessed:  68
+2017-08-15T13:35:06.055Z - info: itemsProcessed:  69
+2017-08-15T13:35:06.055Z - info: itemsProcessed:  70
+2017-08-15T13:35:06.055Z - info: itemsProcessed:  71
+2017-08-15T13:35:06.056Z - info: itemsProcessed:  72
+2017-08-15T13:35:06.056Z - info: itemsProcessed:  73
+2017-08-15T13:35:06.056Z - warn: ## Terminou tudo, chamaria o callback ##
+2017-08-15T13:35:06.203Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:35:06.208Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:35:06.210Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:35:07.369Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:35:07.370Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:35:07.370Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:35:07.372Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:35:08.458Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:35:08.459Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:35:08.459Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:35:08.459Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:35:08.459Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:35:08.460Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:35:08.471Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:35:08.471Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:35:08.471Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:35:08.472Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:35:08.485Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:35:08.486Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:35:08.486Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:35:08.486Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:35:08.486Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:35:08.486Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:35:08.496Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:35:08.496Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:35:08.496Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:35:08.497Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:35:08.506Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:35:08.506Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:35:08.506Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:35:08.506Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:35:08.506Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:35:08.506Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:35:08.522Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:35:08.523Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:35:08.523Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:35:08.523Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:35:08.523Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:35:08.523Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:35:08.529Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:35:08.529Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:35:08.530Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:35:08.530Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:35:08.543Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:35:08.543Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:35:08.543Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:35:08.544Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:35:08.544Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:35:08.544Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:35:08.557Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:35:08.557Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:35:08.558Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:35:08.558Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:35:08.567Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:35:08.567Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:35:08.567Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:35:08.567Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:35:08.606Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:35:08.606Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:35:08.606Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:35:08.606Z - error: Funcionário não encontrado na base, PIS:  016539730196
+2017-08-15T13:35:08.632Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:35:08.632Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:35:08.632Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:35:08.654Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:35:08.655Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:35:08.655Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:35:08.671Z - error: Funcionário não encontrado na base, PIS:  016549967458
+2017-08-15T13:35:08.671Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:35:08.671Z - error: Funcionário não encontrado na base, PIS:  013153898307
+2017-08-15T13:35:08.688Z - error: Funcionário não encontrado na base, PIS:  016119694677
+2017-08-15T13:35:08.689Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:35:08.689Z - error: Funcionário não encontrado na base, PIS:  016550139318
+2017-08-15T13:40:06.060Z - info: #Iniciando request:  2017-08-15T13:40:06.059Z
+2017-08-15T13:40:06.061Z - info: saiu da função getFileRequest
+2017-08-15T13:40:06.593Z - info: Entrou na getFeriadosAssync
+2017-08-15T13:40:06.801Z - info: Entrou no feriado.find: 
+2017-08-15T13:40:06.801Z - info: retornou os feriados:  9
+2017-08-15T13:40:06.802Z - info: Hora do readFile!
+2017-08-15T13:40:06.804Z - info: Quantidade de marcações:  189
+2017-08-15T13:40:06.804Z - info: hashMapSize:  73
+2017-08-15T13:40:06.813Z - info: pisDateMap Hash length:  20
+2017-08-15T13:40:06.831Z - info: itemsProcessed:  1
+2017-08-15T13:40:06.831Z - info: itemsProcessed:  2
+2017-08-15T13:40:06.831Z - info: itemsProcessed:  3
+2017-08-15T13:40:06.831Z - info: itemsProcessed:  4
+2017-08-15T13:40:06.831Z - info: itemsProcessed:  5
+2017-08-15T13:40:06.831Z - info: itemsProcessed:  6
+2017-08-15T13:40:06.831Z - info: itemsProcessed:  7
+2017-08-15T13:40:06.831Z - info: itemsProcessed:  8
+2017-08-15T13:40:06.832Z - info: itemsProcessed:  9
+2017-08-15T13:40:06.832Z - info: itemsProcessed:  10
+2017-08-15T13:40:06.832Z - info: itemsProcessed:  11
+2017-08-15T13:40:06.832Z - info: itemsProcessed:  12
+2017-08-15T13:40:06.832Z - info: itemsProcessed:  13
+2017-08-15T13:40:06.832Z - info: itemsProcessed:  14
+2017-08-15T13:40:06.832Z - info: itemsProcessed:  15
+2017-08-15T13:40:06.832Z - info: itemsProcessed:  16
+2017-08-15T13:40:06.832Z - info: itemsProcessed:  17
+2017-08-15T13:40:06.833Z - info: itemsProcessed:  18
+2017-08-15T13:40:06.833Z - info: itemsProcessed:  19
+2017-08-15T13:40:06.833Z - info: itemsProcessed:  20
+2017-08-15T13:40:06.833Z - info: itemsProcessed:  21
+2017-08-15T13:40:06.833Z - info: itemsProcessed:  22
+2017-08-15T13:40:06.833Z - info: itemsProcessed:  23
+2017-08-15T13:40:06.833Z - info: itemsProcessed:  24
+2017-08-15T13:40:06.833Z - info: itemsProcessed:  25
+2017-08-15T13:40:06.833Z - info: itemsProcessed:  26
+2017-08-15T13:40:06.833Z - info: itemsProcessed:  27
+2017-08-15T13:40:06.834Z - info: itemsProcessed:  28
+2017-08-15T13:40:06.834Z - info: itemsProcessed:  29
+2017-08-15T13:40:06.834Z - info: itemsProcessed:  30
+2017-08-15T13:40:06.834Z - info: itemsProcessed:  31
+2017-08-15T13:40:06.834Z - info: itemsProcessed:  32
+2017-08-15T13:40:06.834Z - info: itemsProcessed:  33
+2017-08-15T13:40:06.834Z - info: itemsProcessed:  34
+2017-08-15T13:40:06.834Z - info: itemsProcessed:  35
+2017-08-15T13:40:06.835Z - info: itemsProcessed:  36
+2017-08-15T13:40:06.835Z - info: itemsProcessed:  37
+2017-08-15T13:40:06.835Z - info: itemsProcessed:  38
+2017-08-15T13:40:06.835Z - info: itemsProcessed:  39
+2017-08-15T13:40:06.835Z - info: itemsProcessed:  40
+2017-08-15T13:40:06.835Z - info: itemsProcessed:  41
+2017-08-15T13:40:06.835Z - info: itemsProcessed:  42
+2017-08-15T13:40:06.835Z - info: itemsProcessed:  43
+2017-08-15T13:40:06.835Z - info: itemsProcessed:  44
+2017-08-15T13:40:06.836Z - info: itemsProcessed:  45
+2017-08-15T13:40:06.836Z - info: itemsProcessed:  46
+2017-08-15T13:40:06.836Z - info: itemsProcessed:  47
+2017-08-15T13:40:06.836Z - info: itemsProcessed:  48
+2017-08-15T13:40:06.836Z - info: itemsProcessed:  49
+2017-08-15T13:40:06.836Z - info: itemsProcessed:  50
+2017-08-15T13:40:06.836Z - info: itemsProcessed:  51
+2017-08-15T13:40:06.836Z - info: itemsProcessed:  52
+2017-08-15T13:40:06.836Z - info: itemsProcessed:  53
+2017-08-15T13:40:06.837Z - info: itemsProcessed:  54
+2017-08-15T13:40:06.837Z - info: itemsProcessed:  55
+2017-08-15T13:40:06.837Z - info: itemsProcessed:  56
+2017-08-15T13:40:06.837Z - info: itemsProcessed:  57
+2017-08-15T13:40:06.837Z - info: itemsProcessed:  58
+2017-08-15T13:40:06.837Z - info: itemsProcessed:  59
+2017-08-15T13:40:06.837Z - info: itemsProcessed:  60
+2017-08-15T13:40:06.837Z - info: itemsProcessed:  61
+2017-08-15T13:40:06.837Z - info: itemsProcessed:  62
+2017-08-15T13:40:06.838Z - info: itemsProcessed:  63
+2017-08-15T13:40:06.838Z - info: itemsProcessed:  64
+2017-08-15T13:40:06.838Z - info: itemsProcessed:  65
+2017-08-15T13:40:06.838Z - info: itemsProcessed:  66
+2017-08-15T13:40:06.838Z - info: itemsProcessed:  67
+2017-08-15T13:40:06.838Z - info: itemsProcessed:  68
+2017-08-15T13:40:06.838Z - info: itemsProcessed:  69
+2017-08-15T13:40:06.838Z - info: itemsProcessed:  70
+2017-08-15T13:40:06.838Z - info: itemsProcessed:  71
+2017-08-15T13:40:06.839Z - info: itemsProcessed:  72
+2017-08-15T13:40:06.839Z - info: itemsProcessed:  73
+2017-08-15T13:40:06.839Z - warn: ## Terminou tudo, chamaria o callback ##
+2017-08-15T13:40:07.033Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:40:07.034Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:40:07.039Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:40:08.295Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:40:08.298Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:40:08.298Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:40:08.301Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:40:09.526Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:40:09.527Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:40:09.527Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:40:09.527Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:40:09.527Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:40:09.528Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:40:09.539Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:40:09.539Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:40:09.539Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:40:09.539Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:40:09.552Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:40:09.553Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:40:09.553Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:40:09.553Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:40:09.553Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:40:09.553Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:40:09.564Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:40:09.565Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:40:09.566Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:40:09.566Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:40:09.566Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:40:09.566Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:40:09.577Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:40:09.577Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:40:09.577Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:40:09.578Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:40:09.588Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:40:09.589Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:40:09.589Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:40:09.589Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:40:09.598Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:40:09.598Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:40:09.598Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:40:09.599Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:40:09.599Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:40:09.599Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:40:09.613Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:40:09.613Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:40:09.613Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:40:09.614Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:40:09.614Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:40:09.614Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:40:09.623Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:40:09.623Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:40:09.623Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:40:09.624Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:40:09.637Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:40:09.637Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:40:09.637Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:40:09.637Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:40:09.674Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:40:09.674Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:40:09.674Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:40:09.674Z - error: Funcionário não encontrado na base, PIS:  016539730196
+2017-08-15T13:40:09.699Z - error: Funcionário não encontrado na base, PIS:  016549967458
+2017-08-15T13:40:09.699Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:40:09.700Z - error: Funcionário não encontrado na base, PIS:  013153898307
+2017-08-15T13:40:09.713Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:40:09.713Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:40:09.713Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:40:09.743Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:40:09.743Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:40:09.744Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:40:09.760Z - error: Funcionário não encontrado na base, PIS:  016119694677
+2017-08-15T13:40:09.760Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:40:09.760Z - error: Funcionário não encontrado na base, PIS:  016550139318
+2017-08-15T13:45:06.844Z - info: #Iniciando request:  2017-08-15T13:45:06.843Z
+2017-08-15T13:45:06.847Z - info: saiu da função getFileRequest
+2017-08-15T13:45:07.224Z - info: Entrou na getFeriadosAssync
+2017-08-15T13:45:07.385Z - info: Entrou no feriado.find: 
+2017-08-15T13:45:07.385Z - info: retornou os feriados:  9
+2017-08-15T13:45:07.386Z - info: Hora do readFile!
+2017-08-15T13:45:07.390Z - info: Quantidade de marcações:  189
+2017-08-15T13:45:07.390Z - info: hashMapSize:  73
+2017-08-15T13:45:07.406Z - info: pisDateMap Hash length:  20
+2017-08-15T13:45:07.431Z - info: itemsProcessed:  1
+2017-08-15T13:45:07.432Z - info: itemsProcessed:  2
+2017-08-15T13:45:07.432Z - info: itemsProcessed:  3
+2017-08-15T13:45:07.432Z - info: itemsProcessed:  4
+2017-08-15T13:45:07.432Z - info: itemsProcessed:  5
+2017-08-15T13:45:07.432Z - info: itemsProcessed:  6
+2017-08-15T13:45:07.432Z - info: itemsProcessed:  7
+2017-08-15T13:45:07.432Z - info: itemsProcessed:  8
+2017-08-15T13:45:07.432Z - info: itemsProcessed:  9
+2017-08-15T13:45:07.433Z - info: itemsProcessed:  10
+2017-08-15T13:45:07.433Z - info: itemsProcessed:  11
+2017-08-15T13:45:07.433Z - info: itemsProcessed:  12
+2017-08-15T13:45:07.433Z - info: itemsProcessed:  13
+2017-08-15T13:45:07.433Z - info: itemsProcessed:  14
+2017-08-15T13:45:07.434Z - info: itemsProcessed:  15
+2017-08-15T13:45:07.434Z - info: itemsProcessed:  16
+2017-08-15T13:45:07.434Z - info: itemsProcessed:  17
+2017-08-15T13:45:07.434Z - info: itemsProcessed:  18
+2017-08-15T13:45:07.434Z - info: itemsProcessed:  19
+2017-08-15T13:45:07.434Z - info: itemsProcessed:  20
+2017-08-15T13:45:07.434Z - info: itemsProcessed:  21
+2017-08-15T13:45:07.434Z - info: itemsProcessed:  22
+2017-08-15T13:45:07.434Z - info: itemsProcessed:  23
+2017-08-15T13:45:07.435Z - info: itemsProcessed:  24
+2017-08-15T13:45:07.435Z - info: itemsProcessed:  25
+2017-08-15T13:45:07.435Z - info: itemsProcessed:  26
+2017-08-15T13:45:07.435Z - info: itemsProcessed:  27
+2017-08-15T13:45:07.435Z - info: itemsProcessed:  28
+2017-08-15T13:45:07.435Z - info: itemsProcessed:  29
+2017-08-15T13:45:07.435Z - info: itemsProcessed:  30
+2017-08-15T13:45:07.435Z - info: itemsProcessed:  31
+2017-08-15T13:45:07.435Z - info: itemsProcessed:  32
+2017-08-15T13:45:07.436Z - info: itemsProcessed:  33
+2017-08-15T13:45:07.436Z - info: itemsProcessed:  34
+2017-08-15T13:45:07.436Z - info: itemsProcessed:  35
+2017-08-15T13:45:07.436Z - info: itemsProcessed:  36
+2017-08-15T13:45:07.436Z - info: itemsProcessed:  37
+2017-08-15T13:45:07.436Z - info: itemsProcessed:  38
+2017-08-15T13:45:07.436Z - info: itemsProcessed:  39
+2017-08-15T13:45:07.438Z - info: itemsProcessed:  40
+2017-08-15T13:45:07.438Z - info: itemsProcessed:  41
+2017-08-15T13:45:07.438Z - info: itemsProcessed:  42
+2017-08-15T13:45:07.438Z - info: itemsProcessed:  43
+2017-08-15T13:45:07.438Z - info: itemsProcessed:  44
+2017-08-15T13:45:07.438Z - info: itemsProcessed:  45
+2017-08-15T13:45:07.439Z - info: itemsProcessed:  46
+2017-08-15T13:45:07.439Z - info: itemsProcessed:  47
+2017-08-15T13:45:07.439Z - info: itemsProcessed:  48
+2017-08-15T13:45:07.439Z - info: itemsProcessed:  49
+2017-08-15T13:45:07.439Z - info: itemsProcessed:  50
+2017-08-15T13:45:07.439Z - info: itemsProcessed:  51
+2017-08-15T13:45:07.439Z - info: itemsProcessed:  52
+2017-08-15T13:45:07.439Z - info: itemsProcessed:  53
+2017-08-15T13:45:07.439Z - info: itemsProcessed:  54
+2017-08-15T13:45:07.440Z - info: itemsProcessed:  55
+2017-08-15T13:45:07.440Z - info: itemsProcessed:  56
+2017-08-15T13:45:07.440Z - info: itemsProcessed:  57
+2017-08-15T13:45:07.440Z - info: itemsProcessed:  58
+2017-08-15T13:45:07.440Z - info: itemsProcessed:  59
+2017-08-15T13:45:07.440Z - info: itemsProcessed:  60
+2017-08-15T13:45:07.440Z - info: itemsProcessed:  61
+2017-08-15T13:45:07.440Z - info: itemsProcessed:  62
+2017-08-15T13:45:07.440Z - info: itemsProcessed:  63
+2017-08-15T13:45:07.440Z - info: itemsProcessed:  64
+2017-08-15T13:45:07.441Z - info: itemsProcessed:  65
+2017-08-15T13:45:07.441Z - info: itemsProcessed:  66
+2017-08-15T13:45:07.441Z - info: itemsProcessed:  67
+2017-08-15T13:45:07.441Z - info: itemsProcessed:  68
+2017-08-15T13:45:07.441Z - info: itemsProcessed:  69
+2017-08-15T13:45:07.441Z - info: itemsProcessed:  70
+2017-08-15T13:45:07.441Z - info: itemsProcessed:  71
+2017-08-15T13:45:07.441Z - info: itemsProcessed:  72
+2017-08-15T13:45:07.441Z - info: itemsProcessed:  73
+2017-08-15T13:45:07.441Z - warn: ## Terminou tudo, chamaria o callback ##
+2017-08-15T13:45:07.592Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:45:07.594Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:45:07.595Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:45:08.769Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:45:08.771Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:45:08.773Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:45:08.773Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:45:09.835Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:45:09.836Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:45:09.836Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:45:09.836Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:45:09.836Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:45:09.836Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:45:09.846Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:45:09.846Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:45:09.847Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:45:09.847Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:45:09.862Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:45:09.863Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:45:09.863Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:45:09.864Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:45:09.864Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:45:09.864Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:45:09.873Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:45:09.874Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:45:09.874Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:45:09.874Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:45:09.886Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:45:09.886Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:45:09.887Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:45:09.887Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:45:09.888Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:45:09.888Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:45:09.900Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:45:09.900Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:45:09.901Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:45:09.901Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:45:09.901Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:45:09.901Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:45:09.910Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:45:09.911Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:45:09.911Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:45:09.911Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:45:09.921Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:45:09.921Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:45:09.922Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:45:09.922Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:45:09.934Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:45:09.934Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:45:09.934Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:45:09.935Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:45:09.935Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:45:09.935Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:45:09.946Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:45:09.946Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:45:09.946Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:45:09.946Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:45:09.979Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:45:09.980Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:45:09.980Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:45:09.980Z - error: Funcionário não encontrado na base, PIS:  016539730196
+2017-08-15T13:45:10.009Z - error: Funcionário não encontrado na base, PIS:  016119694677
+2017-08-15T13:45:10.009Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:45:10.009Z - error: Funcionário não encontrado na base, PIS:  016550139318
+2017-08-15T13:45:10.033Z - error: Funcionário não encontrado na base, PIS:  016549967458
+2017-08-15T13:45:10.033Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:45:10.033Z - error: Funcionário não encontrado na base, PIS:  013153898307
+2017-08-15T13:45:10.046Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:45:10.046Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:45:10.046Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:45:10.081Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:45:10.081Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:45:10.081Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:50:07.447Z - info: #Iniciando request:  2017-08-15T13:50:07.446Z
+2017-08-15T13:50:07.449Z - info: saiu da função getFileRequest
+2017-08-15T13:50:07.834Z - info: Entrou na getFeriadosAssync
+2017-08-15T13:50:07.991Z - info: Entrou no feriado.find: 
+2017-08-15T13:50:07.991Z - info: retornou os feriados:  9
+2017-08-15T13:50:07.992Z - info: Hora do readFile!
+2017-08-15T13:50:07.996Z - info: Quantidade de marcações:  189
+2017-08-15T13:50:07.997Z - info: hashMapSize:  73
+2017-08-15T13:50:08.015Z - info: pisDateMap Hash length:  20
+2017-08-15T13:50:08.039Z - info: itemsProcessed:  1
+2017-08-15T13:50:08.039Z - info: itemsProcessed:  2
+2017-08-15T13:50:08.039Z - info: itemsProcessed:  3
+2017-08-15T13:50:08.039Z - info: itemsProcessed:  4
+2017-08-15T13:50:08.039Z - info: itemsProcessed:  5
+2017-08-15T13:50:08.039Z - info: itemsProcessed:  6
+2017-08-15T13:50:08.040Z - info: itemsProcessed:  7
+2017-08-15T13:50:08.040Z - info: itemsProcessed:  8
+2017-08-15T13:50:08.040Z - info: itemsProcessed:  9
+2017-08-15T13:50:08.040Z - info: itemsProcessed:  10
+2017-08-15T13:50:08.040Z - info: itemsProcessed:  11
+2017-08-15T13:50:08.040Z - info: itemsProcessed:  12
+2017-08-15T13:50:08.040Z - info: itemsProcessed:  13
+2017-08-15T13:50:08.041Z - info: itemsProcessed:  14
+2017-08-15T13:50:08.041Z - info: itemsProcessed:  15
+2017-08-15T13:50:08.041Z - info: itemsProcessed:  16
+2017-08-15T13:50:08.041Z - info: itemsProcessed:  17
+2017-08-15T13:50:08.041Z - info: itemsProcessed:  18
+2017-08-15T13:50:08.041Z - info: itemsProcessed:  19
+2017-08-15T13:50:08.041Z - info: itemsProcessed:  20
+2017-08-15T13:50:08.042Z - info: itemsProcessed:  21
+2017-08-15T13:50:08.042Z - info: itemsProcessed:  22
+2017-08-15T13:50:08.042Z - info: itemsProcessed:  23
+2017-08-15T13:50:08.042Z - info: itemsProcessed:  24
+2017-08-15T13:50:08.042Z - info: itemsProcessed:  25
+2017-08-15T13:50:08.042Z - info: itemsProcessed:  26
+2017-08-15T13:50:08.042Z - info: itemsProcessed:  27
+2017-08-15T13:50:08.043Z - info: itemsProcessed:  28
+2017-08-15T13:50:08.043Z - info: itemsProcessed:  29
+2017-08-15T13:50:08.043Z - info: itemsProcessed:  30
+2017-08-15T13:50:08.043Z - info: itemsProcessed:  31
+2017-08-15T13:50:08.043Z - info: itemsProcessed:  32
+2017-08-15T13:50:08.043Z - info: itemsProcessed:  33
+2017-08-15T13:50:08.043Z - info: itemsProcessed:  34
+2017-08-15T13:50:08.044Z - info: itemsProcessed:  35
+2017-08-15T13:50:08.044Z - info: itemsProcessed:  36
+2017-08-15T13:50:08.044Z - info: itemsProcessed:  37
+2017-08-15T13:50:08.044Z - info: itemsProcessed:  38
+2017-08-15T13:50:08.044Z - info: itemsProcessed:  39
+2017-08-15T13:50:08.044Z - info: itemsProcessed:  40
+2017-08-15T13:50:08.044Z - info: itemsProcessed:  41
+2017-08-15T13:50:08.045Z - info: itemsProcessed:  42
+2017-08-15T13:50:08.045Z - info: itemsProcessed:  43
+2017-08-15T13:50:08.045Z - info: itemsProcessed:  44
+2017-08-15T13:50:08.045Z - info: itemsProcessed:  45
+2017-08-15T13:50:08.045Z - info: itemsProcessed:  46
+2017-08-15T13:50:08.045Z - info: itemsProcessed:  47
+2017-08-15T13:50:08.045Z - info: itemsProcessed:  48
+2017-08-15T13:50:08.046Z - info: itemsProcessed:  49
+2017-08-15T13:50:08.046Z - info: itemsProcessed:  50
+2017-08-15T13:50:08.046Z - info: itemsProcessed:  51
+2017-08-15T13:50:08.046Z - info: itemsProcessed:  52
+2017-08-15T13:50:08.046Z - info: itemsProcessed:  53
+2017-08-15T13:50:08.046Z - info: itemsProcessed:  54
+2017-08-15T13:50:08.046Z - info: itemsProcessed:  55
+2017-08-15T13:50:08.047Z - info: itemsProcessed:  56
+2017-08-15T13:50:08.047Z - info: itemsProcessed:  57
+2017-08-15T13:50:08.047Z - info: itemsProcessed:  58
+2017-08-15T13:50:08.047Z - info: itemsProcessed:  59
+2017-08-15T13:50:08.047Z - info: itemsProcessed:  60
+2017-08-15T13:50:08.047Z - info: itemsProcessed:  61
+2017-08-15T13:50:08.047Z - info: itemsProcessed:  62
+2017-08-15T13:50:08.048Z - info: itemsProcessed:  63
+2017-08-15T13:50:08.048Z - info: itemsProcessed:  64
+2017-08-15T13:50:08.048Z - info: itemsProcessed:  65
+2017-08-15T13:50:08.048Z - info: itemsProcessed:  66
+2017-08-15T13:50:08.048Z - info: itemsProcessed:  67
+2017-08-15T13:50:08.048Z - info: itemsProcessed:  68
+2017-08-15T13:50:08.048Z - info: itemsProcessed:  69
+2017-08-15T13:50:08.049Z - info: itemsProcessed:  70
+2017-08-15T13:50:08.049Z - info: itemsProcessed:  71
+2017-08-15T13:50:08.049Z - info: itemsProcessed:  72
+2017-08-15T13:50:08.049Z - info: itemsProcessed:  73
+2017-08-15T13:50:08.049Z - warn: ## Terminou tudo, chamaria o callback ##
+2017-08-15T13:50:08.198Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:50:08.203Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:50:08.205Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:50:09.368Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:50:09.369Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:50:09.373Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:50:09.375Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:50:10.445Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:50:10.447Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:50:10.447Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:50:10.447Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:50:10.447Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:50:10.447Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:50:10.459Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:50:10.460Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:50:10.460Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:50:10.460Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:50:10.473Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:50:10.473Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:50:10.473Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:50:10.474Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:50:10.474Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:50:10.474Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:50:10.483Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:50:10.486Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:50:10.486Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:50:10.486Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:50:10.486Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:50:10.486Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:50:10.496Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:50:10.496Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:50:10.497Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:50:10.497Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:50:10.506Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:50:10.506Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:50:10.507Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:50:10.507Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:50:10.507Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:50:10.507Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:50:10.521Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:50:10.521Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:50:10.521Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:50:10.521Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:50:10.534Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:50:10.534Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:50:10.534Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:50:10.534Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:50:10.534Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:50:10.534Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:50:10.545Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:50:10.545Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:50:10.545Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:50:10.545Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:50:10.557Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:50:10.557Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:50:10.557Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:50:10.557Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:50:10.593Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:50:10.593Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:50:10.593Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:50:10.593Z - error: Funcionário não encontrado na base, PIS:  016539730196
+2017-08-15T13:50:10.619Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:50:10.619Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:50:10.620Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:50:10.631Z - error: Funcionário não encontrado na base, PIS:  016549967458
+2017-08-15T13:50:10.631Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:50:10.631Z - error: Funcionário não encontrado na base, PIS:  013153898307
+2017-08-15T13:50:10.651Z - error: Funcionário não encontrado na base, PIS:  016119694677
+2017-08-15T13:50:10.651Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:50:10.651Z - error: Funcionário não encontrado na base, PIS:  016550139318
+2017-08-15T13:50:10.681Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:50:10.681Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:50:10.681Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:55:08.052Z - info: #Iniciando request:  2017-08-15T13:55:08.052Z
+2017-08-15T13:55:08.053Z - info: saiu da função getFileRequest
+2017-08-15T13:55:08.425Z - info: Entrou na getFeriadosAssync
+2017-08-15T13:55:08.577Z - info: Entrou no feriado.find: 
+2017-08-15T13:55:08.578Z - info: retornou os feriados:  9
+2017-08-15T13:55:08.578Z - info: Hora do readFile!
+2017-08-15T13:55:08.579Z - info: Quantidade de marcações:  189
+2017-08-15T13:55:08.580Z - info: hashMapSize:  73
+2017-08-15T13:55:08.594Z - info: pisDateMap Hash length:  20
+2017-08-15T13:55:08.608Z - info: itemsProcessed:  1
+2017-08-15T13:55:08.608Z - info: itemsProcessed:  2
+2017-08-15T13:55:08.608Z - info: itemsProcessed:  3
+2017-08-15T13:55:08.608Z - info: itemsProcessed:  4
+2017-08-15T13:55:08.608Z - info: itemsProcessed:  5
+2017-08-15T13:55:08.608Z - info: itemsProcessed:  6
+2017-08-15T13:55:08.608Z - info: itemsProcessed:  7
+2017-08-15T13:55:08.608Z - info: itemsProcessed:  8
+2017-08-15T13:55:08.608Z - info: itemsProcessed:  9
+2017-08-15T13:55:08.608Z - info: itemsProcessed:  10
+2017-08-15T13:55:08.609Z - info: itemsProcessed:  11
+2017-08-15T13:55:08.609Z - info: itemsProcessed:  12
+2017-08-15T13:55:08.609Z - info: itemsProcessed:  13
+2017-08-15T13:55:08.609Z - info: itemsProcessed:  14
+2017-08-15T13:55:08.609Z - info: itemsProcessed:  15
+2017-08-15T13:55:08.609Z - info: itemsProcessed:  16
+2017-08-15T13:55:08.609Z - info: itemsProcessed:  17
+2017-08-15T13:55:08.609Z - info: itemsProcessed:  18
+2017-08-15T13:55:08.609Z - info: itemsProcessed:  19
+2017-08-15T13:55:08.609Z - info: itemsProcessed:  20
+2017-08-15T13:55:08.609Z - info: itemsProcessed:  21
+2017-08-15T13:55:08.609Z - info: itemsProcessed:  22
+2017-08-15T13:55:08.609Z - info: itemsProcessed:  23
+2017-08-15T13:55:08.609Z - info: itemsProcessed:  24
+2017-08-15T13:55:08.609Z - info: itemsProcessed:  25
+2017-08-15T13:55:08.609Z - info: itemsProcessed:  26
+2017-08-15T13:55:08.610Z - info: itemsProcessed:  27
+2017-08-15T13:55:08.610Z - info: itemsProcessed:  28
+2017-08-15T13:55:08.610Z - info: itemsProcessed:  29
+2017-08-15T13:55:08.610Z - info: itemsProcessed:  30
+2017-08-15T13:55:08.610Z - info: itemsProcessed:  31
+2017-08-15T13:55:08.610Z - info: itemsProcessed:  32
+2017-08-15T13:55:08.610Z - info: itemsProcessed:  33
+2017-08-15T13:55:08.610Z - info: itemsProcessed:  34
+2017-08-15T13:55:08.610Z - info: itemsProcessed:  35
+2017-08-15T13:55:08.610Z - info: itemsProcessed:  36
+2017-08-15T13:55:08.610Z - info: itemsProcessed:  37
+2017-08-15T13:55:08.610Z - info: itemsProcessed:  38
+2017-08-15T13:55:08.610Z - info: itemsProcessed:  39
+2017-08-15T13:55:08.610Z - info: itemsProcessed:  40
+2017-08-15T13:55:08.610Z - info: itemsProcessed:  41
+2017-08-15T13:55:08.610Z - info: itemsProcessed:  42
+2017-08-15T13:55:08.611Z - info: itemsProcessed:  43
+2017-08-15T13:55:08.611Z - info: itemsProcessed:  44
+2017-08-15T13:55:08.611Z - info: itemsProcessed:  45
+2017-08-15T13:55:08.611Z - info: itemsProcessed:  46
+2017-08-15T13:55:08.611Z - info: itemsProcessed:  47
+2017-08-15T13:55:08.611Z - info: itemsProcessed:  48
+2017-08-15T13:55:08.611Z - info: itemsProcessed:  49
+2017-08-15T13:55:08.611Z - info: itemsProcessed:  50
+2017-08-15T13:55:08.611Z - info: itemsProcessed:  51
+2017-08-15T13:55:08.611Z - info: itemsProcessed:  52
+2017-08-15T13:55:08.611Z - info: itemsProcessed:  53
+2017-08-15T13:55:08.611Z - info: itemsProcessed:  54
+2017-08-15T13:55:08.611Z - info: itemsProcessed:  55
+2017-08-15T13:55:08.611Z - info: itemsProcessed:  56
+2017-08-15T13:55:08.611Z - info: itemsProcessed:  57
+2017-08-15T13:55:08.611Z - info: itemsProcessed:  58
+2017-08-15T13:55:08.612Z - info: itemsProcessed:  59
+2017-08-15T13:55:08.612Z - info: itemsProcessed:  60
+2017-08-15T13:55:08.612Z - info: itemsProcessed:  61
+2017-08-15T13:55:08.612Z - info: itemsProcessed:  62
+2017-08-15T13:55:08.612Z - info: itemsProcessed:  63
+2017-08-15T13:55:08.612Z - info: itemsProcessed:  64
+2017-08-15T13:55:08.612Z - info: itemsProcessed:  65
+2017-08-15T13:55:08.612Z - info: itemsProcessed:  66
+2017-08-15T13:55:08.612Z - info: itemsProcessed:  67
+2017-08-15T13:55:08.612Z - info: itemsProcessed:  68
+2017-08-15T13:55:08.612Z - info: itemsProcessed:  69
+2017-08-15T13:55:08.612Z - info: itemsProcessed:  70
+2017-08-15T13:55:08.612Z - info: itemsProcessed:  71
+2017-08-15T13:55:08.612Z - info: itemsProcessed:  72
+2017-08-15T13:55:08.612Z - info: itemsProcessed:  73
+2017-08-15T13:55:08.612Z - warn: ## Terminou tudo, chamaria o callback ##
+2017-08-15T13:55:08.763Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:55:08.763Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T13:55:08.767Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:55:09.919Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:55:09.920Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T13:55:09.924Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:55:09.926Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:55:10.983Z - error: Funcionário não encontrado na base, PIS:  016248860034
+2017-08-15T13:55:10.983Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:55:10.983Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:55:10.983Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:55:10.984Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:55:10.984Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:55:11.014Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:55:11.014Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:55:11.014Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:55:11.015Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:55:11.015Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:55:11.015Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:55:11.033Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:55:11.033Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:55:11.033Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:55:11.033Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:55:11.033Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:55:11.034Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:55:11.044Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:55:11.044Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:55:11.044Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:55:11.044Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:55:11.053Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T13:55:11.054Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:55:11.054Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:55:11.055Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:55:11.055Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:55:11.056Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:55:11.069Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:55:11.069Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T13:55:11.069Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:55:11.069Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:55:11.070Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:55:11.070Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:55:11.078Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:55:11.078Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:55:11.078Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:55:11.078Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:55:11.092Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:55:11.092Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:55:11.092Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:55:11.092Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:55:11.129Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:55:11.130Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:55:11.130Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:55:11.130Z - error: Funcionário não encontrado na base, PIS:  016539730196
+2017-08-15T13:55:11.170Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T13:55:11.170Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T13:55:11.170Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T13:55:11.170Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T13:55:11.170Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T13:55:11.170Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T13:55:11.171Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:55:11.171Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T13:55:11.171Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:55:11.171Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:55:11.171Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:55:11.181Z - error: Funcionário não encontrado na base, PIS:  016119694677
+2017-08-15T13:55:11.181Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:55:11.181Z - error: Funcionário não encontrado na base, PIS:  016550139318
+2017-08-15T13:55:11.198Z - error: Funcionário não encontrado na base, PIS:  016549967458
+2017-08-15T13:55:11.198Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:55:11.198Z - error: Funcionário não encontrado na base, PIS:  013153898307
+2017-08-15T13:55:11.216Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T13:55:11.217Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T13:55:11.217Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T13:59:45.327Z - info: Iniciando Serviço de Obtenção dos arquivos dos REPs: 
+2017-08-15T13:59:45.330Z - info: #Iniciando request:  2017-08-15T13:59:45.328Z
+2017-08-15T13:59:45.336Z - info: saiu da função getFileRequest
+2017-08-15T13:59:50.898Z - info: Entrou na getFeriadosAssync
+2017-08-15T14:00:03.679Z - info: Entrou no feriado.find: 
+2017-08-15T14:00:03.679Z - info: retornou os feriados:  9
+2017-08-15T14:00:03.680Z - info: Hora do readFile!
+2017-08-15T14:00:03.687Z - info: Quantidade de marcações:  189
+2017-08-15T14:00:03.687Z - info: hashMapSize:  73
+2017-08-15T14:00:03.702Z - info: pisDateMap Hash length:  20
+2017-08-15T14:00:03.723Z - info: itemsProcessed:  1
+2017-08-15T14:00:03.723Z - info: itemsProcessed:  2
+2017-08-15T14:00:03.723Z - info: itemsProcessed:  3
+2017-08-15T14:00:03.723Z - info: itemsProcessed:  4
+2017-08-15T14:00:03.724Z - info: itemsProcessed:  5
+2017-08-15T14:00:03.725Z - info: itemsProcessed:  6
+2017-08-15T14:00:03.725Z - info: itemsProcessed:  7
+2017-08-15T14:00:03.725Z - info: itemsProcessed:  8
+2017-08-15T14:00:03.725Z - info: itemsProcessed:  9
+2017-08-15T14:00:03.725Z - info: itemsProcessed:  10
+2017-08-15T14:00:03.725Z - info: itemsProcessed:  11
+2017-08-15T14:00:03.725Z - info: itemsProcessed:  12
+2017-08-15T14:00:03.725Z - info: itemsProcessed:  13
+2017-08-15T14:00:03.725Z - info: itemsProcessed:  14
+2017-08-15T14:00:03.725Z - info: itemsProcessed:  15
+2017-08-15T14:00:03.725Z - info: itemsProcessed:  16
+2017-08-15T14:00:03.725Z - info: itemsProcessed:  17
+2017-08-15T14:00:03.725Z - info: itemsProcessed:  18
+2017-08-15T14:00:03.726Z - info: itemsProcessed:  19
+2017-08-15T14:00:03.726Z - info: itemsProcessed:  20
+2017-08-15T14:00:03.726Z - info: itemsProcessed:  21
+2017-08-15T14:00:03.726Z - info: itemsProcessed:  22
+2017-08-15T14:00:03.726Z - info: itemsProcessed:  23
+2017-08-15T14:00:03.726Z - info: itemsProcessed:  24
+2017-08-15T14:00:03.727Z - info: itemsProcessed:  25
+2017-08-15T14:00:03.727Z - info: itemsProcessed:  26
+2017-08-15T14:00:03.727Z - info: itemsProcessed:  27
+2017-08-15T14:00:03.728Z - info: itemsProcessed:  28
+2017-08-15T14:00:03.728Z - info: itemsProcessed:  29
+2017-08-15T14:00:03.728Z - info: itemsProcessed:  30
+2017-08-15T14:00:03.728Z - info: itemsProcessed:  31
+2017-08-15T14:00:03.728Z - info: itemsProcessed:  32
+2017-08-15T14:00:03.728Z - info: itemsProcessed:  33
+2017-08-15T14:00:03.729Z - info: itemsProcessed:  34
+2017-08-15T14:00:03.729Z - info: itemsProcessed:  35
+2017-08-15T14:00:03.729Z - info: itemsProcessed:  36
+2017-08-15T14:00:03.729Z - info: itemsProcessed:  37
+2017-08-15T14:00:03.729Z - info: itemsProcessed:  38
+2017-08-15T14:00:03.729Z - info: itemsProcessed:  39
+2017-08-15T14:00:03.730Z - info: itemsProcessed:  40
+2017-08-15T14:00:03.730Z - info: itemsProcessed:  41
+2017-08-15T14:00:03.730Z - info: itemsProcessed:  42
+2017-08-15T14:00:03.730Z - info: itemsProcessed:  43
+2017-08-15T14:00:03.730Z - info: itemsProcessed:  44
+2017-08-15T14:00:03.730Z - info: itemsProcessed:  45
+2017-08-15T14:00:03.730Z - info: itemsProcessed:  46
+2017-08-15T14:00:03.731Z - info: itemsProcessed:  47
+2017-08-15T14:00:03.731Z - info: itemsProcessed:  48
+2017-08-15T14:00:03.731Z - info: itemsProcessed:  49
+2017-08-15T14:00:03.731Z - info: itemsProcessed:  50
+2017-08-15T14:00:03.732Z - info: itemsProcessed:  51
+2017-08-15T14:00:03.732Z - info: itemsProcessed:  52
+2017-08-15T14:00:03.732Z - info: itemsProcessed:  53
+2017-08-15T14:00:03.732Z - info: itemsProcessed:  54
+2017-08-15T14:00:03.733Z - info: itemsProcessed:  55
+2017-08-15T14:00:03.733Z - info: itemsProcessed:  56
+2017-08-15T14:00:03.733Z - info: itemsProcessed:  57
+2017-08-15T14:00:03.734Z - info: itemsProcessed:  58
+2017-08-15T14:00:03.734Z - info: itemsProcessed:  59
+2017-08-15T14:00:03.734Z - info: itemsProcessed:  60
+2017-08-15T14:00:03.734Z - info: itemsProcessed:  61
+2017-08-15T14:00:03.734Z - info: itemsProcessed:  62
+2017-08-15T14:00:03.734Z - info: itemsProcessed:  63
+2017-08-15T14:00:03.734Z - info: itemsProcessed:  64
+2017-08-15T14:00:03.734Z - info: itemsProcessed:  65
+2017-08-15T14:00:03.734Z - info: itemsProcessed:  66
+2017-08-15T14:00:03.734Z - info: itemsProcessed:  67
+2017-08-15T14:00:03.735Z - info: itemsProcessed:  68
+2017-08-15T14:00:03.735Z - info: itemsProcessed:  69
+2017-08-15T14:00:03.735Z - info: itemsProcessed:  70
+2017-08-15T14:00:03.735Z - info: itemsProcessed:  71
+2017-08-15T14:00:03.735Z - info: itemsProcessed:  72
+2017-08-15T14:00:03.735Z - info: itemsProcessed:  73
+2017-08-15T14:00:03.735Z - warn: ## Terminou tudo, chamaria o callback ##
+2017-08-15T14:00:06.277Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T14:00:06.278Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T14:00:06.281Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T14:00:06.281Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T14:00:06.281Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T14:00:06.282Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T14:00:06.282Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T14:00:06.282Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T14:00:06.296Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T14:00:06.304Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T14:00:06.305Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T14:00:06.305Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T14:00:06.305Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T14:00:06.305Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T14:00:06.305Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T14:00:06.306Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T14:00:06.315Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T14:00:06.316Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T14:00:06.316Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T14:00:06.316Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T14:00:06.316Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T14:00:06.324Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T14:00:06.324Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T14:00:06.324Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T14:00:06.342Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T14:00:06.342Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T14:00:06.343Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T14:00:06.343Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T14:00:06.343Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T14:00:06.343Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T14:00:06.354Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T14:00:06.354Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T14:00:06.354Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T14:00:06.367Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2017-08-15T14:00:06.367Z - error: Funcionário não encontrado na base, PIS:  012475223377
+2017-08-15T14:00:06.367Z - error: Funcionário não encontrado na base, PIS:  012624603087
+2017-08-15T14:00:06.367Z - error: Funcionário não encontrado na base, PIS:  020053806586
+2017-08-15T14:00:06.367Z - error: Funcionário não encontrado na base, PIS:  016248935433
+2017-08-15T14:00:06.368Z - error: Funcionário não encontrado na base, PIS:  016196807146
+2017-08-15T14:00:06.379Z - error: Funcionário não encontrado na base, PIS:  013090618450
+2017-08-15T14:00:06.379Z - error: Funcionário não encontrado na base, PIS:  016597427808
+2017-08-15T14:00:06.379Z - error: Funcionário não encontrado na base, PIS:  013196538450
+2017-08-15T14:00:06.380Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T14:00:06.407Z - error: Funcionário não encontrado na base, PIS:  016552477695
+2017-08-15T14:00:06.407Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T14:00:06.407Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T14:00:06.407Z - error: Funcionário não encontrado na base, PIS:  016119694677
+2017-08-15T14:00:06.408Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T14:00:06.408Z - error: Funcionário não encontrado na base, PIS:  016550139318
+2017-08-15T14:00:06.441Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T14:00:06.441Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T14:00:06.441Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T14:00:06.442Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T14:00:06.442Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T14:00:06.442Z - error: Funcionário não encontrado na base, PIS:  016539730196
+2017-08-15T14:00:06.461Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T14:00:06.461Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T14:00:06.461Z - error: Funcionário não encontrado na base, PIS:  016549967458
+2017-08-15T14:00:06.461Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T14:00:06.461Z - error: Funcionário não encontrado na base, PIS:  013153898307
+2017-08-15T14:00:06.490Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T14:00:06.490Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T14:00:06.490Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T14:00:06.490Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T14:00:06.490Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T14:00:06.516Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T14:00:06.516Z - error: Funcionário não encontrado na base, PIS:  016657810432
+2017-08-15T14:00:06.517Z - error: Funcionário não encontrado na base, PIS:  017009346036
+2017-08-15T14:00:06.517Z - error: Funcionário não encontrado na base, PIS:  016418818343
+2017-08-15T14:00:06.517Z - error: Funcionário não encontrado na base, PIS:  012371810527
+2017-08-15T14:00:06.626Z - info: saveOrUpdateAssyncApontamento para o funcionario:  Josenilson Gonçalves de Brito
+2017-08-15T14:00:06.640Z - info: saveOrUpdateAssyncApontamento para o funcionario:  Josenilson Gonçalves de Brito
+2017-08-15T14:00:06.646Z - info: saveOrUpdateAssyncApontamento para o funcionario:  Josenilson Gonçalves de Brito
+2017-08-15T14:00:06.791Z - info: ## Criando apontamento com a data:  2017-08-14T03:00:00.000Z
+2017-08-15T14:00:06.793Z - info: vai criar o apontamento:  2017-08-14T03:00:00.000Z
+2017-08-15T14:00:06.839Z - info: ## Criando apontamento com a data:  2017-08-13T03:00:00.000Z
+2017-08-15T14:00:06.840Z - info: vai criar o apontamento:  2017-08-13T03:00:00.000Z
+2017-08-15T14:00:06.845Z - info: ## Criando apontamento com a data:  2017-08-15T03:00:00.000Z
+2017-08-15T14:00:06.845Z - info: vai criar o apontamento:  2017-08-15T03:00:00.000Z
+2017-08-15T14:00:07.003Z - info: Apontamento criado com sucesso!. id:  _bsontype=ObjectID, 0=89, 1=146, 2=254, 3=102, 4=48, 5=134, 6=135, 7=97, 8=72, 9=212, 10=194, 11=56
+2017-08-15T14:00:07.016Z - info: Apontamento criado com sucesso!. id:  _bsontype=ObjectID, 0=89, 1=146, 2=254, 3=102, 4=48, 5=134, 6=135, 7=97, 8=72, 9=212, 10=194, 11=61
+2017-08-15T14:00:07.018Z - info: Apontamento criado com sucesso!. id:  _bsontype=ObjectID, 0=89, 1=146, 2=254, 3=102, 4=48, 5=134, 6=135, 7=97, 8=72, 9=212, 10=194, 11=63

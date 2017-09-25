@@ -28,7 +28,7 @@ router.post('/', function(req, res) {
   console.log("req", req.body);
   var user = req.body;
 
-  var _usuario = new Usuario({email: user.email, funcionario: user.funcionario, perfil: user.perfil});
+  var _usuario = new Usuario({email: user.email, firstAccess: user.firstAccess, funcionario: user.funcionario, perfil: user.perfil});
   
   bcrypt.hash(user.senha, 10, function (err, hash) {
     

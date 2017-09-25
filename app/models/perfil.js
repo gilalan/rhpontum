@@ -10,3 +10,16 @@ var perfil = mongoose.Schema({
 });
 
 module.exports = mongoose.model('Perfil', perfil);
+
+//=========================================================================
+// API para Perfils
+//=========================================================================
+/*accessLevel => 
+ *{
+   0: public,
+   1: colaborador,
+   2: fiscal,
+   3: gestor,
+   4: admin 
+  }
+ */
