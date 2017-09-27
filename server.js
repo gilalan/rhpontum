@@ -1,5 +1,5 @@
 // set up ========================
-var fs = require('fs');
+//var fs = require('fs');
 var express  = require('express');
 var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
 
@@ -7,17 +7,17 @@ var bodyParser = require('body-parser');    // pull information from HTML POST (
 2. Import them to a keystore (some programs use a keystore)
 keytool -importcert -file certificate.pem -keystore my.keystore
 */
-var securityOptions = {
-    key: fs.readFileSync('key.pem'),
-    cert: fs.readFileSync('certificate.pem'),
-    requestCert: true
-};
+// var securityOptions = {
+//     key: fs.readFileSync('key.pem'),
+//     cert: fs.readFileSync('certificate.pem'),
+//     requestCert: true
+// };
 
 // .......................................................
 // create the secure server (HTTPS)
 
 var app = express();
-var secureServer = require('https').createServer(securityOptions, app);
+//var secureServer = require('https').createServer(securityOptions, app);
 
 //var app = express();                               // create our app w/ express
 
@@ -62,9 +62,9 @@ process.on('uncaughtException', function(err) {
 });
 
 // listen (start app with node server.js) ======================================
-//app.listen(8080);
-secureServer.listen(8081);
+app.listen(8080);
+//secureServer.listen(8081);
 
-console.log("App listening on port 8081");
+console.log("App listening on port 8080");
 
 //588168ed8ccb4e0c7bf5b22f
