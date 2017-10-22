@@ -45,8 +45,19 @@ router.post('/', function(req, res) {
     // create a user, information comes from AJAX request from Angular
     Funcionario.create(_funcionario, function(err, user) {
         
-        if (err)
-            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!' + err});
+        if (err){
+            var result = "Ocorreu um erro no processamento.";
+            if (err.index == "email_1")
+                result = "E-mail já existente na base de dados.";
+            if (err.index == "PIS_1")
+                result = "PIS já existente na base de dados.";
+            if (err.index == "matricula_1")
+                result = "Matrícula já existente na base de dados.";
+            if (err.index == "CPF_1")
+                result = "CPF já existente na base de dados.";
+
+            return res.status(500).send({success: false, message: result});
+        }
 
         return res.status(200).send({success: true, message: 'Funcionário cadastrado com sucesso.'});
     });
@@ -87,7 +98,7 @@ router.put('/:id', function(req, res){
 
         if(err) {
             return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
-        }
+        }        
 
         funcionario.nome = _funcionario.nome;
         funcionario.sobrenome = _funcionario.sobrenome;
@@ -100,6 +111,8 @@ router.put('/:id', function(req, res){
         funcionario.rhponto = _funcionario.rhponto;
         funcionario.ferias = _funcionario.ferias;
         funcionario.sexoMasculino = _funcionario.sexoMasculino;
+        funcionario.historico = _funcionario.historico;
+        funcionario.geoLocalFixo = _funcionario.geoLocalFixo;
 
       //tenta atualizar de fato no BD
       funcionario.save(function(err){

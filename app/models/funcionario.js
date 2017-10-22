@@ -24,7 +24,7 @@ var funcionarioSchema = new Schema({
 	},
 	historico: {
 		turnos: [{
-			id: {type: Number}, 
+			id: Number, 
 			vigencia: {
 				inicio: Date,
 				fim: Date
@@ -37,7 +37,7 @@ var funcionarioSchema = new Schema({
 			escala: Schema.Types.Mixed
 		}],
 		cargos: [{
-			id: {type: Number}, 
+			id: Number, 
 			vigencia: {
 				inicio: Date,
 				fim: Date
