@@ -48,13 +48,13 @@ router.post('/', function(req, res) {
         if (err){
             var result = "Ocorreu um erro no processamento.";
             console.log('Erro: ' + err);
-            if (err.index == "email_1")
+            if (err.errmsg.indexOf("email_1") !== -1)
                 result = "E-mail já existente na base de dados.";
-            if (err.index == "PIS_1")
+            if (err.errmsg.indexOf("PIS_1") !== -1)
                 result = "PIS já existente na base de dados.";
-            if (err.index == "matricula_1")
+            if (err.errmsg.indexOf("matricula_1") !== -1)
                 result = "Matrícula já existente na base de dados.";
-            if (err.index == "CPF_1")
+            if (err.errmsg.indexOf("CPF_1") !== -1)
                 result = "CPF já existente na base de dados.";
 
             return res.status(500).send({success: false, message: result, err: err});
