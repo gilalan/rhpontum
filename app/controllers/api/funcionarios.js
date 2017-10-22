@@ -46,7 +46,7 @@ router.post('/', function(req, res) {
     Funcionario.create(_funcionario, function(err, user) {
         
         if (err)
-            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!' + err});
 
         return res.status(200).send({success: true, message: 'Funcionário cadastrado com sucesso.'});
     });
