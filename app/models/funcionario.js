@@ -51,7 +51,11 @@ var funcionarioSchema = new Schema({
 	},
 	rhponto: {type: Boolean, required: true}, //usa o sistema caso TRUE, usa relogio de ponto caso FALSE
 	sexoMasculino: {type: Boolean, required: true},
-	ferias: [{ano: Number, periodo: [Date]}]
+	ferias: [{ano: Number, periodo: [Date]}],
+	geoLocalFixo: {
+		latitude: Number,
+		longitude: Number
+	} 
 },
 {
 	timestamps: true
