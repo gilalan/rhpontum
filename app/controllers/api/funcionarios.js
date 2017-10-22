@@ -113,6 +113,7 @@ router.put('/:id', function(req, res){
         funcionario.ferias = _funcionario.ferias;
         funcionario.sexoMasculino = _funcionario.sexoMasculino;
         funcionario.historico = _funcionario.historico;
+        funcionario.localTrabalho = _funcionario.localTrabalho;
         funcionario.geoLocalFixo = _funcionario.geoLocalFixo;
 
       //tenta atualizar de fato no BD
