@@ -4,6 +4,7 @@ var Cargo = require('../../models/cargo');
 var Turno = require('../../models/turno');
 var Escala = require('../../models/escala');
 var moment = require('moment');
+var async = require('async');
 var router = require('express').Router();
 
 router.get('/', function(req, res) {
@@ -324,6 +325,69 @@ router.post('/intervaldate/funcionario', function(req, res){
         return res.json(apontamentos);
     });
    
+});
+
+//teste para iterar sobre as equipes e trazer apontamentos de todos os funcionários que a ela pertencem
+
+router.post('/allequipes/estatisticas', function(req, res){
+
+    var equipes = req.body;
+    var marcacoesTotais = 0;
+    var marcacoesWeb = 0;
+    var marcacoesFisicas = 0;
+
+    async.map(equipes, function (equipe, next) {
+      // Do a query for each key
+      // Apontamento.find({ key: key }, function (err, result) {
+      //   // Map the value to the key
+      //   next(err, result.value);
+      // });
+      //console.log('#######################');
+      //console.log('equipe: ', equipe.nome);
+
+
+      Apontamento.find({funcionario: {$in: equipe.componentes}})
+        .populate({
+            path: 'funcionario', 
+            select: 'nome sobrenome PIS sexoMasculino alocacao',
+            model: 'Funcionario'            
+        })
+        //.sort({data: 'asc'})
+        .exec(function(err, apontamentos){
+            if(err) {
+                return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+            }
+
+            //console.log("opa, resultado: ", apontamentos.length);
+            for (i = 0; i < apontamentos.length; i++) {
+
+                marcacoesTotais += apontamentos[i].marcacoes.length;
+                for (j = 0; j < apontamentos[i].marcacoes.length; j++){
+                    //console.log('marcacao: ', apontamentos[i].marcacoes[j].strHorario);
+                    if (apontamentos[i].marcacoes[j].RHWeb)
+                        marcacoesWeb++;
+                    if (apontamentos[i].marcacoes[j].REP)
+                        marcacoesFisicas++;
+                }
+            }
+            next(err, apontamentos.value);
+            //return res.json(apontamentos);
+        });
+
+       //console.log('#######################');
+
+    },
+    function (err, apontamentos) {
+      //console.log(apontamentos); // [value1, value 2, ...]
+        // for (i = 0; i < apontamentos.length; i++) {
+        //     console.log('apontamento de: ', apontamentos[i].funcionario.nome);
+        //     console.log('qtde de marcacoes: ', apontamentos[i].marcacoes.length);
+        // }
+        console.log('marcacoesTotais? ', marcacoesTotais);
+        console.log('marcacoesFisicas? ', marcacoesFisicas);
+        console.log('marcacoesWeb? ', marcacoesWeb);
+    });
+
 });
 
 //itera sobre uma equipe e traz os apontamentos deles, depois devolve a equipe com cada componente tendo esse apontamento acoplado em uma propriedade

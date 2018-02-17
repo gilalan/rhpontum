@@ -14,7 +14,13 @@ var request = require('request');
 //var urlStaticREPFile = 'https://docs.google.com/uc?export=download&id=0B2GW7fQUvA47UXBSYXExSHRXamc';
 //var urlStaticREPFile = 'https://docs.google.com/uc?export=download&id=0B2GW7fQUvA47SEJZOFZvdzhqTms';
 /* Usando o serviço S3 da Amazon: */
-var urlStaticREPFile = 'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006843.txt'; //Petrolina
+//JUAZEIRO: AFD00009003650006843
+//PETROLINA: AFD00009003650006848
+//FAUNA: AFD00009003650006815
+//FLORA: AFD00009003650006797
+//AGRARIA01 (FAZENDA?): AFD00009003650006774
+//AGRARIA02 (FAZENDA?): AFD00009003650006689
+var urlStaticREPFile = 'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006848.txt'; //Juazeiro
 //var urlStaticREPFile = 'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/arquivo_teste_soll.txt'; //Petrolina
 var Readable = require('stream').Readable;
 const readline = require('readline');
