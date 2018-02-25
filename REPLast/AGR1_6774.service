@@ -1,0 +1,15 @@
+[Unit]
+Description=Agr1_6774
+
+[Service]
+ExecStart=/var/www/myapp/REPServiceAGR1_6774.js
+Restart=always
+User=nobody
+# Note RHEL/Fedora uses 'nobody', Debian/Ubuntu uses 'nogroup'
+Group=nobody  
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/var/www/myapp
+
+[Install]
+WantedBy=multi-user.target
