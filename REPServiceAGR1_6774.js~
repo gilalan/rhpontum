@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 //Database configuration =================
 var database = require('./config/database');
 
