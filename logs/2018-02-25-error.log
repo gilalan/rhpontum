@@ -1,0 +1,50 @@
+2018-02-25T21:50:53.262Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2018-02-25T21:50:53.263Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2018-02-25T21:50:53.444Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2018-02-25T21:50:53.521Z - error: Funcionário não encontrado na base, PIS:  022222222221
+2018-02-25T22:06:21.052Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2018-02-25T22:06:21.053Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2018-02-25T22:06:21.069Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2018-02-25T22:06:21.166Z - error: Funcionário não encontrado na base, PIS:  011111111116
+2018-02-25T22:06:21.167Z - error: Funcionário não encontrado na base, PIS:  022222222221
+2018-02-25T22:35:06.413Z - error: process on - uncaughtException
+2018-02-25T22:35:06.414Z - error:  ReferenceError: successlog is not defined
+    at readFile (/home/gilliard/Node/RHPontum/REPService.js:151:5)
+    at /home/gilliard/Node/RHPontum/REPService.js:128:13
+    at model.Query.<anonymous> (/home/gilliard/Node/RHPontum/node_modules/mongoose/lib/model.js:3701:16)
+    at /home/gilliard/Node/RHPontum/node_modules/kareem/index.js:273:21
+    at /home/gilliard/Node/RHPontum/node_modules/kareem/index.js:127:16
+    at _combinedTickCallback (internal/process/next_tick.js:73:7)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+2018-02-25T22:35:50.006Z - error: process on - uncaughtException
+2018-02-25T22:35:50.007Z - error:  ReferenceError: successlog is not defined
+    at /home/gilliard/Node/RHPontum/REPService.js:248:9
+    at FSReqWrap.oncomplete (fs.js:114:15)
+2018-02-25T22:39:50.743Z - error: process on - uncaughtException
+2018-02-25T22:39:50.744Z - error:  ReferenceError: sucessLog is not defined
+    at Interface.<anonymous> (/home/gilliard/Node/RHPontum/REPService.js:160:9)
+    at emitOne (events.js:96:13)
+    at Interface.emit (events.js:191:7)
+    at Interface._onLine (readline.js:241:10)
+    at Interface._normalWrite (readline.js:384:12)
+    at Readable.ondata (readline.js:101:10)
+    at emitOne (events.js:96:13)
+    at Readable.emit (events.js:191:7)
+    at Readable.read (_stream_readable.js:383:10)
+    at flow (_stream_readable.js:763:34)
+    at emitReadable_ (_stream_readable.js:435:3)
+    at _combinedTickCallback (internal/process/next_tick.js:77:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+2018-02-25T23:04:37.279Z - error: Funcionário não encontrado na base, PIS:  088888888884
+2018-02-25T23:04:37.281Z - error: Funcionário não encontrado na base, PIS:  099999999990
+2018-02-25T23:08:39.086Z - error: Funcionário não encontrado na base, PIS:  020110112258
+2018-02-25T23:08:39.126Z - error: Funcionário não encontrado na base, PIS:  020110112258
+2018-02-25T23:08:42.285Z - error: Funcionário não encontrado na base, PIS:  020110112258
+2018-02-25T23:10:32.883Z - error: Funcionário não encontrado na base, PIS:  016247975423
+2018-02-25T23:10:33.074Z - error: Funcionário não encontrado na base, PIS:  016247975423
+2018-02-25T23:10:33.115Z - error: Funcionário não encontrado na base, PIS:  016247975423
+2018-02-25T23:10:33.147Z - error: Funcionário não encontrado na base, PIS:  016514859616
+2018-02-25T23:10:33.187Z - error: Funcionário não encontrado na base, PIS:  016247975423
+2018-02-25T23:10:33.711Z - error: Funcionário não encontrado na base, PIS:  016514859616
+2018-02-25T23:10:33.711Z - error: Funcionário não encontrado na base, PIS:  016514859616
+2018-02-25T23:10:35.115Z - error: Funcionário não encontrado na base, PIS:  016514859616

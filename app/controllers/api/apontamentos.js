@@ -530,4 +530,132 @@ router.post('/currentDate', function(req, res){
     return res.json({date: currentDate});
 });
 
+//teste de obter reps
+var urlStaticREPFile = 'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006674.txt'; //Agraria01
+var request = require('request');
+var Readable = require('stream').Readable;
+const readline = require('readline');
+
+router.post('/allRepAppoints', function(req, res){
+
+    console.log('#Iniciando request: ', new Date());
+    
+    request(urlStaticREPFile, function (error, response, body) {
+        
+        if (response && response.statusCode === 200){
+                        
+            // getFeriadosAssync(body, callback).then(v => {
+            //return res.json(body);
+            // });
+            var s = new Readable();
+            s.push(body);    // the string you want
+            s.push(null);      // indicates end-of-file basically - the end of the stream
+            const rl = readline.createInterface({
+              input: s//fs.createReadStream(streamData)
+            });
+            var nsr = "";
+            var type = "";
+            var data = "";
+            var month = "";
+            var dataFtd = {};
+            var horario = "";
+            var horarioFtd = {};
+            var pis = "";
+            var total = null;
+            var objMarcacao = {};
+            var pisDateMap = {};
+            var hashMapSize = 0;
+            var count = 0;
+            var countOther = 0;
+            rl.on('line', function (line) {
+
+                if(line.charAt(9) === "3"){//posição que indica o tipo de Registro, se for 3 é marcação!
+                    
+                    nsr = line.substring(0, 9);
+                    type = line.substring(9, 10);
+                    data = line.substring(10, 18);
+                    horario = line.substring(18, 22);
+                    horarioFtd.hora = horario.substring(0, 2);
+                    horarioFtd.minuto = horario.substring(2, 4);
+                    pis = line.substring(22, 34);
+                    
+                    objMarcacao = {
+                        nsr: nsr,
+                        hora: horarioFtd.hora,
+                        min: horarioFtd.minuto,
+                        strHorario: horarioFtd.hora.concat(':', horarioFtd.minuto)
+                    }
+
+                    if (!pisDateMap[pis]){//Não tem um pis mapeado, primeira vez'
+                        
+                        var dateMapTemp = {};
+                        dateMapTemp[data] = [objMarcacao];
+                        pisDateMap[pis] = dateMapTemp;
+                        hashMapSize++;
+
+                    } else {//já tem um pisDateMap['0032']
+                        //caso não haja esse hash, a gnt inicializa o array de marcações nele
+                        // console.log('#Já tem um pis mapeado: ', pisDateMap[pis]);
+                        if (!pisDateMap[pis][data]){
+                            
+                            // console.log('-Não tem um pis e data mapeados', pisDateMap[pis][data]);
+                            pisDateMap[pis][data] = [objMarcacao];
+                            hashMapSize++;
+
+                        } else {
+                            //console.log('#Já tem um pis e data mapeados: ', pisDateMap[pis][data]);
+                            (pisDateMap[pis][data]).push(objMarcacao);
+                        }
+                    }
+
+                    count++;
+
+                } else {
+                    countOther++;
+                }
+
+            }).on('close', function(){
+
+                console.log('Quantidade de marcações: ', count);
+                console.log('Dados que não compõem marcações: ', countOther);
+                const orderedPisDateMap = {};
+                
+                var dateCountPis = [];
+                var monthJS;
+                itemsProcessed = 0
+
+                for (var pis in pisDateMap){
+                    if (pisDateMap.hasOwnProperty(pis)) {
+                        console.log("pis: ", pis);
+                        dateCountPis = [];
+                        for (var date in pisDateMap[pis]){
+                            if (pisDateMap[pis].hasOwnProperty(date)){
+
+                                monthJS = parseInt(date.substring(2,4));
+                                dateCountPis.push(new Date(date.substring(4,8), monthJS-1, date.substring(0,2), 0, 0, 0, 0));
+                            }
+                        }
+
+                        pisDateMap[pis] = dateCountPis.sort(function(a,b){
+                          return new Date(b) - new Date(a);
+                        });
+                    }
+                }
+                
+                return res.json({rawReps: pisDateMap});
+                //Agora posso chamar a rotina para navegar no HashMap e criar os apontamentos
+                //iterateHashAndSaveDB(pisDateMap, hashMapSize, callback);
+            });            
+
+        } else {
+
+            console.log('Aconteceu um erro na comunicação com o arquivo local do REP, código do erro: ', error);
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento: '+error});
+            // callback();
+        }
+    });
+
+    //return res.json({rawReps: count, rawOther: countOther});
+});
+
 module.exports = router;

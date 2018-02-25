@@ -6,9 +6,11 @@ const successLog = require('./util/logger').successlog;
 var Funcionario = require('./app/models/funcionario');
 var Apontamento = require('./app/models/apontamento');
 var Feriado = require('./app/models/feriado');
+var fs = require('fs');
 var moment = require('moment');
 var http = require('http');
 var request = require('request');
+var Async = require('async');
 //arquivo maior: 0B2GW7fQUvA47SEJZOFZvdzhqTms
 //arquivo menor: 0B2GW7fQUvA47UXBSYXExSHRXamc
 //var urlStaticREPFile = 'https://docs.google.com/uc?export=download&id=0B2GW7fQUvA47UXBSYXExSHRXamc';
@@ -20,13 +22,23 @@ var request = require('request');
 //FLORA: AFD00009003650006797
 //AGRARIA01 (FAZENDA?): AFD00009003650006774
 //AGRARIA02 (FAZENDA?): AFD00009003650006689
-var urlStaticREPFile = 'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006848.txt'; //Juazeiro
+var urlStaticREPFileArray = [
+    'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006843.txt',
+    'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006848.txt',
+    'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006815.txt',
+    'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006797.txt',
+    'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006774.txt',
+    'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006689.txt'
+];
+var REPLocalFile = 'REPLast/AGR1_AFD00009003650006774.txt';
+var urlStaticREPFile = 'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006774.txt'; //Juazeiro
 //var urlStaticREPFile = 'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/arquivo_teste_soll.txt'; //Petrolina
 var Readable = require('stream').Readable;
 const readline = require('readline');
 var timePeriod = 5 * 60 * 1000;//minuto * segundo * ms
 var feriados = [];
 var itemsProcessed = 0;
+var requestCount = 0;
 
 process.on('uncaughtException', function(err) {
 	errorLog.error('process on - uncaughtException');
@@ -42,22 +54,51 @@ successLog.info('Iniciando Serviço de Obtenção dos arquivos dos REPs: ');
 */
 //function getFileRequest (callback){
 function getFileRequest(callback){
-   
+        
     successLog.info('#Iniciando request: ', new Date());
-   
+    successLog.info('#Request Número: ', requestCount);
+    
+    // Async.parallel({
+    //     one: function(callback) {
+    //         request(urlStaticREPFileArray[0], function (err, res, body) {
+    //             requestCount++;
+    //             //parallelCb(null, {err: err, res: res, body: body});
+                
+    //             getFeriadosAssync(body, callback).then(v => {
+                
+    //             });
+    //         });
+    //     },
+    //     two: function(callback) {
+    //         request(urlStaticREPFileArray[1], function (err, res, body) {
+    //             requestCount++;
+    //             getFeriadosAssync(body, callback).then(v => {
+                
+    //             });
+    //         });
+    //     },
+    //     three: function(callback) {
+    //         request(urlStaticREPFileArray[2], function (err, res, body) {
+    //             requestCount++;
+    //             getFeriadosAssync(body, callback).then(v => {
+                
+    //             });
+    //         });
+    //     }
+    // }, function(err, results) {
+    //     // results will have the results of all 3
+    //     console.log('Results ONE: ', results.one);
+    //     console.log('Results Two: ', results.two);
+    //     console.log('Results Three: ', results.three);
+    // });
+
     request(urlStaticREPFile, function (error, response, body) {
-        //console.log('error:', error); // Print the error if one occurred 
-        //console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-        //console.log('body:', body); // Print the HTML for the Google homepage. 
+        
         if (response && response.statusCode === 200){
-            
-            //getFeriadosAssync(body);
+                        
             getFeriadosAssync(body, callback).then(v => {
 
-	        	//itemsProcessed++;
-        		//successLog.warn('##############Terminou tudo, chamaria o callback');
         	});
-            //callback();
 
         } else {
 
@@ -65,24 +106,22 @@ function getFileRequest(callback){
             callback();
         }
     });
-
-    successLog.info('saiu da função getFileRequest');
 };
 
 async function getFeriadosAssync(body, callback){
 
-	successLog.info('Entrou na getFeriadosAssync', Feriado);
+	//successLog.info('Entrou na getFeriadosAssync', Feriado);
 
     Feriado.find(function(err, rFeriados){
         
-        successLog.info('Entrou no feriado.find: ');
+        //successLog.info('Entrou no feriado.find: ');
 
         if(err) {
             errorLog.error('Erro ao obter lista de feriados');
             //callback();
         }
         else {
-            successLog.info('retornou os feriados: ', rFeriados.length);
+            //successLog.info('retornou os feriados: ', rFeriados.length);
             feriados = rFeriados;
             var s = new Readable();
             s.push(body);    // the string you want
@@ -95,6 +134,7 @@ async function getFeriadosAssync(body, callback){
 
 function readFile(streamData, callback){
     
+    var activate = false;
     var nsr = "";
     var type = "";
     var data = "";
@@ -108,6 +148,9 @@ function readFile(streamData, callback){
     var objMarcacao = {};
     var hashMapSize = 0;
 
+    var getLastNSRProcessed = getLastRowProcessed().trim();
+    successLog.info('Ultima NSR processada: ', getLastNSRProcessed);
+    // successLog.info('Ultima NSR processada length: ', getLastNSRProcessed.length);
     successLog.info('Hora do readFile!');
 
     const rl = readline.createInterface({
@@ -115,7 +158,12 @@ function readFile(streamData, callback){
     });
     var count = 0;
     rl.on('line', function (line) {
-        if(line.charAt(9) === "3"){//posição que indica o tipo de Registro, se for 3 é marcação!
+        //successLog.info("NSR: ", typeof line.substring(0,9));
+        if (getLastNSRProcessed === line.substring(0, 9)){
+            successLog.info('Encontrou , ativando busca ');
+            activate = true;
+        }
+        if(activate && line.charAt(9) === "3"){//posição que indica o tipo de Registro, se for 3 é marcação! Vejo tb se é a última linha processada (para nao ter que ficar lendo o arquivo inteiro sempre)
             //console.log('line: ', line);
             nsr = "";
             type = "";
@@ -141,11 +189,7 @@ function readFile(streamData, callback){
             horarioFtd.hora = horario.substring(0, 2);
             horarioFtd.minuto = horario.substring(2, 4);
             pis = line.substring(22, 34);
-            // console.log('NSR: ', nsr);
-            // console.log('type: ', type);
-            // console.log('DATA: ', data);
-            // console.log('Horário: ', horario);
-            // console.log('PIS: ', pis);
+            
             //organizar em um HashMap na memória antes de armazenar efetiv. no BD
             objMarcacao = {
                 nsr: nsr,
@@ -164,7 +208,6 @@ function readFile(streamData, callback){
 
             if (!pisDateMap[pis]){
                 //console.log('-Não tem um pis mapeado, primeira vez');
-                //pisDateMap[pis] = {};
                 var dateMapTemp = {};
                 dateMapTemp[data] = [objMarcacao];
                 pisDateMap[pis] = dateMapTemp;
@@ -172,7 +215,6 @@ function readFile(streamData, callback){
 
             } else {//já tem um pisDateMap['0032']
                 //caso não haja esse hash, a gnt inicializa o array de marcações nele
-                // console.log('#Já tem um pis mapeado: ', pisDateMap[pis]);
                 if (!pisDateMap[pis][data]){
                     
                     // console.log('-Não tem um pis e data mapeados', pisDateMap[pis][data]);
@@ -183,19 +225,37 @@ function readFile(streamData, callback){
                     //console.log('#Já tem um pis e data mapeados: ', pisDateMap[pis][data]);
                     (pisDateMap[pis][data]).push(objMarcacao);
                 }
-            }                               
+            }
             //searchDataAssync(nsr, dataFtd, horarioFtd, pis);
-        }
-      //console.log('Line from file:', line);
-      //console.log('tamanho da linha: ', line.length);
-      //console.log('indice da posição 10: ', line.charAt(9));
+        } // só olha o registro de número 3 que é o de MARCAÇÃO DE PONTO
+      
     }).on('close', function(){
 
         successLog.info('Quantidade de marcações: ', count);
         successLog.info('hashMapSize: ', hashMapSize);
+        saveLastRowProcessed(nsr);
         //Agora posso chamar a rotina para navegar no HashMap e criar os apontamentos
         iterateHashAndSaveDB(pisDateMap, hashMapSize, callback);
     });
+};
+
+function saveLastRowProcessed(nsr){
+
+    fs.writeFileSync(REPLocalFile, nsr, 'UTF-8');
+    // fs.writeFile("REPLast/AGR1_AFD00009003650006774", nsr, function(err) {
+        
+    //     if(err) {
+    //         return errorLog.error(err);
+    //     }
+
+    //     successLog.info("The file was saved!");
+    // });
+};
+
+function getLastRowProcessed(){
+
+    var text = fs.readFileSync(REPLocalFile, 'UTF-8');
+    return text;
 };
 
 function iterateHashAndSaveDB(pisDateMap, hashMapSize, callback){
@@ -215,8 +275,9 @@ function iterateHashAndSaveDB(pisDateMap, hashMapSize, callback){
                         pisDateMap[pis][date]).then(v => {
 
                         	itemsProcessed++;
-                        	successLog.info('itemsProcessed: ', itemsProcessed);
+                        	//successLog.info('itemsProcessed: ', itemsProcessed);
                         	if(itemsProcessed === hashMapSize){
+                                successLog.info('itemsProcessed: ', itemsProcessed);
                         		successLog.warn('## Terminou tudo, chamaria o callback ##');
                         		callback();
                         	}
@@ -226,7 +287,7 @@ function iterateHashAndSaveDB(pisDateMap, hashMapSize, callback){
         }
     }
 
-    successLog.info('pisDateMap Hash length: ', count);
+    //successLog.info('pisDateMap Hash length: ', count);
     //successLog.info('hashMapSize: ', hashMapSize);
 };
 
@@ -272,7 +333,7 @@ function saveOrUpdateAssyncApontamento(dateObj, marcacoesObj, funcionario){
 
     var funcionario = funcionario;
     var pis = funcionario.PIS;
-    successLog.info('saveOrUpdateAssyncApontamento para o funcionario: ', funcionario.nome.concat(' ', funcionario.sobrenome));
+    //successLog.info('saveOrUpdateAssyncApontamento para o funcionario: ', funcionario.nome.concat(' ', funcionario.sobrenome));
     var monthJS = parseInt(dateObj.mes);
     if (!monthJS)
         return false;
@@ -308,7 +369,7 @@ function saveOrUpdateAssyncApontamento(dateObj, marcacoesObj, funcionario){
             if (!apontamento) {
                 
                 var arrayMarcacoes = createMarcacoes(marcacoesObj, newDate, null);
-                successLog.info('## Criando apontamento com a data: ', newDate);
+                //successLog.info('## Criando apontamento com a data: ', newDate);
                 var extraInfo = createExtraInfo(funcionario, newDate, arrayMarcacoes);
 
                 if (extraInfo) {
@@ -323,14 +384,14 @@ function saveOrUpdateAssyncApontamento(dateObj, marcacoesObj, funcionario){
                         infoTrabalho: extraInfo.infoTrabalho,
                         marcacoesFtd: createMarcacoesFtd(arrayMarcacoes)
                     };
-                    successLog.info('vai criar o apontamento: ', apontamento.data);
+                    successLog.info('## Vai criar o apontamento: ', apontamento.data);
                     Apontamento.create(apontamento, function(err, appoint) {
                 
                         if(err) {
                           errorLog.error('erro post apontamento: ', err);
                         }   
                         else {
-                          successLog.info('Apontamento criado com sucesso!. id: ', appoint._id);
+                          //successLog.info('Apontamento criado com sucesso!. id: ', appoint._id);
                         }
                         
                     });
@@ -343,7 +404,7 @@ function saveOrUpdateAssyncApontamento(dateObj, marcacoesObj, funcionario){
             } else { //já tem apontamento, vamos atualizá-lo
 
                 var arrayMarcacoes = createMarcacoes(marcacoesObj, newDate, apontamento.marcacoes);
-                successLog.info('## Atualizando apontamento com a data: ', newDate);
+                //successLog.info('## Atualizando apontamento com a data: ', newDate);
                 if (apontamento.infoTrabalho) {
                     apontamento.infoTrabalho.trabalhados = getWorkedMinutes(arrayMarcacoes);
                 }
@@ -357,7 +418,7 @@ function saveOrUpdateAssyncApontamento(dateObj, marcacoesObj, funcionario){
                   if(err)
                     errorLog.error('Erro no save do update de apontamento', err);
                   else 
-                    successLog.info('apontamento atualizado com sucesso');
+                    successLog.info('## Apontamento atualizado com sucesso', newDate);
 
                 });
             }
@@ -412,7 +473,7 @@ function createMarcacoes(marcacoesObj, date, marcacoesOriginais){
         var inseridaREP = false;
         var abort = false;
         var indexIgualHorario = -1;
-        successLog.info('#atualização, marcações recebidas size: ', marcacoesOriginais.length);
+        //successLog.info('#atualização, marcações recebidas size: ', marcacoesOriginais.length);
         marcacoes = marcacoesOriginais.slice();//copia o array
 
         for (var i=0; i<marcacoesObj.length; i++){
