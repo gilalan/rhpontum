@@ -95,3 +95,119 @@
 2018-02-26T00:57:52.812Z - info: itemsProcessed:  1
 2018-02-26T00:57:52.813Z - warn: ## Terminou tudo, chamaria o callback ##
 2018-02-26T00:57:56.392Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T01:06:02.770Z - info: Iniciando Serviço de Obtenção dos arquivos dos REPs: 
+2018-02-26T01:06:02.778Z - info: #Iniciando request:  2018-02-26T01:06:02.773Z
+2018-02-26T01:06:02.778Z - info: #Request Número:  0
+2018-02-26T01:06:12.456Z - info: Ultima NSR processada:  000005903
+2018-02-26T01:06:12.456Z - info: Hora do readFile!
+2018-02-26T01:06:12.465Z - info: Encontrou , ativando busca 
+2018-02-26T01:06:12.466Z - info: Quantidade de marcações:  1
+2018-02-26T01:06:12.466Z - info: hashMapSize:  1
+2018-02-26T01:06:12.472Z - error: process on - uncaughtException
+2018-02-26T01:06:12.473Z - error:  TypeError: Cannot read property 'then' of undefined
+    at iterateHashAndSaveDB (/home/gilliard/Node/RHPontum/REPServiceAGR1_6774.js:271:47)
+    at Interface.<anonymous> (/home/gilliard/Node/RHPontum/REPServiceAGR1_6774.js:234:9)
+    at emitNone (events.js:91:20)
+    at Interface.emit (events.js:188:7)
+    at Interface.close (readline.js:328:8)
+    at Readable.onend (readline.js:109:10)
+    at emitNone (events.js:86:13)
+    at Readable.emit (events.js:188:7)
+    at endReadableNT (_stream_readable.js:975:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+2018-02-26T01:07:41.953Z - info: Iniciando Serviço de Obtenção dos arquivos dos REPs: 
+2018-02-26T01:07:41.960Z - info: #Iniciando request:  2018-02-26T01:07:41.955Z
+2018-02-26T01:07:41.960Z - info: #Request Número:  0
+2018-02-26T01:07:47.499Z - info: Ultima NSR processada:  000005903
+2018-02-26T01:07:47.500Z - info: Hora do readFile!
+2018-02-26T01:07:47.506Z - info: Encontrou , ativando busca 
+2018-02-26T01:07:47.509Z - info: Quantidade de marcações:  1
+2018-02-26T01:07:47.509Z - info: hashMapSize:  1
+2018-02-26T01:07:47.513Z - info: itemsProcessed:  1
+2018-02-26T01:07:47.513Z - warn: ## Terminou tudo, chamaria o callback ##
+2018-02-26T01:07:48.287Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T01:08:12.286Z - info: Iniciando Serviço de Obtenção dos arquivos dos REPs: 
+2018-02-26T01:08:12.292Z - info: #Iniciando request:  2018-02-26T01:08:12.288Z
+2018-02-26T01:08:12.292Z - info: #Request Número:  0
+2018-02-26T01:08:17.392Z - info: Ultima NSR processada:  000005701
+2018-02-26T01:08:17.393Z - info: Hora do readFile!
+2018-02-26T01:08:17.405Z - info: Encontrou , ativando busca 
+2018-02-26T01:08:17.409Z - info: Quantidade de marcações:  200
+2018-02-26T01:08:17.410Z - info: hashMapSize:  64
+2018-02-26T01:08:17.434Z - info: itemsProcessed:  64
+2018-02-26T01:08:17.434Z - warn: ## Terminou tudo, chamaria o callback ##
+2018-02-26T01:08:21.096Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T01:08:21.097Z - info: ## Apontamento atualizado com sucesso 2018-02-21T03:00:00.000Z
+2018-02-26T01:08:21.098Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T01:08:21.099Z - info: ## Apontamento atualizado com sucesso 2018-02-21T03:00:00.000Z
+2018-02-26T01:08:21.108Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T01:08:21.172Z - info: ## Apontamento atualizado com sucesso 2018-02-21T03:00:00.000Z
+2018-02-26T01:08:21.172Z - info: ## Apontamento atualizado com sucesso 2018-02-21T03:00:00.000Z
+2018-02-26T01:08:21.173Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T01:08:21.173Z - info: ## Apontamento atualizado com sucesso 2018-02-21T03:00:00.000Z
+2018-02-26T01:08:21.174Z - info: ## Apontamento atualizado com sucesso 2018-02-22T03:00:00.000Z
+2018-02-26T01:08:21.174Z - info: ## Apontamento atualizado com sucesso 2018-02-22T03:00:00.000Z
+2018-02-26T01:08:21.175Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T01:08:21.176Z - info: ## Apontamento atualizado com sucesso 2018-02-21T03:00:00.000Z
+2018-02-26T01:08:21.176Z - info: ## Apontamento atualizado com sucesso 2018-02-21T03:00:00.000Z
+2018-02-26T01:08:21.223Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T01:08:21.224Z - info: ## Apontamento atualizado com sucesso 2018-02-22T03:00:00.000Z
+2018-02-26T01:08:21.225Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T01:08:21.225Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T01:08:21.226Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T01:08:21.229Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T01:08:21.230Z - info: ## Apontamento atualizado com sucesso 2018-02-22T03:00:00.000Z
+2018-02-26T01:08:21.230Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T01:08:21.231Z - info: ## Apontamento atualizado com sucesso 2018-02-22T03:00:00.000Z
+2018-02-26T01:08:21.231Z - info: ## Apontamento atualizado com sucesso 2018-02-22T03:00:00.000Z
+2018-02-26T01:08:21.232Z - info: ## Apontamento atualizado com sucesso 2018-02-21T03:00:00.000Z
+2018-02-26T01:08:21.247Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T01:08:21.247Z - info: ## Apontamento atualizado com sucesso 2018-02-21T03:00:00.000Z
+2018-02-26T01:08:21.294Z - info: ## Apontamento atualizado com sucesso 2018-02-22T03:00:00.000Z
+2018-02-26T01:08:21.295Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T01:08:21.295Z - info: ## Apontamento atualizado com sucesso 2018-02-22T03:00:00.000Z
+2018-02-26T01:08:21.296Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T01:08:21.296Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T01:08:21.297Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T01:08:21.297Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T01:08:21.298Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T01:08:21.299Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T01:08:21.299Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T01:08:21.299Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T01:08:21.300Z - info: ## Apontamento atualizado com sucesso 2018-02-22T03:00:00.000Z
+2018-02-26T01:08:21.351Z - info: ## Apontamento atualizado com sucesso 2018-02-22T03:00:00.000Z
+2018-02-26T01:08:21.352Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T01:08:21.352Z - info: ## Apontamento atualizado com sucesso 2018-02-22T03:00:00.000Z
+2018-02-26T01:08:22.072Z - info: ## Apontamento atualizado com sucesso 2018-02-21T03:00:00.000Z
+2018-02-26T01:08:22.073Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T01:08:22.074Z - info: ## Apontamento atualizado com sucesso 2018-02-21T03:00:00.000Z
+2018-02-26T01:08:22.151Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T01:08:22.152Z - info: ## Apontamento atualizado com sucesso 2018-02-22T03:00:00.000Z
+2018-02-26T01:08:22.152Z - info: ## Apontamento atualizado com sucesso 2018-02-21T03:00:00.000Z
+2018-02-26T01:08:22.153Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T01:08:22.153Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T01:08:22.153Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T01:08:22.154Z - info: ## Apontamento atualizado com sucesso 2018-02-21T03:00:00.000Z
+2018-02-26T01:08:22.154Z - info: ## Apontamento atualizado com sucesso 2018-02-22T03:00:00.000Z
+2018-02-26T01:08:22.154Z - info: ## Apontamento atualizado com sucesso 2018-02-22T03:00:00.000Z
+2018-02-26T01:08:22.155Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T01:08:22.156Z - info: ## Apontamento atualizado com sucesso 2018-02-22T03:00:00.000Z
+2018-02-26T01:08:22.157Z - info: ## Apontamento atualizado com sucesso 2018-02-22T03:00:00.000Z
+2018-02-26T01:08:22.157Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T01:08:22.157Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T01:08:22.158Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T01:08:22.159Z - info: ## Apontamento atualizado com sucesso 2018-02-22T03:00:00.000Z
+2018-02-26T01:08:22.159Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T01:08:22.160Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T01:08:22.160Z - info: ## Apontamento atualizado com sucesso 2018-02-21T03:00:00.000Z
+2018-02-26T01:09:17.436Z - info: #Iniciando request:  2018-02-26T01:09:17.436Z
+2018-02-26T01:09:17.436Z - info: #Request Número:  0
+2018-02-26T01:09:18.367Z - info: Ultima NSR processada:  000005903
+2018-02-26T01:09:18.367Z - info: Hora do readFile!
+2018-02-26T01:09:18.377Z - info: Encontrou , ativando busca 
+2018-02-26T01:09:18.378Z - info: Quantidade de marcações:  1
+2018-02-26T01:09:18.378Z - info: hashMapSize:  1
+2018-02-26T01:09:18.379Z - info: itemsProcessed:  1
+2018-02-26T01:09:18.379Z - warn: ## Terminou tudo, chamaria o callback ##
+2018-02-26T01:09:19.894Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
