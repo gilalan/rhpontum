@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 //Database configuration =================
 var database = require('./config/database');
 
@@ -36,7 +35,7 @@ var urlStaticREPFile = 'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD0
 //var urlStaticREPFile = 'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/arquivo_teste_soll.txt'; //Petrolina
 var Readable = require('stream').Readable;
 const readline = require('readline');
-var timePeriod = 5 * 60 * 1000;//minuto * segundo * ms
+var timePeriod = 1 * 60 * 1000;//minuto * segundo * ms
 var feriados = [];
 var itemsProcessed = 0;
 var requestCount = 0;
@@ -97,9 +96,9 @@ function getFileRequest(callback){
         
         if (response && response.statusCode === 200){
                         
-            getFeriadosAssync(body, callback).then(v => {
-
-        	});
+         //    getFeriadosAssync(body, callback).then(v => {
+        	// });
+            getFeriadosAssync(body, callback);
 
         } else {
 
@@ -109,7 +108,7 @@ function getFileRequest(callback){
     });
 };
 
-async function getFeriadosAssync(body, callback){
+function getFeriadosAssync(body, callback){
 
 	//successLog.info('Entrou na getFeriadosAssync', Feriado);
 

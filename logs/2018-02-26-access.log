@@ -1,0 +1,97 @@
+2018-02-26T00:49:13.829Z - info: Iniciando Serviço de Obtenção dos arquivos dos REPs: 
+2018-02-26T00:49:13.832Z - info: #Iniciando request:  2018-02-26T00:49:13.830Z
+2018-02-26T00:49:13.833Z - info: #Request Número:  0
+2018-02-26T00:49:16.879Z - error: process on - uncaughtException
+2018-02-26T00:49:16.881Z - error:  TypeError: Cannot read property 'then' of undefined
+    at Request._callback (/home/gilliard/Node/RHPontum/REPServiceAGR1_6774.js:99:46)
+    at Request.self.callback (/home/gilliard/Node/RHPontum/node_modules/request/request.js:188:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:194:7)
+    at Request.<anonymous> (/home/gilliard/Node/RHPontum/node_modules/request/request.js:1171:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:191:7)
+    at IncomingMessage.<anonymous> (/home/gilliard/Node/RHPontum/node_modules/request/request.js:1091:12)
+    at Object.onceWrapper (events.js:293:19)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:188:7)
+    at endReadableNT (_stream_readable.js:975:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+2018-02-26T00:49:22.038Z - info: Ultima NSR processada:  000005903
+2018-02-26T00:49:22.039Z - info: Hora do readFile!
+2018-02-26T00:49:22.047Z - info: Encontrou , ativando busca 
+2018-02-26T00:49:22.048Z - info: Quantidade de marcações:  1
+2018-02-26T00:49:22.049Z - info: hashMapSize:  1
+2018-02-26T00:49:22.058Z - info: itemsProcessed:  1
+2018-02-26T00:49:22.058Z - warn: ## Terminou tudo, chamaria o callback ##
+2018-02-26T00:49:23.552Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T00:54:04.512Z - info: Iniciando Serviço de Obtenção dos arquivos dos REPs: 
+2018-02-26T00:54:04.519Z - info: #Iniciando request:  2018-02-26T00:54:04.515Z
+2018-02-26T00:54:04.520Z - info: #Request Número:  0
+2018-02-26T00:54:09.565Z - info: Ultima NSR processada:  000005801
+2018-02-26T00:54:09.566Z - info: Hora do readFile!
+2018-02-26T00:54:09.575Z - info: Encontrou , ativando busca 
+2018-02-26T00:54:09.578Z - info: Quantidade de marcações:  101
+2018-02-26T00:54:09.578Z - info: hashMapSize:  34
+2018-02-26T00:54:09.610Z - info: itemsProcessed:  34
+2018-02-26T00:54:09.611Z - warn: ## Terminou tudo, chamaria o callback ##
+2018-02-26T00:54:12.246Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T00:54:12.247Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T00:54:12.255Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T00:54:12.313Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T00:54:12.361Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T00:54:12.396Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T00:54:12.397Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T00:54:12.398Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T00:54:12.398Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T00:54:12.398Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T00:54:12.399Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T00:54:12.400Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T00:54:12.400Z - info: ## Apontamento atualizado com sucesso 2018-02-22T03:00:00.000Z
+2018-02-26T00:54:12.400Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T00:54:12.435Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T00:54:12.435Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T00:54:12.444Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T00:54:12.445Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T00:54:12.446Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T00:54:12.515Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T00:54:12.517Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T00:54:12.517Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T00:54:12.518Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T00:54:12.519Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T00:54:12.519Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T00:54:12.520Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T00:54:12.521Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T00:54:12.522Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T00:54:12.559Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T00:54:12.559Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T00:54:12.560Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T00:54:12.561Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T00:54:12.562Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T00:54:12.562Z - info: ## Apontamento atualizado com sucesso 2018-02-24T03:00:00.000Z
+2018-02-26T00:55:09.613Z - info: #Iniciando request:  2018-02-26T00:55:09.612Z
+2018-02-26T00:55:09.613Z - info: #Request Número:  0
+2018-02-26T00:55:29.637Z - error: Aconteceu um erro na comunicação com o arquivo local do REP, código do erro:  Error: getaddrinfo EAI_AGAIN s3-sa-east-1.amazonaws.com:443
+    at Object.exports._errnoException (util.js:1034:11)
+    at errnoException (dns.js:33:15)
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:73:26)
+2018-02-26T00:56:29.642Z - info: #Iniciando request:  2018-02-26T00:56:29.642Z
+2018-02-26T00:56:29.643Z - info: #Request Número:  0
+2018-02-26T00:56:51.805Z - info: Ultima NSR processada:  000005903
+2018-02-26T00:56:51.805Z - info: Hora do readFile!
+2018-02-26T00:56:51.815Z - info: Encontrou , ativando busca 
+2018-02-26T00:56:51.816Z - info: Quantidade de marcações:  1
+2018-02-26T00:56:51.816Z - info: hashMapSize:  1
+2018-02-26T00:56:51.820Z - info: itemsProcessed:  1
+2018-02-26T00:56:51.821Z - warn: ## Terminou tudo, chamaria o callback ##
+2018-02-26T00:56:54.189Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T00:57:51.825Z - info: #Iniciando request:  2018-02-26T00:57:51.825Z
+2018-02-26T00:57:51.825Z - info: #Request Número:  0
+2018-02-26T00:57:52.803Z - info: Ultima NSR processada:  000005903
+2018-02-26T00:57:52.803Z - info: Hora do readFile!
+2018-02-26T00:57:52.810Z - info: Encontrou , ativando busca 
+2018-02-26T00:57:52.811Z - info: Quantidade de marcações:  1
+2018-02-26T00:57:52.811Z - info: hashMapSize:  1
+2018-02-26T00:57:52.812Z - info: itemsProcessed:  1
+2018-02-26T00:57:52.813Z - warn: ## Terminou tudo, chamaria o callback ##
+2018-02-26T00:57:56.392Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z

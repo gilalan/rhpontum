@@ -1,0 +1,20 @@
+2018-02-26T00:49:16.880Z - error: process on - uncaughtException
+2018-02-26T00:49:16.881Z - error:  TypeError: Cannot read property 'then' of undefined
+    at Request._callback (/home/gilliard/Node/RHPontum/REPServiceAGR1_6774.js:99:46)
+    at Request.self.callback (/home/gilliard/Node/RHPontum/node_modules/request/request.js:188:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:194:7)
+    at Request.<anonymous> (/home/gilliard/Node/RHPontum/node_modules/request/request.js:1171:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:191:7)
+    at IncomingMessage.<anonymous> (/home/gilliard/Node/RHPontum/node_modules/request/request.js:1091:12)
+    at Object.onceWrapper (events.js:293:19)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:188:7)
+    at endReadableNT (_stream_readable.js:975:12)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
+2018-02-26T00:55:29.637Z - error: Aconteceu um erro na comunicação com o arquivo local do REP, código do erro:  Error: getaddrinfo EAI_AGAIN s3-sa-east-1.amazonaws.com:443
+    at Object.exports._errnoException (util.js:1034:11)
+    at errnoException (dns.js:33:15)
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:73:26)
