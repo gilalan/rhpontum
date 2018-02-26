@@ -211,3 +211,58 @@
 2018-02-26T01:09:18.379Z - info: itemsProcessed:  1
 2018-02-26T01:09:18.379Z - warn: ## Terminou tudo, chamaria o callback ##
 2018-02-26T01:09:19.894Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T01:25:25.503Z - info: Iniciando Serviço de Obtenção dos arquivos dos REPs: 
+2018-02-26T01:25:25.506Z - info: #Iniciando request:  2018-02-26T01:25:25.504Z
+2018-02-26T01:25:25.507Z - info: #Request Número:  0
+2018-02-26T01:25:30.328Z - info: Ultima NSR processada:  000016581
+2018-02-26T01:25:30.328Z - info: Hora do readFile!
+2018-02-26T01:25:30.342Z - info: Encontrou , ativando busca 
+2018-02-26T01:25:30.344Z - info: Quantidade de marcações:  1
+2018-02-26T01:25:30.344Z - info: hashMapSize:  1
+2018-02-26T01:25:30.347Z - info: itemsProcessed:  1
+2018-02-26T01:25:30.347Z - warn: ## Terminou tudo, chamaria o callback ##
+2018-02-26T01:25:31.093Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T01:26:36.448Z - info: Iniciando Serviço de Obtenção dos arquivos dos REPs: 
+2018-02-26T01:26:36.452Z - info: #Iniciando request:  2018-02-26T01:26:36.450Z
+2018-02-26T01:26:36.452Z - info: #Request Número:  0
+2018-02-26T01:26:41.216Z - info: Ultima NSR processada:  000004073
+2018-02-26T01:26:41.217Z - info: Hora do readFile!
+2018-02-26T01:26:41.221Z - info: Encontrou , ativando busca 
+2018-02-26T01:26:41.222Z - info: Quantidade de marcações:  1
+2018-02-26T01:26:41.222Z - info: hashMapSize:  1
+2018-02-26T01:26:41.225Z - info: itemsProcessed:  1
+2018-02-26T01:26:41.226Z - warn: ## Terminou tudo, chamaria o callback ##
+2018-02-26T01:26:41.969Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T01:27:53.018Z - info: Iniciando Serviço de Obtenção dos arquivos dos REPs: 
+2018-02-26T01:27:53.022Z - info: #Iniciando request:  2018-02-26T01:27:53.020Z
+2018-02-26T01:27:53.022Z - info: #Request Número:  0
+2018-02-26T01:27:58.233Z - info: Ultima NSR processada:  000001512
+2018-02-26T01:27:58.233Z - info: Hora do readFile!
+2018-02-26T01:27:58.236Z - info: Encontrou , ativando busca 
+2018-02-26T01:27:58.237Z - info: Quantidade de marcações:  1
+2018-02-26T01:27:58.237Z - info: hashMapSize:  1
+2018-02-26T01:27:58.240Z - info: itemsProcessed:  1
+2018-02-26T01:27:58.240Z - warn: ## Terminou tudo, chamaria o callback ##
+2018-02-26T01:27:59.291Z - info: ## Apontamento atualizado com sucesso 2018-02-23T03:00:00.000Z
+2018-02-26T01:29:10.269Z - info: Iniciando Serviço de Obtenção dos arquivos dos REPs: 
+2018-02-26T01:29:10.272Z - info: #Iniciando request:  2018-02-26T01:29:10.270Z
+2018-02-26T01:29:10.272Z - info: #Request Número:  0
+2018-02-26T01:29:17.268Z - info: Ultima NSR processada:  000005419
+2018-02-26T01:29:17.269Z - info: Hora do readFile!
+2018-02-26T01:29:17.275Z - info: Encontrou , ativando busca 
+2018-02-26T01:29:17.275Z - info: Quantidade de marcações:  1
+2018-02-26T01:29:17.275Z - info: hashMapSize:  1
+2018-02-26T01:29:17.278Z - info: itemsProcessed:  1
+2018-02-26T01:29:17.279Z - warn: ## Terminou tudo, chamaria o callback ##
+2018-02-26T01:29:18.191Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z
+2018-02-26T01:30:14.806Z - info: Iniciando Serviço de Obtenção dos arquivos dos REPs: 
+2018-02-26T01:30:14.810Z - info: #Iniciando request:  2018-02-26T01:30:14.808Z
+2018-02-26T01:30:14.810Z - info: #Request Número:  0
+2018-02-26T01:30:20.111Z - info: Ultima NSR processada:  000011160
+2018-02-26T01:30:20.111Z - info: Hora do readFile!
+2018-02-26T01:30:20.122Z - info: Encontrou , ativando busca 
+2018-02-26T01:30:20.123Z - info: Quantidade de marcações:  1
+2018-02-26T01:30:20.123Z - info: hashMapSize:  1
+2018-02-26T01:30:20.128Z - info: itemsProcessed:  1
+2018-02-26T01:30:20.128Z - warn: ## Terminou tudo, chamaria o callback ##
+2018-02-26T01:30:20.854Z - info: ## Apontamento atualizado com sucesso 2018-02-25T03:00:00.000Z

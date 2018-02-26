@@ -10,11 +10,6 @@ var fs = require('fs');
 var moment = require('moment');
 var http = require('http');
 var request = require('request');
-var Async = require('async');
-//arquivo maior: 0B2GW7fQUvA47SEJZOFZvdzhqTms
-//arquivo menor: 0B2GW7fQUvA47UXBSYXExSHRXamc
-//var urlStaticREPFile = 'https://docs.google.com/uc?export=download&id=0B2GW7fQUvA47UXBSYXExSHRXamc';
-//var urlStaticREPFile = 'https://docs.google.com/uc?export=download&id=0B2GW7fQUvA47SEJZOFZvdzhqTms';
 /* Usando o serviço S3 da Amazon: */
 //JUAZEIRO: AFD00009003650006843
 //PETROLINA: AFD00009003650006848
@@ -96,9 +91,9 @@ function getFileRequest(callback){
         
         if (response && response.statusCode === 200){
                         
-            getFeriadosAssync(body, callback).then(v => {
+            getFeriadosAssync(body, callback);//.then(v => {
 
-        	});
+        	//});
 
         } else {
 
@@ -108,7 +103,7 @@ function getFileRequest(callback){
     });
 };
 
-async function getFeriadosAssync(body, callback){
+function getFeriadosAssync(body, callback){
 
 	//successLog.info('Entrou na getFeriadosAssync', Feriado);
 
@@ -272,7 +267,7 @@ function iterateHashAndSaveDB(pisDateMap, hashMapSize, callback){
                     // console.log("sub key is " + date + ", value is " + pisDateMap[pis][date]);
                     searchPISAndSaveAppointment(pis, {dia: date.substring(0, 2), 
                         mes: date.substring(2, 4), ano: date.substring(4, 8)}, 
-                        pisDateMap[pis][date]).then(v => {
+                        pisDateMap[pis][date]);//.then(v => {
 
                         	itemsProcessed++;
                         	//successLog.info('itemsProcessed: ', itemsProcessed);
@@ -281,7 +276,7 @@ function iterateHashAndSaveDB(pisDateMap, hashMapSize, callback){
                         		successLog.warn('## Terminou tudo, chamaria o callback ##');
                         		callback();
                         	}
-                    });
+                    //});
                 }
              }
         }
@@ -295,7 +290,7 @@ function iterateHashAndSaveDB(pisDateMap, hashMapSize, callback){
 ** Como são chamadas assíncronas, vou buscar o PIS e se der certo tento criar/atualizar o apontamento 
 ** desse funcionário
 */
-async function searchPISAndSaveAppointment(pis, dateObj, marcacoesObj){
+function searchPISAndSaveAppointment(pis, dateObj, marcacoesObj){
 
     marcacoesObj.sort(function(a, b){//ordena o array de marcações
       return a.total - b.total;
