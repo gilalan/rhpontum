@@ -28,6 +28,7 @@ var urlStaticREPFileArray = [
 var REPLocalFile = 'REPLast/JUAZ_AFD00009003650006843.txt';
 var urlStaticREPFile = 'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006843.txt'; //Juazeiro
 //var urlStaticREPFile = 'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/arquivo_teste_soll.txt'; //Petrolina
+var saltNSR = 400;
 var Readable = require('stream').Readable;
 const readline = require('readline');
 var timePeriod = 5 * 60 * 1000;//minuto * segundo * ms
@@ -40,7 +41,7 @@ process.on('uncaughtException', function(err) {
 	errorLog.error(err);
 });
 
-successLog.info('Iniciando Serviço de Obtenção dos arquivos dos REPs: ');
+// successLog.info('Iniciando Serviço de Obtenção dos arquivos dos REPs: ');
 //errorLog.error('Teste de msg de erro');
 //errorLog.error('Teste de msg de erro', error);
 
@@ -51,7 +52,7 @@ successLog.info('Iniciando Serviço de Obtenção dos arquivos dos REPs: ');
 function getFileRequest(callback){
         
     successLog.info('#Iniciando request: ', new Date());
-    successLog.info('#Request Número: ', requestCount);
+    // successLog.info('#Request Número: ', requestCount);
     
     // Async.parallel({
     //     one: function(callback) {
@@ -144,9 +145,14 @@ function readFile(streamData, callback){
     var hashMapSize = 0;
 
     var getLastNSRProcessed = getLastRowProcessed().trim();
+
+    if (!getLastNSRProcessed)
+        activate = true;
+    
     successLog.info('Ultima NSR processada: ', getLastNSRProcessed);
-    // successLog.info('Ultima NSR processada length: ', getLastNSRProcessed.length);
-    successLog.info('Hora do readFile!');
+    getLastNSRProcessed = calculateSaltNSR(getLastNSRProcessed);
+    successLog.info('NSR calculada para início da leitura: ', getLastNSRProcessed);
+    // successLog.info('Hora do readFile!');
 
     const rl = readline.createInterface({
       input: streamData//fs.createReadStream(streamData)
@@ -155,7 +161,7 @@ function readFile(streamData, callback){
     rl.on('line', function (line) {
         //successLog.info("NSR: ", typeof line.substring(0,9));
         if (getLastNSRProcessed === line.substring(0, 9)){
-            successLog.info('Encontrou , ativando busca ');
+            // successLog.info('Encontrou , ativando busca ');
             activate = true;
         }
         if(activate && line.charAt(9) === "3"){//posição que indica o tipo de Registro, se for 3 é marcação! Vejo tb se é a última linha processada (para nao ter que ficar lendo o arquivo inteiro sempre)
@@ -226,8 +232,8 @@ function readFile(streamData, callback){
       
     }).on('close', function(){
 
-        successLog.info('Quantidade de marcações: ', count);
-        successLog.info('hashMapSize: ', hashMapSize);
+        // successLog.info('Quantidade de marcações: ', count);
+        // successLog.info('hashMapSize: ', hashMapSize);
         saveLastRowProcessed(nsr);
         //Agora posso chamar a rotina para navegar no HashMap e criar os apontamentos
         iterateHashAndSaveDB(pisDateMap, hashMapSize, callback);
@@ -251,6 +257,19 @@ function getLastRowProcessed(){
 
     var text = fs.readFileSync(REPLocalFile, 'UTF-8');
     return text;
+};
+
+function calculateSaltNSR(nsrString){
+    
+    var intNSR = parseInt(nsrString);
+    if ( intNSR >= 0 && intNSR <= saltNSR-1 )
+        return nsrString;
+    else {
+        
+        var diffStr = (intNSR - saltNSR) + "";
+        return (nsrString.substring(0, nsrString.length - diffStr.length) + diffStr);
+    }
+    
 };
 
 function iterateHashAndSaveDB(pisDateMap, hashMapSize, callback){
@@ -412,8 +431,8 @@ function saveOrUpdateAssyncApontamento(dateObj, marcacoesObj, funcionario){
                     
                   if(err)
                     errorLog.error('Erro no save do update de apontamento', err);
-                  else 
-                    successLog.info('## Apontamento atualizado com sucesso', newDate);
+                  // else 
+                  //   successLog.info('## Apontamento atualizado com sucesso', newDate);
 
                 });
             }
