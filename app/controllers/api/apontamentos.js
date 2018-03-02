@@ -190,6 +190,7 @@ router.post('/date/equipe', function(req, res){
 router.post('/intervaldate/equipe', function(req, res){
 
     var objDateEquipe = req.body;
+    console.log("Objeto Date Equipe: ", objDateEquipe);
     var dateParametro = objDateEquipe.date;
     var dias = objDateEquipe.dias;
     var equipe = objDateEquipe.equipe;
