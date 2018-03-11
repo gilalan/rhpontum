@@ -47,16 +47,22 @@ var funcionarioSchema = new Schema({
 			descricao: String,
 			cbo: String
 		}],
-		emails: [String]
+		emails: [String],
+		datasAdmissao: [Date],
+		datasDemissao: [Date]
 	},
 	rhponto: {type: Boolean, required: true}, //usa o sistema caso TRUE, usa relogio de ponto caso FALSE
 	sexoMasculino: {type: Boolean, required: true},
-	ferias: [{ano: Number, periodo: [Date]}],
+	ferias: [{
+				ano: Number, 
+				periodo: {dataInicial: Date, dataFinal: Date}
+			}],
 	localTrabalho: String, //o ideal seria eu ter uma entidade (local de trabalho) mas não da tempo
 	geoLocalFixo: {
 		latitude: Number,
 		longitude: Number
-	} 
+	},
+	active: Boolean
 },
 {
 	timestamps: true

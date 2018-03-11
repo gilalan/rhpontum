@@ -1,11 +1,16 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Campi = require('./campi');
-//mongoose.connect('mongodb://rhpontumadm:123456789@jello.modulusmongo.net:27017/Ohy3tagi');
+var Estado = require('./estado');
+var Municipio = require('./municipio');
 
 var setor = mongoose.Schema({
   nome: {type: String, required: true, unique: true},
   descricao: String,
+  local: {
+	  estado: {type: Schema.Types.ObjectId, ref: 'Estado'},
+	  municipio: {type: Schema.Types.ObjectId, ref: 'Municipio'}
+  },
   campus: {type: Schema.Types.ObjectId, required: true, ref: 'Campi'}
 },{
 	timestamps: true

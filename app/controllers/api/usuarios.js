@@ -172,4 +172,19 @@ router.delete('/:id', function(req, res){
   });
 });
 
+router.post('/unregister', function(req, res){
+
+  var funcionario = req.body;
+  console.log('vai dar UnRegister no funcionário: ', funcionario);
+
+  Usuario.remove({funcionario: funcionario._id}, function(err){
+    if(err){
+      console.log('Erro no delete usuario', err);
+      return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+    }
+    return res.status(200).send({success: true, message: 'Usuario removido do funcionário com sucesso!'});
+  });
+
+});
+
 module.exports = router;

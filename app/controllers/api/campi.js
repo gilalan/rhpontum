@@ -77,6 +77,7 @@ router.put('/:id', function(req, res){
     campus.endereco = req.body.endereco;
     campus.area = req.body.area;
     campus.instituicao = req.body.instituicao;
+
     if (req.body.projetos) 
       campus.projetos = req.body.projetos;
     

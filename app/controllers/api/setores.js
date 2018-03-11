@@ -9,14 +9,15 @@ var config = require('../../../config');
 router.get('/', function(req, res) {
 
   Setor.find()
-  .populate('campus', 'nome')  
+  .populate('campus', 'nome')
+  .populate('local.estado', 'uf sigla_uf nome_uf')
+  .populate('local.municipio')
   .exec(function(err, setores){
 		
 		if(err) {
     	return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
     }
 
-  	
 	  return res.json(setores);
   });
 });
@@ -70,6 +71,7 @@ router.put('/:id', function(req, res){
 	  	setor.campus = req.body.campus;
 	  	if(req.body.descricao)
 	  		setor.descricao = req.body.descricao;
+	  	setor.local = req.body.local;
 
 	  	//tenta atualizar de fato no BD
 	    setor.save(function(err){

@@ -4,7 +4,7 @@ var Instituicao = require('./instituicao');
 
 //mongoose.connect('mongodb://rhpontumadm:123456789@jello.modulusmongo.net:27017/Ohy3tagi');
 
-var campi = mongoose.Schema({
+var campi = mongoose.Schema({//precisamos acrescentar um munícipio!
   nome: {type: String, required: true, unique: true},
   endereco: Schema.Types.Mixed,
   area: Number,

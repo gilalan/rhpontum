@@ -25,7 +25,7 @@ router.get('/', function(req, res) {
 
   Equipe.find()
   .populate('gestor', 'nome')
-  .populate('setor', 'nome descricao')
+  .populate('setor', 'nome descricao local')
   .populate('componentes', 'nome sobrenome PIS')
   .sort({nome: 'asc'})
   .exec(function(err, equipes){
@@ -61,7 +61,7 @@ router.get('/:id', function(req, res){
 	console.log("nomeEquipe: ", idEquipe);
 	
 	Equipe.findOne({_id: idEquipe})
-  .populate('setor', 'nome descricao')
+  .populate('setor', 'nome descricao local')
   .populate('gestor', 'nome sobrenome')
   .populate({
     path: 'componentes',
@@ -167,7 +167,7 @@ router.post('/gestorFilter', function(req, res){
   .sort({nome: 'asc'})
   .populate({
     path: 'componentes',
-    select: 'nome sobrenome PIS sexoMasculino alocacao',
+    select: 'nome sobrenome PIS sexoMasculino alocacao active',
     model: 'Funcionario',
     populate: [{
       path: 'alocacao.cargo',
@@ -183,6 +183,7 @@ router.post('/gestorFilter', function(req, res){
       }]
     }]  
   })
+  .populate('setor', 'nome local')
   .exec(function(err, equipes){
     
     if(err) {

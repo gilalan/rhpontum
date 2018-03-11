@@ -19,7 +19,10 @@ var accessLevel = 4;
 //Get ALL feriados
 router.get('/', function(req, res) {
 
-	Feriado.find(function(err, feriados){
+	Feriado.find()
+  .populate('local.estado', 'sigla_uf nome_uf')
+  .populate('local.municipio', 'estado nome_municipio')
+  .exec(function(err, feriados){
 		
 		if(err) {
      	return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
@@ -39,7 +42,11 @@ router.post('/', function(req, res) {
     
     nome: req.body.nome,
     fixo: req.body.fixo,
-    data: req.body.data
+    data: req.body.data,
+    abrangencia: req.body.abrangencia,
+    local: req.body.local,
+    ftdString: req.body.ftdString,
+    array: req.body.array
 
   }, function(err, feriado){
 
@@ -90,6 +97,10 @@ router.put('/:id', function(req, res){
     feriado.nome = req.body.nome;
     feriado.fixo = req.body.fixo;
     feriado.data = req.body.data;
+    feriado.abrangencia = req.body.abrangencia;
+    feriado.local = req.body.local;
+    feriado.ftdString = req.body.ftdString;
+    feriado.array = req.body.array;
 
     //tenta atualizar de fato no BD
     feriado.save(function(err){

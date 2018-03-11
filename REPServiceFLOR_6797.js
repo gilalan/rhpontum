@@ -6,6 +6,7 @@ const successLog = require('./util/logger').successlog;
 var Funcionario = require('./app/models/funcionario');
 var Apontamento = require('./app/models/apontamento');
 var Feriado = require('./app/models/feriado');
+var Equipe = require('./app/models/equipe');
 var fs = require('fs');
 var moment = require('moment');
 var http = require('http');
@@ -33,6 +34,7 @@ var Readable = require('stream').Readable;
 const readline = require('readline');
 var timePeriod = 5 * 60 * 1000;//minuto * segundo * ms
 var feriados = [];
+var equipeF = {};
 var itemsProcessed = 0;
 var requestCount = 0;
 
@@ -332,9 +334,19 @@ function searchPISAndSaveAppointment(pis, dateObj, marcacoesObj){
         
         if (funcionario && funcionario.PIS){
 
-            if(!saveOrUpdateAssyncApontamento(dateObj, marcacoesObj, funcionario)){
-                //console.log('Erro no parsing do mês!');
-            }
+            Equipe.findOne({componentes: funcionario._id})
+            .populate('setor', 'nome local')
+            .exec(function(err, equipe){
+
+                if(err) {
+                    errorLog.error('Erro ao recuperar equipe do funcionario no BD. Erro: ', err);
+                    return false;
+                }
+                equipeF = equipe;
+                if(!saveOrUpdateAssyncApontamento(dateObj, marcacoesObj, funcionario)){
+                    //console.log('Erro no parsing do mês!');
+                }
+            });
 
         } else {
 
@@ -685,36 +697,74 @@ function createExtraInfo(funcionario, date, arrayMarcacoes){
 
 };
 
-function isFeriado(date) {
-       
-  var day = date.getDate();//1 a 31
-  var month = date.getMonth();//0 a 11
-  var year = date.getFullYear();//
+function isFeriado(dataDesejada) {
+      
+  var data = dataDesejada;
+
+  console.log('Data Desejada: ', data);
+  //console.log('Setor.local: ', $scope.equipe);
+
+  var date = data.getDate();//1 a 31
+  var month = data.getMonth();//0 a 11
+  var year = data.getFullYear();//
   var flagFeriado = false;
-  var tempDate;
+  var tempDate;      
 
   feriados.forEach(function(feriado){
     
-    tempDate = new Date(feriado.data);
-    //console.log('new date from feriado: ', new Date(feriado.data));
-    if (feriado.fixo){
+    //console.log('feriado atual: ', feriado);        
+
+    for (var i = 0; i < feriado.array.length; i++) {
       
-      if (tempDate.getMonth() === month && tempDate.getDate() === day){
-        //successLog.info("É Feriado (fixo)!");
-        flagFeriado = true;
-        return feriado;
+      tempDate = new Date(feriado.array[i]);
+      if (feriado.fixo){
+      
+        if (tempDate.getMonth() === month && tempDate.getDate() === date){
+          console.log("É Feriado (fixo)!", tempDate);
+          flagFeriado = checkFeriadoSchema(feriado);
+          return feriado;
+        }
+
+      } else {//se não é fixo
+
+        if ( (tempDate.getFullYear() === year) && (tempDate.getMonth() === month) && (tempDate.getDate() === date) ){
+          console.log("É Feriado (variável)!", tempDate);
+          flagFeriado = checkFeriadoSchema(feriado);
+          return feriado;
+        }
       }
-
-    } else {//se não é fixo
-
-      if ( (tempDate.getFullYear() === year) && (tempDate.getMonth() === month) && (tempDate.getDate() === day) ){
-        //successLog.info("É Feriado (variável)!");
-        flagFeriado = true;
-        return feriado;
-      }
-
     }
   });
+  console.log('FlagFeriado: ', flagFeriado);
+  return flagFeriado;//no futuro retornar o flag de Feriado e a descrição do mesmo!
+};
+
+function checkFeriadoSchema(feriado){
+
+  var abrangencias = ["Nacional", "Estadual", "Municipal"];
+  var flagFeriado = false;
+
+  if (feriado.abrangencia == abrangencias[0]){
+
+    console.log('Feriado Nacional!');
+    flagFeriado = true;
+
+  } else  if (feriado.abrangencia == abrangencias[1]){
+    
+    console.log('Feriado Estadual!');
+    if (equipeF.setor.local.estado == feriado.local.estado._id){
+      console.log('Feriado Estadual no Estado correto!');
+      flagFeriado = true;
+    }
+
+  } else if (feriado.abrangencia == abrangencias[2]){
+    
+    console.log('Feriado Municipal!');
+    if (equipeF.setor.local.municipio == feriado.local.municipio._id){
+      console.log('No municipio correto!');
+      flagFeriado = true;
+    }
+  }
 
   return flagFeriado;
 };

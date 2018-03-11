@@ -115,6 +115,7 @@ router.put('/:id', function(req, res){
         funcionario.historico = _funcionario.historico;
         funcionario.localTrabalho = _funcionario.localTrabalho;
         funcionario.geoLocalFixo = _funcionario.geoLocalFixo;
+        funcionario.active = _funcionario.active;
 
       //tenta atualizar de fato no BD
       funcionario.save(function(err){
@@ -234,6 +235,45 @@ router.post('/:id/apontamentoRange', function(req, res){
 
         console.log("Apontamentos filtrados mongoose: ", apontamentosFuncionario);
         return res.json(apontamentosFuncionario);
+    });
+});
+
+//get all funcionarios ativos (não demitidos)
+router.post('/actives', function(req, res){
+
+    // usando o mongoose Model para buscar todos os funcionários
+    Funcionario.find({active: true})
+    .populate('alocacao.cargo', 'especificacao nomeFeminino')
+    .populate({
+        path: 'alocacao.turno',
+        model: 'Turno',
+        populate: [{path: 'escala', model: 'Escala'}]
+    })
+    .populate('alocacao.instituicao', 'nome sigla')
+    .exec(function(err, funcionarios){
+
+       if(err) {
+        console.log('errorrrrr', err);
+        return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+       }
+
+       return res.json(funcionarios); // return all users in JSON format
+    });
+});
+
+//get team from employee (equipe do funciońario)
+router.post('/:id/equipe', function(req, res){
+
+    var idFuncionario = req.params.id;
+    Equipe.findOne({componentes: idFuncionario})
+    .populate('setor', 'nome local')
+    .exec(function(err, equipe){
+
+        if(err) {
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+        }
+
+        return res.json(equipe);
     });
 });
 
