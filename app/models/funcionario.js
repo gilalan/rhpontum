@@ -62,7 +62,7 @@ var funcionarioSchema = new Schema({
 		latitude: Number,
 		longitude: Number
 	},
-	active: Boolean
+	active: {type: Boolean, default: true}
 },
 {
 	timestamps: true

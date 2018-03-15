@@ -66,7 +66,7 @@ router.get('/:id', function(req, res){
     });
 });
 
-//Update 1 setor by id
+//Update 1 appoint by id
 router.put('/:id', function(req, res){
     
     var idApontamento = req.params.id;

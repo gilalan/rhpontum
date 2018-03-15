@@ -242,7 +242,10 @@ router.post('/:id/apontamentoRange', function(req, res){
 router.post('/actives', function(req, res){
 
     // usando o mongoose Model para buscar todos os funcionários
-    Funcionario.find({active: true})
+    var count = 0;
+    var fFuncs = [];
+    // Funcionario.find({active: true})
+    Funcionario.find()
     .populate('alocacao.cargo', 'especificacao nomeFeminino')
     .populate({
         path: 'alocacao.turno',
@@ -257,7 +260,15 @@ router.post('/actives', function(req, res){
         return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
        }
 
-       return res.json(funcionarios); // return all users in JSON format
+       // console.log('Qtde de funcionários ativos: ', funcionarios.length);
+       for (var i=0; i<funcionarios.length; i++){
+            if(!funcionarios[i].active){
+                count++;
+                fFuncs.push(funcionarios[i]);
+            }
+       }
+       console.log('Qtde de funcionários ativos: ', count);
+       return res.json(fFuncs); // return all users in JSON format
     });
 });
 
