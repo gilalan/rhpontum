@@ -1,5 +1,6 @@
 var SolicitacaoAjuste = require('../../models/solicitacaoAjuste');
 var Funcionario = require('../../models/funcionario');
+var moment = require('moment');
 var router = require('express').Router();
 var config = require('../../../config');
 
@@ -39,6 +40,7 @@ router.get('/', function(req, res) {
       }]
     }]
   })
+  .sort({data: 'asc'})
   .exec(function(err, solicitacoes){
 		
 		if(err) {
@@ -55,6 +57,15 @@ router.post('/', function(req, res) {
 
   console.log("req", req.body);
   var solicitacaoObj = req.body;
+  var dateParametro = solicitacaoObj.date;
+
+  // var dateMom = moment({year: dateParametro.year, month: dateParametro.month,
+  //       day: dateParametro.day});
+  solicitacaoObj.data = new Date(dateParametro.year, dateParametro.month, dateParametro.day);
+  delete solicitacaoObj.rawData;
+  delete solicitacaoObj.date;
+
+  console.log('solicitacao: ', solicitacaoObj);
 
   SolicitacaoAjuste.create(solicitacaoObj, function(err, solicitacao){
 

@@ -38,6 +38,7 @@ var apontamentoSchema = new Schema(
 			hora: Number,
 			minuto: Number,
 			segundo: Number,
+			totalMin: Number, //Total em minutos dessa batida (vai de 0 até 1439)(00:00 às 23:59)
 			strHorario: String,
 			tzOffset: Number, //representa a diferença entre a hora universal UTC e a hora local
 			RHWeb: Boolean, //indica se a batida foi proveniente da WEB 
