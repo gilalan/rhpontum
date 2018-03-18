@@ -163,7 +163,47 @@ router.delete('/:id', function(req, res){
     }
     return res.status(200).send({success: true, message: 'Solicitação removida com sucesso!'});
   });
+});
 
+/*
+** Traz as solicitações pendentes de um funcionário em determinada data.
+*/
+router.post('/data/funcionario', function(req, res){
+
+  var objFuncDate = req.body;
+  var dateParametro = objFuncDate.date;
+  var dateMom = moment({year: dateParametro.year, month: dateParametro.month,
+        day: dateParametro.day});
+
+  //status 0 -> pendente
+  SolicitacaoAjuste.find({data: dateMom.toDate(), funcionario: objFuncDate.funcionario._id, status: 0})
+  .populate({
+    path: 'funcionario', 
+    select: 'nome sobrenome PIS sexoMasculino alocacao',
+    model: 'Funcionario',
+    populate: [{
+      path: 'alocacao.cargo',
+      select: 'especificacao nomeFeminino',
+      model: 'Cargo'
+    },
+    {
+      path: 'alocacao.turno',
+      model: 'Turno',
+      populate: [{
+        path: 'escala', 
+        model: 'Escala'
+      }]
+    }]
+  })
+  .exec(function(err, solicitacoes){
+    
+    if(err) {
+      return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento: '+err});
+    }
+
+    console.log("Solicitacoes mongoose: ", solicitacoes.length);
+    return res.json(solicitacoes);
+  });
 });
 
 module.exports = router;
