@@ -64,7 +64,7 @@ router.get('/:id', function(req, res) {
   .populate('perfil')
   .populate({
       path: 'funcionario', 
-      select: 'nome sobrenome PIS sexoMasculino alocacao',
+      select: 'nome sobrenome email PIS sexoMasculino alocacao',
       model: 'Funcionario',
       populate: [{
         path: 'alocacao.cargo',

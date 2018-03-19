@@ -6,7 +6,12 @@ var solicitacaoAjusteSchema = new Schema(
 {
 	funcionario: {type: Schema.Types.ObjectId, required: true, ref: 'Funcionario'},
 	data: {type: Date, required: true}, //Data Pretendida para solicitação
-	dataAprovacao: Date,
+	resposta: {
+		aprovada: {type: Boolean, default: false},
+		data: Date,
+		gestor: {type: Schema.Types.ObjectId, ref: 'Funcionario'},
+		motivo: String
+	}, 
 	status: {type: Number, required: true, enum: [-1, 0, 1]},//Não Aprovada, Pendente ou Aprovada
 	anterior: {
 		marcacoes: [{
@@ -15,6 +20,7 @@ var solicitacaoAjusteSchema = new Schema(
 			hora: Number,
 			minuto: Number,
 			segundo: Number,
+			totalMin: Number,
 			strHorario: String,
 			tzOffset: Number, //representa a diferença entre a hora universal UTC e a hora local
 			RHWeb: Boolean, //indica se a batida foi proveniente da WEB 
@@ -35,6 +41,7 @@ var solicitacaoAjusteSchema = new Schema(
 			hora: Number,
 			minuto: Number,
 			segundo: Number,
+			totalMin: Number,
 			strHorario: String,
 			tzOffset: Number, //representa a diferença entre a hora universal UTC e a hora local
 			RHWeb: Boolean, //indica se a batida foi proveniente da WEB 

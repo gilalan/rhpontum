@@ -54,9 +54,10 @@ var apontamentoSchema = new Schema(
 		infoTrabalho: {
 			trabalha: Boolean,
 			aTrabalhar: Number, //em minutos?
-			trabalhados: Number //em minutos?		
+			trabalhados: Number //em minutos?
 		},
-		ajustada: Boolean,
+		marcacoesFtd: [String],
+		justificativa: String,
 		gerencial: {
 			dataAlteracao: Date,
 			gestor: {
@@ -67,7 +68,7 @@ var apontamentoSchema = new Schema(
 			}
 		}
 	}],
-	justificativa: String,
+	justificativa: String,//talvez não precise aqui
 	infoTrabalho: {
 		trabalha: Boolean,
 		aTrabalhar: Number, //em minutos?

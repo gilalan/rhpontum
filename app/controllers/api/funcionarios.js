@@ -156,7 +156,7 @@ router.get('/:id/usuario', function(req, res){
     var idFuncionario = req.params.id;
 
     Usuario.findOne({funcionario: idFuncionario})
-    .populate('funcionario', 'nome sobrenome email')
+    .populate('funcionario', 'nome sobrenome email PIS')
     .populate('perfil', 'nome')
     .exec(function(err, usuario){
         
