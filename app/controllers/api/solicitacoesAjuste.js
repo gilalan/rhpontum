@@ -58,13 +58,15 @@ router.post('/', function(req, res) {
 
   console.log("req", req.body);
   var solicitacaoObj = req.body;
-  var dateParametro = solicitacaoObj.date;
+  //var dateParametro = solicitacaoObj.date;
 
   // var dateMom = moment({year: dateParametro.year, month: dateParametro.month,
   //       day: dateParametro.day});
-  solicitacaoObj.data = new Date(dateParametro.year, dateParametro.month, dateParametro.day);
+  //solicitacaoObj.data = new Date(dateParametro.year, dateParametro.month, dateParametro.day);
   
-  delete solicitacaoObj.date;
+  if (solicitacaoObj.date)
+    delete solicitacaoObj.date;
+  
   if (solicitacaoObj.rawData)
     delete solicitacaoObj.rawData;
 
@@ -178,8 +180,14 @@ router.post('/data/funcionario', function(req, res){
   var dateMom = moment({year: dateParametro.year, month: dateParametro.month,
         day: dateParametro.day});
 
+  var today = dateMom.startOf('day');
+  var tomorrow = moment(today).add(1, 'days');
+    
+  console.log('today moment: ', today);
+  console.log('tomorrow moment: ', tomorrow);
+
   //status 0 -> pendente
-  SolicitacaoAjuste.find({data: dateMom.toDate(), funcionario: objFuncDate.funcionario._id, status: 0})
+  SolicitacaoAjuste.find({data: {$gte: today.toDate(),$lt: tomorrow.toDate()}, funcionario: objFuncDate.funcionario._id, status: 0})
   .populate({
     path: 'funcionario', 
     select: 'nome sobrenome PIS sexoMasculino alocacao',
