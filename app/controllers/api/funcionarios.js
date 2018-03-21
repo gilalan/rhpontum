@@ -244,8 +244,7 @@ router.post('/actives', function(req, res){
     // usando o mongoose Model para buscar todos os funcionários
     var count = 0;
     var fFuncs = [];
-    // Funcionario.find({active: true})
-    Funcionario.find()
+    Funcionario.find({active: true})
     .populate('alocacao.cargo', 'especificacao nomeFeminino')
     .populate({
         path: 'alocacao.turno',
@@ -262,7 +261,7 @@ router.post('/actives', function(req, res){
 
        // console.log('Qtde de funcionários ativos: ', funcionarios.length);
        for (var i=0; i<funcionarios.length; i++){
-            if(!funcionarios[i].active){
+            if(funcionarios[i].active){
                 count++;
                 fFuncs.push(funcionarios[i]);
             }
