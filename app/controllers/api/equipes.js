@@ -48,7 +48,7 @@ router.post('/', function(req, res) {
 
     if(err) {
       console.log('erro post setor: ', err);
-      return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+      return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'+err});
     }
       
     return res.status(200).send({success: true, message: 'Equipe cadastrada com sucesso!'});
