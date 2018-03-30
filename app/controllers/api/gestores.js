@@ -17,4 +17,19 @@ router.get('/', function(req, res) {
     });
 });
 
+router.post('/fiscais', function(req, res) {
+
+    console.log('obter fiscais!');
+
+    Funcionario.find({'alocacao.fiscal': true}, {'nome':1, 'sobrenome': 1})
+    .exec(function(err, fiscais){
+        if (err){
+            console.log("ERROR: ", err);
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});    
+        }
+        //console.log('Gestores: ', gestores);
+        return res.json(fiscais);
+    });
+});
+
 module.exports = router;

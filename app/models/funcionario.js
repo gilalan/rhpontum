@@ -20,7 +20,8 @@ var funcionarioSchema = new Schema({
 		turno: {type: Schema.Types.ObjectId, ref: 'Turno', required: true},
 		dataTurno: Date,
 		instituicao: {type: Schema.Types.ObjectId, ref: 'Instituicao', required: true},
-		gestor: {type: Boolean}
+		gestor: {type: Boolean},
+		fiscal: {type: Boolean}
 	},
 	historico: {
 		turnos: [{
