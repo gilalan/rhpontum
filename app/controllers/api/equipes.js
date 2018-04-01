@@ -67,7 +67,7 @@ router.get('/:id', function(req, res){
   .populate('fiscal', 'nome sobrenome')
   .populate({
     path: 'componentes',
-    select: 'nome sobrenome email PIS sexoMasculino alocacao',
+    select: 'nome sobrenome email PIS matricula sexoMasculino alocacao',
     model: 'Funcionario',
     populate: [{
       path: 'alocacao.cargo',
@@ -163,15 +163,22 @@ router.post('/:id/updateWorkers', function(req, res){
 router.post('/gestorFilter', function(req, res){
   
   console.log("gestorFilter Equipes");
-  var gestor = req.body;
+  //var gestor = req.body;
+  var funcionario = req.body;
+  var query = {};
+  if (funcionario.alocacao.gestor)
+    query = {gestor: funcionario._id};
+  else if (funcionario.alocacao.fiscal)
+    query = {fiscal: funcionario._id};
 
-  Equipe.find({gestor: gestor._id})
+
+  Equipe.find(query)
   //.populate('gestor', 'nome')
   //.populate('setor', 'nome descricao')
   .sort({nome: 'asc'})
   .populate({
     path: 'componentes',
-    select: 'nome sobrenome PIS sexoMasculino alocacao active',
+    select: 'nome sobrenome PIS matricula sexoMasculino alocacao active',
     model: 'Funcionario',
     populate: [{
       path: 'alocacao.cargo',
