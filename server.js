@@ -55,6 +55,7 @@ app.use('/api/cargos', require('./app/controllers/api/cargos'));
 app.use('/api/perfis', require('./app/controllers/api/perfis'));
 app.use('/api/estados', require('./app/controllers/api/estados'));
 app.use('/api/municipios', require('./app/controllers/api/municipios'));
+app.use('/api/reports', require('./app/controllers/api/reports'));
 app.use(require('./app/controllers/static'));
 // equivalent to: app.use('/', require('./controllers/static'))
 

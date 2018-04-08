@@ -22,6 +22,7 @@ router.get('/', function(req, res) {
         populate: [{path: 'escala', model: 'Escala'}]
     })
     .populate('alocacao.instituicao', 'nome sigla')
+    .sort({nome: 'asc', sobrenome: 'asc'})
     .exec(function(err, funcionarios){
 
        if(err) {

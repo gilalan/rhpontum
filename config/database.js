@@ -18,7 +18,7 @@ db.on('error', function(err){
     console.log('Erro de conexao.', err)
 });
 db.on('open', function () {  
-  console.log('Conexão aberta.')
+  // console.log('Conexão aberta.')
 });
 db.on('connected', function(err){  
     console.log('Conectado')
