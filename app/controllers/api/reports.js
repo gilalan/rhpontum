@@ -5,6 +5,7 @@ var Turno = require('../../models/turno');
 var Escala = require('../../models/escala');
 var moment = require('moment');
 var router = require('express').Router();
+var async = require('async');
 
 //=========================================================================
 // API para Relatórios
@@ -68,6 +69,44 @@ router.post('/', function(req, res){
         return res.json(apontamentos);
     });
 
+});
+
+router.post('/updateAppoints', function(req, res){
+
+    var arrayApps = req.body;
+
+    // for (var i = 0; i < arrayApps.length; i++) {
+        
+    //     Apontamento.update({_id: arrayApps[i]._id}, 
+    //         {
+    //             $set: {
+    //               "infoTrabalho.trabalha": arrayApps[i].trabalha, 
+    //               "infoTrabalho.aTrabalhar": arrayApps[i].aTrabalhar
+    //             }
+    //         },
+    //         function(err, count) {
+               
+    //             if (err) 
+    //                 return res.status(500).send({success: false, message: err});
+               
+    //            // callback(err, count);
+    //            console.log('atualizado o apontamento: ', count);
+    //     });    
+    // }    
+
+    async.eachSeries(arrayApps, function updateObject (obj, done) {
+        
+        // Model.update(condition, doc, callback)
+        //console.log('apontamento? ', obj._id);
+        Apontamento.update({ _id: obj._id }, { $set : { "infoTrabalho.trabalha": obj.trabalha, "infoTrabalho.aTrabalhar": obj.aTrabalhar }}, done);
+
+    }, function allDone (err) {
+        if (err)
+            return res.status(500).send({success: false, message: err});
+
+        return res.status(200).send({success: true, message: "tudo atualizado!"});
+    });
+    
 });
 
 // router.post('/', function(req, res) {    
