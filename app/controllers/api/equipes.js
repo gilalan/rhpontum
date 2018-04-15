@@ -5,9 +5,18 @@ var Turno = require('../../models/turno');
 var Escala = require('../../models/escala');
 var router = require('express').Router();
 var config = require('../../../config');
+var appUtil = require('../../../util/apontamentosUtil');
+
+var Apontamento = require('../../models/apontamento');
+var Feriado = require('../../models/feriado');
+var fs = require('fs');
+var moment = require('moment');
+var http = require('http');
+var request = require('request');
+var Readable = require('stream').Readable;
 
 //=========================================================================
-// API para Setores -> Cada setor faz parte de um Campus (que pertence a uma Instituicao)
+// API para Equipes -> Cada setor faz parte de um Campus (que pertence a uma Instituicao)
 // Cada setor possui Equipes acopladas
 //=========================================================================
 /*accessLevel => 
@@ -204,5 +213,57 @@ router.post('/gestorFilter', function(req, res){
     return res.json(equipes);
   });
 });
+
+router.post('/:id/searchAndUpdateAppointments', function(req, res){
+
+  var equipeID = req.params.id;
+  var componentes = req.body.empIds;
+  var arrayPis = req.body.arrayPIS;
+
+  console.log('componentes: ', componentes);
+  console.log('psi: ', arrayPis);
+
+  var urlStaticREPFileArray = [
+    'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006843.txt',
+    'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006848.txt',
+    'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006815.txt',
+    'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006797.txt',
+    'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006774.txt',
+    'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006689.txt'
+  ];  
+
+  Feriado.find(function(err, rFeriados){
+    
+
+    if(err) {
+      console.log('Erro ao obter lista de feriados');
+    }
+    else {
+      feriados = rFeriados;
+      for (var i=0; i<urlStaticREPFileArray.length; i++){
+
+        request(urlStaticREPFileArray[i], function (error, response, body) {
+              
+          if (response && response.statusCode === 200){
+            var s = new Readable();
+            s.push(body);
+            s.push(null);
+            appUtil.readFile(s, feriados, componentes, arrayPis);
+          } else {
+
+            console.log('Aconteceu um erro na comunicação com o arquivo local do REP, código do erro: ', error);
+          }
+        });
+      }
+    }
+  });
+
+  return res.status(200).send({success: true, message: 'Consulta assíncrona enviada com sucesso, aguarde alguns minutos e cheque os apontamentos dos funcionários associados'});
+
+});
+
+
+
+
 
 module.exports = router;
