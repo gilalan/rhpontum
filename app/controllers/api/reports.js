@@ -98,7 +98,7 @@ router.post('/updateAppoints', function(req, res){
         
         // Model.update(condition, doc, callback)
         //console.log('apontamento? ', obj._id);
-        Apontamento.update({ _id: obj._id }, { $set : { "infoTrabalho.trabalha": obj.trabalha, "infoTrabalho.aTrabalhar": obj.aTrabalhar }}, done);
+        Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, "infoTrabalho.trabalha": obj.trabalha, "infoTrabalho.trabalhados": obj.trabalhados, "infoTrabalho.aTrabalhar": obj.aTrabalhar }}, done);
 
     }, function allDone (err) {
         if (err)
