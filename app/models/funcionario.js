@@ -58,7 +58,7 @@ var funcionarioSchema = new Schema({
 				qtdeDias: Number, 
 				periodo: {dataInicial: Number, dataFinal: Number, mesInicial: Number, mesFinal: Number, anoInicial: Number, anoFinal: Number},
 				comentario: String,
-				cadastradoPor: {nome: String, email: String}
+				cadastradoPor: {_id: String, email: String}
 			}],
 	localTrabalho: String, //o ideal seria eu ter uma entidade (local de trabalho) mas não da tempo
 	geoLocalFixo: {
