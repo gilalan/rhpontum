@@ -56,7 +56,7 @@ var funcionarioSchema = new Schema({
 	sexoMasculino: {type: Boolean, required: true},
 	ferias: [{
 				qtdeDias: Number,
-				arrayDias: [{date: Number, month: Number, year: Number}]
+				arrayDias: [{date: Number, month: Number, year: Number}],
 				periodo: {dataInicial: Number, dataFinal: Number, mesInicial: Number, mesFinal: Number, anoInicial: Number, anoFinal: Number},
 				comentario: String,
 				cadastradoPor: {_id: String, email: String}
