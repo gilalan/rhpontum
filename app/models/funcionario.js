@@ -55,7 +55,8 @@ var funcionarioSchema = new Schema({
 	rhponto: {type: Boolean, required: true}, //usa o sistema caso TRUE, usa relogio de ponto caso FALSE
 	sexoMasculino: {type: Boolean, required: true},
 	ferias: [{
-				qtdeDias: Number, 
+				qtdeDias: Number,
+				arrayDias: [{date: Number, month: Number, year: Number}]
 				periodo: {dataInicial: Number, dataFinal: Number, mesInicial: Number, mesFinal: Number, anoInicial: Number, anoFinal: Number},
 				comentario: String,
 				cadastradoPor: {_id: String, email: String}

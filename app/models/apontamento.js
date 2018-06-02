@@ -71,6 +71,7 @@ var apontamentoSchema = new Schema(
 	justificativa: String,//talvez não precise aqui
 	infoTrabalho: {
 		trabalha: Boolean,
+		ferias: {type: Boolean, default: false},
 		aTrabalhar: Number, //em minutos?
 		trabalhados: Number //em minutos?		
 	},
