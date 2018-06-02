@@ -109,6 +109,23 @@ router.post('/updateAppoints', function(req, res){
     
 });
 
+router.post('/setFeriasAppoints', function(req, res){
+
+    var arrayApps = req.body;
+
+    async.eachSeries(arrayApps, function updateObject (obj, done) {
+        
+        Apontamento.update({ _id: obj._id }, { $set : { "infoTrabalho.trabalha": obj.trabalha, "infoTrabalho.aTrabalhar": obj.aTrabalhar, "infoTrabalho.ferias": obj.estaFerias }}, done);
+
+    }, function allDone (err) {
+        if (err)
+            return res.status(500).send({success: false, message: err});
+        
+        return res.status(200).send({success: true, message: "tudo atualizado!"});
+    });
+    
+});
+
 // router.post('/', function(req, res) {    
    
 //    	var objDateWorker = req.body;
