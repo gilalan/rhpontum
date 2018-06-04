@@ -36,7 +36,25 @@ router.get('/', function(req, res) {
   .populate('gestor', 'nome')
   .populate('fiscal', 'nome')
   .populate('setor', 'nome descricao local')
-  .populate('componentes', 'nome sobrenome PIS')
+  //.populate('componentes', 'nome sobrenome PIS')
+  .populate({
+    path: 'componentes',
+    select: 'nome sobrenome PIS matricula sexoMasculino alocacao active',
+    model: 'Funcionario',
+    populate: [{
+      path: 'alocacao.cargo',
+      select: 'especificacao nomeFeminino',
+      model: 'Cargo'
+    },
+    {
+      path: 'alocacao.turno',
+      model: 'Turno',
+      populate: [{
+        path: 'escala', 
+        model: 'Escala'
+      }]
+    }]  
+  })
   .sort({nome: 'asc'})
   .exec(function(err, equipes){
 		
