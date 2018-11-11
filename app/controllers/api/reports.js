@@ -126,6 +126,61 @@ router.post('/setFeriasAppoints', function(req, res){
     
 });
 
+router.post('/getAppointsByTeam', function(req, res){
+
+    var objDateWorker = req.body;
+    var dateParametro = objDateWorker.date;
+    var dateFinalParametro = objDateWorker.date.final;
+    var equipe = objDateWorker.equipe;
+
+    console.log("data inicial pura: ", dateParametro.raw);
+    console.log("data final pura: ", dateFinalParametro.raw);
+
+    var startDateMom = moment({year: dateParametro.year, month: dateParametro.month,
+        day: dateParametro.day, hour: dateParametro.hour, minute: dateParametro.minute});
+
+    var endDateMom = moment({year: dateFinalParametro.year, month: dateFinalParametro.month,
+        day: dateFinalParametro.day, hour: dateFinalParametro.hour, minute: dateFinalParametro.minute});
+
+    var firstDay = dateParametro ? startDateMom.startOf('day') : moment(new Date()).startOf('day');
+    var lastDay = dateFinalParametro ? endDateMom.startOf('day') : moment(new Date()).startOf('day');
+
+    console.log('firstDay moment: ', firstDay);
+    console.log('lastDay moment: ', lastDay);
+
+    var queryDate = {$gte: firstDay.toDate(), $lt: lastDay.toDate()};
+    if (dateParametro.finalInclude)
+        queryDate = {$gte: firstDay.toDate(), $lte: lastDay.toDate()};
+
+    var mapFuncAppoints = {};
+
+    async.eachSeries(equipe.componentes, function getObjects (componente, done) {
+        
+        Apontamento.find({data: queryDate, PIS: componente.PIS}, done)
+        .exec(function(err, apontamentos){
+            if(!err) {
+                //return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+                if (!mapFuncAppoints[componente.PIS]){
+                    mapFuncAppoints[componente.PIS] = apontamentos;
+                } else {
+                    console.log('ja tinha mapeado o PIS', componente.PIS);
+                }
+            }
+
+            // console.log("Apontamento dateRange mongoose: ", apontamentos.length);
+            // return res.json(apontamentos);
+        });
+
+        }, function allDone (err) {
+            if (err)
+                return res.status(500).send({success: false, message: err});
+            
+            //return res.status(200).send({success: true, message: "tudo atualizado!"});
+            return res.json(mapFuncAppoints);
+        });
+    
+});
+
 // router.post('/', function(req, res) {    
    
 //    	var objDateWorker = req.body;

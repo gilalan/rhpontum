@@ -527,8 +527,16 @@ router.post('/currentDate', function(req, res){
     //currentDate.setTime( currentDate.getTime() - currentDate.getTimezoneOffset()*60*1000 );
     //console.log('@# depois -  date no server: ', currentDate);
     //console.log('@# depois -  timezone no server: ', currentDate.getTimezoneOffset());
-
-    return res.json({date: currentDate});
+    datePar = {
+        nYear: currentDate.getFullYear(),
+        nMonth: currentDate.getMonth(),
+        nDay: currentDate.getDate(),
+        nHours: currentDate.getHours(),
+        nMinutes: currentDate.getMinutes(),
+        nSeconds: currentDate.getSeconds(),
+        nMillisecs: currentDate.getMilliseconds()
+    };
+    return res.json({date: currentDate, dateParameter: datePar});
 });
 
 //teste de obter reps
