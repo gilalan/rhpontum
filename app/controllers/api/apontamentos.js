@@ -527,14 +527,16 @@ router.post('/currentDate', function(req, res){
     //currentDate.setTime( currentDate.getTime() - currentDate.getTimezoneOffset()*60*1000 );
     //console.log('@# depois -  date no server: ', currentDate);
     //console.log('@# depois -  timezone no server: ', currentDate.getTimezoneOffset());
+    var recifeDate = new Date(Date.now() - 3*60*60*1000); //diminui de -3h (em millisecs) para chegar no horário local de recife
+
     datePar = {
-        nYear: currentDate.getFullYear(),
-        nMonth: currentDate.getMonth(),
-        nDay: currentDate.getDate(),
-        nHours: currentDate.getHours(),
-        nMinutes: currentDate.getMinutes(),
-        nSeconds: currentDate.getSeconds(),
-        nMillisecs: currentDate.getMilliseconds()
+        nYear: recifeDate.getFullYear(),
+        nMonth: recifeDate.getMonth(),
+        nDay: recifeDate.getDate(),
+        nHours: recifeDate.getHours(),
+        nMinutes: recifeDate.getMinutes(),
+        nSeconds: recifeDate.getSeconds(),
+        nMillisecs: recifeDate.getMilliseconds()
     };
     return res.json({date: currentDate, dateParameter: datePar});
 });
