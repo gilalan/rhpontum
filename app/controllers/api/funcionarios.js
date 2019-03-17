@@ -272,6 +272,30 @@ router.post('/actives', function(req, res){
     });
 });
 
+//Get all employees, except GESTOR
+router.post('/onlyemployees', function(req, res) {    
+    
+    // usando o mongoose Model para buscar todos os funcionários
+    Funcionario.find({'alocacao.gestor': false})
+    .populate('alocacao.cargo', 'especificacao nomeFeminino')
+    .populate({
+        path: 'alocacao.turno',
+        model: 'Turno',
+        populate: [{path: 'escala', model: 'Escala'}]
+    })
+    .populate('alocacao.instituicao', 'nome sigla')
+    .sort({nome: 1, sobrenome: 1})
+    .exec(function(err, funcionarios){
+
+       if(err) {
+        console.log('errorrrrr', err);
+        return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+       }
+
+       res.json(funcionarios); // return all users in JSON format
+    });
+});
+
 //get team from employee (equipe do funciońario)
 router.post('/:id/equipe', function(req, res){
 

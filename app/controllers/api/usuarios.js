@@ -85,7 +85,7 @@ router.get('/:id', function(req, res) {
     if(err) {
       return res.status(500).send({success: false, message: 'Ocorreu um erro na obtenção do Usuário no Banco de Dados!'});
     }        
-    console.log("usuário retornado no get único: ", usuario);      
+    //console.log("usuário retornado no get único: ", usuario);      
     return res.json(usuario);
   });
 

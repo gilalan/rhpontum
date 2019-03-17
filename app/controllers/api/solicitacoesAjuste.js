@@ -1,6 +1,8 @@
 var SolicitacaoAjuste = require('../../models/solicitacaoAjuste');
 var Funcionario = require('../../models/funcionario');
 var Apontamento = require('../../models/apontamento');
+var Usuario = require('../../models/usuario');
+var Equipe = require('../../models/equipe');
 var moment = require('moment');
 var router = require('express').Router();
 var config = require('../../../config');
@@ -309,6 +311,154 @@ router.post('/getbystatus', function(req, res){
     }
           
     return res.json(solicitacoes);
+  });
+});
+
+router.post('/getbyteams', function(req, res){
+
+  var obj = req.body;
+
+  SolicitacaoAjuste.find({status: obj.status, funcionario: {$in: obj.employees}})
+  .populate({
+    path: 'funcionario', 
+    select: 'nome sobrenome PIS sexoMasculino alocacao',
+    model: 'Funcionario',
+    populate: [{
+      path: 'alocacao.cargo',
+      select: 'especificacao nomeFeminino',
+      model: 'Cargo'
+    },
+    {
+      path: 'alocacao.turno',
+      model: 'Turno',
+      populate: [{
+        path: 'escala', 
+        model: 'Escala'
+      }]
+    }]
+  })
+  .sort({data: 'asc'})
+  .exec(function(err, solicitacoes){
+    
+    if(err) {
+      return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+    }
+          
+    return res.json(solicitacoes);
+  });
+});
+
+router.post('/getbycomponents', function(req, res){
+
+  var obj = req.body;
+  var idUsuario = obj.userId;
+
+  Usuario.findOne({_id: idUsuario})
+  .populate('perfil')
+  .populate({
+      path: 'funcionario', 
+      select: 'nome sobrenome email PIS sexoMasculino alocacao',
+      model: 'Funcionario',
+      populate: [{
+        path: 'alocacao.cargo',
+        select: 'especificacao nomeFeminino',
+        model: 'Cargo'
+      },
+      {
+        path: 'alocacao.turno',
+        model: 'Turno',
+        populate: [{
+          path: 'escala', 
+          model: 'Escala'
+        }]
+      }]            
+  })
+  .exec(function(err, usuario){
+    
+    if(err) {
+      return res.status(500).send({success: false, message: 'Ocorreu um erro na obtenção do Usuário no Banco de Dados!'});
+    }        
+    console.log("usuário retornado no get único: ", usuario.funcionario.nome);      
+
+    var query = {};
+    var func = usuario.funcionario;
+    if (func.alocacao.gestor)
+      query = {gestor: func._id};
+    else if (func.alocacao.fiscal)
+      query = {fiscal: func._id};
+
+
+    Equipe.find(query)
+    //.populate('gestor', 'nome')
+    //.populate('setor', 'nome descricao')
+    .sort({nome: 'asc'})
+    .populate({
+      path: 'componentes',
+      select: 'nome sobrenome PIS matricula sexoMasculino alocacao active',
+      model: 'Funcionario',
+      populate: [{
+        path: 'alocacao.cargo',
+        select: 'especificacao nomeFeminino',
+        model: 'Cargo'
+      },
+      {
+        path: 'alocacao.turno',
+        model: 'Turno',
+        populate: [{
+          path: 'escala', 
+          model: 'Escala'
+        }]
+      }]  
+    })
+    .populate('setor', 'nome local')
+    .exec(function(err, equipes){
+      
+      if(err) {
+        return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+      }
+      
+      console.log("Qtde de Equipes trazidas: ", equipes.length);
+      var allEmployees = [];
+      for (var i=0; i < equipes.length; i++) {
+        for (var j=0; j < equipes[i].componentes.length; j++) {
+          if (equipes[i].componentes[j].active === true){
+            allEmployees.push(equipes[i].componentes[j]);  
+          }
+        }
+      }
+      console.log("Qtde de employees nas equipes: ", allEmployees.length);
+
+      SolicitacaoAjuste.find({status: obj.status, funcionario: {$in: allEmployees}})
+      .populate({
+        path: 'funcionario', 
+        select: 'nome sobrenome PIS sexoMasculino alocacao',
+        model: 'Funcionario',
+        populate: [{
+          path: 'alocacao.cargo',
+          select: 'especificacao nomeFeminino',
+          model: 'Cargo'
+        },
+        {
+          path: 'alocacao.turno',
+          model: 'Turno',
+          populate: [{
+            path: 'escala', 
+            model: 'Escala'
+          }]
+        }]
+      })
+      .sort({data: 'asc'})
+      .exec(function(err, solicitacoes){
+        
+        if(err) {
+          return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+        }
+              
+        return res.json(solicitacoes);
+      });
+      //return res.json(equipes);
+    });
+    //return res.json(usuario);
   });
 });
 
