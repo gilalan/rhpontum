@@ -288,16 +288,25 @@ router.post('/intervaldate/funcionario', function(req, res){
     var firstDay = dateParametro ? startDateMom.startOf('day') : moment(new Date()).startOf('day');
     var lastDay = dateFinalParametro ? endDateMom.startOf('day') : moment(new Date()).startOf('day');
     
+    var oneDayMoreLastDay = moment(lastDay).add(1, 'days');
+
     console.log('firstDay moment: ', firstDay);
     console.log('lastDay moment: ', lastDay);
+    console.log('one more day: ', oneDayMoreLastDay);
 
-    var queryDate = {$gte: firstDay.toDate(), $lt: lastDay.toDate()};
+    
+    var queryDate = {$gte: firstDay.toDate(), $lt: oneDayMoreLastDay.toDate()};
     if (dateParametro.finalInclude)
-        queryDate = {$gte: firstDay.toDate(), $lte: lastDay.toDate()};
+        queryDate = {$gte: firstDay.toDate(), $lte: oneDayMoreLastDay.toDate()};
+    
 
-    console.log("############# Trazendo dados!");
+    //var date1 = "2019-02-07T03:00:00Z";
+    //var date2 = "2019-02-07T03:00:00Z";
+    //var queryDate = {$gte: "2019-02-07T03:00:00Z", $lte: "2019-02-07T03:00:00Z"};
+    console.log("############# Trazendo dados! queryDate: ", queryDate);
 
     Apontamento.find({data: queryDate, funcionario: funcionario._id ? funcionario._id : funcionario})
+    //Apontamento.find({data: {$gte: new ISODate(date1), $lte: new ISODate(date2)}, funcionario: funcionario._id ? funcionario._id : funcionario})
     .populate({
         path: 'funcionario', 
         select: 'nome sobrenome PIS sexoMasculino alocacao',
