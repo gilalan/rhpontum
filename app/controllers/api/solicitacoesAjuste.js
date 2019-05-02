@@ -21,10 +21,10 @@ var config = require('../../../config');
  */
 var accessLevel = 4;
 
-//Get ALL solicitacoes
+//Get ALL solicitacoes de ajuste - tipo 0
 router.get('/', function(req, res) {
 
-	SolicitacaoAjuste.find()
+	SolicitacaoAjuste.find({tipo: 0})
   .populate({
     path: 'funcionario', 
     select: 'nome sobrenome PIS sexoMasculino alocacao',

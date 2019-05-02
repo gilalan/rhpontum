@@ -1,10 +1,12 @@
 var mongoose = require('mongoose');
 var Funcionario = require('./funcionario');
+var EventoAbono = require('./eventoAbono');
 var Schema = mongoose.Schema;
 
 var solicitacaoAjusteSchema = new Schema(
 {
 	funcionario: {type: Schema.Types.ObjectId, required: true, ref: 'Funcionario'},
+	tipo: {type: Number, default: 0}, //0: ajuste, 1: abono
 	data: {type: Date, required: true}, //Data Pretendida para solicitação
 	resposta: {
 		aprovada: {type: Boolean, default: false},
@@ -56,6 +58,29 @@ var solicitacaoAjusteSchema = new Schema(
 		}]
 	},
 	motivo: {type: String, required: true}, //motivo da solicitação
+	dataFinal: {type: Date},
+	horarioEnviado: {
+		inicial: {
+			hora: Number, 
+			minuto: Number, 
+			segundo: Number,
+			totalMin: Number
+		},
+		final: {
+			hora: Number, 
+			minuto: Number, 
+			segundo: Number,
+			totalMin: Number
+		}
+	},
+	arrayAusAjt: [
+		{
+			id: Number,
+			data: Date,
+			totalMin: Number
+		}
+	],
+	eventoAbono: {type: Schema.Types.ObjectId, required: false, ref: 'EventoAbono'},
 	anexo: { data: Buffer, contentType: String }
 },
 {
