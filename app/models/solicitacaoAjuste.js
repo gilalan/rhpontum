@@ -58,7 +58,8 @@ var solicitacaoAjusteSchema = new Schema(
 		}]
 	},
 	motivo: {type: String, required: true}, //motivo da solicitação
-	dataFinal: {type: Date},
+	//somente para abono a partir daqui
+	dataFinal: {type: Date}, 
 	horarioEnviado: {
 		inicial: {
 			hora: Number, 

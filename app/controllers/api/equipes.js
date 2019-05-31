@@ -39,7 +39,7 @@ router.get('/', function(req, res) {
   //.populate('componentes', 'nome sobrenome PIS')
   .populate({
     path: 'componentes',
-    select: 'nome sobrenome PIS matricula sexoMasculino alocacao active',
+    select: 'nome sobrenome PIS matricula sexoMasculino alocacao active ferias',
     model: 'Funcionario',
     populate: [{
       path: 'alocacao.cargo',
@@ -205,7 +205,7 @@ router.post('/gestorFilter', function(req, res){
   .sort({nome: 'asc'})
   .populate({
     path: 'componentes',
-    select: 'nome sobrenome PIS matricula sexoMasculino alocacao active',
+    select: 'nome sobrenome PIS matricula sexoMasculino alocacao active ferias',
     model: 'Funcionario',
     populate: [{
       path: 'alocacao.cargo',
@@ -227,7 +227,7 @@ router.post('/gestorFilter', function(req, res){
     if(err) {
       return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
     }
-    
+    console.log("equipes retornadas?", equipes);
     return res.json(equipes);
   });
 });
