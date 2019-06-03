@@ -65,14 +65,17 @@ var solicitacaoAjusteSchema = new Schema(
 			hora: Number, 
 			minuto: Number, 
 			segundo: Number,
-			totalMin: Number
+			totalMin: Number,
+			horarioFtd: String
 		},
 		final: {
 			hora: Number, 
 			minuto: Number, 
 			segundo: Number,
-			totalMin: Number
-		}
+			totalMin: Number,
+			horarioFtd: String
+		},
+		diff: Number //totalMinutos de diferença entre inicial e final
 	},
 	arrayAusAjt: [
 		{
@@ -90,6 +93,8 @@ var solicitacaoAjusteSchema = new Schema(
 { 
 	collection : 'solicitacoesAjuste' 
 });
+
+//solicitacaoAjusteSchema.index({ data: 1, funcionario: 1}, { unique: true });
 
 var solicitacaoAjusteModel = mongoose.model('SolicitacaoAjuste', solicitacaoAjusteSchema);
 

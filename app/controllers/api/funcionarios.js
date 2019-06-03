@@ -174,13 +174,13 @@ router.post('/:id/apontamentoRange', function(req, res){
 
     var funcionarioId = req.params.id;
     var dateApontamento = req.body;
-    console.log("dateApontamento: ", dateApontamento.raw);
+    //console.log("dateApontamento: ", dateApontamento.raw);
 
     var dateMom = moment({year: dateApontamento.year, month: dateApontamento.month,
         day: dateApontamento.day, hour: dateApontamento.hour, minute: dateApontamento.minute});    
 
-    console.log('dateMom: ', dateMom);
-    console.log('dateMom ftd: ', dateMom.format());
+    //console.log('dateMom: ', dateMom);
+    //console.log('dateMom ftd: ', dateMom.format());
     var today = dateMom.startOf('day');
     //var today = moment(dateApontamento.dataInicial).startOf('day');
     var anotherDay = null;
@@ -224,17 +224,17 @@ router.post('/:id/apontamentoRange', function(req, res){
         */
 
         var apontamentosFuncionario = [];
-        console.log('apontamentos retornados: ', apontamentos);
+        //console.log('apontamentos retornados: ', apontamentos);
         if(apontamentos) {
             //Temos que filtrar para trazer apenas os apontamentos deste usuário nesse período de data
-            console.log('tem apontamentos, entrei na função');
+            //console.log('tem apontamentos, entrei na função');
             apontamentosFuncionario = apontamentos.filter(function(apontamento){
-                console.log('É o apontamento?', apontamento.funcionario._id == funcionarioId);
+                //console.log('É o apontamento?', apontamento.funcionario._id == funcionarioId);
                 return apontamento.funcionario._id == funcionarioId;
             });
         }
 
-        console.log("Apontamentos filtrados mongoose: ", apontamentosFuncionario);
+        //console.log("Apontamentos filtrados mongoose: ", apontamentosFuncionario);
         return res.json(apontamentosFuncionario);
     });
 });

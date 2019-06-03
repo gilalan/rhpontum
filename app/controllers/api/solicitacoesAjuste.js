@@ -1,10 +1,12 @@
 var SolicitacaoAjuste = require('../../models/solicitacaoAjuste');
 var Funcionario = require('../../models/funcionario');
+var EventoAbono = require('../../models/eventoAbono');
 var Apontamento = require('../../models/apontamento');
 var Usuario = require('../../models/usuario');
 var Equipe = require('../../models/equipe');
 var moment = require('moment');
 var router = require('express').Router();
+var async = require('async');
 var config = require('../../../config');
 
 //=========================================================================
@@ -30,19 +32,20 @@ router.get('/', function(req, res) {
     select: 'nome sobrenome PIS sexoMasculino alocacao',
     model: 'Funcionario',
     populate: [{
-      path: 'alocacao.cargo',
-      select: 'especificacao nomeFeminino',
-      model: 'Cargo'
-    },
-    {
-      path: 'alocacao.turno',
-      model: 'Turno',
-      populate: [{
-        path: 'escala', 
-        model: 'Escala'
+        path: 'alocacao.cargo',
+        select: 'especificacao nomeFeminino',
+        model: 'Cargo'
+      },
+      {
+        path: 'alocacao.turno',
+        model: 'Turno',
+        populate: [{
+          path: 'escala', 
+          model: 'Escala'
+        }]
       }]
-    }]
   })
+  .populate('eventoAbono', 'nome')
   .sort({data: 'asc'})
   .exec(function(err, solicitacoes){
 		
@@ -115,6 +118,7 @@ router.get('/:id', function(req, res) {
       }]
     }]
   })
+  .populate('eventoAbono', 'nome')
   .exec(function(err, solicitacao){
     
     if(err) {
@@ -188,8 +192,13 @@ router.post('/data/funcionario', function(req, res){
   console.log('today moment: ', today);
   console.log('tomorrow moment: ', tomorrow);
 
+  var query = {data: {$gte: today.toDate(),$lt: tomorrow.toDate()}, funcionario: objFuncDate.funcionario._id, status: 0, tipo: 0};
+  if (objFuncDate.tipo)
+    query = {data: {$gte: today.toDate(),$lt: tomorrow.toDate()}, funcionario: objFuncDate.funcionario._id, status: 0, tipo: objFuncDate.tipo};
+
+  //console.log('query: ', query);
   //status 0 -> pendente
-  SolicitacaoAjuste.find({data: {$gte: today.toDate(),$lt: tomorrow.toDate()}, funcionario: objFuncDate.funcionario._id, status: 0})
+  SolicitacaoAjuste.find(query)
   .populate({
     path: 'funcionario', 
     select: 'nome sobrenome PIS sexoMasculino alocacao',
@@ -208,6 +217,7 @@ router.post('/data/funcionario', function(req, res){
       }]
     }]
   })
+  .populate('eventoAbono', 'nome')
   .exec(function(err, solicitacoes){
     
     if(err) {
@@ -225,6 +235,9 @@ router.post('/solicitationappoint', function(req, res){
   var _apontamento = req.body.apontamento;
   var isNewApt = req.body.isNew;
 
+  //console.log("_solicitacao: ", req.body);
+  //console.log("_solicitacao: ", _solicitacao);
+
   SolicitacaoAjuste.findOne({_id: _solicitacao._id}, function(err, solicitacao){
 
     if(err) {
@@ -232,14 +245,14 @@ router.post('/solicitationappoint', function(req, res){
       return res.status(500).send({success: false, message: 'Ocorreu um erro no FINDONE da Solicitação!'});
     }
 
-    solicitacao.funcionario = _solicitacao.funcionario;
-    solicitacao.data = _solicitacao.data;
+    //solicitacao.funcionario = _solicitacao.funcionario;
+    //solicitacao.data = _solicitacao.data;
     solicitacao.resposta = _solicitacao.resposta;
     solicitacao.status = _solicitacao.status;
-    solicitacao.motivo = _solicitacao.motivo;
-    solicitacao.anexo = _solicitacao.anexo;
-    solicitacao.anterior = _solicitacao.anterior;
-    solicitacao.proposto = _solicitacao.proposto;
+    //solicitacao.motivo = _solicitacao.motivo;
+    //solicitacao.anexo = _solicitacao.anexo;
+    //solicitacao.anterior = _solicitacao.anterior;
+    //solicitacao.proposto = _solicitacao.proposto;
 
     //tenta atualizar de fato no BD
     solicitacao.save(function(err){
@@ -280,6 +293,139 @@ router.post('/solicitationappoint', function(req, res){
   });
 });
 
+router.post('/createsolicitationappoint', function(req, res){
+
+  var _solicitacao = req.body.solicitacao;
+  var _apontamento = req.body.apontamento;
+  var isNewApt = req.body.isNew;
+
+  //console.log("_solicitacao: ", req.body);
+  //console.log("_solicitacao: ", _solicitacao);
+
+  SolicitacaoAjuste.create(_solicitacao, function(err, solicitacao){
+
+    if(err) {
+      console.log('Erro no Create: ', err);
+      return res.status(500).send({success: false, message: 'Ocorreu um erro no Criar Solicitação!'});
+    }
+
+    if (isNewApt) {
+
+      Apontamento.create(_apontamento, function(err, apontamento) {
+      
+        if(err) {
+          console.log('erro post apontamento: ', err);
+          return res.status(500).send({success: false, message: 'Ocorreu um erro na criação do apontamento!'});
+        }   
+        
+        console.log('criou apontamento normalmente');
+        return res.status(200).send({success: true, message: 'Atualizações efetuadas com sucesso!'});
+        //return res.json(apontamento);
+      });
+
+    } else {
+      
+      Apontamento.findOneAndUpdate({_id: _apontamento._id}, _apontamento, { upsert: false, new: false }, function(err, apontamento){
+        if (err){
+          console.log('erro ao atualizar apontamento', err);
+        }
+
+        console.log('atualizou normalmente');
+        return res.status(200).send({success: true, message: 'Atualizações efetuadas com sucesso!'});
+      });
+    }
+  });
+});
+
+router.post('/insertAndUpdateMany', function(req, res){
+
+  var _solicitacao = req.body.solicitacao;
+  var _apontamentos = req.body.apontamentos;
+  //var apontamentosNovos = _apontamentos.novos;
+  //var 
+
+  SolicitacaoAjuste.findOne({_id: _solicitacao._id}, function(err, solicitacao){
+
+    if(err) {
+      console.log('Erro no FINDONE: ', err);
+      return res.status(500).send({success: false, message: 'Ocorreu um erro no FINDONE da Solicitação!'});
+    }
+
+    solicitacao.resposta = _solicitacao.resposta;
+    solicitacao.status = _solicitacao.status;
+
+    //tenta atualizar de fato no BD
+    solicitacao.save(function(err){
+      
+      if(err){
+        console.log('Erro no save do update', err);
+        return res.status(500).send({success: false, message: 'Ocorreu um erro no save da Solicitação!'});
+      }
+
+      Apontamento.insertMany(_apontamentos.novos, function(err, novosApontamentos){
+
+        if(err) {
+          console.log('Erro no FINDONE: ', err);
+          return res.status(500).send({success: false, message: 'Ocorreu um erro no FINDONE da Solicitação!'});
+        }
+      });
+
+      async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
+                
+        Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
+          "infoTrabalho": obj.infoTrabalho, "status": obj.status }}, done);
+          console.log("obj a ser atualizado: ", obj.infoTrabalho);
+          console.log("obj a ser atualizado: ", obj.status);
+        }, function allDone (err) {
+            if (err)
+              return res.status(500).send({success: false, message: err});
+            console.log("Tudo finalizado na atualizacao da solicitacao");
+            return res.status(200).send({success: true, message: "Solicitação atualizada!"});
+        });
+
+    });
+
+    //return res.status(200).send({success: true, message: 'Solicitação atualizada com sucesso!'});
+  });
+
+});
+
+router.post('/createAndUpdateMany', function(req, res){
+
+  var _solicitacao = req.body.solicitacao;
+  var _apontamentos = req.body.apontamentos;
+
+  SolicitacaoAjuste.create(_solicitacao, function(err, solicitacao){
+
+    if(err) {
+      console.log('Erro no FINDONE: ', err);
+      return res.status(500).send({success: false, message: 'Ocorreu um erro no FINDONE da Solicitação!'});
+    }
+
+    Apontamento.insertMany(_apontamentos.novos, function(err, novosApontamentos){
+
+      if(err) {
+        console.log('Erro no FINDONE: ', err);
+        return res.status(500).send({success: false, message: 'Ocorreu um erro no FINDONE da Solicitação!'});
+      }
+    });
+
+    async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
+              
+      Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
+        "infoTrabalho": obj.infoTrabalho, "status": obj.status }}, done);
+        console.log("obj a ser atualizado: ", obj.infoTrabalho);
+        console.log("obj a ser atualizado: ", obj.status);
+      }, function allDone (err) {
+          if (err)
+            return res.status(500).send({success: false, message: err});
+          console.log("Tudo finalizado na atualizacao da solicitacao");
+          return res.status(200).send({success: true, message: "Solicitação atualizada!"});
+      });
+
+    });
+});
+
 router.post('/getbystatus', function(req, res){
 
   var objStatus = req.body;
@@ -303,6 +449,7 @@ router.post('/getbystatus', function(req, res){
       }]
     }]
   })
+  .populate('eventoAbono', 'nome')
   .sort({data: 'asc'})
   .exec(function(err, solicitacoes){
     
@@ -337,6 +484,7 @@ router.post('/getbyteams', function(req, res){
       }]
     }]
   })
+  .populate('eventoAbono', 'nome')
   .sort({data: 'asc'})
   .exec(function(err, solicitacoes){
     
@@ -447,6 +595,7 @@ router.post('/getbycomponents', function(req, res){
           }]
         }]
       })
+      .populate('eventoAbono', 'nome')
       .sort({data: 'asc'})
       .exec(function(err, solicitacoes){
         

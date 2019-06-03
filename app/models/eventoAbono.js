@@ -9,6 +9,6 @@ var eventoAbonoSchema = new Schema(
 	timestamps: true
 });
 
-var eventoAbonoModel = mongoose.model('eventoAbono', eventoAbonoSchema);
+var eventoAbonoModel = mongoose.model('EventoAbono', eventoAbonoSchema);
 
 module.exports = eventoAbonoModel;

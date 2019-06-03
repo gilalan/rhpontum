@@ -9,7 +9,7 @@ var apontamentoSchema = new Schema(
 	PIS: {type: String, required: true},
 	status: {
 		id: Number, //Poderia ter o método no qual foi criado o ponto, se foi batida do usuário ou manualmente pelo Gestor/Fiscal (manual tem q ser justificado)
-		descricao: {type: String, enum: ["Correto", "Incompleto", "Errado", "Justificado"]}
+		descricao: {type: String, enum: ["Correto", "Incompleto", "Errado", "Justificado", "Abonado"]}
 	},
 	marcacoes: [{ //registradas no horário local (o TZOffset ajuda a calcular a hora universal se precisar)
 		id: Number, //1, 2, 3, 4 -> sequencial para ordenação

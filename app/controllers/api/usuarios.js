@@ -16,7 +16,7 @@ router.get('/', function(req, res) {
     if(err) {
       return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
     }
-          
+    //console.log("usuario retornado: ", usuarios);      
     return res.json(usuarios);
   });
 
@@ -64,7 +64,7 @@ router.get('/:id', function(req, res) {
   .populate('perfil')
   .populate({
       path: 'funcionario', 
-      select: 'nome sobrenome email PIS sexoMasculino alocacao',
+      select: 'nome sobrenome email PIS sexoMasculino alocacao active ferias',
       model: 'Funcionario',
       populate: [{
         path: 'alocacao.cargo',

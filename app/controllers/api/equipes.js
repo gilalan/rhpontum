@@ -227,7 +227,7 @@ router.post('/gestorFilter', function(req, res){
     if(err) {
       return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
     }
-    console.log("equipes retornadas?", equipes);
+    //console.log("equipes retornadas?", equipes);
     return res.json(equipes);
   });
 });

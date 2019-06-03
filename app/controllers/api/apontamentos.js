@@ -25,12 +25,12 @@ router.post('/', function(req, res) {
     
     var apoint = req.body;
     var dataReg = req.body.data;
-    console.log("APONTAMENTO: ", apoint);
+    //console.log("APONTAMENTO: ", apoint);
 
     Apontamento.create(apoint, function(err, apontamento) {
         
         if(err) {
-          console.log('erro post apontamento: ', err);
+          //console.log('erro post apontamento: ', err);
           return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
         }   
 
@@ -44,7 +44,7 @@ router.post('/', function(req, res) {
 router.get('/:id', function(req, res){
 
     var idApontamento = req.params.id;
-    console.log("nomeApontamento: ", idApontamento);
+    //console.log("nomeApontamento: ", idApontamento);
     
     Apontamento.findOne({_id: idApontamento})
     .populate('funcionario')
@@ -57,11 +57,11 @@ router.get('/:id', function(req, res){
         /*remover por enquanto essa função de verificar a permissão de autorização
     
         if(!config.ensureAuthorized(req.auth, accessLevel)) {
-            console.log('usuário não autorizado para instituições');
+            //console.log('usuário não autorizado para instituições');
             return res.status(403).send({success: false, message: 'Usuário não autorizado!'});
         }
         */
-        console.log("Apontamento mongoose: ", apontamento);
+        //console.log("Apontamento mongoose: ", apontamento);
         return res.json(apontamento);
     });
 });
@@ -92,7 +92,7 @@ router.put('/:id', function(req, res){
       apontamento.save(function(err){
         
         if(err){
-          console.log('Erro no save do update', err);
+          //console.log('Erro no save do update', err);
           return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
         }
 
@@ -112,7 +112,7 @@ router.delete('/:id', function(req, res){
     Apontamento.remove({_id: idApontamento}, function(err){
         
         if(err){
-          console.log('Erro no delete apontamento', err);
+          //console.log('Erro no delete apontamento', err);
           return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
         }
 
@@ -124,19 +124,19 @@ router.delete('/:id', function(req, res){
 router.post('/date', function(req, res){
 
     var dateApontamento = req.body;
-    console.log("data pura: ", dateApontamento.raw);
+    //console.log("data pura: ", dateApontamento.raw);
         
     //testes
     var dateMom = moment({year: dateApontamento.year, month: dateApontamento.month,
         day: dateApontamento.day, hour: dateApontamento.hour, minute: dateApontamento.minute});    
 
-    console.log('#moment date: ', dateMom.format());
+    //console.log('#moment date: ', dateMom.format());
 
     var today = dateMom.startOf('day');//moment(dateApontamento.dataInicial).startOf('day');
     var tomorrow = moment(today).add(1, 'days');
     
-    console.log('today moment: ', today);
-    console.log('tomorrow moment: ', tomorrow);
+    //console.log('today moment: ', today);
+    //console.log('tomorrow moment: ', tomorrow);
 
     Apontamento.find({data: {$gte: today.toDate(),$lt: tomorrow.toDate()}})
     .populate('funcionario', 'nome PIS')
@@ -146,7 +146,7 @@ router.post('/date', function(req, res){
             return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
         }
 
-        console.log("Apontamento mongoose: ", apontamentos);
+        //console.log("Apontamento mongoose: ", apontamentos);
         return res.json(apontamentos);
     });
 });
@@ -166,18 +166,18 @@ router.post('/date/equipe', function(req, res){
     var today = dateMom.startOf('day');
     var tomorrow = moment(today).add(1, 'days');
     
-    console.log('today moment: ', today);
-    console.log('tomorrow moment: ', tomorrow);
+    //console.log('today moment: ', today);
+    //console.log('tomorrow moment: ', tomorrow);
 
     Apontamento.find({data: {$gte: today.toDate(),$lt: tomorrow.toDate()}, funcionario: {$in: equipe}})
     .populate('funcionario', 'nome PIS')
     .exec(function(err, apontamentos){
         if(err) {
-            console.log("erro de apontamento? ", err);
+            //console.log("erro de apontamento? ", err);
             return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
         }
 
-        console.log("Apontamento mongoose: ", apontamentos);
+        //console.log("Apontamento mongoose: ", apontamentos);
         return res.json(apontamentos);
     });
 });
@@ -190,12 +190,12 @@ router.post('/date/equipe', function(req, res){
 router.post('/intervaldate/equipe', function(req, res){
 
     var objDateEquipe = req.body;
-    console.log("Objeto Date Equipe: ", objDateEquipe);
+    ////console.log("Objeto Date Equipe: ", objDateEquipe);
     var dateParametro = objDateEquipe.date;
     var dias = objDateEquipe.dias;
     var equipe = objDateEquipe.equipe;
 
-    console.log("data pura: ", dateParametro.raw);
+    ////console.log("data pura: ", dateParametro.raw);
 
     var dateMom = moment({year: dateParametro.year, month: dateParametro.month,
         day: dateParametro.day, hour: dateParametro.hour, minute: dateParametro.minute});    
@@ -205,15 +205,15 @@ router.post('/intervaldate/equipe', function(req, res){
     
     var otherDay = (dias >= 0) ? moment(today).add(dias, 'days') : moment(today).subtract(dias, 'days');
     
-    console.log('today moment: ', today);
-    console.log('other day moment: ', otherDay);
+    ////console.log('today moment: ', today);
+    ////console.log('other day moment: ', otherDay);
 
     var queryDate = (dias >= 0) ? {$gte: today.toDate(), $lt: otherDay.toDate()} : {$gte: otherDay.toDate(), $lt: today.toDate()};
 
     //Para um intervalo de dias, envia mais dados no populate
     if (dias > 1) {
 
-        console.log("############# DADOS MULTIPLICADOS");
+        ////console.log("############# DADOS MULTIPLICADOS");
 
         Apontamento.find({data: queryDate, funcionario: {$in: equipe}})
         .populate({
@@ -240,13 +240,13 @@ router.post('/intervaldate/equipe', function(req, res){
                 return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
             }
 
-            console.log("Apontamento dateRange mongoose: ", apontamentos.length);
+            //console.log("Apontamento dateRange mongoose: ", apontamentos.length);
             return res.json(apontamentos);
         });
         
     } else {
 
-        console.log("################ Dados simplificados...");
+        ////console.log("################ Dados simplificados...");
 
         Apontamento.find({data: queryDate, funcionario: {$in: equipe}})
         .populate({
@@ -260,7 +260,7 @@ router.post('/intervaldate/equipe', function(req, res){
                 return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
             }
 
-            console.log("Apontamento dateRange mongoose: ", apontamentos.length);
+            ////console.log("Apontamento dateRange mongoose: ", apontamentos.length);
             return res.json(apontamentos);
         });
     }
@@ -276,8 +276,8 @@ router.post('/intervaldate/funcionario', function(req, res){
     var dateFinalParametro = objDateWorker.date.final;
     var funcionario = objDateWorker.funcionario;
 
-    console.log("data inicial pura: ", dateParametro.raw);
-    console.log("data final pura: ", dateFinalParametro.raw);
+    //console.log("data inicial pura: ", dateParametro.raw);
+    //console.log("data final pura: ", dateFinalParametro.raw);
 
     var startDateMom = moment({year: dateParametro.year, month: dateParametro.month,
         day: dateParametro.day, hour: dateParametro.hour, minute: dateParametro.minute});
@@ -290,9 +290,9 @@ router.post('/intervaldate/funcionario', function(req, res){
     
     var oneDayMoreLastDay = moment(lastDay).add(1, 'days');
 
-    console.log('firstDay moment: ', firstDay);
-    console.log('lastDay moment: ', lastDay);
-    console.log('one more day: ', oneDayMoreLastDay);
+    //console.log('firstDay moment: ', firstDay);
+    //console.log('lastDay moment: ', lastDay);
+    //console.log('one more day: ', oneDayMoreLastDay);
 
     
     var queryDate = {$gte: firstDay.toDate(), $lt: oneDayMoreLastDay.toDate()};
@@ -303,7 +303,7 @@ router.post('/intervaldate/funcionario', function(req, res){
     //var date1 = "2019-02-07T03:00:00Z";
     //var date2 = "2019-02-07T03:00:00Z";
     //var queryDate = {$gte: "2019-02-07T03:00:00Z", $lte: "2019-02-07T03:00:00Z"};
-    console.log("############# Trazendo dados! queryDate: ", queryDate);
+    //console.log("############# Trazendo dados! queryDate: ", queryDate);
 
     Apontamento.find({data: queryDate, funcionario: funcionario._id ? funcionario._id : funcionario})
     //Apontamento.find({data: {$gte: new ISODate(date1), $lte: new ISODate(date2)}, funcionario: funcionario._id ? funcionario._id : funcionario})
@@ -331,7 +331,7 @@ router.post('/intervaldate/funcionario', function(req, res){
             return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
         }
 
-        console.log("Apontamento dateRange mongoose: ", apontamentos.length);
+        //console.log("Apontamento dateRange mongoose: ", apontamentos.length);
         return res.json(apontamentos);
     });
    
@@ -352,8 +352,8 @@ router.post('/allequipes/estatisticas', function(req, res){
       //   // Map the value to the key
       //   next(err, result.value);
       // });
-      //console.log('#######################');
-      //console.log('equipe: ', equipe.nome);
+      ////console.log('#######################');
+      ////console.log('equipe: ', equipe.nome);
 
 
       Apontamento.find({funcionario: {$in: equipe.componentes}})
@@ -368,12 +368,12 @@ router.post('/allequipes/estatisticas', function(req, res){
                 return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
             }
 
-            //console.log("opa, resultado: ", apontamentos.length);
+            ////console.log("opa, resultado: ", apontamentos.length);
             for (i = 0; i < apontamentos.length; i++) {
 
                 marcacoesTotais += apontamentos[i].marcacoes.length;
                 for (j = 0; j < apontamentos[i].marcacoes.length; j++){
-                    //console.log('marcacao: ', apontamentos[i].marcacoes[j].strHorario);
+                    ////console.log('marcacao: ', apontamentos[i].marcacoes[j].strHorario);
                     if (apontamentos[i].marcacoes[j].RHWeb)
                         marcacoesWeb++;
                     if (apontamentos[i].marcacoes[j].REP)
@@ -384,18 +384,18 @@ router.post('/allequipes/estatisticas', function(req, res){
             //return res.json(apontamentos);
         });
 
-       //console.log('#######################');
+       ////console.log('#######################');
 
     },
     function (err, apontamentos) {
-      //console.log(apontamentos); // [value1, value 2, ...]
+      ////console.log(apontamentos); // [value1, value 2, ...]
         // for (i = 0; i < apontamentos.length; i++) {
-        //     console.log('apontamento de: ', apontamentos[i].funcionario.nome);
-        //     console.log('qtde de marcacoes: ', apontamentos[i].marcacoes.length);
+        //     //console.log('apontamento de: ', apontamentos[i].funcionario.nome);
+        //     //console.log('qtde de marcacoes: ', apontamentos[i].marcacoes.length);
         // }
-        console.log('marcacoesTotais? ', marcacoesTotais);
-        console.log('marcacoesFisicas? ', marcacoesFisicas);
-        console.log('marcacoesWeb? ', marcacoesWeb);
+        //console.log('marcacoesTotais? ', marcacoesTotais);
+        //console.log('marcacoesFisicas? ', marcacoesFisicas);
+        //console.log('marcacoesWeb? ', marcacoesWeb);
     });
 
 });
@@ -414,15 +414,15 @@ router.post('/teste', function(req, res){
     var otherDay = (dias >= 0) ? moment(today).add(dias, 'days') : moment(today).subtract(dias, 'days');
     var funcionariosApontamentos = equipe;
 
-    console.log('today moment: ', today);
-    console.log('other day moment: ', otherDay);
+    //console.log('today moment: ', today);
+    //console.log('other day moment: ', otherDay);
 
     var queryDate = (dias >= 0) ? {$gte: today.toDate(), $lt: otherDay.toDate()} : {$gte: otherDay.toDate(), $lt: today.toDate()};
 
     if (equipe) {
         
         //equipe.forEach(function(componente){
-          //  console.log("componente: ", componente);
+          //  //console.log("componente: ", componente);
           const cursor = 
             Apontamento.find({funcionario: {$in: equipe}, data: queryDate})
             .populate({
@@ -445,17 +445,17 @@ router.post('/teste', function(req, res){
             }).cursor();
 
             cursor.on('data', function(apontamento) {
-              //console.log(apontamento.data);
-              //console.log(apontamento.funcionario.nome);
+              ////console.log(apontamento.data);
+              ////console.log(apontamento.funcionario.nome);
               equipe.forEach(function(componente){
-                //console.log("componente: ", componente.nome);
+                ////console.log("componente: ", componente.nome);
                 if (componente._id == apontamento.funcionario._id){
-                  //  console.log("encontrou um componente com o id do funcionário");
+                  //  //console.log("encontrou um componente com o id do funcionário");
                     if (!componente.apontamentos)
                         componente.apontamentos = [];
 
                     componente.apontamentos.push(apontamento);
-                    //console.log("componente.apontamentos array: ", componente.apontamentos.length);
+                    ////console.log("componente.apontamentos array: ", componente.apontamentos.length);
                 }
               });
             });
@@ -469,7 +469,7 @@ router.post('/teste', function(req, res){
             // function next(promise) {
             //   promise.then(apontamento => {
             //     if (apontamento) {
-            //       console.log(apontamento);
+            //       //console.log(apontamento);
             //       next(cursor.next());
             //     }
             //   })
@@ -480,36 +480,36 @@ router.post('/teste', function(req, res){
             // cursor.next().then(function(apontamento){
 
             //     if (!apontamento) {
-            //         console.log("Não encontrou apontamento!");
+            //         //console.log("Não encontrou apontamento!");
             //         return res.status(500).send({success: false, message: 'Não foi encontrado apontamento!!'});
             //     }
                 
-            //     console.log("Apontamento dateRange mongoose: ", apontamento.data);
-            //     console.log("Apontamento dateRange mongoose: ", apontamento.funcionario.nome);
+            //     //console.log("Apontamento dateRange mongoose: ", apontamento.data);
+            //     //console.log("Apontamento dateRange mongoose: ", apontamento.funcionario.nome);
 
             //     equipe.forEach(function(componente){
-            //         console.log("componente: ", componente.nome);
+            //         //console.log("componente: ", componente.nome);
             //         if (componente._id == apontamento.funcionario._id){
-            //             console.log("encontrou um componente com o id do funcionário");
+            //             //console.log("encontrou um componente com o id do funcionário");
             //             if (!componente.apontamentos)
             //                 componente.apontamentos = [];
 
             //             componente.apontamentos.push(apontamento);
-            //             console.log("componente.apontamentos array: ", componente.apontamentos.length);
+            //             //console.log("componente.apontamentos array: ", componente.apontamentos.length);
             //         }
             //     });
             // });
             //.exec(function(err, cursor){
                 
                 // if(err) {
-                //     console.log("Err: ", err);
+                //     //console.log("Err: ", err);
                 //     return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
                 // }
 
                 // cursor.each(function(error, apontamento){
 
                 //     if(error) {
-                //         console.log("Error: ", error);
+                //         //console.log("Error: ", error);
                 //         return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
                 //     }
                     
@@ -530,12 +530,12 @@ router.post('/currentDate', function(req, res){
     //var timezone = currentDate.getTimezoneOffset(); //em horas
     //ao invés de retornar a data com uma string completa, vou retornar ela em partes
     //lá no cliente eu reconstruo sem precisar dar um new Date() e pegar a hora local
-    console.log('@# antes -  date no server: ', currentDate);
-    console.log('@# UTC Date: ', currentDate.toUTCString());
-    console.log('@# antes -  timezone no server: ', currentDate.getTimezoneOffset());
+    //console.log('@# antes -  date no server: ', currentDate);
+    //console.log('@# UTC Date: ', currentDate.toUTCString());
+    //console.log('@# antes -  timezone no server: ', currentDate.getTimezoneOffset());
     //currentDate.setTime( currentDate.getTime() - currentDate.getTimezoneOffset()*60*1000 );
-    //console.log('@# depois -  date no server: ', currentDate);
-    //console.log('@# depois -  timezone no server: ', currentDate.getTimezoneOffset());
+    ////console.log('@# depois -  date no server: ', currentDate);
+    ////console.log('@# depois -  timezone no server: ', currentDate.getTimezoneOffset());
     var recifeDate = new Date(Date.now() - 3*60*60*1000); //diminui de -3h (em millisecs) para chegar no horário local de recife
 
     datePar = {
@@ -558,7 +558,7 @@ const readline = require('readline');
 
 router.post('/allRepAppoints', function(req, res){
 
-    console.log('#Iniciando request: ', new Date());
+    //console.log('#Iniciando request: ', new Date());
     
     request(urlStaticREPFile, function (error, response, body) {
         
@@ -615,15 +615,15 @@ router.post('/allRepAppoints', function(req, res){
 
                     } else {//já tem um pisDateMap['0032']
                         //caso não haja esse hash, a gnt inicializa o array de marcações nele
-                        // console.log('#Já tem um pis mapeado: ', pisDateMap[pis]);
+                        // //console.log('#Já tem um pis mapeado: ', pisDateMap[pis]);
                         if (!pisDateMap[pis][data]){
                             
-                            // console.log('-Não tem um pis e data mapeados', pisDateMap[pis][data]);
+                            // //console.log('-Não tem um pis e data mapeados', pisDateMap[pis][data]);
                             pisDateMap[pis][data] = [objMarcacao];
                             hashMapSize++;
 
                         } else {
-                            //console.log('#Já tem um pis e data mapeados: ', pisDateMap[pis][data]);
+                            ////console.log('#Já tem um pis e data mapeados: ', pisDateMap[pis][data]);
                             (pisDateMap[pis][data]).push(objMarcacao);
                         }
                     }
@@ -636,8 +636,8 @@ router.post('/allRepAppoints', function(req, res){
 
             }).on('close', function(){
 
-                console.log('Quantidade de marcações: ', count);
-                console.log('Dados que não compõem marcações: ', countOther);
+                //console.log('Quantidade de marcações: ', count);
+                //console.log('Dados que não compõem marcações: ', countOther);
                 const orderedPisDateMap = {};
                 
                 var dateCountPis = [];
@@ -646,7 +646,7 @@ router.post('/allRepAppoints', function(req, res){
 
                 for (var pis in pisDateMap){
                     if (pisDateMap.hasOwnProperty(pis)) {
-                        console.log("pis: ", pis);
+                        //console.log("pis: ", pis);
                         dateCountPis = [];
                         for (var date in pisDateMap[pis]){
                             if (pisDateMap[pis].hasOwnProperty(date)){
@@ -669,7 +669,7 @@ router.post('/allRepAppoints', function(req, res){
 
         } else {
 
-            console.log('Aconteceu um erro na comunicação com o arquivo local do REP, código do erro: ', error);
+            //console.log('Aconteceu um erro na comunicação com o arquivo local do REP, código do erro: ', error);
             return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento: '+error});
             // callback();
         }
