@@ -85,7 +85,7 @@ var solicitacaoAjusteSchema = new Schema(
 		}
 	],
 	eventoAbono: {type: Schema.Types.ObjectId, required: false, ref: 'EventoAbono'},
-	anexo: { data: Buffer, contentType: String }
+	anexo: []
 },
 {
 	timestamps: true

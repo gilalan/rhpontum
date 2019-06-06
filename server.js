@@ -28,7 +28,11 @@ var database = require('./config/database');
 app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users
 //app.use(morgan('dev'));                                         // log every request to the console
 //app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
-app.use(bodyParser.json());                                     // parse application/json
+//app.use(bodyParser.json());                                     // parse application/json
+
+app.use(bodyParser.json({limit: '50mb'}));							//Coloquei isso para tentar funcionar o envio/upload de imagens em base64
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
 //app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 //app.use(methodOverride());
 
@@ -65,10 +69,14 @@ process.on('uncaughtException', function(err) {
 	console.log(err);
 });
 
+process.env.AWS_SDK_LOAD_CONFIG = 1;
+//process.env.AWS_SHARED_CREDENTIALS_FILE = '/home/gilliard/.aws/credentials';
+//process.env.AWS_CONFIG_FILE = '/home/gilliard/.aws/config';
+
 // listen (start app with node server.js) ======================================
 app.listen(8080);
 //secureServer.listen(8081);
 
 console.log("App listening on port 8080");
-
+console.log("Process.env: ", process.env.AWS_SDK_LOAD_CONFIG);
 //588168ed8ccb4e0c7bf5b22f

@@ -7,7 +7,14 @@ var Equipe = require('../../models/equipe');
 var moment = require('moment');
 var router = require('express').Router();
 var async = require('async');
+var aws = require('aws-sdk');
+var randomString = require('../../../randomString');
 var config = require('../../../config');
+
+// aws.config = new aws.Config();
+// aws.config.accessKeyId = config.awsAccessKeyId;
+// aws.config.secretAccessKey = config.awsSecretAccessKey;
+// aws.config.region = config.region;
 
 //=========================================================================
 // API para Solicitacoes de Ajuste de Ponto
@@ -301,92 +308,171 @@ router.post('/createsolicitationappoint', function(req, res){
 
   //console.log("_solicitacao: ", req.body);
   //console.log("_solicitacao: ", _solicitacao);
-
-  SolicitacaoAjuste.create(_solicitacao, function(err, solicitacao){
-
-    if(err) {
-      console.log('Erro no Create: ', err);
-      return res.status(500).send({success: false, message: 'Ocorreu um erro no Criar Solicitação!'});
+  
+  var files = _solicitacao.anexo;
+  var s3 = new aws.S3();  
+  var matches, params, uploadBody, randomSubfolder;
+  var savedArray = [];
+  console.log("vai tentar salvar no bucket s3");  
+  async.eachSeries(files, function updateObject (obj, done) {
+    console.log('vez do ', obj.name);
+    randomSubfolder = randomString.generate(20);
+    matches = obj.data.match(/data:([A-Za-z-+\/].+);base64,(.+)/);
+    if (matches === null || matches.length !== 3) {
+      return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
     }
+    uploadBody = new Buffer(matches[2], 'base64');
+    params = {
+      Bucket: config.aws.bucketName,
+      Key: obj.matr + '/' + randomSubfolder + '/' + obj.name,
+      Body: uploadBody,
+      ACL:'public-read'
+    };
 
-    if (isNewApt) {
+    savedArray.push({
+      name: obj.name,
+      key: obj.matr + '/' + randomSubfolder,
+      bucket: params.Bucket
+    });
 
-      Apontamento.create(_apontamento, function(err, apontamento) {
-      
-        if(err) {
-          console.log('erro post apontamento: ', err);
-          return res.status(500).send({success: false, message: 'Ocorreu um erro na criação do apontamento!'});
-        }   
+    s3.upload(params, done);
+
+  }, function allDone (err) {
+      if (err)
+        return res.status(500).send({success: false, message: err});
         
-        console.log('criou apontamento normalmente');
-        return res.status(200).send({success: true, message: 'Atualizações efetuadas com sucesso!'});
-        //return res.json(apontamento);
-      });
+      console.log("Todas as imagens carregadas no bucket", savedArray.length);
+      //usar o savedArray para preencher os objetos de solicitacaoAJuste.
+      //return res.status(200).send({success: true, message: "Solicitação atualizada!"});
+      console.log("vai tentar criar a solicitacao na base de dados agora");
+      _solicitacao.anexo = savedArray;
+      SolicitacaoAjuste.create(_solicitacao, function(err, solicitacao){
 
-    } else {
-      
-      Apontamento.findOneAndUpdate({_id: _apontamento._id}, _apontamento, { upsert: false, new: false }, function(err, apontamento){
-        if (err){
-          console.log('erro ao atualizar apontamento', err);
+        if(err) {
+          console.log('Erro no Create: ', err);
+          return res.status(500).send({success: false, message: 'Ocorreu um erro no Criar Solicitação!'});
         }
 
-        console.log('atualizou normalmente');
-        return res.status(200).send({success: true, message: 'Atualizações efetuadas com sucesso!'});
+        if (isNewApt) {
+
+          Apontamento.create(_apontamento, function(err, apontamento) {
+          
+            if(err) {
+              console.log('erro post apontamento: ', err);
+              return res.status(500).send({success: false, message: 'Ocorreu um erro na criação do apontamento!'});
+            }   
+            
+            console.log('criou apontamento normalmente');
+            return res.status(200).send({success: true, message: 'Atualizações efetuadas com sucesso!'});
+            //return res.json(apontamento);
+          });
+
+        } else {
+          
+          Apontamento.findOneAndUpdate({_id: _apontamento._id}, _apontamento, { upsert: false, new: false }, function(err, apontamento){
+            if (err){
+              console.log('erro ao atualizar apontamento', err);
+            }
+
+            console.log('Atualizou o objeto, vai tentar carregar os anexos...');
+            return res.status(200).send({success: true, message: 'Atualizações efetuadas com sucesso!'});
+          });
+        }
       });
     }
-  });
+  );
+
+
 });
 
 router.post('/insertAndUpdateMany', function(req, res){
 
   var _solicitacao = req.body.solicitacao;
   var _apontamentos = req.body.apontamentos;
-  //var apontamentosNovos = _apontamentos.novos;
-  //var 
-
-  SolicitacaoAjuste.findOne({_id: _solicitacao._id}, function(err, solicitacao){
-
-    if(err) {
-      console.log('Erro no FINDONE: ', err);
-      return res.status(500).send({success: false, message: 'Ocorreu um erro no FINDONE da Solicitação!'});
+  
+  var files = _solicitacao.anexo;
+  var s3 = new aws.S3();  
+  var matches, params, uploadBody, randomSubfolder;
+  var savedArray = [];
+  console.log("vai tentar salvar no bucket s3");  
+  async.eachSeries(files, function updateObject (obj, done) {
+    console.log('vez do ', obj.name);
+    randomSubfolder = randomString.generate(20);
+    matches = obj.data.match(/data:([A-Za-z-+\/].+);base64,(.+)/);
+    if (matches === null || matches.length !== 3) {
+      return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
     }
+    uploadBody = new Buffer(matches[2], 'base64');
+    params = {
+      Bucket: config.aws.bucketName,
+      Key: obj.matr + '/' + randomSubfolder + '/' + obj.name,
+      Body: uploadBody,
+      ACL:'public-read'
+    };
 
-    solicitacao.resposta = _solicitacao.resposta;
-    solicitacao.status = _solicitacao.status;
+    savedArray.push({
+      name: obj.name,
+      key: obj.matr + '/' + randomSubfolder,
+      bucket: params.Bucket
+    });
 
-    //tenta atualizar de fato no BD
-    solicitacao.save(function(err){
-      
-      if(err){
-        console.log('Erro no save do update', err);
-        return res.status(500).send({success: false, message: 'Ocorreu um erro no save da Solicitação!'});
-      }
+    s3.upload(params, done);
 
-      Apontamento.insertMany(_apontamentos.novos, function(err, novosApontamentos){
+  }, function allDone (err) {
+      if (err)
+        return res.status(500).send({success: false, message: err});
+        
+      console.log("Tudo finalizado na atualizacao da solicitacao", savedArray.length);
+      //usar o savedArray para preencher os objetos de solicitacaoAJuste.
+      //return res.status(200).send({success: true, message: "Solicitação atualizada!"});
+      _solicitacao.anexo = savedArray;
+      SolicitacaoAjuste.findOne({_id: _solicitacao._id}, function(err, solicitacao){
 
         if(err) {
           console.log('Erro no FINDONE: ', err);
           return res.status(500).send({success: false, message: 'Ocorreu um erro no FINDONE da Solicitação!'});
         }
-      });
 
-      async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
-                
-        Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
-          "infoTrabalho": obj.infoTrabalho, "status": obj.status }}, done);
-          console.log("obj a ser atualizado: ", obj.infoTrabalho);
-          console.log("obj a ser atualizado: ", obj.status);
-        }, function allDone (err) {
-            if (err)
-              return res.status(500).send({success: false, message: err});
-            console.log("Tudo finalizado na atualizacao da solicitacao");
-            return res.status(200).send({success: true, message: "Solicitação atualizada!"});
+        solicitacao.resposta = _solicitacao.resposta;
+        solicitacao.status = _solicitacao.status;
+        solicitacao.anexo = _solicitacao.anexo;
+
+        //tenta atualizar de fato no BD
+        solicitacao.save(function(err){
+          
+          if(err){
+            console.log('Erro no save do update', err);
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no save da Solicitação!'});
+          }
+
+          Apontamento.insertMany(_apontamentos.novos, function(err, novosApontamentos){
+
+            if(err) {
+              console.log('Erro no FINDONE: ', err);
+              return res.status(500).send({success: false, message: 'Ocorreu um erro no FINDONE da Solicitação!'});
+            }
+          });
+
+          async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
+                    
+            Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
+              "infoTrabalho": obj.infoTrabalho, "status": obj.status }}, done);
+              console.log("obj a ser atualizado: ", obj.infoTrabalho);
+              console.log("obj a ser atualizado: ", obj.status);
+            }, function allDone (err) {
+                if (err)
+                  return res.status(500).send({success: false, message: err});
+                console.log("Tudo finalizado na atualizacao da solicitacao");
+                return res.status(200).send({success: true, message: "Solicitação atualizada!"});
+            });
+
         });
 
-    });
+        //return res.status(200).send({success: true, message: 'Solicitação atualizada com sucesso!'});
+      });
+    }
+  );
 
-    //return res.status(200).send({success: true, message: 'Solicitação atualizada com sucesso!'});
-  });
 
 });
 
@@ -395,35 +481,74 @@ router.post('/createAndUpdateMany', function(req, res){
   var _solicitacao = req.body.solicitacao;
   var _apontamentos = req.body.apontamentos;
 
-  SolicitacaoAjuste.create(_solicitacao, function(err, solicitacao){
-
-    if(err) {
-      console.log('Erro no FINDONE: ', err);
-      return res.status(500).send({success: false, message: 'Ocorreu um erro no FINDONE da Solicitação!'});
+  var files = _solicitacao.anexo;
+  var s3 = new aws.S3();  
+  var matches, params, uploadBody, randomSubfolder;
+  var savedArray = [];
+  console.log("vai tentar salvar no bucket s3");  
+  async.eachSeries(files, function updateObject (obj, done) {
+    console.log('vez do ', obj.name);
+    randomSubfolder = randomString.generate(20);
+    matches = obj.data.match(/data:([A-Za-z-+\/].+);base64,(.+)/);
+    if (matches === null || matches.length !== 3) {
+      return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
     }
+    uploadBody = new Buffer(matches[2], 'base64');
+    params = {
+      Bucket: config.aws.bucketName,
+      Key: obj.matr + '/' + randomSubfolder + '/' + obj.name,
+      Body: uploadBody,
+      ACL:'public-read'
+    };
 
-    Apontamento.insertMany(_apontamentos.novos, function(err, novosApontamentos){
-
-      if(err) {
-        console.log('Erro no FINDONE: ', err);
-        return res.status(500).send({success: false, message: 'Ocorreu um erro no FINDONE da Solicitação!'});
-      }
+    savedArray.push({
+      name: obj.name,
+      key: obj.matr + '/' + randomSubfolder,
+      bucket: params.Bucket
     });
 
-    async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
-              
-      Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
-        "infoTrabalho": obj.infoTrabalho, "status": obj.status }}, done);
-        console.log("obj a ser atualizado: ", obj.infoTrabalho);
-        console.log("obj a ser atualizado: ", obj.status);
-      }, function allDone (err) {
-          if (err)
-            return res.status(500).send({success: false, message: err});
-          console.log("Tudo finalizado na atualizacao da solicitacao");
-          return res.status(200).send({success: true, message: "Solicitação atualizada!"});
-      });
+    s3.upload(params, done);
 
-    });
+  }, function allDone (err) {
+      if (err)
+        return res.status(500).send({success: false, message: err});
+        
+      console.log("Tudo finalizado no envio dos arquivos, vai cadastrar solicitacao", savedArray.length);
+      //usar o savedArray para preencher os objetos de solicitacaoAJuste.
+      //return res.status(200).send({success: true, message: "Solicitação atualizada!"});
+      _solicitacao.anexo = savedArray;
+      SolicitacaoAjuste.create(_solicitacao, function(err, solicitacao){
+
+        if(err) {
+          console.log('Erro no FINDONE: ', err);
+          return res.status(500).send({success: false, message: 'Ocorreu um erro no FINDONE da Solicitação!'});
+        }
+
+        Apontamento.insertMany(_apontamentos.novos, function(err, novosApontamentos){
+
+          if(err) {
+            console.log('Erro no FINDONE: ', err);
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no FINDONE da Solicitação!'});
+          }
+        });
+
+        async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
+                  
+          Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
+            "infoTrabalho": obj.infoTrabalho, "status": obj.status }}, done);
+            console.log("obj a ser atualizado: ", obj.infoTrabalho);
+            console.log("obj a ser atualizado: ", obj.status);
+          }, function allDone (err) {
+              if (err)
+                return res.status(500).send({success: false, message: err});
+              console.log("Tudo finalizado na atualizacao da solicitacao");
+              return res.status(200).send({success: true, message: "Solicitação atualizada!"});
+          });
+
+        });
+    }
+  );
+
 });
 
 router.post('/getbystatus', function(req, res){
@@ -609,6 +734,85 @@ router.post('/getbycomponents', function(req, res){
     });
     //return res.json(usuario);
   });
+});
+
+router.post('/uploadImage', function(req, res){
+  var obj = req.body;
+  //console.log("obj recebido: ", obj);
+  var files = obj.array;
+  var s3 = new aws.S3();  
+  var matches, params, uploadBody, randomSubfolder;
+  var savedArray = [];
+  console.log("vai tentar salvar no bucket s3");  
+  async.eachSeries(files, function updateObject (obj, done) {
+    console.log('vez do ', obj.name);
+    randomSubfolder = randomString.generate(20);
+    matches = obj.data.match(/data:([A-Za-z-+\/].+);base64,(.+)/);
+    if (matches === null || matches.length !== 3) {
+      return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+    }
+    uploadBody = new Buffer(matches[2], 'base64');
+    params = {
+      Bucket: config.aws.bucketName,
+      Key: obj.matr + '/' + randomSubfolder + '/' + obj.name,
+      Body: uploadBody,
+      ACL:'public-read'
+    };
+
+    savedArray.push({
+      name: obj.name,
+      key: obj.matr + '/' + randomSubfolder,
+      bucket: params.Bucket
+    });
+
+    s3.upload(params, done);
+
+  }, function allDone (err) {
+      if (err)
+        return res.status(500).send({success: false, message: err});
+        
+      console.log("Tudo finalizado na atualizacao da solicitacao", savedArray.length);
+      //usar o savedArray para preencher os objetos de solicitacaoAJuste.
+      return res.status(200).send({success: true, message: "Solicitação atualizada!"});
+    }
+  );
+
+  /*
+  var folder = //"teste";//randomString.generate(20); // I guess I do this because when the user downloads the file it will have the original file name.
+  var uploadName = "gilliTeste.png";
+
+  //var matches = files.match(/data:([A-Za-z-+\/].+);base64,(.+)/); //não sei oq é isso
+  
+  var matches = files[0].data.match(/data:([A-Za-z-+\/].+);base64,(.+)/); //não sei oq é isso
+
+  if (matches === null || matches.length !== 3) {
+    return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+  }
+
+  var uploadBody = new Buffer(matches[2], 'base64');
+
+  var params = {
+    Bucket: config.aws.bucketName,
+    Key: folder + '/' + uploadName,//req.body.uploadName,
+    Body: uploadBody,
+    ACL:'public-read'
+  };
+  console.log("vai tentar salvar no bucket s3");  
+
+  s3.putObject(params, function(err, data) {
+    if (err)
+      console.log(err)
+    else {
+      console.log("Successfully uploaded data to csk3-uploads/" + folder + '/' + uploadName);
+      return res.json({
+        name: uploadName,
+        bucket: config.aws.bucketName,
+        key: folder
+      });
+    }
+   }); 
+   */
+
 });
 
 module.exports = router;
