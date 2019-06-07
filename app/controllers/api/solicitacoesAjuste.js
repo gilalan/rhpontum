@@ -82,23 +82,61 @@ router.post('/', function(req, res) {
   if (solicitacaoObj.rawData)
     delete solicitacaoObj.rawData;
 
-  console.log('solicitacao: ', solicitacaoObj);
+  //console.log('solicitacao: ', solicitacaoObj);
 
-  SolicitacaoAjuste.create(solicitacaoObj, function(err, solicitacao){
-
-    if(err) {
-      console.log('erro post solicitacao: ', err);
-      
-      if (err.code === 11000) {
-        console.log('solicitacao existente!');
-        return res.status(500).send({success: false, message: 'Solicitação já existente na base de dados!'});
-      }
-      
+  var files = solicitacaoObj.anexo;
+  var s3 = new aws.S3();  
+  var matches, params, uploadBody, randomSubfolder;
+  var savedArray = [];
+  console.log("vai tentar salvar no bucket s3");  
+  async.eachSeries(files, function updateObject (obj, done) {
+    console.log('vez do ', obj.name);
+    randomSubfolder = randomString.generate(20);
+    matches = obj.data.match(/data:([A-Za-z-+\/].+);base64,(.+)/);
+    if (matches === null || matches.length !== 3) {
       return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
     }
-    
-    return res.status(200).send({success: true, message: 'Solicitação cadastrada com sucesso!'});
-  });
+    uploadBody = new Buffer(matches[2], 'base64');
+    params = {
+      Bucket: config.aws.bucketName,
+      Key: obj.matr + '/' + randomSubfolder + '/' + obj.name,
+      Body: uploadBody,
+      ACL:'public-read'
+    };
+
+    savedArray.push({
+      name: obj.name,
+      key: obj.matr + '/' + randomSubfolder,
+      bucket: params.Bucket
+    });
+
+    s3.upload(params, done);
+
+  }, function allDone (err) {
+      if (err)
+        return res.status(500).send({success: false, message: err});
+        
+      console.log("Todas as imagens carregadas no bucket", savedArray.length);
+      //usar o savedArray para preencher os objetos de solicitacaoAJuste.
+      //return res.status(200).send({success: true, message: "Solicitação atualizada!"});
+      console.log("vai tentar criar a solicitacao na base de dados agora");
+      solicitacaoObj.anexo = savedArray;
+      SolicitacaoAjuste.create(solicitacaoObj, function(err, solicitacao){
+        if(err) {
+          console.log('erro post solicitacao: ', err);
+          
+          if (err.code === 11000) {
+            console.log('solicitacao existente!');
+            return res.status(500).send({success: false, message: 'Solicitação já existente na base de dados!'});
+          }
+          
+          return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+        }
+        
+        return res.status(200).send({success: true, message: 'Solicitação cadastrada com sucesso!'});
+      });  
+    }
+  );
 });
 
 //Traz apenas 1 solicitacao
@@ -256,8 +294,8 @@ router.post('/solicitationappoint', function(req, res){
     //solicitacao.data = _solicitacao.data;
     solicitacao.resposta = _solicitacao.resposta;
     solicitacao.status = _solicitacao.status;
-    //solicitacao.motivo = _solicitacao.motivo;
     //solicitacao.anexo = _solicitacao.anexo;
+    //solicitacao.motivo = _solicitacao.motivo;
     //solicitacao.anterior = _solicitacao.anterior;
     //solicitacao.proposto = _solicitacao.proposto;
 
@@ -389,89 +427,142 @@ router.post('/insertAndUpdateMany', function(req, res){
 
   var _solicitacao = req.body.solicitacao;
   var _apontamentos = req.body.apontamentos;
-  
+  var uploaded = req.body.uploaded ? true : false;
+
   var files = _solicitacao.anexo;
   var s3 = new aws.S3();  
   var matches, params, uploadBody, randomSubfolder;
   var savedArray = [];
-  console.log("vai tentar salvar no bucket s3");  
-  async.eachSeries(files, function updateObject (obj, done) {
-    console.log('vez do ', obj.name);
-    randomSubfolder = randomString.generate(20);
-    matches = obj.data.match(/data:([A-Za-z-+\/].+);base64,(.+)/);
-    if (matches === null || matches.length !== 3) {
-      return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
-    }
-    uploadBody = new Buffer(matches[2], 'base64');
-    params = {
-      Bucket: config.aws.bucketName,
-      Key: obj.matr + '/' + randomSubfolder + '/' + obj.name,
-      Body: uploadBody,
-      ACL:'public-read'
-    };
+  
+  if (!uploaded) {
 
-    savedArray.push({
-      name: obj.name,
-      key: obj.matr + '/' + randomSubfolder,
-      bucket: params.Bucket
-    });
+    console.log("vai tentar salvar no bucket s3");  
+    async.eachSeries(files, function updateObject (obj, done) {
+      console.log('vez do ', obj.name);
+      randomSubfolder = randomString.generate(20);
+      matches = obj.data.match(/data:([A-Za-z-+\/].+);base64,(.+)/);
+      if (matches === null || matches.length !== 3) {
+        return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+      }
+      uploadBody = new Buffer(matches[2], 'base64');
+      params = {
+        Bucket: config.aws.bucketName,
+        Key: obj.matr + '/' + randomSubfolder + '/' + obj.name,
+        Body: uploadBody,
+        ACL:'public-read'
+      };
 
-    s3.upload(params, done);
+      savedArray.push({
+        name: obj.name,
+        key: obj.matr + '/' + randomSubfolder,
+        bucket: params.Bucket
+      });
 
-  }, function allDone (err) {
-      if (err)
-        return res.status(500).send({success: false, message: err});
-        
-      console.log("Tudo finalizado na atualizacao da solicitacao", savedArray.length);
-      //usar o savedArray para preencher os objetos de solicitacaoAJuste.
-      //return res.status(200).send({success: true, message: "Solicitação atualizada!"});
-      _solicitacao.anexo = savedArray;
-      SolicitacaoAjuste.findOne({_id: _solicitacao._id}, function(err, solicitacao){
+      s3.upload(params, done);
 
-        if(err) {
-          console.log('Erro no FINDONE: ', err);
-          return res.status(500).send({success: false, message: 'Ocorreu um erro no FINDONE da Solicitação!'});
-        }
-
-        solicitacao.resposta = _solicitacao.resposta;
-        solicitacao.status = _solicitacao.status;
-        solicitacao.anexo = _solicitacao.anexo;
-
-        //tenta atualizar de fato no BD
-        solicitacao.save(function(err){
+    }, function allDone (err) {
+        if (err)
+          return res.status(500).send({success: false, message: err});
           
-          if(err){
-            console.log('Erro no save do update', err);
-            return res.status(500).send({success: false, message: 'Ocorreu um erro no save da Solicitação!'});
+        console.log("Tudo finalizado na atualizacao da solicitacao", savedArray.length);
+        //usar o savedArray para preencher os objetos de solicitacaoAJuste.
+        //return res.status(200).send({success: true, message: "Solicitação atualizada!"});
+        _solicitacao.anexo = savedArray;
+        SolicitacaoAjuste.findOne({_id: _solicitacao._id}, function(err, solicitacao){
+
+          if(err) {
+            console.log('Erro no FINDONE: ', err);
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no FINDONE da Solicitação!'});
           }
 
-          Apontamento.insertMany(_apontamentos.novos, function(err, novosApontamentos){
+          solicitacao.resposta = _solicitacao.resposta;
+          solicitacao.status = _solicitacao.status;
+          solicitacao.anexo = _solicitacao.anexo;
 
-            if(err) {
-              console.log('Erro no FINDONE: ', err);
-              return res.status(500).send({success: false, message: 'Ocorreu um erro no FINDONE da Solicitação!'});
+          //tenta atualizar de fato no BD
+          solicitacao.save(function(err){
+            
+            if(err){
+              console.log('Erro no save do update', err);
+              return res.status(500).send({success: false, message: 'Ocorreu um erro no save da Solicitação!'});
             }
-          });
 
-          async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
-                    
-            Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
-              "infoTrabalho": obj.infoTrabalho, "status": obj.status }}, done);
-              console.log("obj a ser atualizado: ", obj.infoTrabalho);
-              console.log("obj a ser atualizado: ", obj.status);
-            }, function allDone (err) {
-                if (err)
-                  return res.status(500).send({success: false, message: err});
-                console.log("Tudo finalizado na atualizacao da solicitacao");
-                return res.status(200).send({success: true, message: "Solicitação atualizada!"});
+            Apontamento.insertMany(_apontamentos.novos, function(err, novosApontamentos){
+
+              if(err) {
+                console.log('Erro no FINDONE: ', err);
+                return res.status(500).send({success: false, message: 'Ocorreu um erro no FINDONE da Solicitação!'});
+              }
             });
 
+            async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
+                      
+              Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
+                "infoTrabalho": obj.infoTrabalho, "status": obj.status }}, done);
+                //console.log("obj a ser atualizado: ", obj.infoTrabalho);
+                //console.log("obj a ser atualizado: ", obj.status);
+              }, function allDone (err) {
+                  if (err)
+                    return res.status(500).send({success: false, message: err});
+                  console.log("Tudo finalizado na atualizacao da solicitacao");
+                  return res.status(200).send({success: true, message: "Solicitação atualizada!"});
+              });
+
+          });
+
+          //return res.status(200).send({success: true, message: 'Solicitação atualizada com sucesso!'});
+        });
+      }
+
+    );
+  } 
+  else {
+
+    SolicitacaoAjuste.findOne({_id: _solicitacao._id}, function(err, solicitacao){
+
+      if(err) {
+        console.log('Erro no FINDONE: ', err);
+        return res.status(500).send({success: false, message: 'Ocorreu um erro no FINDONE da Solicitação!'});
+      }
+
+      solicitacao.resposta = _solicitacao.resposta;
+      solicitacao.status = _solicitacao.status;
+      solicitacao.anexo = _solicitacao.anexo;
+
+      //tenta atualizar de fato no BD
+      solicitacao.save(function(err){
+        
+        if(err){
+          console.log('Erro no save do update', err);
+          return res.status(500).send({success: false, message: 'Ocorreu um erro no save da Solicitação!'});
+        }
+
+        Apontamento.insertMany(_apontamentos.novos, function(err, novosApontamentos){
+
+          if(err) {
+            console.log('Erro no FINDONE: ', err);
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no FINDONE da Solicitação!'});
+          }
         });
 
-        //return res.status(200).send({success: true, message: 'Solicitação atualizada com sucesso!'});
+        async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
+                  
+          Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
+            "infoTrabalho": obj.infoTrabalho, "status": obj.status }}, done);
+            //console.log("obj a ser atualizado: ", obj.infoTrabalho);
+            //console.log("obj a ser atualizado: ", obj.status);
+          }, function allDone (err) {
+              if (err)
+                return res.status(500).send({success: false, message: err});
+              console.log("Tudo finalizado na atualizacao da solicitacao");
+              return res.status(200).send({success: true, message: "Solicitação atualizada!"});
+          });
+
       });
-    }
-  );
+
+      //return res.status(200).send({success: true, message: 'Solicitação atualizada com sucesso!'});
+    });
+  }
 
 
 });
@@ -536,8 +627,8 @@ router.post('/createAndUpdateMany', function(req, res){
                   
           Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
             "infoTrabalho": obj.infoTrabalho, "status": obj.status }}, done);
-            console.log("obj a ser atualizado: ", obj.infoTrabalho);
-            console.log("obj a ser atualizado: ", obj.status);
+            //console.log("obj a ser atualizado: ", obj.infoTrabalho);
+            //console.log("obj a ser atualizado: ", obj.status);
           }, function allDone (err) {
               if (err)
                 return res.status(500).send({success: false, message: err});
@@ -651,7 +742,7 @@ router.post('/getbycomponents', function(req, res){
     if(err) {
       return res.status(500).send({success: false, message: 'Ocorreu um erro na obtenção do Usuário no Banco de Dados!'});
     }        
-    console.log("usuário retornado no get único: ", usuario.funcionario.nome);      
+    //console.log("usuário retornado no get único: ", usuario.funcionario.nome);      
 
     var query = {};
     var func = usuario.funcionario;
