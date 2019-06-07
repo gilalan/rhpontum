@@ -20,8 +20,6 @@ var ensureAuthorizedFunc = function(reqUsuario, routeAccessLevel) {
 module.exports = {
   	secretKey: 'supersecretkey',
 	aws: {
-		awsAccessKeyId: "AKIA5RSVQVER3ZRSXUXD",
-		awsSecretAccessKey: "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",
 		region: "us-west-2",
 		bucketName: "uploads-abono-attachments"
 	},
