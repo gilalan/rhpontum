@@ -68,7 +68,7 @@ router.get('/', function(req, res) {
 //Create solicitacao
 router.post('/', function(req, res) {
 
-  console.log("req", req.body);
+  //console.log("req", req.body);
   var solicitacaoObj = req.body;
   //var dateParametro = solicitacaoObj.date;
 
