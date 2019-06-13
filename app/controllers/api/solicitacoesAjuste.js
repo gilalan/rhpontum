@@ -233,11 +233,20 @@ router.post('/data/funcionario', function(req, res){
 
   var today = dateMom.startOf('day');
   var tomorrow = moment(today).add(1, 'days');
+
     
   console.log('today moment: ', today);
   console.log('tomorrow moment: ', tomorrow);
 
+  if (dateParametro.finalInclude){
+    tomorrow = moment({year: dateParametro.final.year, month: dateParametro.final.month,
+        day: dateParametro.final.day});
+    tomorrow = moment(tomorrow).add(1, 'days');
+  }
+
+
   var query = {data: {$gte: today.toDate(),$lt: tomorrow.toDate()}, funcionario: objFuncDate.funcionario._id, status: 0, tipo: 0};
+
   if (objFuncDate.tipo)
     query = {data: {$gte: today.toDate(),$lt: tomorrow.toDate()}, funcionario: objFuncDate.funcionario._id, status: 0, tipo: objFuncDate.tipo};
 
@@ -904,6 +913,97 @@ router.post('/uploadImage', function(req, res){
    }); 
    */
 
+});
+
+//Get Apontamentos + Solicitações que existam para um dado funcionário num período de datas.
+router.post('/getallbyemployee', function(req, res){
+
+    var objDateWorker = req.body;
+    var dateParametro = objDateWorker.date;
+    var dateFinalParametro = objDateWorker.date.final;
+    var funcionario = objDateWorker.funcionario;
+
+    var startDateMom = moment({year: dateParametro.year, month: dateParametro.month,
+        day: dateParametro.day, hour: dateParametro.hour, minute: dateParametro.minute});
+
+    var endDateMom = moment({year: dateFinalParametro.year, month: dateFinalParametro.month,
+        day: dateFinalParametro.day, hour: dateFinalParametro.hour, minute: dateFinalParametro.minute});
+
+    var firstDay = dateParametro ? startDateMom.startOf('day') : moment(new Date()).startOf('day');
+    var lastDay = dateFinalParametro ? endDateMom.startOf('day') : moment(new Date()).startOf('day');
+    
+    var oneDayMoreLastDay = moment(lastDay).add(1, 'days');
+    
+    var queryDate = {$gte: firstDay.toDate(), $lt: oneDayMoreLastDay.toDate()};
+    if (dateParametro.finalInclude)
+        queryDate = {$gte: firstDay.toDate(), $lte: oneDayMoreLastDay.toDate()};
+    
+
+    Apontamento.find({data: queryDate, funcionario: funcionario._id ? funcionario._id : funcionario})
+    //Apontamento.find({data: {$gte: new ISODate(date1), $lte: new ISODate(date2)}, funcionario: funcionario._id ? funcionario._id : funcionario})
+    .populate({
+        path: 'funcionario', 
+        select: 'nome sobrenome PIS sexoMasculino alocacao',
+        model: 'Funcionario',
+        populate: [{
+          path: 'alocacao.cargo',
+          select: 'especificacao nomeFeminino',
+          model: 'Cargo'
+        },
+        {
+          path: 'alocacao.turno',
+          model: 'Turno',
+          populate: [{
+            path: 'escala', 
+            model: 'Escala'
+          }]
+        }]            
+    })
+    .sort({data: 'asc'})
+    .exec(function(err, apontamentos){
+        if(err) {
+          return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+        }        
+
+        var query = {data: {$gte: firstDay.toDate(), $lt: oneDayMoreLastDay.toDate()}, funcionario: funcionario._id, status: 0};
+        if (objDateWorker.tipo)
+          query = {data: {$gte: firstDay.toDate(), $lt: oneDayMoreLastDay.toDate()}, funcionario: funcionario._id, status: 0, tipo: objDateWorker.tipo};
+
+        //console.log('query: ', query);
+        //status 0 -> pendente
+        SolicitacaoAjuste.find(query)
+        .populate({
+          path: 'funcionario', 
+          select: 'nome sobrenome PIS sexoMasculino alocacao',
+          model: 'Funcionario',
+          populate: [{
+            path: 'alocacao.cargo',
+            select: 'especificacao nomeFeminino',
+            model: 'Cargo'
+          },
+          {
+            path: 'alocacao.turno',
+            model: 'Turno',
+            populate: [{
+              path: 'escala', 
+              model: 'Escala'
+            }]
+          }]
+        })
+        .populate('eventoAbono', 'nome')
+        .exec(function(err, solicitacoes){
+          
+          if(err) {
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento: '+err});
+          }
+
+          console.log("Solicitacoes mongoose: ", solicitacoes.length);
+          return res.json({apontamentos: apontamentos, solicitacoes: solicitacoes});
+        });
+
+        //return res.json(apontamentos);
+    });
+   
 });
 
 module.exports = router;
