@@ -120,6 +120,44 @@ router.delete('/:id', function(req, res){
     });
 });
 
+//Get todos os apontamentos de um funcionario
+router.post('/allbyemployee', function(req, res){
+
+    var funcionario = req.body;
+    
+    Apontamento.find({funcionario: funcionario._id})
+    .populate({
+        path: 'funcionario', 
+        select: 'nome sobrenome PIS sexoMasculino alocacao',
+        model: 'Funcionario',
+        populate: [{
+          path: 'alocacao.cargo',
+          select: 'especificacao nomeFeminino',
+          model: 'Cargo'
+        },
+        {
+          path: 'alocacao.turno',
+          model: 'Turno',
+          populate: [{
+            path: 'escala', 
+            model: 'Escala'
+          }]
+        }]            
+    })
+    .sort({data: 'asc'})
+    .exec(function(err, apontamentos){
+        if(err) {
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+        }
+
+        console.log("Apontamento dateRange mongoose: ", apontamentos.length);
+
+        //return res.json({apontamentos: apontamentos, firstDate: apontamentos[0].data});
+        return res.json(apontamentos);
+    });
+   
+});
+
 //Get apontamento de todos os funcionarios by date
 router.post('/date', function(req, res){
 
