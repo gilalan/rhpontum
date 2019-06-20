@@ -70,7 +70,8 @@ router.get('/:id', function(req, res){
 router.put('/:id', function(req, res){
     
     var idApontamento = req.params.id;
-    var dataReg = req.body.data;
+    var newApontamento = req.body;
+    var dataReg = newApontamento.data;
     
     Apontamento.findOne({_id: idApontamento}, function(err, apontamento){
 
@@ -78,15 +79,16 @@ router.put('/:id', function(req, res){
             return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
         }
 
-        //apontamento.data = req.body.data;
-        apontamento.status = req.body.status;
-        //apontamento.pis = req.body.pis;
-        apontamento.marcacoes = req.body.marcacoes;//no futuro não poderá atualizar as marcações
-        apontamento.marcacoesFtd = req.body.marcacoesFtd;
-        apontamento.historico = req.body.historico;//no futuro não poderá atualizar as marcações
-        apontamento.infoTrabalho = req.body.infoTrabalho;
-        apontamento.justificativa = req.body.justificativa;
-        //apontamento.funcionario = req.body.funcionario; //SÓ PARA TESTES!!!!!!
+        //Se encontrar, 
+        apontamento.status = newApontamento.status;
+        //Ordenar arrays para não ter erro, as vezes mesmo ordenado no cliente o javascript perde a referencia.        
+        sortMarcacoes(newApontamento);
+        //console.log("newApontamento: ", newApontamento);
+        apontamento.marcacoes = newApontamento.marcacoes;//no futuro não poderá atualizar as marcações
+        apontamento.marcacoesFtd = newApontamento.marcacoesFtd;
+        apontamento.historico = newApontamento.historico;//no futuro não poderá atualizar as marcações
+        apontamento.infoTrabalho = newApontamento.infoTrabalho;
+        apontamento.justificativa = newApontamento.justificativa;
 
       //tenta atualizar de fato no BD
       apontamento.save(function(err){
@@ -561,31 +563,20 @@ router.post('/teste', function(req, res){
 });
 
 //Get current date on server 
-//Tem que subtrair -3h do Timezone, pois o server está com timeozne 0
+//Server está com timezone 0 GMT (0)
 router.post('/currentDate', function(req, res){
 
-    var currentDate = new Date(); //Cria com TImeZone +3h em relação ao Brasil
-    //var timezone = currentDate.getTimezoneOffset(); //em horas
-    //ao invés de retornar a data com uma string completa, vou retornar ela em partes
-    //lá no cliente eu reconstruo sem precisar dar um new Date() e pegar a hora local
-    //console.log('@# antes -  date no server: ', currentDate);
-    //console.log('@# UTC Date: ', currentDate.toUTCString());
-    //console.log('@# antes -  timezone no server: ', currentDate.getTimezoneOffset());
-    //currentDate.setTime( currentDate.getTime() - currentDate.getTimezoneOffset()*60*1000 );
-    ////console.log('@# depois -  date no server: ', currentDate);
-    ////console.log('@# depois -  timezone no server: ', currentDate.getTimezoneOffset());
-    var recifeDate = new Date(Date.now() - 3*60*60*1000); //diminui de -3h (em millisecs) para chegar no horário local de recife
+    var currentDate = new Date(); //Cria com TImeZone 0, que é +3h em relação ao Brasil - Recife (GMT -03)
+    var timezone = currentDate.getTimezoneOffset(); //em horas
+    console.log('@# antes -  date no server: ', currentDate);
+    //console.log('@# antes -  timezone no server: ', timezone);
+    //console.log("string: ", currentDate.toUTCString())
+    //Se por algum motivo o servidor perder a configuração de Timezone no GMT 0, fazemos as adaptações:
+    // if (timezone != 0) {
 
-    datePar = {
-        nYear: recifeDate.getFullYear(),
-        nMonth: recifeDate.getMonth(),
-        nDay: recifeDate.getDate(),
-        nHours: recifeDate.getHours(),
-        nMinutes: recifeDate.getMinutes(),
-        nSeconds: recifeDate.getSeconds(),
-        nMillisecs: recifeDate.getMilliseconds()
-    };
-    return res.json({date: currentDate, dateParameter: datePar});
+    // }
+
+    return res.json({date: currentDate, utcStr: currentDate.toUTCString()});
 });
 
 //teste de obter reps
@@ -715,5 +706,73 @@ router.post('/allRepAppoints', function(req, res){
 
     //return res.json({rawReps: count, rawOther: countOther});
 });
+
+function sortMarcacoes(newApontamento) {
+
+    newApontamento.marcacoes.sort(
+        function (a, b) {
+          return a.totalMin - b.totalMin;
+    });
+
+    newApontamento.marcacoesFtd.sort(
+        function(a, b){//ordena o array de marcaçõesFtd
+            return a > b;
+    }); 
+
+    if (newApontamento.historico){
+
+        if (newApontamento.historico.length > 0){
+
+            for (var i=0; i < newApontamento.historico.length; i++){
+
+                if (newApontamento.historico[i].marcacoes){
+                    if (newApontamento.historico[i].marcacoes.length > 0){
+                        newApontamento.historico[i].marcacoes.sort(
+                            function (a, b) {
+                                return a.totalMin - b.totalMin;
+                        });
+
+                         newApontamento.historico[i].marcacoesFtd.sort(
+                            function(a, b){//ordena o array de marcaçõesFtd
+                                return a > b;
+                        }); 
+                        for (var k=0; k < newApontamento.historico[i].marcacoes.length; k++){
+
+                            newApontamento.historico[i].marcacoes[k].id = k+1;
+                            newApontamento.historico[i].marcacoes[k].descricao = getDescription(k);
+                        }   
+                    }
+                }
+            }
+        }        
+    }
+
+    for (var k=0; k < newApontamento.marcacoes.length; k++){
+
+        newApontamento.marcacoes[k].id = k+1;
+        newApontamento.marcacoes[k].descricao = getDescription(k);
+    }   
+
+};
+
+function getDescription (index){
+
+    if (index === 0)
+        return "ent1";
+    else if (index === 1)
+        return "sai1";
+    else if (index === 2)
+        return "ent2";
+    else if (index === 3)
+        return "sai2";
+    else { //verificar quantos pares de entrada/saida já foram adicionados para gerar a descricao
+        if (index % 2 === 0) {//se é par
+          return "ent" + ( (index/2) + 1);
+        } else {
+          return "sai" + (Math.floor(index/2) + 1);
+        }
+     }
+
+};
 
 module.exports = router;
