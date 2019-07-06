@@ -666,23 +666,23 @@ function createExtraInfo(funcionario, date, arrayMarcacoes){
     } else if (escala.codigo == 2){ //escala de revezamento 12x36h
 
       //dia de trabalho
-      if (isWorkingDayRotationScale(date, new Date(funcionario.alocacao.dataInicioEfetivo)) && !flagFeriado){
+      if (isWorkingDayRotationScale(date, new Date(funcionario.alocacao.dataInicioEfetivo))){
         
         infoTrabalho.trabalha = true; 
         infoTrabalho.aTrabalhar = turno.jornada.minutosTrabalho;
 
-      } else {
-
-        if (flagFeriado && ignoraFeriados){ //é feriado mas o turno do colaborador ignora
+        if (flagFeriado && !ignoraFeriados){ //é feriado mas o turno do colaborador ignora
           
-          infoTrabalho.trabalha = true; 
-          infoTrabalho.aTrabalhar = turno.jornada.minutosTrabalho;
-
-        } else {
-         
           infoTrabalho.trabalha = false; 
           infoTrabalho.aTrabalhar = 0;
-        }
+
+        } 
+
+      } else {
+            
+          infoTrabalho.trabalha = false; 
+          infoTrabalho.aTrabalhar = 0;
+        
       }
     }
 

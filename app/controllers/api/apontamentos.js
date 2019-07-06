@@ -89,6 +89,7 @@ router.put('/:id', function(req, res){
         apontamento.historico = newApontamento.historico;//no futuro não poderá atualizar as marcações
         apontamento.infoTrabalho = newApontamento.infoTrabalho;
         apontamento.justificativa = newApontamento.justificativa;
+        //console.log('a', a); forçando um erro pra testes...
 
       //tenta atualizar de fato no BD
       apontamento.save(function(err){
@@ -286,8 +287,6 @@ router.post('/intervaldate/equipe', function(req, res){
         
     } else {
 
-        ////console.log("################ Dados simplificados...");
-
         Apontamento.find({data: queryDate, funcionario: {$in: equipe}})
         .populate({
             path: 'funcionario', 
@@ -300,7 +299,6 @@ router.post('/intervaldate/equipe', function(req, res){
                 return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
             }
 
-            ////console.log("Apontamento dateRange mongoose: ", apontamentos.length);
             return res.json(apontamentos);
         });
     }
@@ -440,128 +438,6 @@ router.post('/allequipes/estatisticas', function(req, res){
 
 });
 
-//itera sobre uma equipe e traz os apontamentos deles, depois devolve a equipe com cada componente tendo esse apontamento acoplado em uma propriedade
-//seria algo do tipo funcionario.apontamentos = [apontamentos];
-//USAR CURSOR DEIXOU MTO LENTO A REQUISICAO!!!
-router.post('/teste', function(req, res){
-
-    var objDateEquipe = req.body;
-    var dateParametro = objDateEquipe.date;
-    var dias = objDateEquipe.dias;
-    var equipe = objDateEquipe.equipe; 
-
-    var today = dateParametro ? moment(new Date(dateParametro)).startOf('day') : moment(new Date()).startOf('day'); //dia atual
-    var otherDay = (dias >= 0) ? moment(today).add(dias, 'days') : moment(today).subtract(dias, 'days');
-    var funcionariosApontamentos = equipe;
-
-    //console.log('today moment: ', today);
-    //console.log('other day moment: ', otherDay);
-
-    var queryDate = (dias >= 0) ? {$gte: today.toDate(), $lt: otherDay.toDate()} : {$gte: otherDay.toDate(), $lt: today.toDate()};
-
-    if (equipe) {
-        
-        //equipe.forEach(function(componente){
-          //  //console.log("componente: ", componente);
-          const cursor = 
-            Apontamento.find({funcionario: {$in: equipe}, data: queryDate})
-            .populate({
-                path: 'funcionario', 
-                select: 'nome sobrenome PIS sexoMasculino alocacao',
-                model: 'Funcionario',
-                populate: [{
-                  path: 'alocacao.cargo',
-                  select: 'especificacao nomeFeminino',
-                  model: 'Cargo'
-                },
-                {
-                  path: 'alocacao.turno',
-                  model: 'Turno',
-                  populate: [{
-                    path: 'escala', 
-                    model: 'Escala'
-                  }]
-                }]            
-            }).cursor();
-
-            cursor.on('data', function(apontamento) {
-              ////console.log(apontamento.data);
-              ////console.log(apontamento.funcionario.nome);
-              equipe.forEach(function(componente){
-                ////console.log("componente: ", componente.nome);
-                if (componente._id == apontamento.funcionario._id){
-                  //  //console.log("encontrou um componente com o id do funcionário");
-                    if (!componente.apontamentos)
-                        componente.apontamentos = [];
-
-                    componente.apontamentos.push(apontamento);
-                    ////console.log("componente.apontamentos array: ", componente.apontamentos.length);
-                }
-              });
-            });
-
-            cursor.on('end', function(){
-                return res.json(equipe);
-            });
-
-            // next(cursor.next);
-
-            // function next(promise) {
-            //   promise.then(apontamento => {
-            //     if (apontamento) {
-            //       //console.log(apontamento);
-            //       next(cursor.next());
-            //     }
-            //   })
-            // }
-            
-            //return res.json(equipe);
-
-            // cursor.next().then(function(apontamento){
-
-            //     if (!apontamento) {
-            //         //console.log("Não encontrou apontamento!");
-            //         return res.status(500).send({success: false, message: 'Não foi encontrado apontamento!!'});
-            //     }
-                
-            //     //console.log("Apontamento dateRange mongoose: ", apontamento.data);
-            //     //console.log("Apontamento dateRange mongoose: ", apontamento.funcionario.nome);
-
-            //     equipe.forEach(function(componente){
-            //         //console.log("componente: ", componente.nome);
-            //         if (componente._id == apontamento.funcionario._id){
-            //             //console.log("encontrou um componente com o id do funcionário");
-            //             if (!componente.apontamentos)
-            //                 componente.apontamentos = [];
-
-            //             componente.apontamentos.push(apontamento);
-            //             //console.log("componente.apontamentos array: ", componente.apontamentos.length);
-            //         }
-            //     });
-            // });
-            //.exec(function(err, cursor){
-                
-                // if(err) {
-                //     //console.log("Err: ", err);
-                //     return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
-                // }
-
-                // cursor.each(function(error, apontamento){
-
-                //     if(error) {
-                //         //console.log("Error: ", error);
-                //         return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
-                //     }
-                    
-                // });
-                //return res.json(equipe);                
-           // });
-       // });
-
-        //return res.json(funcionariosApontamentos);
-    }
-});
-
 //Get current date on server 
 //Server está com timezone 0 GMT (0)
 router.post('/currentDate', function(req, res){
@@ -577,6 +453,35 @@ router.post('/currentDate', function(req, res){
     // }
 
     return res.json({date: currentDate, utcStr: currentDate.toUTCString()});
+});
+
+router.post('/createupdatemany', function(req, res){
+
+    var _apontamentos = req.body;
+
+    Apontamento.insertMany(_apontamentos.novos, function(err, novosApontamentos){
+
+        if(err) {
+            console.log('Erro no insertMany: ', err);
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no INSERTMANY apontamentos!'});
+        }
+
+        async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
+              
+            Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
+            "infoTrabalho": obj.infoTrabalho, "status": obj.status, "historico": obj.historico }}, done);
+            //console.log("obj a ser atualizado: ", obj.infoTrabalho);
+            //console.log("obj a ser atualizado: ", obj.status);
+        }, 
+        function allDone (err) {
+            if (err)
+                return res.status(500).send({success: false, message: err});
+            
+            console.log("Tudo finalizado na atualizacao do INSERT AND UPDATE");
+            return res.status(200).send({success: true, message: "Pontos atualizados!"});
+        });
+    });
+    
 });
 
 //teste de obter reps

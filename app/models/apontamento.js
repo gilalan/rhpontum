@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 var Funcionario = require('./funcionario');
+var MotivoAjuste = require('./motivoAjuste');
+var EventoAbono = require('./eventoAbono');
 var Schema = mongoose.Schema;
 
 var apontamentoSchema = new Schema(
@@ -53,6 +55,8 @@ var apontamentoSchema = new Schema(
 		}],
 		infoTrabalho: {
 			trabalha: Boolean,
+			dataReferencia: Date,
+			ferias: {type: Boolean, default: false},
 			aTrabalhar: Number, //em minutos?
 			trabalhados: Number //em minutos?
 		},
@@ -69,8 +73,13 @@ var apontamentoSchema = new Schema(
 		}
 	}],
 	justificativa: String,//talvez não precise aqui
+	correcao: {
+		abono: {type: Schema.Types.ObjectId, ref: 'EventoAbono', required: false},
+		justificado: {type: Schema.Types.ObjectId, ref: 'MotivoAjuste', required: false}
+	},
 	infoTrabalho: {
 		trabalha: Boolean,
+		dataReferencia: Date,
 		ferias: {type: Boolean, default: false},
 		aTrabalhar: Number, //em minutos?
 		trabalhados: Number //em minutos?		

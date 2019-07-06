@@ -53,6 +53,7 @@ app.use('/api/campi', require('./app/controllers/api/campi'));
 app.use('/api/setores', require('./app/controllers/api/setores'));
 app.use('/api/equipes', require('./app/controllers/api/equipes'));
 app.use('/api/eventosabono', require('./app/controllers/api/eventoAbonos'));
+app.use('/api/motivosajuste', require('./app/controllers/api/motivoAjustes'));
 app.use('/api/feriados', require('./app/controllers/api/feriados'));
 app.use('/api/escalas', require('./app/controllers/api/escalas'));
 app.use('/api/turnos', require('./app/controllers/api/turnos'));

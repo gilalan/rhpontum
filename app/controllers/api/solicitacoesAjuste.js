@@ -635,7 +635,7 @@ router.post('/createAndUpdateMany', function(req, res){
         async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
                   
           Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
-            "infoTrabalho": obj.infoTrabalho, "status": obj.status }}, done);
+            "infoTrabalho": obj.infoTrabalho, "status": obj.status, "historico": obj.historico }}, done);
             //console.log("obj a ser atualizado: ", obj.infoTrabalho);
             //console.log("obj a ser atualizado: ", obj.status);
           }, function allDone (err) {

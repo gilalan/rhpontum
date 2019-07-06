@@ -27,7 +27,7 @@ router.get('/', function(req, res) {
 		if(err) {
      	return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
   	}
-      		
+    //console.log("passou no getFeriados do server");  		
     return res.json(feriados);
 	});
 
