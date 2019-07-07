@@ -375,8 +375,137 @@ router.post('/intervaldate/funcionario', function(req, res){
    
 });
 
-//teste para iterar sobre as equipes e trazer apontamentos de todos os funcionários que a ela pertencem
+//modificar apontamento de cada funcionário dentro do intervalo
+router.post('/idt/func', function(req, res){
+    
+    var objDateWorker = req.body;
+    var dateParametro = objDateWorker.date;
+    var dateFinalParametro = objDateWorker.date.final;
+    var funcionario = objDateWorker.funcionario;
+    var eventoAbono = objDateWorker.eventoAbono;
 
+    var startDateMom = moment({year: dateParametro.year, month: dateParametro.month,
+        day: dateParametro.day, hour: dateParametro.hour, minute: dateParametro.minute});
+
+    var endDateMom = undefined;
+    if (dateFinalParametro){        
+        endDateMom = moment({year: dateFinalParametro.year, month: dateFinalParametro.month,
+            day: dateFinalParametro.day, hour: dateFinalParametro.hour, minute: dateFinalParametro.minute});
+    }
+
+    var firstDay = dateParametro ? startDateMom.startOf('day') : moment(new Date()).startOf('day');
+    var lastDay = endDateMom ? endDateMom.startOf('day') : moment(new Date(firstDay)).startOf('day');
+    
+    var oneDayMoreLastDay = moment(lastDay).add(1, 'days');
+    
+    var queryDate = {$gte: firstDay.toDate(), $lt: oneDayMoreLastDay.toDate()};
+    if (dateFinalParametro)
+        queryDate = {$gte: firstDay.toDate(), $lte: oneDayMoreLastDay.toDate()};
+    
+    var strEmpty = "Evento de Abono Excluído";
+    console.log("Funcionário: ", funcionario.nome)
+    console.log("Período: ", firstDay.toDate());
+    console.log("End: ", oneDayMoreLastDay.toDate());
+    console.log("Evento de Abono: ", eventoAbono ? eventoAbono.nome : strEmpty);
+    var counter = 0;
+
+    Apontamento.find({data: queryDate, funcionario: funcionario._id ? funcionario._id : funcionario})    
+    .sort({data: 'asc'})
+    .exec(function(err, apontamentos){
+        if(err) {
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+        }
+        console.log("Apontamentos: ", apontamentos.length);
+        //return res.status(200).send({success: true, message: "Passou!"});
+        async.eachSeries(apontamentos, function updateObject (obj, done, next) {
+            console.log("Apontamento: ", obj.data);
+            if (obj.status.id == 4){
+                counter++;
+                if (eventoAbono){
+                    Apontamento.update({ _id: obj._id }, 
+                        { $set : { "correcao.abono": eventoAbono, 
+                        "status.abonoStr": eventoAbono.nome }}, done);
+                } else {
+                    Apontamento.update({ _id: obj._id }, 
+                        { $set : { "correcao": {}, 
+                        "status.abonoStr": strEmpty }}, done);
+                }                
+                //console.log("obj a ser atualizado: ", obj.infoTrabalho);
+                //console.log("obj a ser atualizado: ", obj.status);
+            } else {
+                Apontamento.update({ _id: obj._id }, 
+                    { $set : { "correcao": {}}}, done);
+            } 
+        }, 
+        function allDone (err) {
+            if (err){
+                console.log("Ocorreu um erro ", err);
+                return res.status(500).send({success: false, message: err});
+            }
+            
+            console.log("Tudo finalizado na atualizacao");
+            return res.status(200).send({success: true, message: "Total atualizado: "+counter});
+        });
+    });
+   
+});
+
+router.post('/abonos/func', function(req, res){
+
+    var funcionario = req.body;
+
+    Apontamento.find({"status.id": 4, funcionario: funcionario._id ? funcionario._id : funcionario})
+    .sort({data: 'asc'})
+    .exec(function(err, apontamentos){
+        if(err) {
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+        }
+        //console.log("Apontamento dateRange mongoose: ", apontamentos.length);
+        var _date; 
+        var yearMonthMap = {}; 
+        if (apontamentos.length > 1){
+ 
+            for (i=0; i<apontamentos.length; i++){
+                
+                _date = moment(apontamentos[i].data);
+                if (!yearMonthMap[_date.year()]){
+                    //console.log('-Não tem um ano mapeado, primeira vez');
+                    var monthMapTemp = {};
+                    monthMapTemp[_date.month()] = [{day: _date.date(),
+                        id: apontamentos[i]._id,
+                        fullDate: apontamentos[i].data, 
+                        abonoStr: apontamentos[i].status.abonoStr}];
+                    yearMonthMap[_date.year()] = monthMapTemp;
+
+                } else {//já tem um ano mapeado['2019']
+                    //caso não haja esse hash, a gnt inicializa o array de meses nele
+                    if (!yearMonthMap[_date.year()][_date.month()]){
+                        
+                        // console.log('-Não tem um ano e mes mapeados')
+                        yearMonthMap[_date.year()][_date.month()] = [{day: _date.date(), 
+                            id: apontamentos[i]._id,
+                            fullDate: apontamentos[i].data,
+                            abonoStr: apontamentos[i].status.abonoStr}];
+
+                    } else {
+                        //console.log('#Já tem um pis e data mapeados: ', yearMonthMap[pis][data]);
+                        (yearMonthMap[_date.year()][_date.month()]).push({day: _date.date(), 
+                            id: apontamentos[i]._id,
+                            fullDate: apontamentos[i].data,
+                            abonoStr: apontamentos[i].status.abonoStr});
+                    }
+                }
+            }
+            return res.json(yearMonthMap);
+
+        } else {
+            return res.json(apontamentos);
+        }
+    });
+
+});
+
+//teste para iterar sobre as equipes e trazer apontamentos de todos os funcionários que a ela pertencem
 router.post('/allequipes/estatisticas', function(req, res){
 
     var equipes = req.body;
@@ -453,6 +582,27 @@ router.post('/currentDate', function(req, res){
     // }
 
     return res.json({date: currentDate, utcStr: currentDate.toUTCString()});
+});
+
+router.post('/deletemany', function(req, res){
+
+    //PAREI AQUI POIS ESTOU QUERENDO FAZER UM BACKUP ANTES DE DELETAR COISAS NA BASE
+    //VAI QUE DELETA TUDO...
+
+    async.eachSeries(req.body, function deleteObject (obj, done) {
+              
+        Apontamento.deleteOne({ _id: obj._id }, done);
+        //console.log("obj a ser atualizado: ", obj.infoTrabalho);
+        //console.log("obj a ser atualizado: ", obj.status);
+    }, 
+    function allDone (err) {
+        if (err)
+            return res.status(500).send({success: false, message: err});
+        
+        console.log("Tudo finalizado no delete");
+        return res.status(200).send({success: true, message: "Tudo deletado"});
+    });
+
 });
 
 router.post('/createupdatemany', function(req, res){
