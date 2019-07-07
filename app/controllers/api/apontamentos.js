@@ -586,22 +586,25 @@ router.post('/currentDate', function(req, res){
 
 router.post('/deletemany', function(req, res){
 
-    //PAREI AQUI POIS ESTOU QUERENDO FAZER UM BACKUP ANTES DE DELETAR COISAS NA BASE
-    //VAI QUE DELETA TUDO...
+    var apontamentosParaExcluir = req.body;
 
-    async.eachSeries(req.body, function deleteObject (obj, done) {
-              
-        Apontamento.deleteOne({ _id: obj._id }, done);
-        //console.log("obj a ser atualizado: ", obj.infoTrabalho);
-        //console.log("obj a ser atualizado: ", obj.status);
-    }, 
-    function allDone (err) {
-        if (err)
-            return res.status(500).send({success: false, message: err});
-        
-        console.log("Tudo finalizado no delete");
-        return res.status(200).send({success: true, message: "Tudo deletado"});
-    });
+    if (apontamentosParaExcluir.length > 0){
+        async.eachSeries(apontamentosParaExcluir, function deleteObject (obj, done) {
+                  
+            console.log("obj a ser deletado: ", obj.fullDate);
+            //Apontamento.deleteOne({ _id: obj.id }, done);
+            Apontamento.deleteOne({ _id: obj.id }, done);
+        }, 
+        function allDone (err) {
+            if (err)
+                return res.status(500).send({success: false, message: err});
+            
+            console.log("Tudo finalizado no delete");
+            return res.status(200).send({success: true, message: "Tudo deletado"});
+        });
+    } else {
+        return res.status(200).send({success: true, message: "Não há apontamentos para deleção"});
+    }
 
 });
 
