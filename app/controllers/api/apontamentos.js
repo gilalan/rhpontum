@@ -3,6 +3,7 @@ var Funcionario = require('../../models/funcionario');
 var Cargo = require('../../models/cargo');
 var Turno = require('../../models/turno');
 var Escala = require('../../models/escala');
+var Util = require('../utilService');
 var moment = require('moment');
 var async = require('async');
 var router = require('express').Router();
@@ -636,6 +637,249 @@ router.post('/createupdatemany', function(req, res){
     });
     
 });
+
+router.post('/adjustRepeated', function(req, res){
+    console.log("iniciar correção...");
+    Apontamento.find().exec(function(err, apontamentos) {
+
+        if(err) {
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+        }
+        
+        console.log("Apontamentos.length: ", apontamentos.length);
+
+        var repeatedAppoints = [];
+        for (var i=0; i<apontamentos.length; i++){
+            
+            if (checkRepeatedElements(apontamentos[i].marcacoes)){
+                repeatedAppoints.push(apontamentos[i]);
+            }
+            console.log("repeatedAppoints: ", repeatedAppoints);
+        }
+
+        return res.json({quantity: apontamentos.length, quantityRep: repeatedAppoints.length});
+    });
+
+});
+
+router.post('/adjustRepeatedEmployee', function(req, res){
+    var emp = req.body;
+    console.log("iniciar correção...", emp.PIS);
+    var apontamentosDataToCorrect = [];
+
+    Apontamento.find({'PIS': emp.PIS}).sort({data: 'asc'}).exec(function(err, apontamentos) {
+
+        if(err) {
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+        }
+        
+        console.log("Apontamentos.length: ", apontamentos.length);
+
+        var repeatedAppoints = [];
+        var objMarcacoes = {};
+        var objNewData = undefined;
+       
+        for (var i=0; i<apontamentos.length; i++){
+            
+            objNewData = changeIncorrectTZ(apontamentos[i].data);
+            if (objNewData.changed){
+                apontamentos[i].data = objNewData.data.toDate();
+                apontamentosDataToCorrect.push(apontamentos[i]);
+            }
+
+            objMarcacoes = removeRepeatedElements(apontamentos[i].marcacoes);
+            if (objMarcacoes.ajusted){
+                apontamentos[i].marcacoes = objMarcacoes.array;
+                modifyApontamento(apontamentos[i]);
+                repeatedAppoints.push(apontamentos[i]);
+            }
+
+        }
+
+        console.log("repeatedAppoints: ", repeatedAppoints.length);
+        console.log("Apontamentos data para corrigir: ", apontamentosDataToCorrect.length);
+
+        if (apontamentosDataToCorrect.length > 0){
+            console.log("Vai corrigir as datas no BANCO primeiro: ");
+            async.eachSeries(apontamentosDataToCorrect, function updateObject (obj, done) {
+                  
+                Apontamento.update({ _id: obj._id }, { $set : { "data": obj.data }}, done);
+                
+            }, 
+            function allDone (err) {
+                if (err)
+                    return res.status(500).send({success: false, message: err});
+                
+                console.log("Tudo finalizado na atualizacao da DATA e TImeZone");
+                async.eachSeries(repeatedAppoints, function updateObject (obj, done) {
+                  
+                    Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
+                        "infoTrabalho": obj.infoTrabalho, "status": obj.status }}, done);
+                    
+                }, 
+                function allDone (err) {
+                    if (err)
+                        return res.status(500).send({success: false, message: err});
+                        
+                    console.log("Tudo finalizado na atualizacao dos apontamentos");
+                    //devo fazer a mesma coisa aqui de atualização do que se não tiver pra atualizar... o restante das coisas...
+
+                    return res.json({arrayRep: repeatedAppoints, quantity: apontamentos.length, quantityRep: repeatedAppoints.length});
+                });
+                //return res.json({arrayRep: repeatedAppoints, quantity: apontamentos.length, quantityRep: repeatedAppoints.length});
+            });    
+        } else { 
+
+            async.eachSeries(repeatedAppoints, function updateObject (obj, done) {
+                  
+                Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
+                    "infoTrabalho": obj.infoTrabalho, "status": obj.status }}, done);
+                
+            }, 
+            function allDone (err) {
+                if (err)
+                    return res.status(500).send({success: false, message: err});
+                    
+                console.log("Tudo finalizado na atualizacao dos apontamentos");
+                //devo fazer a mesma coisa aqui de atualização do que se não tiver pra atualizar... o restante das coisas...
+
+                return res.json({arrayRep: repeatedAppoints, quantity: apontamentos.length, quantityRep: repeatedAppoints.length});
+            });
+            //return res.json({arrayRep: repeatedAppoints, quantity: apontamentos.length, quantityRep: repeatedAppoints.length});
+
+        }
+        
+    });
+
+});
+
+function changeIncorrectTZ(apontamentoData){
+
+    var strUTC = "";
+    var newStrUTC = "";
+    var momNormal = undefined;
+    var momUTC = {};
+    var changed = false;
+
+    strUTC = apontamentoData.toUTCString();
+    //console.log("String UTC: ", strUTC);
+    momNormal = moment(strUTC);
+    momUTC = moment.utc(strUTC);
+    //console.log( 'Data: ', momNormal);
+    //console.log( 'Data TZ: ', momNormal.utcOffset());
+    //console.log( 'Data UTC: ', momUTC);
+    //console.log( 'Data UTC TZ: ', momUTC.utcOffset());
+    if (momNormal.year() == momUTC.year() && momNormal.month() == momUTC.month() && momNormal.date() == momUTC.date()){
+        //console.log('Mesma Data em ambos');
+    }
+    else{
+        newStrUTC = "";
+        //console.log('####### Erro de Timezone, arrumando:');
+        if(strUTC.includes("00:00:00")){
+            //console.log("includes T00");
+            newStrUTC = strUTC.replace("00:00:00", "03:00:00");
+            //console.log("New String UTC: ", newStrUTC);
+        }
+        else if (strUTC.includes("01:00:00"))
+            newStrUTC = strUTC.replace("01:00:00", "03:00:00");
+        else if (strUTC.includes("02:00:00"))
+            newStrUTC = strUTC.replace("02:00:00", "03:00:00");
+        //momNormal = moment([momUTC.year(), momUTC.month(), momUTC.date(), momUTC.hour(), momUTC.minute()]).utcOffset(-180);
+        //console.log("New String UTC: ", newStrUTC);
+        momNormal = moment(newStrUTC);
+        //console.log( 'Nova Data: ', momNormal);
+        //console.log( 'Nova Data TZ: ', momNormal.utcOffset());
+        //console.log('#######');
+    }
+    if (!momNormal.isSame(moment(strUTC)))
+        changed = true;
+
+    return {changed: changed, data: momNormal};
+
+};
+
+function checkRepeatedElements(marcacoes){
+
+  if (marcacoes.length < 2){
+    return false;
+  }
+
+  else {
+    var keyObj = {};
+    var strKey = "";
+    for (var j=0; j<marcacoes.length; j++){
+      strKey = getRawHours(marcacoes[j].hora, marcacoes[j].minuto);
+      if(!keyObj[strKey])
+        keyObj[strKey] = 0;
+      keyObj[strKey] += 1;
+    }
+    var hasDupl = false;
+    for (var prop in keyObj){
+      if (keyObj[prop] >= 2)
+        hasDupl = true;
+    }
+
+    return hasDupl;
+  }
+
+};
+
+function removeRepeatedElements(marcacoes){
+
+  if (marcacoes.length >= 2) {
+  
+    var keyObj = {};
+    var strKey = "";
+
+    for (var j=0; j<marcacoes.length; j++){
+        strKey = getRawHours(marcacoes[j].hora, marcacoes[j].minuto);
+        if(!keyObj[strKey])
+            keyObj[strKey] = {len: 0, marc: marcacoes[j]};
+        keyObj[strKey].len += 1;
+    }
+
+    var marcacoesRet = new Array();
+    var hasDupl = false;
+    for (var key in keyObj){
+        if (keyObj[key].len >= 2){
+            hasDupl = true;
+            marcacoesRet.push(keyObj[key].marc);
+        }
+    }
+
+    return {ajusted: hasDupl, array: marcacoesRet};
+
+  } else {
+    return {ajusted: false};
+  }
+
+};
+
+function getRawHours(hoursP, minutesP){
+
+    var hours = parseInt(hoursP);
+    var minutes = parseInt(minutesP);
+    var hoursStr = "";
+    var minutesStr = "";
+
+    hoursStr = (hours >= 0 && hours <= 9) ? "0"+hours : ""+hours;           
+    minutesStr = (minutes >= 0 && minutes <= 9) ? "0"+minutes : ""+minutes;
+
+    return hoursStr + minutesStr;
+};
+
+function modifyApontamento(apontamento){
+
+    var objMarcacoes = Util.reorganizarBatidasPropostas(apontamento.marcacoes);
+    apontamento.marcacoes = objMarcacoes.newArray;
+    apontamento.marcacoesFtd = objMarcacoes.newArrayFtd;
+    console.log('marcacoesFtd: ', apontamento.marcacoesFtd);
+    var minTrab = Util.calcularHorasMarcacoesPropostas(apontamento.marcacoes);
+    console.log("Minutos Trabalhados: ", minTrab);
+    apontamento.infoTrabalho.trabalhados = minTrab;
+    Util.setStatus(apontamento);
+
+};
 
 //teste de obter reps
 var urlStaticREPFile = 'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006674.txt'; //Agraria01
