@@ -3,6 +3,7 @@ var Funcionario = require('../../models/funcionario');
 var Cargo = require('../../models/cargo');
 var Turno = require('../../models/turno');
 var Escala = require('../../models/escala');
+var Feriado = require('../../models/feriado');
 var Util = require('../utilService');
 var moment = require('moment');
 var async = require('async');
@@ -753,6 +754,140 @@ router.post('/adjustRepeatedEmployee', function(req, res){
 
 });
 
+router.post('/reverterFerias', function(req, res){
+    
+    var objEmpFerias = req.body;
+    //console.log("iniciar reversão...", objEmpFerias.empID);
+    var arrayFerias = objEmpFerias.ferias.arrayDias;
+
+    if (arrayFerias.length > 0){
+        arrayFerias.sort(
+          function (a, b) {
+            if (a.year == b.year){
+                if (a.month == b.month){
+                    if (a.date == b.date)
+                        return 0;
+                    else if (a.date < b.date)
+                        return -1;
+                    else
+                        return 1;
+
+                } else if (a.month < b.month){
+                    return -1;
+                } else {
+                    return 1;
+                }
+            } 
+            else if (a.year < b.year)
+              return -1;
+            else 
+                return 1;
+          } 
+        );
+
+        //for (var i=0; i<arrayFerias.length; i++) 
+          // console.log("data: ", arrayFerias[i]);
+
+        var startDateMom = undefined;
+        var endDateMom = undefined;
+        var queryDate = undefined;
+
+        console.log("Array Ferias: ", arrayFerias.length);
+
+        if (arrayFerias.length == 1){
+            startDateMom = moment({year: arrayFerias[0].year, month: arrayFerias[0].month-1,
+                day: arrayFerias[0].date});
+            //console.log("startDateMom: ", startDateMom);
+            var firstDay = startDateMom.startOf('day');
+            var oneDayMoreLastDay = moment(firstDay).add(1, 'days');
+            queryDate = {$gte: firstDay.toDate(), $lt: oneDayMoreLastDay.toDate()};
+        }
+        else {
+            var lastIndex = arrayFerias.length - 1;
+            startDateMom = moment({year: arrayFerias[0].year, month: arrayFerias[0].month-1,
+                day: arrayFerias[0].date});
+            //console.log("startDateMom: ", startDateMom);
+            endDateMom = moment({year: arrayFerias[lastIndex].year, month: arrayFerias[lastIndex].month-1,
+                day: arrayFerias[lastIndex].date});
+            //console.log("endDateMom: ", endDateMom);
+            
+            var firstDay = startDateMom.startOf('day');
+            var lastDay = endDateMom.startOf('day');
+            //console.log("FirstDay Query: ", firstDay);
+            //console.log("LastDay Query: ", lastDay);
+            var oneDayMoreLastDay = moment(lastDay).add(1, 'days');
+            queryDate = {$gte: firstDay.toDate(), $lt: oneDayMoreLastDay.toDate()};
+        }
+
+        console.log("queryDate: ", queryDate);
+
+        if (queryDate != undefined){
+
+            Apontamento.find({data: queryDate, funcionario: objEmpFerias.employee._id})    
+            .sort({data: 'asc'})//depois pode tirar pra melhorar o desempenho...
+            .exec(function(err, apontamentos){
+                if(err) {
+                    return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+                }
+                console.log("Apontamentos: ", apontamentos.length);
+                //return res.status(200).send({success: true, message: "Trouxe os apontamentos para atualizar!"});
+                // for (var i=0; i<apontamentos.length; i++){
+                //     console.log("##Apontamento Data: ", apontamentos[i].data);
+                //     console.log("##Apontamento InfoTrab: ", apontamentos[i].infoTrabalho);
+                //     var itemSearched = _updateInfoTrabalho(objEmpFerias.employee, apontamentos[i]);
+                //     console.log("itemSearched: ", itemSearched);
+                // }
+                // return res.json(apontamentos);
+                async.eachSeries(apontamentos, function updateObject (obj, done, next) {
+                    
+                    console.log("Apontamento: ", obj.data);
+                    var itemSearched = _updateInfoTrabalho(objEmpFerias.employee, obj);
+                    console.log("itemSearched: ", itemSearched);
+                    Apontamento.update({ _id: obj._id }, { $set : { "infoTrabalho.trabalha": itemSearched.trabalha, 
+                        "infoTrabalho.aTrabalhar": itemSearched.aTrabalhar, "infoTrabalho.ferias": false }}, done);
+
+                }, 
+                function allDone (err) {
+                    if (err){
+                        console.log("Ocorreu um erro ", err);
+                        return res.status(500).send({success: false, message: err});
+                    }
+                    
+                    console.log("Tudo finalizado na atualizacao, remover ferias agora");
+                    Funcionario.findOne({_id: objEmpFerias.employee._id})
+                    .exec(function(err, funcionario){
+                        
+                        if(err) {
+                            return res.status(500).send({success: false, message: 'Ocorreu um erro na remoção das férias!'});
+                        }
+
+                        var newArrayFerias = [];
+                        for (var j=0; j<funcionario.ferias.length; j++){
+                            if (objEmpFerias.ferias._id != funcionario.ferias[j]._id)
+                                newArrayFerias.push(funcionario.ferias[j]);
+                        }
+                        funcionario.ferias = newArrayFerias;
+                        //tenta atualizar de fato no BD
+                        funcionario.save(function(err){
+                            
+                            if(err){
+                              console.log('Erro no save do update', err);
+                              return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento da atualização e remoção das férias!'});
+                            }
+
+                            return res.status(200).send({success: true, message: 'Funcionário atualizado com sucesso.'});
+                        });
+
+                        //return res.json(funcionario);
+                    });
+                    //return res.status(200).send({success: true, message: "Total atualizado: "+counter});
+                });
+            });
+        }
+    }
+
+});
+
 function changeIncorrectTZ(apontamentoData){
 
     var strUTC = "";
@@ -879,6 +1014,183 @@ function modifyApontamento(apontamento){
     apontamento.infoTrabalho.trabalhados = minTrab;
     Util.setStatus(apontamento);
 
+};
+
+function _updateInfoTrabalho(funcionario, apontamento){
+
+    var turno = funcionario.alocacao.turno;
+    var escala = turno.escala;
+    var date = new Date(apontamento.data);
+    var infoTrabalho = {};        
+
+    var flagFeriado = _isFeriado(date, funcionario.equipe);
+    ////console.log('flagFeriado: ', flagFeriado);
+
+      if (escala) {
+      
+          ////console.log('entrou no if de criar informações extra de Escala');
+          var ignoraFeriados = turno.ignoraFeriados;
+          var minutos_trabalhados = undefined;
+          if (escala.codigo == 1) {//escala tradicional na semana
+
+            var diaTrabalho = _isWorkingDayWeeklyScale(date.getDay(), turno.jornada.array);
+            if (diaTrabalho.horarios && !flagFeriado) { //é um dia de trabalho normal
+
+              infoTrabalho.trabalha = true;
+              infoTrabalho.aTrabalhar = diaTrabalho.minutosTrabalho;
+
+            } else {
+
+              if (flagFeriado && ignoraFeriados) { //é um feriado mas o turno do colaborador ignora isso
+                
+                infoTrabalho.trabalha = true;
+                infoTrabalho.aTrabalhar = diaTrabalho.minutosTrabalho;
+
+              } else {
+
+                infoTrabalho.trabalha = false;
+                infoTrabalho.aTrabalhar = 0;
+                
+              }
+            }
+
+          } else if (escala.codigo == 2) { //escala 12x36
+
+            //dia de trabalho
+            if (_isWorkingDayRotationScale(date, new Date(funcionario.alocacao.dataInicioEfetivo))){
+              
+              infoTrabalho.trabalha = true; 
+              infoTrabalho.aTrabalhar = turno.jornada.minutosTrabalho;
+              
+              if (flagFeriado && !ignoraFeriados){ //é feriado mas o turno do colaborador não ignora
+                
+                infoTrabalho.trabalha = false; 
+                infoTrabalho.aTrabalhar = 0;
+              } 
+
+            } else {
+
+                infoTrabalho.trabalha = false; 
+                infoTrabalho.aTrabalhar = 0;
+            }
+          }
+      } else {
+
+          return undefined;
+      }
+
+      return infoTrabalho;
+
+};
+
+function _isFeriado (data, equipe){
+
+    Feriado.find()
+      .populate('local.estado', 'sigla_uf nome_uf')
+      .populate('local.municipio', 'estado nome_municipio')
+      .exec(function(err, feriados){
+            
+            if(err) {
+                return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+
+            var date = data.getDate();//1 a 31
+            var month = data.getMonth();//0 a 11
+            var year = data.getFullYear();//
+            var flagFeriado = false;
+            var tempDate;
+
+            feriados.forEach(function(feriado){
+            
+              for (var i = 0; i < feriado.array.length; i++) {
+                
+                tempDate = new Date(feriado.array[i]);
+                
+                if (feriado.fixo){
+                
+                  if (tempDate.getMonth() === month && tempDate.getDate() === date){
+                    // //console.log("É Feriado (fixo)!", tempDate);
+                    flagFeriado = _checkFeriadoSchema(feriado, equipe);
+                    return feriado;
+                  }
+
+                } else {//se não é fixo
+
+                  if ( (tempDate.getFullYear() === year) && (tempDate.getMonth() === month) && (tempDate.getDate() === date) ){
+                    //////console.log("É Feriado (variável)!", tempDate);
+                    flagFeriado = _checkFeriadoSchema(feriado, equipe);
+                    return feriado;
+                  }
+                }
+              }
+            });
+            // //console.log('FlagFeriado: ', flagFeriado);
+            return flagFeriado;//no futuro retornar o flag de Feriado e a descrição do mesmo!
+        }        
+    });    
+
+};
+
+function _checkFeriadoSchema(feriado, equipe){
+
+    var abrangencias = ["Nacional", "Estadual", "Municipal"];
+    var flagFeriado = false;
+
+    if (feriado.abrangencia == abrangencias[0]){
+
+      flagFeriado = true;
+
+    } else  if (feriado.abrangencia == abrangencias[1]){
+      
+      if (equipe.setor.local.estado == feriado.local.estado._id){
+        ////console.log('Feriado Estadual no Estado correto!');
+        flagFeriado = true;
+      }
+
+    } else if (feriado.abrangencia == abrangencias[2]){
+      
+      if (equipe.setor.local.municipio == feriado.local.municipio._id){
+        ////console.log('No municipio correto!');
+        flagFeriado = true;
+      }
+    }
+
+    return flagFeriado;
+};
+
+
+/*
+*
+* Não Verifica, mas retorna o dia de trabalho na escala semanal
+*
+*/
+function _isWorkingDayWeeklyScale(dayToCompare, arrayJornadaSemanal) {
+    
+    var diaRetorno = {};
+    arrayJornadaSemanal.forEach(function(objJornadaSemanal){
+      if(dayToCompare == objJornadaSemanal.dia){
+        diaRetorno = objJornadaSemanal;
+        return diaRetorno;
+      }
+    });
+    return diaRetorno;
+};
+
+/*
+*
+* Verifica se é dia de trabalho na escala de revezamento 12x36h 
+*
+*/
+function _isWorkingDayRotationScale (dateToCompare, dataInicioEfetivo) {
+
+    var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+    
+    var d1 = angular.copy(dateToCompare); 
+    var d2 = angular.copy(dataInicioEfetivo);
+    d1.setHours(0,0,0,0);
+    d2.setHours(0,0,0,0);
+
+    var diffDays = Math.round(Math.abs((d1.getTime() - d2.getTime())/(oneDay)));
+    return (diffDays % 2 == 0) ? true : false;
 };
 
 //teste de obter reps
@@ -1018,7 +1330,7 @@ function sortMarcacoes(newApontamento) {
 
     newApontamento.marcacoesFtd.sort(
         function(a, b){//ordena o array de marcaçõesFtd
-            return a > b;
+            return a.localeCompare(b);
     }); 
 
     if (newApontamento.historico){
@@ -1036,7 +1348,7 @@ function sortMarcacoes(newApontamento) {
 
                          newApontamento.historico[i].marcacoesFtd.sort(
                             function(a, b){//ordena o array de marcaçõesFtd
-                                return a > b;
+                                return a.localeCompare(b);
                         }); 
                         for (var k=0; k < newApontamento.historico[i].marcacoes.length; k++){
 
