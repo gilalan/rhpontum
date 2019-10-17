@@ -754,6 +754,51 @@ router.post('/adjustRepeatedEmployee', function(req, res){
 
 });
 
+//Traz os abonos desse funcionario
+router.post('/adjustFolgaCompensatoria', function(req, res){
+   
+    var emp = req.body;
+    //console.log("iniciar correção...", emp.PIS);
+    var apontamentosDataToCorrect = [];
+
+    Apontamento.find({'PIS': emp.PIS, 'status.id': 4}).sort({data: 'asc'}).exec(function(err, apontamentos) {
+
+        if(err) {
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento!'});
+        }
+        
+        console.log("Apontamentos.length: ", apontamentos.length);
+
+        return res.json(apontamentos);        
+        
+    });
+
+});
+
+router.post('/changeAbonoFolgaComp', function(req, res){
+
+    var apontamentos = req.body;
+
+    async.eachSeries(apontamentos, function updateObject (obj, done, next) {
+                        
+        console.log("Apontamento: ", obj.data);
+        Apontamento.update({ _id: obj._id }, { $set : { "infoTrabalho.trabalhados": 0, 
+        "status.id": 5, "status.descricao": "Folga Compensatória", "status.abonoStr": ""}}, done);
+
+    }, 
+    function allDone (err) {
+        if (err){
+            console.log("Ocorreu um erro ", err);
+            return res.status(500).send({success: false, message: err});
+         }
+
+        console.log("Tudo finalizado na atualizacao, remover ferias agora");    
+        return res.status(200).send({success: true, message: "Tudo atualizado!"});
+    });
+
+});
+
+
 router.post('/reverterFerias', function(req, res){
     
     var objEmpFerias = req.body;
@@ -886,6 +931,25 @@ router.post('/reverterFerias', function(req, res){
         }
     }
 
+});
+
+router.post('/correctMarcacoesFtd', function(req, res){
+    console.log("iniciar correção...");
+    var arrayApontamentos = req.body;
+    async.eachSeries(arrayApontamentos, function updateObject (obj, done) {
+              
+        Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
+        "infoTrabalho": obj.infoTrabalho, "status": obj.status, "historico": obj.historico }}, done);
+        //console.log("obj a ser atualizado: ", obj.infoTrabalho);
+        //console.log("obj a ser atualizado: ", obj.status);
+    }, 
+    function allDone (err) {
+        if (err)
+            return res.status(500).send({success: false, message: err});
+        
+        console.log("Tudo finalizado na atualizacao do INSERT AND UPDATE");
+        return res.status(200).send({success: true, message: "Pontos atualizados!"});
+    });
 });
 
 function changeIncorrectTZ(apontamentoData){

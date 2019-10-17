@@ -39,7 +39,7 @@ router.get('/', function(req, res) {
   //.populate('componentes', 'nome sobrenome PIS')
   .populate({
     path: 'componentes',
-    select: 'nome sobrenome PIS matricula sexoMasculino alocacao active ferias',
+    select: 'nome sobrenome PIS matricula sexoMasculino alocacao active ferias historico',
     model: 'Funcionario',
     populate: [{
       path: 'alocacao.cargo',
