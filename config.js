@@ -23,5 +23,11 @@ module.exports = {
 		region: "us-west-2",
 		bucketName: "uploads-abono-attachments"
 	},
+	awsrep: {
+        region: "sa-east-1",
+        bucketName: "rhponto.rep.file",
+        key: "AKIAJWIF4GOLKQPKQ5MQ"
+
+    },
   	ensureAuthorized: ensureAuthorizedFunc	
 }

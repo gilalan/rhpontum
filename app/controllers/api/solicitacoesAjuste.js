@@ -6,7 +6,7 @@ var Usuario = require('../../models/usuario');
 var Equipe = require('../../models/equipe');
 var moment = require('moment');
 var router = require('express').Router();
-var async = require('async');
+var Async = require('async');
 var aws = require('aws-sdk');
 var randomString = require('../../../randomString');
 var config = require('../../../config');
@@ -89,7 +89,7 @@ router.post('/', function(req, res) {
   var matches, params, uploadBody, randomSubfolder;
   var savedArray = [];
   console.log("vai tentar salvar no bucket s3");  
-  async.eachSeries(files, function updateObject (obj, done) {
+  Async.eachSeries(files, function updateObject (obj, done) {
     console.log('vez do ', obj.name);
     randomSubfolder = randomString.generate(20);
     matches = obj.data.match(/data:([A-Za-z-+\/].+);base64,(.+)/);
@@ -361,7 +361,7 @@ router.post('/createsolicitationappoint', function(req, res){
   var matches, params, uploadBody, randomSubfolder;
   var savedArray = [];
   console.log("vai tentar salvar no bucket s3");  
-  async.eachSeries(files, function updateObject (obj, done) {
+  Async.eachSeries(files, function updateObject (obj, done) {
     console.log('vez do ', obj.name);
     randomSubfolder = randomString.generate(20);
     matches = obj.data.match(/data:([A-Za-z-+\/].+);base64,(.+)/);
@@ -446,7 +446,7 @@ router.post('/insertAndUpdateMany', function(req, res){
   if (!uploaded) {
 
     console.log("vai tentar salvar no bucket s3");  
-    async.eachSeries(files, function updateObject (obj, done) {
+    Async.eachSeries(files, function updateObject (obj, done) {
       console.log('vez do ', obj.name);
       randomSubfolder = randomString.generate(20);
       matches = obj.data.match(/data:([A-Za-z-+\/].+);base64,(.+)/);
@@ -504,7 +504,7 @@ router.post('/insertAndUpdateMany', function(req, res){
               }
             });
 
-            async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
+            Async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
                       
               Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
                 "infoTrabalho": obj.infoTrabalho, "status": obj.status }}, done);
@@ -554,7 +554,7 @@ router.post('/insertAndUpdateMany', function(req, res){
           }
         });
 
-        async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
+        Async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
                   
           Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
             "infoTrabalho": obj.infoTrabalho, "status": obj.status }}, done);
@@ -586,7 +586,7 @@ router.post('/createAndUpdateMany', function(req, res){
   var matches, params, uploadBody, randomSubfolder;
   var savedArray = [];
   console.log("vai tentar salvar no bucket s3");  
-  async.eachSeries(files, function updateObject (obj, done) {
+  Async.eachSeries(files, function updateObject (obj, done) {
     console.log('vez do ', obj.name);
     randomSubfolder = randomString.generate(20);
     matches = obj.data.match(/data:([A-Za-z-+\/].+);base64,(.+)/);
@@ -632,7 +632,7 @@ router.post('/createAndUpdateMany', function(req, res){
           }
         });
 
-        async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
+        Async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
                   
           Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
             "infoTrabalho": obj.infoTrabalho, "status": obj.status, "historico": obj.historico }}, done);
@@ -844,7 +844,7 @@ router.post('/uploadImage', function(req, res){
   var matches, params, uploadBody, randomSubfolder;
   var savedArray = [];
   console.log("vai tentar salvar no bucket s3");  
-  async.eachSeries(files, function updateObject (obj, done) {
+  Async.eachSeries(files, function updateObject (obj, done) {
     console.log('vez do ', obj.name);
     randomSubfolder = randomString.generate(20);
     matches = obj.data.match(/data:([A-Za-z-+\/].+);base64,(.+)/);

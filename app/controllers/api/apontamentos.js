@@ -6,7 +6,7 @@ var Escala = require('../../models/escala');
 var Feriado = require('../../models/feriado');
 var Util = require('../utilService');
 var moment = require('moment');
-var async = require('async');
+var Async = require('async');
 var router = require('express').Router();
 
 router.get('/', function(req, res) {
@@ -419,7 +419,7 @@ router.post('/idt/func', function(req, res){
         }
         console.log("Apontamentos: ", apontamentos.length);
         //return res.status(200).send({success: true, message: "Passou!"});
-        async.eachSeries(apontamentos, function updateObject (obj, done, next) {
+        Async.eachSeries(apontamentos, function updateObject (obj, done, next) {
             console.log("Apontamento: ", obj.data);
             if (obj.status.id == 4){
                 counter++;
@@ -515,7 +515,7 @@ router.post('/allequipes/estatisticas', function(req, res){
     var marcacoesWeb = 0;
     var marcacoesFisicas = 0;
 
-    async.map(equipes, function (equipe, next) {
+    Async.map(equipes, function (equipe, next) {
       // Do a query for each key
       // Apontamento.find({ key: key }, function (err, result) {
       //   // Map the value to the key
@@ -591,7 +591,7 @@ router.post('/deletemany', function(req, res){
     var apontamentosParaExcluir = req.body;
 
     if (apontamentosParaExcluir.length > 0){
-        async.eachSeries(apontamentosParaExcluir, function deleteObject (obj, done) {
+        Async.eachSeries(apontamentosParaExcluir, function deleteObject (obj, done) {
                   
             console.log("obj a ser deletado: ", obj.fullDate);
             //Apontamento.deleteOne({ _id: obj.id }, done);
@@ -621,7 +621,7 @@ router.post('/createupdatemany', function(req, res){
             return res.status(500).send({success: false, message: 'Ocorreu um erro no INSERTMANY apontamentos!'});
         }
 
-        async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
+        Async.eachSeries(_apontamentos.antigos, function updateObject (obj, done) {
               
             Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
             "infoTrabalho": obj.infoTrabalho, "status": obj.status, "historico": obj.historico }}, done);
@@ -702,7 +702,7 @@ router.post('/adjustRepeatedEmployee', function(req, res){
 
         if (apontamentosDataToCorrect.length > 0){
             console.log("Vai corrigir as datas no BANCO primeiro: ");
-            async.eachSeries(apontamentosDataToCorrect, function updateObject (obj, done) {
+            Async.eachSeries(apontamentosDataToCorrect, function updateObject (obj, done) {
                   
                 Apontamento.update({ _id: obj._id }, { $set : { "data": obj.data }}, done);
                 
@@ -712,7 +712,7 @@ router.post('/adjustRepeatedEmployee', function(req, res){
                     return res.status(500).send({success: false, message: err});
                 
                 console.log("Tudo finalizado na atualizacao da DATA e TImeZone");
-                async.eachSeries(repeatedAppoints, function updateObject (obj, done) {
+                Async.eachSeries(repeatedAppoints, function updateObject (obj, done) {
                   
                     Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
                         "infoTrabalho": obj.infoTrabalho, "status": obj.status }}, done);
@@ -731,7 +731,7 @@ router.post('/adjustRepeatedEmployee', function(req, res){
             });    
         } else { 
 
-            async.eachSeries(repeatedAppoints, function updateObject (obj, done) {
+            Async.eachSeries(repeatedAppoints, function updateObject (obj, done) {
                   
                 Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
                     "infoTrabalho": obj.infoTrabalho, "status": obj.status }}, done);
@@ -779,7 +779,7 @@ router.post('/changeAbonoFolgaComp', function(req, res){
 
     var apontamentos = req.body;
 
-    async.eachSeries(apontamentos, function updateObject (obj, done, next) {
+    Async.eachSeries(apontamentos, function updateObject (obj, done, next) {
                         
         console.log("Apontamento: ", obj.data);
         Apontamento.update({ _id: obj._id }, { $set : { "infoTrabalho.trabalhados": 0, 
@@ -883,7 +883,7 @@ router.post('/reverterFerias', function(req, res){
                 //     console.log("itemSearched: ", itemSearched);
                 // }
                 // return res.json(apontamentos);
-                async.eachSeries(apontamentos, function updateObject (obj, done, next) {
+                Async.eachSeries(apontamentos, function updateObject (obj, done, next) {
                     
                     console.log("Apontamento: ", obj.data);
                     var itemSearched = _updateInfoTrabalho(objEmpFerias.employee, obj);
@@ -936,7 +936,7 @@ router.post('/reverterFerias', function(req, res){
 router.post('/correctMarcacoesFtd', function(req, res){
     console.log("iniciar correção...");
     var arrayApontamentos = req.body;
-    async.eachSeries(arrayApontamentos, function updateObject (obj, done) {
+    Async.eachSeries(arrayApontamentos, function updateObject (obj, done) {
               
         Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, 
         "infoTrabalho": obj.infoTrabalho, "status": obj.status, "historico": obj.historico }}, done);

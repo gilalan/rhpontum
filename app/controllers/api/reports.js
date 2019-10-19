@@ -5,7 +5,7 @@ var Turno = require('../../models/turno');
 var Escala = require('../../models/escala');
 var moment = require('moment');
 var router = require('express').Router();
-var async = require('async');
+var Async = require('async');
 
 //=========================================================================
 // API para Relatórios
@@ -94,7 +94,7 @@ router.post('/updateAppoints', function(req, res){
     //     });    
     // }    
 
-    async.eachSeries(arrayApps, function updateObject (obj, done) {
+    Async.eachSeries(arrayApps, function updateObject (obj, done) {
         
         // Model.update(condition, doc, callback)
         //console.log('apontamento? ', obj._id);
@@ -113,7 +113,7 @@ router.post('/setFeriasAppoints', function(req, res){
 
     var arrayApps = req.body;
 
-    async.eachSeries(arrayApps, function updateObject (obj, done) {
+    Async.eachSeries(arrayApps, function updateObject (obj, done) {
         
         Apontamento.update({ _id: obj._id }, { $set : { "infoTrabalho.trabalha": obj.trabalha, "infoTrabalho.aTrabalhar": obj.aTrabalhar, "infoTrabalho.ferias": obj.estaFerias }}, done);
 
@@ -154,7 +154,7 @@ router.post('/getAppointsByTeam', function(req, res){
 
     var mapFuncAppoints = {};
 
-    async.eachSeries(equipe.componentes, function getObjects (componente, done) {
+    Async.eachSeries(equipe.componentes, function getObjects (componente, done) {
         
         Apontamento.find({data: queryDate, PIS: componente.PIS}, done)
         .exec(function(err, apontamentos){
