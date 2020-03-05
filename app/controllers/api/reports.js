@@ -109,6 +109,23 @@ router.post('/updateAppoints', function(req, res){
     
 });
 
+router.post('/updateRemoveZeros', function(req, res){
+
+    var arrayApps = req.body; 
+
+    Async.eachSeries(arrayApps, function updateObject (obj, done) {
+                
+        Apontamento.update({ _id: obj._id }, { $set : { "marcacoes": obj.marcacoes, "marcacoesFtd": obj.marcacoesFtd, "status": obj.status, "infoTrabalho.trabalhados": obj.trabalhados }}, done);
+
+    }, function allDone (err) {
+        if (err)
+            return res.status(500).send({success: false, message: err});
+
+        return res.status(200).send({success: true, message: "tudo atualizado!"});
+    });
+    
+});
+
 router.post('/setFeriasAppoints', function(req, res){
 
     var arrayApps = req.body;

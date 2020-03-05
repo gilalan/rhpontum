@@ -1,3 +1,5 @@
+var async = require('async');
+
 function timeout(ms) {
 	console.log('timeout');
     return new Promise(resolve => setTimeout(resolve, ms));
