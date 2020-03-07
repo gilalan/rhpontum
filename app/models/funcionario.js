@@ -8,8 +8,8 @@ var funcionarioSchema = new Schema({
 	nome: {type: String, required: true},
 	sobrenome: {type: String, required: true},
 	dataNascimento: Date,
-	CPF: {type: String, required: true, unique: true},
-	PIS: {type: String, required: true, unique: true},
+	CPF: {type: String, required: true, unique: false},
+	PIS: {type: String, required: true, unique: false},
 	matricula: {type: String, unique: true},
 	email: {type: String, unique: true},
 	alocacao: {
@@ -72,6 +72,8 @@ var funcionarioSchema = new Schema({
 	timestamps: true
 }
 );
+
+funcionarioSchema.index({ CPF: 1, matricula: 1}, { unique: true });
 
 var funcionarioModel = mongoose.model('Funcionario', funcionarioSchema);
 
