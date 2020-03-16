@@ -169,6 +169,36 @@ router.get('/:id/usuario', function(req, res){
     });
 });
 
+router.post('/checkMatricula', function(req, res){
+    
+    var rMatricula = req.body;
+    console.log("Matricula recebida: ", rMatricula);
+    Funcionario.findOne({matricula: rMatricula.matr})    
+    .exec(function(err, funcionario){
+        
+        if(err) {
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento do servidor!'});
+        }
+        console.log("Func encontrado: ", funcionario);
+        return res.json(funcionario);
+    });
+});
+
+router.post('/checkEmail', function(req, res){
+    
+    var rEmail = req.body;
+    console.log("email recebida: ", rEmail);
+    Funcionario.findOne({email: rEmail.email})    
+    .exec(function(err, funcionario){
+        
+        if(err) {
+            return res.status(500).send({success: false, message: 'Ocorreu um erro no processamento do servidor!'});
+        }
+        console.log("Func encontrado: ", funcionario);
+        return res.json(funcionario);
+    });
+});
+
 //Get apontamento de um funcionário by date range
 router.post('/:id/apontamentoRange', function(req, res){
 
