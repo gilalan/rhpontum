@@ -94,14 +94,23 @@ router.get('/:id', function(req, res){
   .populate('fiscal', 'nome sobrenome')
   .populate({
     path: 'componentes',
-    select: 'nome sobrenome email PIS matricula sexoMasculino alocacao',
+    select: 'nome sobrenome email PIS matricula sexoMasculino alocacao active ferias historico',
     model: 'Funcionario',
     populate: [{
       path: 'alocacao.cargo',
       select: 'especificacao nomeFeminino',
       model: 'Cargo'
+    },
+    {
+      path: 'alocacao.turno',
+      model: 'Turno',
+      populate: [{
+        path: 'escala', 
+        model: 'Escala'
+      }]
     }]  
   })
+  .sort({matricula: 'asc'})
   .exec(function(err, equipe){
 		
 		if(err) {
