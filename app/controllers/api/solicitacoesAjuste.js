@@ -194,6 +194,7 @@ router.put('/:id', function(req, res){
     solicitacao.anexo = req.body.anexo;
     solicitacao.anterior = req.body.anterior;
     solicitacao.proposto = req.body.proposto;
+    solicitacao.afastamento = req.body.afastamento;
 
     //tenta atualizar de fato no BD
     solicitacao.save(function(err){

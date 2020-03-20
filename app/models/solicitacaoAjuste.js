@@ -85,6 +85,7 @@ var solicitacaoAjusteSchema = new Schema(
 		}
 	],
 	eventoAbono: {type: Schema.Types.ObjectId, required: false, ref: 'EventoAbono'},
+	afastamento: {type: Boolean, default: false},
 	anexo: []
 },
 {
