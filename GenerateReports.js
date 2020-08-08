@@ -14,8 +14,8 @@ const pdfMake = require('pdfmake');
 moment.locale('pt-br');
 //Modificar esses dados para gerações dos relatórios
 //##########################################
-const startDate = "2020-01-01T03:00:00Z";
-const endDate = "2020-02-01T03:00:00Z";
+const startDate = "2020-07-01T03:00:00Z";
+const endDate = "2020-08-01T03:00:00Z";
 // #########################################
 const queryDate = {$gte: startDate, $lt: endDate};
 const fonts = {
@@ -55,8 +55,8 @@ function _setEquipesFunc(funcionario) {
 
 function getFuncionarios(){
        
-    Funcionario.find({active: true, PIS: ["021270759053", "016596231721", "012913784455"]})
-    //Funcionario.find({active: true})
+    // Funcionario.find({active: true, PIS: ["021270759053", "016596231721", "012913784455"]})
+    Funcionario.find({active: true})
     .populate('alocacao.cargo', 'especificacao nomeFeminino')
     .populate({
         path: 'alocacao.turno',
@@ -113,7 +113,7 @@ function generateReportAllWorkers(funcionarios){
         _setEquipesFunc(componente);
         componente.name = `${componente.nome} ${componente.sobrenome}`;
         componente.cargo = componente.sexoMasculino ? componente.alocacao.cargo.especificacao : componente.alocacao.cargo.nomeFeminino;
-        console.log(`Nome: ${componente.name}, Apts: ${componente.arrayApontamentos.length}, QtEq: ${componente.equipes.length}`);
+        // console.log(`Nome: ${componente.name}, Apts: ${componente.arrayApontamentos.length}, QtEq: ${componente.equipes.length}`);
         
         if (componente.equipes.length <= 0){
             gerados--;
@@ -122,6 +122,8 @@ function generateReportAllWorkers(funcionarios){
         
         if (componente.arrayApontamentos.length == 0)
             zerados++;
+        else
+            console.log(`Nome: ${componente.name}, Apts: ${componente.arrayApontamentos.length}, QtEq: ${componente.equipes.length}`);
 
         current = new Date(startDate);
         endDateLocal = new Date(endDate);
