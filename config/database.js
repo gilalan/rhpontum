@@ -2,13 +2,14 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const MONGODB_URI = "mongodb://127.0.0.1:27017/production?authSource=admin";
+//const MONGODB_URI = "mongodb://127.0.0.1:27017/production?authSource=admin";
+const MONGODB_URI = "mongodb://127.0.0.1:27017/production";
 const MONGODB_USER = "adminrhponto";
 const MONGODB_PASS = "12345678";
 
 const authData =  {
-    "user": MONGODB_USER,
-    "pass": MONGODB_PASS,
+    //"user": MONGODB_USER,
+    //"pass": MONGODB_PASS,
     "useNewUrlParser": true
 }; 
 mongoose.connect(
