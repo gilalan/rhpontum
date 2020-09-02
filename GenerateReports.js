@@ -14,8 +14,8 @@ const pdfMake = require('pdfmake');
 moment.locale('pt-br');
 //Modificar esses dados para gerações dos relatórios
 //##########################################
-const startDate = "2020-07-01T03:00:00Z";
-const endDate = "2020-08-01T03:00:00Z";
+const startDate = "2020-08-01T03:00:00Z";
+const endDate = "2020-09-01T03:00:00Z";
 // #########################################
 const queryDate = {$gte: startDate, $lt: endDate};
 const fonts = {

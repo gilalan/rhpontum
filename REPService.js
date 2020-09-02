@@ -24,7 +24,7 @@ var itemsProcessed = 0;
 var requestCount = 0;
 
 const serialsArray = ["AFD00009003650006843", "AFD00009003650006848", "AFD00009003650006815", 
-"AFD00009003650006797", "AFD00009003650006774", "AFD00009003650006689"];
+"AFD00009003650006797"];//, "AFD00009003650006774", "AFD00009003650006689"];
 
 const urlStaticREPFileArray = [
   'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006843.txt',
@@ -129,8 +129,11 @@ async function getLastNSRProcessed(serial) {
 /*
 ** Requisita o arquivo .txt com os apontamentos recuperados do REP e armazenados na nuvem 
 */
-async function getFilesS3(serial){
-           
+async function getFilesS3(repObj){
+  
+  const serial = repObj.serial;
+  const lastProcessed = repObj.last_processed;
+
   const params = {
     Bucket: Config.awsrep.bucketName,
     Key: serial+".txt"//RepS3File    
@@ -149,11 +152,20 @@ async function getFilesS3(serial){
     });
     
     console.log("Vai iniciar a leitura da stream");
-    let pisDateMap = await readLines(rl, serial);
-   
+
+    //let lastNSRFile = await getLastNSRProcessed(serial);
+    //let lastNSRFile = {last_processed: "000033558"};
+    const nsrLine = lastProcessed;
+    let nsrLastRead = await readLines(rl, nsrLine);
+    
+    console.log("NSR Last Read: ", nsrLastRead);
+    repObj.last_processed = nsrLastRead;
+    
+    await repObj.save();
+
     console.log("#### Terminou a leitura #####");
-    let outputjson = JSON.stringify(pisDateMap, null, 2);
-    console.log(`Mapeamento: ${outputjson}`);
+    //let outputjson = JSON.stringify(pisDateMap, null, 2);
+    //console.log(`Mapeamento: ${outputjson}`);
   } 
   catch (err) {
     
@@ -162,22 +174,23 @@ async function getFilesS3(serial){
   
 };
 
-async function readLines(rlFile, repSerial){
+async function readLines(rlFile, nsrLine){
   
   let [activate,nsr,type,dateString,month,horario,pis,hashMapSize] = [false,"","","","","","",0];
   let [dataFtd, horarioFtd, pisDateMap, objMarcacao, total] = [{},{},{},{},null];
 
-  //let lastNSRFile = await getLastNSRProcessed(repSerial);
-  let lastNSRFile = {last_processed: "000006982"};
-  if(!lastNSRFile)//se nao tiver ultimas NSR processada no BD, tem que ler o arquivo inteiro
+  if(!nsrLine){//se nao tiver ultimas NSR processada no BD, tem que ler o arquivo inteiro
     activate = true;
-  console.log('Ultima NSR processada: ', lastNSRFile.last_processed);
+  }
+
+  console.log('Ultima NSR processada: ', nsrLine);
+  console.log("Proxima linha esta aqui....");
   //getLastNSRProcessed = calculateSaltNSR(getLastNSRProcessed);
   //console.log('NSR calculada para início da leitura: ', getLastNSRProcessed);
   let count = 0;
   for await (const line of rlFile){
-    //console.log(line);
-    if ( (!activate) && (lastNSRFile.last_processed === line.substring(0, 9)) ){
+    //console.log("Entrou no For...", nsrLine == line.substring(0, 9));    
+    if ( (!activate) && (nsrLine === line.substring(0, 9)) ){
       activate = true; //Vejo tb se é a última linha processada (para nao ter que ficar lendo o arquivo inteiro sempre)
     }
     if(activate && line.charAt(9) === "3"){//posição que indica o tipo de Registro, se for 3 é marcação!
@@ -196,6 +209,8 @@ async function readLines(rlFile, repSerial){
       };
       total = null;
       count++;
+
+      console.log("Line ", nsr);
       
       //organizar em um HashMap na memória antes de armazenar efetiv. no BD
       objMarcacao = {
@@ -211,30 +226,8 @@ async function readLines(rlFile, repSerial){
         objMarcacao.total = total;
       else
         objMarcacao.erro = true;
-
-
-      // if (!pisDateMap[pis]){
-      //   //console.log('-Não tem um pis mapeado, primeira vez');
-      //   let dateMapTemp = {};
-      //   dateMapTemp[data] = [objMarcacao];
-      //   pisDateMap[pis] = dateMapTemp;
-      //   hashMapSize++;
-
-      // } else {//já tem um pisDateMap['0032']
-      //   //caso não haja esse hash, a gnt inicializa o array de marcações nele
-      //   if (!pisDateMap[pis][data]){
-            
-      //     // console.log('-Não tem um pis e data mapeados', pisDateMap[pis][data]);
-      //     pisDateMap[pis][data] = [objMarcacao];
-      //     hashMapSize++;
-
-      //   } else {
-      //     //console.log('#Já tem um pis e data mapeados: ', pisDateMap[pis][data]);
-      //     (pisDateMap[pis][data]).push(objMarcacao);
-      //   }
-      // }
-
-      console.log("Func: ", pis);
+   
+      //console.log("#READLINE# - PIS do Funcionário: ", pis);
       let {dateMom, today, tomorrow} = _formatDateMoment(dateString);
 
       let apontamento = await Apontamento.findOne(
@@ -245,11 +238,14 @@ async function readLines(rlFile, repSerial){
           }).populate('funcionario').exec();
            
       let newDate = new Date(dateMom);
+      console.log("-----------------------------------------------------------------------");
+      console.log("Batimento no readLine: ", objMarcacao.strHorario);
       await _checkApontamento(apontamento, pis, newDate, objMarcacao);
+      console.log("-----------------------------------------------------------------------");
     }
   }
-  
-  return pisDateMap;
+
+  return nsr;
 }
 
 function _formatDateMoment(dateString){
@@ -263,7 +259,7 @@ function _formatDateMoment(dateString){
   let dateMom = moment({year: year, month: monthJS-1,
     day: day, hour: 0, minute: 0});
 
-  console.log('#moment date: ', dateMom.format());
+  console.warn('# Data formatada: ', dateMom.format('DD/MM/YYYY'));
 
   let today = dateMom.startOf('day');
   let tomorrow = moment(today).add(1, 'days');
@@ -291,7 +287,7 @@ async function _checkApontamento(apontamento, pis, newDate, objMarcacao){
     
     if (!funcionario) {
 
-      console.log("Funcionário não cadastrado! Impossível realizar registros na base de dados.");
+      console.error("Funcionário não cadastrado! Impossível realizar registros na base de dados.");
       return false;
     }
 
@@ -302,26 +298,35 @@ async function _checkApontamento(apontamento, pis, newDate, objMarcacao){
       return false;
     }
     
-    console.log(`CheckApontamento - Funcionario: ${funcionario.nome}, ${funcionario.matricula} , equipe: ${equipeF.nome}`);
+    console.log(`## Funcionario: ${funcionario.nome}, ${funcionario.matricula} , equipe: ${equipeF.nome}`);
 
     if (apontamento){ 
 
-      console.log(`apontamento recuperado is ${apontamento.data}, ${apontamento.status} e ${apontamento.infoTrabalho}`);
-      let arrayMarcacoes = _createMarcacao(objMarcacao, apontamento.marcacoes);
-      //successLog.info('## Atualizando apontamento com a data: ', newDate);
-      if (apontamento.infoTrabalho) {
-          apontamento.infoTrabalho.trabalhados = _getWorkedMinutes(arrayMarcacoes);
-      }
-      apontamento.marcacoes = arrayMarcacoes;
-      apontamento.marcacoesFtd = _createMarcacoesFtd(arrayMarcacoes);
-      apontamento.status = _setStatus(arrayMarcacoes, null);
+      console.log(`### Tem Apontamento: ${apontamento.status} e ${apontamento.infoTrabalho}`);
+      //Só vamos alterar os apontamentos que não tenham sido já criados por justificativas...
+      if (apontamento.status.id != 3){
+        let arrayMarcacoes = _createMarcacao(objMarcacao, apontamento.marcacoes);
+        apontamento.marcacoes = arrayMarcacoes;
+        apontamento.marcacoesFtd = _createMarcacoesFtd(arrayMarcacoes);      
       
+        //Para apontamentos abonados
+        if (apontamento.status.id != 4) {
+
+          if (apontamento.infoTrabalho) {
+            apontamento.infoTrabalho.trabalhados = _getWorkedMinutes(arrayMarcacoes);
+          }
+
+          if (apontamento.status.id != 5)
+            apontamento.status = _setStatus(arrayMarcacoes, null);
+        }
+      }               
+      console.log(`*** Vai ATUALIZAR o apontamento! ***`);
       //tenta atualizar de fato no BD
       await apontamento.save();
 
     } else {
 
-      console.log("Nao tem apontamento nessa data, vai criar");
+      //console.log("Nao tem apontamento nessa data, vai criar");
       let extraInfo = _createExtraInformations(funcionario, newDate, equipeF);
       let arrayMarcacoes = _createMarcacao(objMarcacao, null);
 
@@ -335,9 +340,8 @@ async function _checkApontamento(apontamento, pis, newDate, objMarcacao){
         infoTrabalho: extraInfo.infoTrabalho,
         marcacoesFtd: _createMarcacoesFtd(arrayMarcacoes)
       };
-      console.log('--- vai criar o apontamento: ', apontamento.data);
+      console.log(`+++ Vai criar o apontamento! +++`);
       await Apontamento.create(apontamento);
-      console.log('--- criou ----');
     }
   }
 
@@ -581,9 +585,8 @@ function _getWorkedMinutes(arrayMarcacoes) {
 
 /*
 ** Cria o Objeto de Marcações padronizado para a base de dados
-** Arg1: marcacoesObj - são as marcações provenientes do arquivo txt do REP
-** Arg2: date - é a data do registro provenient tb do arquivo txt do REP
-** Arg3: marcacoesOriginais - são as marcações já efetuadas e recuperadas no BD
+** Arg1: marcacaoObj - A marcação a ser inserida proveniente do arquivo txt do REP
+** Arg2: marcacoesOriginais - são as marcações já efetuadas e recuperadas no BD
 */
 function _createMarcacao(marcacaoObj, marcacoesOriginais){
 
@@ -637,8 +640,8 @@ function _createMarcacao(marcacaoObj, marcacoesOriginais){
     if (!inseridaREP && (indexIgualHorario == -1) ){
       //successLog.info('Não é marcacao repetida, vai criar um obj de marcacao novo');
       marcacao = {
-        id: marcacoes.length + 1,
-        descricao: _getDescricao(marcacoes),
+        id: undefined,
+        descricao: undefined,
         hora: parseInt(marcacaoObj.hora),
         minuto: parseInt(marcacaoObj.min),
         segundo: 0,
@@ -651,20 +654,17 @@ function _createMarcacao(marcacaoObj, marcacoesOriginais){
         motivo: '',
         gerada: {}
       };
+      marcacoes.push(marcacao);
+      marcacoes.sort( (a,b) => { return a.strHorario.localeCompare(b.strHorario)} );
+      _reorganizarBatimentos(marcacoes);
     }
 
     //para não ficar com marcações repetidas de horário na WEB e REP (evita marcacoes repetidas)
     if (!inseridaREP && (indexIgualHorario > -1)) {
       console.log('caso raro em que a marcacao web e do REP tiveram mesmo horário', marcacaoObj.nsr);
-      marcacoes[indexIgualHorario].NSR = marcacaoObj.nsr;
-    }
+      //marcacoes[indexIgualHorario].NSR = marcacaoObj.nsr;
+    }    
     
-    //successLog.info('antes de dar push, valor da marcacao: ', marcacao);
-    //para não inserir marcações vazias...            
-    if (marcacao.id >= 1){
-      //successLog.info('vai dar push no array');
-      marcacoes.push(marcacao);
-    }
   }
   //successLog.info('vai retornar o seguinte array de marcacoes: ', marcacoes);
   return marcacoes;
@@ -687,6 +687,22 @@ function _getDescricao (array){
       return "sai" + (Math.floor(array.length/2) + 1);
     }
   }
+};
+
+function _reorganizarBatimentos(newArrayES){
+  
+  for (let i=1; i<=newArrayES.length; i++){
+    newArrayES[i-1].id = i;
+    if (i == 1)
+      newArrayES[i-1].descricao = "ent1";     
+    else {
+      if (i % 2 === 0) //se for par é uma saída
+        newArrayES[i-1].descricao = "sai"+( (i/2) );
+      else  //ímpar é uma entrada
+        newArrayES[i-1].descricao = "ent"+(Math.floor(i/2) + 1);      
+    }
+  }
+
 };
 
 function _createMarcacoesFtd(arrayMarcacoes){
@@ -746,28 +762,38 @@ function _setStatus(arrayMarcacoes, justificativa) {
 async function start(){
   
   feriados = await getFeriados();
-  console.log(`feriados: ${feriados.length}`);
+  console.log("$$$$$$$$$$$$$$$$ BASE DE DADOS $$$$$$$$$$$$$$$");
+  console.log(`No de feriados: ${feriados.length}`);
   equipes = await getEquipes();
-  console.log(`equipes: ${equipes.length}`);
+  console.log(`No de equipes: ${equipes.length}`);
   funcionarios = await getFuncionarios();
-  console.log(`funcionarios: ${funcionarios.length}`);
+  console.log(`No de funcionarios: ${funcionarios.length}`);
   console.log(`Vai obter os REPs...`);
-  //const reps = await getReps();
-  let reps = [
-    {
-      "_id": "5da9f78f1c9d440000252ff0",
-      "serial": "arquivo_teste2",
-      "local": "Inexistente",
-      "last_processed": "000006982"
-    },
-  ];
-  console.log("Iniciou chamada");
+  console.log("$$$$$$$$$$$$$$$$ FIM BASE DE DADOS $$$$$$$$$$$$$$$");
+  reps = await getReps();
+  // let reps = [
+  //   {
+  //     "_id": "5da9f78f1c9d440000252ff0",
+  //     "serial": "arquivo_teste2",
+  //     "local": "Inexistente",
+  //     "last_processed": "000006982"
+  //   },
+  // ];
+  // let reps = [
+  //   {
+  //     "_id": "5da9fe781c9d440000837485",
+  //     "serial": "AFD00009003650006815",
+  //     "local": "Fauna",
+  //     "last_processed": "000033558"
+  //   }
+  // ];
+  console.log("############# Iniciou chamada #############");
 
   for await (const repObj of reps){
-    await getFilesS3(repObj.serial);
+    await getFilesS3(repObj);
   }
   
-  console.log("Terminou execução");
+  console.log("############# Terminou execução #############");
 }
 
 start();
