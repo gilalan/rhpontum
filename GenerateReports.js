@@ -1,5 +1,5 @@
-const database = require('./config/database');
-//const database = require('./config/database2');
+const database = require('./config/databaseServer');
+//const database = require('./config/database');
 const Funcionario = require('./app/models/funcionario');
 const Apontamento = require('./app/models/apontamento');
 const Feriado = require('./app/models/feriado');

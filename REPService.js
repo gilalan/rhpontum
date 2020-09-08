@@ -1,47 +1,23 @@
 const database = require('./config/database');
+//const database = require('./config/databaseServer');
 const Funcionario = require('./app/models/funcionario');
 const Apontamento = require('./app/models/apontamento');
 const Feriado = require('./app/models/feriado');
 const Equipe = require('./app/models/equipe');
 const RepDB = require('./app/models/rep');
-const libRHPontum = require('./util/calculateAppoint');
-const libPDFReports = require('./util/generateReportPdf');
-const fs = require('fs');
 const moment = require('moment');
-const Async = require('async');
 const Aws = require('aws-sdk');
 const Config = require('./config.js');
-const path = require('path');
-const stream = require('stream');
-
-const Readable = stream.Readable;
+const Readable = require('stream').Readable;
 const readline = require('readline');
-const timePeriod = 5 * 60 * 1000;//minuto * segundo * ms
-var feriados = [];
-var equipes = [];
-var funcionarios = [];
-var itemsProcessed = 0;
-var requestCount = 0;
 
-const serialsArray = ["AFD00009003650006843", "AFD00009003650006848", "AFD00009003650006815", 
-"AFD00009003650006797"];//, "AFD00009003650006774", "AFD00009003650006689"];
+const timePeriod = 20 * 60 * 1000;//minuto * segundo * ms
+let feriados = [];
+let equipes = [];
+let funcionarios = [];
 
-const urlStaticREPFileArray = [
-  'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006843.txt',
-  'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006848.txt',
-  'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006815.txt',
-  'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006797.txt',
-  'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006774.txt',
-  'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006689.txt'
-];
-const pathCreateFile = path.resolve("file_reps", "file.txt");
-const RepS3File = 'arquivo_teste';
-const REPLocalFile = 'REPLast/AGR1_AFD00009003650006774.txt';
-const urlStaticREPFile = 'https://s3-sa-east-1.amazonaws.com/rhponto.rep.file/AFD00009003650006774.txt'; //Juazeiro
 moment.locale('pt-br');
 process.env.AWS_SDK_LOAD_CONFIG = 1;
-
-//console.log("Path ", pathCreateFile);
 
 process.on('uncaughtException', function(err) {
 	console.log('process on - uncaughtException', err);
@@ -132,7 +108,8 @@ async function getLastNSRProcessed(serial) {
 async function getFilesS3(repObj){
   
   const serial = repObj.serial;
-  const lastProcessed = repObj.last_processed;
+  const lastProcessed = repObj.last_processed; //on AWS
+  const lastDate = repObj.last_date; //on DataBase
 
   const params = {
     Bucket: Config.awsrep.bucketName,
@@ -142,30 +119,38 @@ async function getFilesS3(repObj){
   try {
     const s3 = new Aws.S3();
     const fileAws = await s3.getObject(params).promise();
-    console.log(`Last Modified: ${fileAws.LastModified}`);
-    const s = new Readable();
-    s.push(fileAws.Body);    // the string you want
-    s.push(null);      // indicates end-of-file basically - the end of the stream
-    // console.log('TypeOf: ', fileAws);
-    const rl = readline.createInterface({
-      input: s//fs.createReadStream(s.toString())
-    });
     
-    console.log("Vai iniciar a leitura da stream");
+    console.log(`Last Date on DB: ${lastDate}, convertido: ${lastDate.getTime()}`);
+    console.log(`Last Date on AWS: ${fileAws.LastModified}, convertido: ${fileAws.LastModified.getTime()}`);
+    
+    //se tiver desatualizado (data dos arquivos na nuvem sao maiores que a ultima data processada no banco)
+    if (fileAws.LastModified.getTime() > lastDate.getTime()){
+      
+      const s = new Readable();
+      s.push(fileAws.Body);    // the string you want
+      s.push(null);      // indicates end-of-file basically - the end of the stream
+      // console.log('TypeOf: ', fileAws);
+      const rl = readline.createInterface({
+        input: s//fs.createReadStream(s.toString())
+      });
+      
+      console.log("Vai iniciar a leitura da stream");
+  
+      //let lastNSRFile = await getLastNSRProcessed(serial);
+      //let lastNSRFile = {last_processed: "000033558"};
+      const nsrLine = lastProcessed;
+      let nsrLastRead = await readLines(rl, nsrLine);
+      
+      console.log("NSR Last Read: ", nsrLastRead);
+      repObj.last_processed = nsrLastRead;
+      repObj.last_date = new Date(fileAws.LastModified);
+  
+      await repObj.save();
 
-    //let lastNSRFile = await getLastNSRProcessed(serial);
-    //let lastNSRFile = {last_processed: "000033558"};
-    const nsrLine = lastProcessed;
-    let nsrLastRead = await readLines(rl, nsrLine);
-    
-    console.log("NSR Last Read: ", nsrLastRead);
-    repObj.last_processed = nsrLastRead;
-    
-    await repObj.save();
+    } 
 
     console.log("#### Terminou a leitura #####");
-    //let outputjson = JSON.stringify(pisDateMap, null, 2);
-    //console.log(`Mapeamento: ${outputjson}`);
+    
   } 
   catch (err) {
     
@@ -354,7 +339,7 @@ async function _checkApontamento(apontamento, pis, newDate, objMarcacao){
 function _getOnlyDate (date) {
   
   return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 
-        0, 0, 0, 0);
+        3, 0, 0, 0);
 }; 
 
 /*
@@ -750,17 +735,9 @@ function _setStatus(arrayMarcacoes, justificativa) {
   return status;
 };
 
-//NEW CODE!!!
-// function waitTimePeriod(){
-//   setTimeout(function(){
-//     getFileRequest(waitTimePeriod);
-//   }, timePeriod);
-// }
-
-// getFileRequest(waitTimePeriod);
-
 async function start(){
   
+  console.log("INICIO DA REQUISICAO: ", new Date());
   feriados = await getFeriados();
   console.log("$$$$$$$$$$$$$$$$ BASE DE DADOS $$$$$$$$$$$$$$$");
   console.log(`No de feriados: ${feriados.length}`);
@@ -790,10 +767,22 @@ async function start(){
   console.log("############# Iniciou chamada #############");
 
   for await (const repObj of reps){
+    console.log(`================ BEG SERIAL: ${repObj.serial} (${repObj.local}) ================`);
     await getFilesS3(repObj);
+    console.log(`================ END SERIAL: ${repObj.serial} (${repObj.local}) ================`);
   }
   
   console.log("############# Terminou execução #############");
 }
 
+//NEW CODE!!!
+// function waitTimePeriod(){
+//   setTimeout(async() => {
+//     start(waitTimePeriod);
+//   }, timePeriod);
+// }
+
+// start(waitTimePeriod);
+
 start();
+setInterval(start, timePeriod);
